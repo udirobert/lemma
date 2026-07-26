@@ -34,10 +34,12 @@ Each paper directory should have:
 
 ## Compute strategy
 
-We have **Modal** as our GPU workhorse. T4/L4 for cheap runs, A100-40GB for heavier experiments. Keep experiments:
-- **Tractable**: ≤2-3 hours on T4 for a single claim reproduction
+Compute lives on **Hugging Face Jobs** under the applicant's own namespace (e.g. `Papajams`). The challenge judges reward HF-Job-scaled experiments with recorded Job URLs, GPU flavor, and command; the org does NOT grant `job.write`, so each applicant runs Jobs under their own HF account. Modal / local Docker is only for smoke tests. Keep experiments:
+- **Tractable**: ≤2-3 hours on T4/L4 for a single claim reproduction (or smaller / CPU-only for theory papers)
 - **Idempotent**: `reproduce.py` should be re-runnable from scratch
 - **Logged**: every metric that matters goes to Trackio, not just stdout
+
+Before designing GPU experiments, smoke-test the flavor with a `--timeout 3m` canary (`hf jobs run --flavor <gpu> --timeout 3m python:3.12 python -c "import torch; print(torch.cuda.is_available())"`). A 402 means add credits; a 403 means the token lacks `job.write`. **A `RUNNING` state is not proof of progress**, and a detached submit's exit 0 is not proof of completion — always poll `hf jobs logs <id>` until you see real output before recording a Job as done.
 
 ## Secrets and credentials
 
@@ -59,6 +61,17 @@ A logbook with 5 failed attempts that lead to 1 successful reproduction is worth
 ## Tone
 
 This is research, not a production system. Be rigorous, be honest, document mistakes. The reproduction trail is the deliverable.
+
+## Logbook shape (judge-validated)
+
+Every published logbook must satisfy `scripts/validate_icml_logbook.py` (mirrored from the org Space). The required structure:
+- One `Index` page with `# Reproduction: <paper title>` and a `## Pages` table linking each Page slug. No external paper link on the index.
+- An `Executive summary` page with two **pinned** cells in this order: (1) `Executive summary` (outcome-first paragraph + `## Scope & cost` table comparing *This reproduction* vs *Full replication* with `≈$X (est. = wall × flavor-rate)` cost), (2) a self-contained `Reproduction poster` figure cell built with `gradio-app/posterly`'s `tools/render_logbook_embed.py` against a passing `--strict-polish` gate.
+- One page per claim with the audit / experiment evidence; link every Hub asset (Models, Datasets, Spaces, Jobs, Buckets) and GitHub repo with full URLs.
+- A `Conclusion` page summarizing supported / falsified / inconclusive claims.
+- Run `./scripts/validate_logbook.sh <owner>/repro-<slug>` before `trackio logbook publish`; iterate until it passes.
+
+Agent traces (Trackio ≥ 0.32.1) are required only for the two $500 special awards (`Highest-Quality Human-in-the-Loop`, `Best Falsification / Negative Result`), but empty Traces is the most common fail mode — attach at the start of work, not the end.
 
 ## Anti-patterns
 

@@ -1,9 +1,14 @@
 """Reproduction entry point for <paper title>.
 
+Runs the numerical audit / experiment for a single claim from the paper.
+
 Usage:
-    modal run papers/<paper-id>/reproduce.py --claim=1
-    # or locally:
     python papers/<paper-id>/reproduce.py --claim=1
+    uv run papers/<paper-id>/reproduce.py --claim=1
+    # For empirical claims, prefer an HF GPU Job under your own namespace:
+    hf jobs run --flavor t4 --timeout 1h \\
+        -v .:/work python:3.12 \\
+        bash -lc "cd /work && uv sync && uv run python papers/<paper-id>/reproduce.py --claim=1"
 """
 
 from __future__ import annotations
@@ -17,7 +22,13 @@ def parse_args() -> argparse.Namespace:
         "--claim",
         type=int,
         default=1,
-        help="Which claim number from the paper to reproduce",
+        help="Which claim number from the paper to reproduce.",
+    )
+    parser.add_argument(
+        "--out",
+        type=str,
+        default="results/",
+        help="Output directory for figures/tables.",
     )
     return parser.parse_args()
 
