@@ -1,0 +1,31 @@
+repos:
+  # --- Secrets scanning ---
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ["--baseline", ".secrets.baseline"]
+
+  # --- Python linting + formatting (ruff) ---
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.20
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+      - id: ruff-format
+
+  # --- General file hygiene ---
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-added-large-files
+        args: ["--maxkb=10240"]  # 10 MB — block accidental model weight commits
+      - id: check-merge-conflict
+      - id: end-of-file-fixer
+        exclude: \.jsonl$
+      - id: trailing-whitespace
+        exclude: \.jsonl$
+      - id: detect-private-key

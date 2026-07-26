@@ -1,0 +1,9 @@
+# Per-paper artifacts (the global .gitignore already excludes many of these,
+# but this file can be tuned per paper if needed).
+
+results/
+checkpoints/
+*.bin
+*.safetensors
+*.pt
+*.pth

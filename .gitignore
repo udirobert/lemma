@@ -1,0 +1,111 @@
+# --- Secrets / env ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+hf_token.txt
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- Virtualenvs ---
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# --- Tooling caches ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# --- Jupyter ---
+notebooks/.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# --- Hugging Face / model artifacts ---
+# Trackio + HF Spaces handle publication; don't commit weights here.
+*.bin
+*.safetensors
+*.gguf
+*.pt
+*.pth
+*.onnx
+*.ot
+*.msgpack
+*.h5
+hf_cache/
+hub_cache/
+wandb/
+runs/
+mlruns/
+outputs/
+
+# --- Trackio logbook local state ---
+.trackio/
+trackio.db
+trackio_logs/
+
+# --- Modal cache ---
+.modal/
+
+# --- Data artifacts (keep small synthetic data, ignore large/raw) ---
+data/raw/
+data/cache/
+data/datasets/
+*.parquet
+*.arrow
+*.feather
+*.tar
+*.tar.gz
+*.zip
+
+# --- Paper reproduction artifacts (per-paper) ---
+papers/*/checkpoints/
+papers/*/logs/
+papers/*/wandb/
+papers/*/outputs/
+papers/*/*.bin
+papers/*/*.safetensors
+papers/*/*.pt
+papers/*/*.pth
+
+# --- Editor / OS ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# --- Misc ---
+coverage/
+.coverage
+htmlcov/
+.tox/
+nox/
