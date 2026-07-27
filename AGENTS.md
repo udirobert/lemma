@@ -45,7 +45,7 @@ Before designing GPU experiments, smoke-test the flavor with a `--timeout 3m` ca
 
 - All secrets in `.env` (gitignored) — copy from `.env.example`
 - `HF_TOKEN` needs write access to publish logbook Spaces
-- `MODAL_TOKEN_ID` + `MODAL_TOKEN_SECRET` for GPU compute
+- `ANTHROPIC_API_KEY` (or `OPENAI_API_KEY`) for coding-agent traces via Trackio
 - Pre-commit hooks scan for leaked secrets on every commit
 
 ## Documentation discipline

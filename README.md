@@ -38,12 +38,12 @@ trackio logbook publish <your-hf-username>/<paper-id>
 lemma/
 ├── papers/              # One directory per paper reproduction
 │   ├── _template/       # Starting structure (copy when starting a new paper)
-│   └── <paper-id>/      # reproduce.py, configs/, README.md, results/
+│   └── <paper-id>/      # reproduce.py, configs/, README.md, results/, poster/
 ├── logbooks/            # Local Trackio logbook outputs (gitignored)
 ├── scripts/             # Helper scripts (HF upload, logbook sync, etc.)
 ├── notebooks/           # Exploratory notebooks
 ├── data/                # Synthetic / small datasets only (large data is gitignored)
-├── .env.example         # Template for .env (HF_TOKEN, MODAL_TOKEN_ID, etc.)
+├── .env.example         # Template for .env (HF_TOKEN, ANTHROPIC_API_KEY, etc.)
 ├── .pre-commit-config.yaml  # detect-secrets + ruff + file hygiene
 ├── pyproject.toml       # Ruff config
 ├── AGENTS.md            # Guidance for AI agents working on this project
