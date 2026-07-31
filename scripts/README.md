@@ -11,7 +11,7 @@ The org Space also provides a `paper_template.py` reference scaffold; we keep th
 
 ## Posterly poster (special award)
 
-The `Highest-Quality Human-in-the-Loop` award requires a `gradio-app/posterly` poster embed in the logbook's executive-summary page. The workflow lives inside each paper's `poster/` directory:
+The `Highest-Quality Human-in-the-Loop` award requires a `Chenruishuo/posterly` poster embed in the logbook's executive-summary page. The workflow lives inside each paper's `poster/` directory:
 
 ```bash
 cd papers/<paper-id>/poster

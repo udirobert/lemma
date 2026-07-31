@@ -25,28 +25,28 @@ Why this works: specific names, three concrete pieces, no abstract language. The
 
 2. **Control Tower exercise (20s):** Open `https://docs.linuxarena.ai/docs` and your own fork's most recent run (you've got a `ct run sabotage-eval` history in your fork log). If you don't have a run with a Pareto frontier visible, just point at the AGENTS.md and say: "this is the framework I work in, it runs honest and attack evals against a real agent harness in Docker, and it emits safety/usefulness curves — I'm currently wiring a HF Jobs backend so any HF user can run the same eval in one CLI line."
 
-3. **Lemma / ICML artifact (25s):** (Have this in a browser tab already) Open `https://huggingface.co/spaces/Papajams/repro-to-grok-grokking-ridge-regression` once it's published, OR — if not yet published at the time of recording — the local Trackio preview (`uv run trackio logbook serve`). Click through: index page → executive summary → Claim 1 page → show the three-panel figure with Theorem 4.1 envelopes overlaid → say: "I just finished auditing a numerical claim by Xu, Vardi, Safran — grokking in ridge regression. Three per-step bounds, all hold. Empirical grokking time of 7792 steps; the theory's worst case is 9517. Within tolerance."
+3. **Lemma / ICML artifact (30s):** (Have this tab open already — it's live.) Open `https://huggingface.co/spaces/Papajams/repro-to-grok-grokking-ridge-regression`. Click through: index → executive summary → Claim 1 page → show the three-panel figure with the Theorem 4.1 envelopes overlaid → say: "This week I finished auditing a numerical claim by Xu, Vardi, Safran — grokking in ridge regression, arXiv 2601.19791. Three per-step bounds, all hold. Empirical grokking time of 7792 steps; the theory's worst case is 9517. Within tolerance." Then the honest part: "For the smallest weight decay, the test loss hadn't crossed the generalization threshold by 100K steps — I had to double the run to 200K to actually catch grokking at 109K. First pass would've undersold the result."
 
-Why this works: every artifact is named, dated, and concretely at hand. A real person made this; an LLM couldn't simultaneously cite v2.2.0, an HF Space slug, a paper title, and a step count without obvious parroting.
+Why this works: every artifact is named, dated, and concretely at hand. A real person made this; an LLM couldn't simultaneously cite Trackio 0.33.0, an HF Space slug, a paper title, and a step count without obvious parroting.
 
 ## Beat 3 — What the grant unblocks (40s, ~110 words)
 
 > "The grant funding unblocks three things, each a concrete deliverable. First: I want to add Hugging Face Jobs as a first-class backend for Control Tower, so any HF user with compute credits can launch a LinuxArena eval in a single command. Second: I want to plug LinuxArena's MTGen task-generator into Cognivern's audit trail, so a fleet of agents running evals gets its governance and its evidence in the same place. Third: I want to ship one published logbook per month through the ICML/HF judge system — that's the public record of evaluation rigor I think the control-research community hasn't built yet."
 
-Why this works: three numbered concrete deliverables; each one names a real technology (HF Jobs, MTGen, ICML/HF judge) and ties back to a real artifact. The third deliverable is *evidence-led*: I'm already shipping logbooks (Track 0.33.0 released, audit passing), the funding just amplifies the cadence.
+Why this works: three numbered concrete deliverables; each one names a real technology (HF Jobs, MTGen, ICML/HF judge) and ties back to a real artifact. The third deliverable is *evidence-led*: I'm already shipping logbooks (Trackio 0.33.0, audit passing), the funding just amplifies the cadence.
 
 ## Beat 4 — Close (5s, ~15 words)
 
 > "I'd rather show the work than pitch the work. Thanks for the review."
 
-Total: ~355 words ≈ 2:00 at typical speaking pace.
+Total: ~400 words ≈ 2:15 at typical speaking pace. The friction line in Beat 2 is the most human 12 seconds — keep it.
 
 ---
 
 ## Recording prep checklist
 
 - [ ] Mute notifications
-- [ ] Open three browser tabs in this order: Cognivern live, Control Tower docs, Lemma logbook (or local preview)
+- [ ] Open three browser tabs in this order: Cognivern live, Control Tower docs, Lemma logbook (published: huggingface.co/spaces/Papajams/repro-to-grok-grokking-ridge-regression)
 - [ ] Have `loom_beats.md` open in a second monitor / phone so you glance, don't read
 - [ ] Do a 30-second dummy take first to check audio + face framing
 - [ ] Save the Loom URL locally and verify it plays for a friend before sending

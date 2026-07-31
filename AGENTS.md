@@ -66,7 +66,7 @@ This is research, not a production system. Be rigorous, be honest, document mist
 
 Every published logbook must satisfy `scripts/validate_icml_logbook.py` (mirrored from the org Space). The required structure:
 - One `Index` page with `# Reproduction: <paper title>` and a `## Pages` table linking each Page slug. No external paper link on the index.
-- An `Executive summary` page with two **pinned** cells in this order: (1) `Executive summary` (outcome-first paragraph + `## Scope & cost` table comparing *This reproduction* vs *Full replication* with `≈$X (est. = wall × flavor-rate)` cost), (2) a self-contained `Reproduction poster` figure cell built with `gradio-app/posterly`'s `tools/render_logbook_embed.py` against a passing `--strict-polish` gate.
+- An `Executive summary` page with two **pinned** cells in this order: (1) `Executive summary` (outcome-first paragraph + `## Scope & cost` table comparing *This reproduction* vs *Full replication* with `≈$X (est. = wall × flavor-rate)` cost), (2) a self-contained `Reproduction poster` figure cell built with `Chenruishuo/posterly`'s `tools/render_logbook_embed.py` against a passing `--strict-polish` gate.
 - One page per claim with the audit / experiment evidence; link every Hub asset (Models, Datasets, Spaces, Jobs, Buckets) and GitHub repo with full URLs.
 - A `Conclusion` page summarizing supported / falsified / inconclusive claims.
 - Run `./scripts/validate_logbook.sh <owner>/repro-<slug>` before `trackio logbook publish`; iterate until it passes.

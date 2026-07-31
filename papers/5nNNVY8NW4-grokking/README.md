@@ -45,7 +45,7 @@ Theory paper — **no GPU Job required**. Per challenge docs:
 - **GPU / HF Job id:** none (theory exemption).
 - **Outputs:** `results/c1_zero_teacher.png`, `results/c1_realizable_teacher.png`, `results/c1_negative_control_m_eq_n.png`, `results/c1_audit_summary.json`, `results/c4_figure2.png`, `results/c4_sweep.json`.
 - **Logbook:** Published at https://huggingface.co/spaces/Papajams/repro-to-grok-grokking-ridge-regression (validator passes).
-- **Poster:** `poster/poster.html` — gradio-app/posterly portrait poster, `--strict-polish` gate PASS, interactive embed with 3 logbook hotspots.
+- **Poster:** `poster/poster.html` — Chenruishuo/posterly portrait poster, `--strict-polish` gate PASS, interactive embed with 3 logbook hotspots.
 - **Next:** C5 (two-layer ReLU extension, Figures 3 & 4) — subsequently completed CPU-only in the next audit entry (no GPU required after all); see the C5 and falsification entries below.
 
 ### 2026-07-27: Claim 5 — Two-layer ReLU experiments (Figures 3 & 4)
