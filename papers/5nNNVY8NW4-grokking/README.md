@@ -46,7 +46,7 @@ Theory paper — **no GPU Job required**. Per challenge docs:
 - **Outputs:** `results/c1_zero_teacher.png`, `results/c1_realizable_teacher.png`, `results/c1_negative_control_m_eq_n.png`, `results/c1_audit_summary.json`, `results/c4_figure2.png`, `results/c4_sweep.json`.
 - **Logbook:** Published at https://huggingface.co/spaces/Papajams/repro-to-grok-grokking-ridge-regression (validator passes).
 - **Poster:** `poster/poster.html` — gradio-app/posterly portrait poster, `--strict-polish` gate PASS, interactive embed with 3 logbook hotspots.
-- **Next:** C5 (two-layer ReLU extension) is deferred — would require GPU training and the paper's ReLU figures are secondary to the core theory claims.
+- **Next:** C5 (two-layer ReLU extension, Figures 3 & 4) — subsequently completed CPU-only in the next audit entry (no GPU required after all); see the C5 and falsification entries below.
 
 ### 2026-07-27: Claim 5 — Two-layer ReLU experiments (Figures 3 & 4)
 - **Hypothesis:** The qualitative grokking-time dependencies on (λ, n, m, ν²) predicted by the linear theory should transfer to non-linear two-layer ReLU networks, even though the theorems do not directly apply.
