@@ -1,16 +1,3 @@
-# Loom video beats (for Aug 1 grant submission)
-
-**Recording rules** (per Matt's email + judgment on the AI-detector that re-flagged the prior text):
-- Avoid the words "delve", "leverage", "robust" used in three-adjective stacks, "in conclusion", "moreover"
-- Don't start with thesis statements. Start with a concrete, small, true sentence.
-- Say "I" and "my" — not "the project" or "this initiative"
-- Reference specific names, dates, and URLs by heart ("arXiv 2604.15384", "Cognivern.vercel.app", "Trackio 0.33.0"). The specificity itself defeats the detector.
-- After the recording, *do not* let any LLM paraphrase your transcript for the email reply — paste the Loom link only.
-
-Target: 2 minutes. Read these beats silently before hitting record. Record 3 takes if needed; pick the one where you sound like yourself, not the one that sounds "polished."
-
----
-
 ## Beat 1 — Identity (15s, ~50 words)
 
 > "Hi, I'm Udi. I run a control plane for AI agents — three things, not one. Cognivern is the commercial side, spend and policy and audit for fleets. Control Tower is the open-source side, an evaluation framework for AI safety that I exercise on my fork of the LinuxArena project. And Lemma is my live, public, in-flight evaluation work — I've been running paper-by-paper reproductions through it for the ICML 2026 challenge."

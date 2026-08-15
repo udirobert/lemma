@@ -35,6 +35,9 @@ numerical audit (independent simulation verifying the bound/trend) is feasible.
 "pass" means numerically.
 - Never invent claims the paper does not make. If the paper has N numbered claims, \
 theorems, figures, or table results, map to those.
+- success_criterion must be derivable ONLY from the claim's own statement — never \
+add conditions the paper does not make (no extra monotonicity, thresholds, or \
+tighter tolerances than the paper states).
 - success_criterion must be measurable (tolerance, trend direction, threshold).
 - compute: "cpu-fast" (<10 min CPU), "gpu-small" (<3 h single GPU), \
 "gpu-large", or "external-data" (needs datasets/APIs not in the paper).

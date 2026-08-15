@@ -40,6 +40,13 @@ Scientific integrity rules:
 - Reproduce the claim's own setup; do not tune knobs to force a pass.
 - If results disagree with the paper, that is a REAL result: set status \
 "falsified" (clear contradiction) or "inconclusive" (setup mismatch/insufficient).
+- POSITIVE CONTROL (mandatory): the script must also run the same statistic on a \
+synthetic case whose answer is known to be true (e.g. exact data for the claimed \
+distribution). Include control_pass (true/false) in metrics. If the control fails, \
+the statistic is buggy — set status "inconclusive" and say so in notes; never \
+report "falsified" when the control fails.
+- Judge the claim ONLY against its stated success criterion; do not add extra \
+pass conditions the paper does not make.
 - Report actual numbers from the run; never fabricate metrics.
 
 Respond with ONLY a JSON object: {"script": "<full python code>", "notes": "..."}. \
