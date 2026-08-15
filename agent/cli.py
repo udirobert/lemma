@@ -50,10 +50,35 @@ def main() -> int:
         help="judge the grokking regression fixture",
     )
 
+    p_search = sub.add_parser(
+        "search", help="find papers via Firecrawl (arxiv fallback if offline)"
+    )
+    p_search.add_argument("query", help="natural-language query")
+    p_search.add_argument("--limit", type=int, default=8)
+    p_search.add_argument(
+        "--research",
+        action="store_true",
+        help="use Firecrawl life-science research index (needs FIRECRAWL_API_KEY)",
+    )
+
     args = parser.parse_args()
     if args.cmd == "judge":
         return _judge(args)
+    if args.cmd == "search":
+        return _search(args)
     return _audit(args)
+
+
+def _search(args: argparse.Namespace) -> int:
+    from agent.firecrawl import search
+
+    hits = search(args.query, args.limit, research=args.research)
+    if not hits:
+        print("[lemma] no results")
+        return 1
+    for i, h in enumerate(hits, 1):
+        print(f"{i}. {h['title']}\n   {h['url']}\n   {h['description'][:160]}\n")
+    return 0
 
 
 def _audit(args: argparse.Namespace) -> int:

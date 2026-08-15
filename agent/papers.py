@@ -94,6 +94,16 @@ def _from_openreview(oid: str, workdir: Path) -> dict:
 
 
 def _extract_pdf_text(pdf_path: Path) -> str:
+    # Prefer Firecrawl markdown (cleaner for LLM extraction) when keyed.
+    try:
+        from agent import firecrawl
+
+        md = firecrawl.markdown_from_pdf(pdf_path)
+        if md:
+            return md[:MAX_TEXT_CHARS]
+    except Exception:
+        pass  # degrade to local extraction
+
     import fitz  # PyMuPDF
 
     doc = fitz.open(pdf_path)
