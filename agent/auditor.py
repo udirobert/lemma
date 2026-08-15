@@ -33,8 +33,11 @@ hyperparameters, seed numpy, and run in a few minutes on CPU unless the claim \
 explicitly requires a GPU (then say so in summary instead of running).
 - The script MUST print exactly one line: SUMMARY_JSON=<json> where json has keys:
   claim_id, status ("supported"|"falsified"|"inconclusive"), metrics (dict of \
-numbers/strings), notes (short explanation). Also save plots to results/*.png via \
-matplotlib with Agg backend.
+numbers/strings — MUST be non-empty), notes (short explanation). Serialize with \
+`json.dumps(summary, default=str)` so numpy scalars (np.bool_, np.float64, \
+np.int64) never crash the encoder. Also save plots to results/{claim_slug}/ \
+(that directory already exists; e.g. results/c1/fig.png) via matplotlib with the \
+Agg backend. Never write to other directories.
 
 Scientific integrity rules:
 - Reproduce the claim's own setup; do not tune knobs to force a pass.
@@ -83,7 +86,8 @@ def audit_one(
     claim: dict, paper_text: str, workdir: Path, results_dir: Path, trace: Trace
 ) -> dict:
     cid = claim["id"]
-    claim_dir = results_dir / cid.lower()
+    claim_slug = cid.lower()
+    claim_dir = results_dir / claim_slug
     claim_dir.mkdir(exist_ok=True)
 
     run_history: list[str] = []
@@ -134,13 +138,16 @@ def audit_one(
         summary = _parse_summary(out)
         tail = out[-MAX_OUT_CHARS:] + "\n---STDERR---\n" + err[-MAX_OUT_CHARS:]
 
-        if exit_code == 0 and summary:
+        # Accept a run that printed a valid SUMMARY_JSON even if the process
+        # crashed afterwards (e.g. a serialization error on the very last line);
+        # the evidence was still produced and is what matters.
+        if summary is not None:
             run_path = claim_dir / f"run_attempt{attempt}.json"
             run_path.write_text(
                 json.dumps(
                     {
                         "attempt": attempt,
-                        "exit_code": 0,
+                        "exit_code": exit_code,
                         "summary": summary,
                         "wall_s": round(duration, 2),
                     },
@@ -173,7 +180,7 @@ def audit_one(
         last_summary = {
             "claim_id": cid,
             "status": "inconclusive",
-            "metrics": {},
+            "metrics": {"script_exit_code": exit_code, "attempts_used": attempt},
             "notes": f"script failed after {attempt} tries",
         }
 
@@ -181,7 +188,7 @@ def audit_one(
         last_summary = {
             "claim_id": cid,
             "status": "inconclusive",
-            "metrics": {},
+            "metrics": {"attempts_used": MAX_ATTEMPTS},
             "notes": "no successful run",
         }
     summary_path = claim_dir / "audit_summary.json"
@@ -197,12 +204,14 @@ def audit_one(
 def _build_prompt(
     claim: dict, paper_text: str, attempt: int, history: list[str]
 ) -> str:
+    claim_slug = claim["id"].lower()
     parts = [
         f"Audit claim {claim['id']}: {claim['title']}",
         f"Statement: {claim['statement']}",
         f"Paper evidence it rests on: {claim['evidence_in_paper']}",
         f"Test plan from extraction: {claim['test_plan']}",
         f"Success criterion: {claim['success_criterion']}",
+        f"Save any plots to: results/{claim_slug}/ (directory exists)",
         f"Attempt {attempt} of {MAX_ATTEMPTS}.",
         "",
         "Relevant paper text (excerpt):",
