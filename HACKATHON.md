@@ -5,15 +5,26 @@
 
 ## The pitch in one paragraph
 
-This repo already contains one hand-driven reproduction that passed the ICML 2026
-logbook judge end to end (papers/5nNNVY8NW4-grokking: 5 claims audited, falsification
-experiment, published logbook, poster, agent traces). The hackathon build is the
-**agent that generalizes that workflow**: give it an unseen paper, and it extracts
-claims, writes and runs numerical audits, iterates on failures, assembles an
-inspectable evidence trail, and finally runs an automated judge that decides whether
-the trail is trustworthy. Every LLM call and tool result is logged to an append-only
-trace, so the reasoning is auditable — the system evaluates its own evidence before
-a human ever looks at it.
+Lemma is an **AI scientist that audits scientific claims and distrusts itself**.
+Give it an unseen paper and it extracts testable claims, writes and runs
+numerical audits with a mandatory positive control, assembles an inspectable
+evidence trail, and runs its own judge that decides whether that trail is
+trustworthy — all before a human looks at it. Every LLM call and tool result is
+appended to a trace, so nothing is hidden: supported, falsified, and
+inconclusive are all reported as results. This repo already contains one
+hand-driven reproduction that **passed an independent auto-judge end to end**
+(`papers/5nNNVY8NW4-grokking`, 5 claims audited, a falsification experiment,
+published logbook, poster, agent traces); the build generalizes that workflow
+to any paper.
+
+How this lands on Track A's criteria:
+
+| Track A asks | How Lemma answers it |
+|--------------|----------------------|
+| Gather evidence, use tools/databases | arxiv / openreview / PDF resolution + Firecrawl search (web → research index → arxiv fallback); optional Paperclip as an evidence source |
+| Generate & test hypotheses | extract claims → auditor writes & runs scripts (≤3 attempts, positive control mandatory) |
+| Produce structured output | claims.json + Trackio logbook + judge_report.json |
+| Make reasoning easy to inspect | append-only JSONL trace attached to the logbook; judge scores evidence completeness |
 
 ## Pipeline
 
@@ -27,28 +38,45 @@ lemma audit <arxiv-id | openreview-id | paper.pdf>
 
 Traces: `agent/traces/<run-id>.jsonl` (append-only, attached to the logbook).
 
-## Demo plan (by Sun 10:45)
+## Demo plan (by Sun 10:45) — in this exact order, boring-safe
 
-- **Regression:** run stages 1, 3, 4 against the grokking paper's known-good
-  outputs; judge must PASS.
-- **Fresh run:** overnight end-to-end audit of one unseen, CPU-tractable paper.
-- **Live demo:** `lemma audit <fresh-paper>` on a tiny claim with traces on screen;
-  judge verdict live; published logbook URL.
-- **Fallback:** pre-recorded artifacts of the overnight run if live compute flakes.
+1. **Regression (offline, deterministic, no API):** `./lemma judge --regression`
+   on the grokking fixture → **PASS**. This is the safety net; run it first.
+2. **Fresh run (centerpiece):** overnight end-to-end audit of one unseen,
+   CPU-tractable paper (VPS: `./scripts/run_overnight.sh <source>`) → show
+   claims, audit scripts/figures, judge verdict, trace.
+3. **Live (if compute cooperates):** `lemma audit <fresh-paper>` on a tiny
+   claim with the trace on screen; watch the judge produce a verdict live;
+   show a published logbook URL.
+4. **Fallback:** if step 2/3 flake, land on the pre-recorded artifacts.
 
-## Repo layout for the weekend
+**Artifacts a demo must have ready:** (a) the regression PASS output, (b) the
+overnight paper's `claims.json`, `results/`, `judge_report.json`, `trace.jsonl`,
+(c) one live tiny audit logged to a trace, (d) a published logbook URL.
+
+## Repo layout
 
 | Path | Role |
 |------|------|
-| `agent/` | The hackathon build (pipeline package) |
-| `papers/5nNNVY8NW4-grokking/` | Prior-art evidence + regression fixture |
+| `agent/` | The build — pipeline package (see AGENTS.md for the module map) |
+| `papers/5nNNVY8NW4-grokking/` | Prior-art validation + regression fixture |
 | `papers/<new-id>/` | Fresh paper audits (agent-generated) |
-| `scripts/validate_icml_logbook.py` | ICML-challenge validator (kept; judge.py generalizes it) |
+| `scripts/` | Deploy + overnight + regression-fixture helpers |
+| `README.md` | Public face (re:AGENT pitch + quickstart) |
+| `AGENTS.md` | Guidance for coding agents working in-repo |
 | `HACKATHON.md` | This file |
 
-## Rules of engagement (carried over from ICML work)
+## Options we may fold in before judging (only if time allows)
+
+- **Paperclip as an evidence source** in the gather stage — a first-party host
+  tool, strengthens the "tools/databases" criterion.
+- **One falsification headline** in the overnight paper (judges reward honest
+  negative results).
+
+## Rules of engagement (carried over from the ICML work)
 
 - Report ALL runs, including failures. A falsified claim is a result.
+- Patch nothing into a pass; a failed control is "inconclusive", never "falsified".
 - Log wall-clock and compute for every stage; the judge checks cost disclosure.
 - Never trust paper hyperparameters blindly; the auditor re-derives them.
 - The trail is the deliverable.
