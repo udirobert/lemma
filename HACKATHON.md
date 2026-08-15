@@ -80,3 +80,83 @@ overnight paper's `claims.json`, `results/`, `judge_report.json`, `trace.jsonl`,
 - Log wall-clock and compute for every stage; the judge checks cost disclosure.
 - Never trust paper hyperparameters blindly; the auditor re-derives them.
 - The trail is the deliverable.
+
+## Milestone log (checkpoint so this reopens cleanly)
+
+### Day 1 → Day 2 overnight (2026-08-16 00:40 BST / 16:40 PST)
+
+**Status: overnight audit run in progress on the VPS; all local work committed.**
+
+Built, tested, and shipped (commits `041ca5b` → `8e856a7`):
+
+1. `agent/` pipeline: `traces.py` (append-only JSONL), `llm.py` (multi-endpoint
+   stack with 429/Retry-After + 60s error-window fallback), `papers.py`
+   (arxiv/openreview/local-PDF resolution), `extract.py`, `auditor.py`
+   (≤3 attempts/claim, positive control mandatory, figures to
+   `results/<slug>/`, numpy-safe JSON), `evidence.py` (Trackio logbook
+   assembly), `judge.py` (5-point rubric: structure / evidence / integrity /
+   cost disclosure / trace), `cli.py` + `./lemma` wrapper.
+2. Firecrawl integration (`agent/firecrawl.py`): keyless web search working,
+   research index + PDF-markdown when `FIRECRAWL_API_KEY` set, arXiv fallback.
+   CLI: `./lemma search "<query>" [--research]`.
+3. Regression fixture: `papers/5nNNVY8NW4-grokking/claims.json` +
+   `results/<cid>/audit_summary.json` adapted from the July hand-driven work
+   (`scripts/build_regression_fixture.py`); `./lemma judge --regression` →
+   **PASS 5/5** locally AND on the VPS bootstrap. Negative test (empty trace,
+   missing figures) correctly → **FAIL**.
+4. Provider stack live-tested: primary HF public Qwen3.8-27B endpoint
+   (~4.6s, thinking OFF via `LEMMA_HF_EXTRA_BODY={"reasoning_effort":"none"}`
+   — without it content comes back empty), fallback OrcaRouter
+   `qwen/qwen3.8-27b-free` (~15–60s, `reasoning:false`). Stale shell-env
+   gateway (out of credits) neutralized by emptying `OPENAI_*` in `.env`
+   (dotenv override=True).
+5. VPS (`nuncio-vultr`, shared box: Coolify + Traefik on 80/443/8000, ~30
+   containers, 13 pm2 services — we touch none of them): deployed to `~/lemma`
+   via `scripts/deploy_vps.sh` (rsync incl. `.env` over SSH, `--delete`
+   scoped to that dir only); runner `scripts/run_overnight.sh` uses tmux +
+   `nice -n 19` + tee'd log.
+
+**Overnight run (launched 23:15 UTC on VPS):**
+`./scripts/run_overnight.sh papers/_staging/jmlr-22-1228-ca-grokking.pdf
+ca-grokking` → tmux session `lemma-ca-grokking`,
+log `~/lemma/runs/ca-grokking-20260815-231542.log`,
+workdir `~/lemma/papers/jmlr-22-1228-ca-grokking/`.
+Paper: "Grokking phase transitions in learning local rules with gradient
+descent" (Žunkovič, Ilievski; JMLR 25 (2024) 1–52).
+Extraction produced 6 claims, all testable (5× cpu-fast, 1× gpu-small Rule-30
+CA): C1 critical exponent (1D exponential model), C2 critical exponent
+(D-dim uniform ball), C3 L1↑→grokking-probability↑, C4 D↑→probability↓,
+C5 Rule-30 CA grokking, C6 grokking-time bimodality.
+Progress at 00:40: C1 audited (falsified @112s), C2 on attempt 3,
+0 provider fallbacks, 2 script failures preserved in trace.
+
+**Known issue:** the VPS sshd intermittently stops answering banner exchange
+(box stays alive — Traefik/Coolify respond on 80/443/8000). The tmux run is
+unaffected; artifacts persist to disk. Recovery sentinel on laptop: PID 61303,
+log `runs/ssh-sentinel.log` (probes every 15 min; note: it exited on the
+first successful probe — recheck `runs/ssh-sentinel.log` first thing).
+
+### Reopen checklist (Sunday morning)
+
+1. `cat runs/ssh-sentinel.log` → when did SSH recover? `ssh nuncio-vultr`
+   may need patience if sshd is again in banner timeout.
+2. On VPS: `cd ~/lemma && tail -50 runs/ca-grokking-20260815-231542.log`,
+   inspect `papers/jmlr-22-1228-ca-grokking/{trace.jsonl,results/audit_report.json,judge_report.json}`.
+3. Sync results back: from laptop `rsync -az nuncio-vultr:lemma/papers/ papers/`
+   (mind `--delete` — do NOT use it here; or commit on VPS and `git fetch`).
+4. Triage: rerun failed/inconclusive claims (`./lemma audit <pdf> --stages
+   audit` reuses `claims.json`); a falsified claim is a headline, keep it.
+5. Publish: assemble logbook (`--stages evidence`) then
+   `trackio logbook publish <HF_USERNAME>/repro-ca-grokking-local-rules`;
+   validate with `./scripts/validate_logbook.sh` if the ICML shape is kept,
+   else the built-in judge report stands as the evidence gate.
+6. Demo artifacts (boring-safe order): regression PASS → overnight claims +
+   figures + judge verdict + trace → live tiny audit if time → logbook URL.
+7. Stretch (only if 1–6 land): Adaption AutoScientist as a delegated training
+   tool for a finetuning-style claim; Benchling name-drop (their Model Hub
+   "auditable provenance" language mirrors our judge + trace story).
+
+**Credentials state:** all in `.env` (gitignored): `LEMMA_ENDPOINTS=HF,ORCA`
++ per-endpoint key/URL/model/extra-body, `LEMMA_HF_EXTRA_BODY` thinking-off,
+`OPENAI_*` emptied to kill the stale gateway. HF/Modal/Trackio creds as
+before. `.env` also rsynced to `~/lemma/.env` on the VPS.
