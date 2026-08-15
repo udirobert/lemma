@@ -97,6 +97,8 @@ papers/_staging/
 
 # --- Lemma agent (re:AGENT build) ---
 agent/traces/
+runs/
+.deploy.conf
 
 # --- Editor / OS ---
 .DS_Store
