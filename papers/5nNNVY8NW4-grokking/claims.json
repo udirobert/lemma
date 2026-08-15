@@ -1,0 +1,57 @@
+[
+  {
+    "id": "C1",
+    "title": "Theorem 4.1 \u2014 end-to-end grokking (zero teacher)",
+    "statement": "GD with weight decay on ridge regression with zero teacher overfits early, generalizes poorly for a long delay, then eventually generalizes (grokking), per the three per-step bounds of Theorem 4.1.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Independent numerical audit: vanilla GD with weight decay on a synthetic Gaussian-feature problem; check per-step envelopes of Theorem 4.1(i)-(iii) along the trajectory.",
+    "evidence_in_paper": "Theorem 4.1; Figure 1.",
+    "compute": "cpu-fast",
+    "success_criterion": "Zero substantive violations of all three envelopes."
+  },
+  {
+    "id": "C2",
+    "title": "Theorem 4.2 \u2014 grokking with realizable teacher",
+    "statement": "The grokking guarantee extends from the zero-teacher setting to realizable ridge regression with arbitrary realizable teacher functions.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Same audit harness with a realizable teacher, checking the Theorem 4.2 / Eq. 8 envelopes.",
+    "evidence_in_paper": "Theorem 4.2; Eq. 8.",
+    "compute": "cpu-fast",
+    "success_criterion": "Zero substantive violations under Theorem 4.2 envelopes."
+  },
+  {
+    "id": "C3",
+    "title": "Theorems 4.4-4.6 \u2014 phase decomposition",
+    "statement": "Grokking decomposes into (i) training-loss convergence, (ii) poor generalization during overfitting, (iii) eventual generalization, with the predicted phase timing.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Per-phase envelope checks on the same trajectories used for C1/C2.",
+    "evidence_in_paper": "Theorems 4.4-4.6.",
+    "compute": "cpu-fast",
+    "success_criterion": "All phase boundaries and envelopes match; zero violations."
+  },
+  {
+    "id": "C4",
+    "title": "Figure 2 \u2014 hyperparameter dependence of grokking time",
+    "statement": "Decreasing weight decay and sample size amplify grokking time in ridge-regression simulations, matching the paper's quantitative hyperparameter predictions.",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "4-panel hyperparameter sweep over (lambda, n, m, nu^2) reproducing Figure 2.",
+    "evidence_in_paper": "Figure 2.",
+    "compute": "cpu-fast",
+    "success_criterion": "Qualitative trends match: t2 scales as 1/lambda; t1 grows with n and log(nu^2); m has minor effect."
+  },
+  {
+    "id": "C5",
+    "title": "Figures 3-4 \u2014 two-layer ReLU grokking beyond the linear setting",
+    "statement": "The predicted grokking-time dependence on hyperparameters transfers qualitatively to two-layer ReLU networks (random features and fully trained).",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "Two numpy experiments (random-features ReLU per Sec 5.2; full two-layer ReLU per Sec 5.3) with 4-panel sweeps plus a single-run demo.",
+    "evidence_in_paper": "Figures 3 and 4; Sections 5.2-5.3.",
+    "compute": "cpu-fast",
+    "success_criterion": "Qualitative match of grokking-time trends; clear grokking in the demo run."
+  }
+]

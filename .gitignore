@@ -93,6 +93,10 @@ papers/*/*.bin
 papers/*/*.safetensors
 papers/*/*.pt
 papers/*/*.pth
+papers/_staging/
+
+# --- Lemma agent (re:AGENT build) ---
+agent/traces/
 
 # --- Editor / OS ---
 .DS_Store

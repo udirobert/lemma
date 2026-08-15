@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Wrapper so the demo command is just: ./lemma audit <source>
+set -euo pipefail
+cd "$(dirname "$0")"
+exec python3 -m agent.cli "$@"

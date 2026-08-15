@@ -1,0 +1,28 @@
+{
+  "verdict": "PASS",
+  "rubric": {
+    "structure": {
+      "pass": true,
+      "detail": "claims.json (5 claims), audit_report.json present"
+    },
+    "evidence": {
+      "pass": true,
+      "detail": "6 audited claims; issues: none"
+    },
+    "integrity": {
+      "pass": true,
+      "detail": "0 claims skipped as untestable, all declared untestable at extraction"
+    },
+    "cost_disclosure": {
+      "pass": true,
+      "detail": "per-claim attempt counts recorded; wall time in run files + trace"
+    },
+    "trace": {
+      "pass": true,
+      "detail": "10 events; legacy hand-driven run \u2014 adaptation documented by 10 fixture events (no LLM/tool calls captured by construction)"
+    }
+  },
+  "score": "5/5",
+  "workdir": "papers/5nNNVY8NW4-grokking",
+  "trace": "papers/5nNNVY8NW4-grokking/results/trace.jsonl"
+}
