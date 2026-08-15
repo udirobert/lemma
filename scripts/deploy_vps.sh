@@ -13,18 +13,26 @@ cd "$(dirname "$0")/.."
 VPS_DIR="${VPS_DIR:-lemma}"
 SSH_OPTS=(${VPS_SSH_OPTS:-})
 
-# Sanity: never deploy without a usable LLM key.
-if ! grep -Eq '^ANTHROPIC_API_KEY=.+' .env 2>/dev/null \
-   && ! grep -Eq '^OPENAI_API_KEY=.+' .env 2>/dev/null; then
-  echo "error: .env has no ANTHROPIC_API_KEY or OPENAI_API_KEY — fix before deploying" >&2
+# Sanity: never deploy without a usable LLM key (named endpoint or legacy).
+if ! grep -Eq '^(LEMMA_ENDPOINTS=.+|ANTHROPIC_API_KEY=.+|OPENAI_API_KEY=.+)' .env 2>/dev/null; then
+  echo "error: .env has no LLM provider config (LEMMA_ENDPOINTS / ANTHROPIC_API_KEY / OPENAI_API_KEY) — fix before deploying" >&2
   exit 1
 fi
+if grep -q '^LEMMA_ENDPOINTS=' .env 2>/dev/null; then
+  for name in $(grep '^LEMMA_ENDPOINTS=' .env | cut -d= -f2 | tr ',' ' '); do
+    if ! grep -q "^LEMMA_${name}_API_KEY=.\+" .env; then
+      echo "error: LEMMA_ENDPOINTS names $name but LEMMA_${name}_API_KEY is missing" >&2
+      exit 1
+    fi
+  done
+fi
 
-rsync -az "${SSH_OPTS[@]}" --delete \
+# macOS bash 3.2-safe expansion of the (possibly empty) SSH_OPTS array
+rsync -az ${SSH_OPTS[@]+"${SSH_OPTS[@]}"} --delete \
   --exclude '.venv' --exclude '__pycache__' --exclude '.ruff_cache' \
   --exclude '.pytest_cache' --exclude '.trackio' --exclude 'runs/' \
   --exclude '.DS_Store' \
   ./ "$VPS_HOST:$VPS_DIR/"
 
-ssh "${SSH_OPTS[@]}" "$VPS_HOST" "cd '$VPS_DIR' && bash scripts/bootstrap_vps.sh"
+ssh ${SSH_OPTS[@]+"${SSH_OPTS[@]}"} "$VPS_HOST" "cd '$VPS_DIR' && bash scripts/bootstrap_vps.sh"
 echo "[deploy] ready. On the VPS: ./scripts/run_overnight.sh <paper-source>"

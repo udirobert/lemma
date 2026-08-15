@@ -21,7 +21,7 @@ if ! command -v tmux >/dev/null 2>&1; then
 fi
 
 tmux new-session -d -s "lemma-$NAME" \
-  "source .venv/bin/activate && python -m agent.cli audit '$SRC' --no-publish 2>&1 | tee '$LOG'; echo '=== RUN FINISHED ==='; sleep 86400"
+  "source .venv/bin/activate && nice -n 19 python -m agent.cli audit '$SRC' --no-publish 2>&1 | tee '$LOG'; echo '=== RUN FINISHED ==='; sleep 86400"
 
 echo "[run] launched tmux session 'lemma-$NAME'"
 echo "[run] log: $LOG"
