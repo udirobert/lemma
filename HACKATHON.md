@@ -66,10 +66,23 @@ overnight paper's `claims.json`, `results/`, `judge_report.json`, `trace.jsonl`,
 | `AGENTS.md` | Guidance for coding agents working in-repo |
 | `HACKATHON.md` | This file |
 
+## Sponsor usage (creative-but-honest, grounded in their actual docs)
+
+| Sponsor | Role in Lemma | Status |
+|---|---|---|
+| **Paperclip (GXL)** co-host | Literature stage: `lemma search` discovery (11M papers + FDA + trials + UniProt/PDB/ChEMBL) and per-claim `cross_check()` "Literature context" logbook cells. Context only — never alters audit verdicts. | Code shipped (`agent/paperclip.py`, commit `26639a5`); needs `PAPERCLIP_API_KEY` from venue (free for participants) or their install.sh / MCP server. Degrades to Firecrawl/arXiv until then. |
+| **Anthropic** co-host | Claude as the audit-script generator for hard claims (stronger codegen than 27B Qwen). `LEMMA_PROVIDER=anthropic` already wired in `agent/llm.py`. | Code ready; needs venue Claude credits in `.env`. Best used for a targeted round-3 on C1/C2 if 27B keeps failing the closed-form dynamics. |
+| **Modal** sponsor | GPU compute backend for `gpu-small` claims (C5 Rule-30) if CPU audits cannot reproduce it; also a demo of "the agent knows when a claim needs real compute". | `MODAL_*` creds already in `.env`. Only if C5 reaches round 3 — not forced. |
+| **BenchFlow** co-host | Their runtime is "tasks, harnesses, agents, verifiers" — the conceptual twin of our judge. Pitch language: *the judge is a BenchFlow-style verifier over the agent's evidence trail.* Full task packaging only if submission slack exists. | Research done; no code integration before 10:45. |
+| **Benchling / LatchBio / Boltz / Strand** sponsors | Not applicable to a theory-paper audit. Benchling's "auditable provenance: inputs, outputs, model versions, timestamps" mirrors our trace+judge story → one-line demo name-drop. | Name-drop only. |
+| **future.bio / Arc / Biohub** co-hosts | Audience/context alignment (agentic science framing); no tool integration fits this build. | None. |
+
+**Principle:** every sponsor touch must be load-bearing in the pipeline, not a
+logo slide. Paperclip = evidence gathering, Anthropic = better auditor brain,
+Modal = honest compute escalation, BenchFlow = verifier framing.
+
 ## Options we may fold in before judging (only if time allows)
 
-- **Paperclip as an evidence source** in the gather stage — a first-party host
-  tool, strengthens the "tools/databases" criterion.
 - **One falsification headline** in the overnight paper (judges reward honest
   negative results).
 
@@ -192,3 +205,18 @@ C4/C6). Re-audit runs on the VPS:
 + per-endpoint key/URL/model/extra-body, `LEMMA_HF_EXTRA_BODY` thinking-off,
 `OPENAI_*` emptied to kill the stale gateway. HF/Modal/Trackio creds as
 before. `.env` also rsynced to `~/lemma/.env` on the VPS.
+
+**Venue grab-list (check-in, Day 2 morning):**
+1. **Paperclip API key** (free for participants) → `PAPERCLIP_API_KEY=pk_...`
+   in `.env`; redeploy to VPS; re-run evidence stage so every claim page gets
+   a Literature-context cell before publishing.
+2. **Anthropic / Claude API credits** → `ANTHROPIC_API_KEY` in `.env`
+   (already first in the provider order if `LEMMA_PROVIDER=anthropic`, or
+   just set the key and it joins the stack).
+3. Optionally: Firecrawl key (`FIRECRAWL_API_KEY`) for the 41M-paper research
+   index + cleaner PDF parsing.
+
+**Local env note (2026-08-16):** the laptop's old `.browser-use-env` was
+deleted; pipeline deps now live in the repo `.venv` (Python 3.12.13, built
+from `requirements-agent.txt`); `./lemma` prefers it automatically. The VPS
+has its own `.venv` from `scripts/bootstrap_vps.sh`.
