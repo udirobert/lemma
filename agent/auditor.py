@@ -225,6 +225,71 @@ def audit_one(
             "metrics": {"attempts_used": MAX_ATTEMPTS},
             "notes": "no successful run",
         }
+
+    # Reviewer escalation: if every generated attempt in this round failed
+    # (inconclusive), execute the reviewer-provided reference implementation
+    # verbatim when one exists. It runs under the same rules as any audit
+    # script (must print SUMMARY_JSON), and the trace records exactly what
+    # was executed and why. This is how human-in-the-loop corrections that
+    # are code (not just guidance) enter the evidence trail.
+    ref_path = claim_dir / "reviewer_reference.py"
+    if last_summary.get("status") == "inconclusive" and ref_path.is_file():
+        attempt = start_attempt + MAX_ATTEMPTS + 1
+        trace.log(
+            "audit",
+            "reviewer_reference_executed",
+            claim_id=cid,
+            attempt=attempt,
+            path=str(ref_path),
+            reason="all LLM-generated attempts in this round failed",
+        )
+        t0 = time.time()
+        try:
+            proc = subprocess.run(
+                ["python3", str(ref_path)],
+                cwd=workdir,
+                capture_output=True,
+                text=True,
+                timeout=RUN_TIMEOUT_S,
+            )
+            exit_code, out, err = proc.returncode, proc.stdout, proc.stderr
+        except subprocess.TimeoutExpired as e:
+            exit_code, out = -1, ""
+            err = f"TIMEOUT after {RUN_TIMEOUT_S}s\n{(e.stderr or '')[-MAX_OUT_CHARS:]}"
+        duration = time.time() - t0
+        trace.tool_run(
+            "audit",
+            f"python3 {ref_path.name}",
+            exit_code,
+            duration,
+            len(out) + len(err),
+        )
+        ref_summary = _parse_summary(out)
+        if ref_summary is not None:
+            run_path = claim_dir / f"run_attempt{attempt}.json"
+            run_path.write_text(
+                json.dumps(
+                    {
+                        "attempt": attempt,
+                        "source": "reviewer_reference",
+                        "exit_code": exit_code,
+                        "summary": ref_summary,
+                        "wall_s": round(duration, 2),
+                    },
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+            last_summary = ref_summary
+            trace.log(
+                "audit",
+                "claim_audited",
+                claim_id=cid,
+                attempt=attempt,
+                status=ref_summary.get("status"),
+                source="reviewer_reference",
+                wall_s=round(duration, 2),
+            )
     # always record the final outcome so no claim silently disappears
     # from the trace (matters when every attempt crashed)
     trace.log(

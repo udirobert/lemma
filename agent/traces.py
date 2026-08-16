@@ -31,7 +31,7 @@ class Trace:
             **payload,
         }
         with self.path.open("a", encoding="utf-8") as f:
-            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+            f.write(json.dumps(record, ensure_ascii=False, default=str) + "\n")
 
     def llm_call(
         self,
