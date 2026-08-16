@@ -136,6 +136,38 @@ unaffected; artifacts persist to disk. Recovery sentinel on laptop: PID 61303,
 log `runs/ssh-sentinel.log` (probes every 15 min; note: it exited on the
 first successful probe — recheck `runs/ssh-sentinel.log` first thing).
 
+### Round 1 results (completed ~23:55 UTC, 39 min total)
+
+All four stages ran unattended: 6 claims → 3 falsified / 3 inconclusive /
+0 supported; judge **PASS 5/5** (71 trace events, 10 LLM calls, 39 tool runs,
+3 failed attempts preserved). Results synced to laptop and committed (`9af2842`).
+
+Triage (human review of metrics vs verdicts):
+- **C1** falsified: degenerate exponent fit (ν≈1e-14) — wrong dynamics/fit
+  window in the generated script, not physics.
+- **C2** inconclusive: fits returned N/A; simulation never produced curves.
+- **C3** inconclusive: control failed (P_grok=0 for both settings) — broken
+  training procedure, correctly flagged by the positive-control rule.
+- **C4** falsified but metrics SUPPORT the claim (P=1.0 at D=1, P=0 for D≥5,
+  monotone) — statistical-resolution issue, verdict logic needs fixing.
+- **C5** inconclusive: Rule-30 setup not per Sec 4.2 (train error never ~0).
+- **C6** falsified but metrics show clear bimodality (clusters 0.60 vs 2.83,
+  analytic 3.23) — detector threshold was wrong.
+
+This is the human-in-the-loop moment the judges want: two of three
+"falsified" verdicts were the agent disagreeing with its own data, caught on
+review, documented in `results/<cid>/feedback.md`, not patched silently.
+
+### Round 2 (in progress)
+
+`agent/auditor.py` now ingests `results/<cid>/feedback.md` as authoritative
+reviewer corrections (commit `9af2842`): attempt numbering continues,
+re-audited outcomes merge into `audit_report.json`. Six feedback files written
+with paper-grounded corrections (Eq. 5–6 closed-form dynamics for C1, ball-model
+gradient flow for C3/C4, Sec 4.2 perceptron map for C5, verdict-logic fixes for
+C4/C6). Re-audit runs on the VPS:
+`./lemma audit papers/_staging/jmlr-22-1228-ca-grokking.pdf --stages audit --claims C1,C2,C3,C4,C5,C6`
+
 ### Reopen checklist (Sunday morning)
 
 1. `cat runs/ssh-sentinel.log` → when did SSH recover? `ssh nuncio-vultr`
