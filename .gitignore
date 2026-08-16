@@ -118,3 +118,8 @@ nox/
 tmp/
 token.json
 slides_token.json
+
+# --- landing page (site/) ---
+site/node_modules/
+site/dist/
+site/.astro/
