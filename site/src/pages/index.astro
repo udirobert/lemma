@@ -3,6 +3,7 @@ import "@fontsource-variable/montserrat";
 import "@fontsource-variable/roboto-mono";
 import "../styles/global.css";
 import Xylophone from "../components/Xylophone.astro";
+import TracePlayer from "../components/TracePlayer.astro";
 
 const ARTIFACTS = [
   {
@@ -202,6 +203,21 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
   </div>
 </section>
 
+<!-- ================= REPLAY ================= -->
+<section class="replay" id="replay">
+  <div class="wrap">
+    <div class="trace-head">
+      <h2>Replay an audit, line by line</h2>
+      <p>
+        The real append-only traces from two completed runs — every model call,
+        every script, every rejection and verdict flip. Scrub it, play it,
+        watch a claim go from falsified to supported across rounds.
+      </p>
+    </div>
+    <TracePlayer />
+  </div>
+</section>
+
 <!-- ================= ARTIFACTS ================= -->
 <section class="artifacts" id="artifacts">
   <div class="wrap">
@@ -228,11 +244,13 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
     <li><span class="menu-sub">lemma</span></li>
     <li><a href="#story"><span class="idx">01</span>story</a></li>
     <li><a href="#trace"><span class="idx">02</span>trace</a></li>
-    <li><a href="#artifacts"><span class="idx">03</span>artifacts</a></li>
+    <li><a href="#replay"><span class="idx">03</span>replay</a></li>
+    <li><a href="#artifacts"><span class="idx">04</span>artifacts</a></li>
     <li><a href="https://github.com/udirobert/lemma" target="_blank" rel="noopener"><span class="idx">→</span>github</a></li>
   </ul>
 </nav>
 
 <script src="../motion.ts"></script>
+<script src="../player.ts"></script>
   </body>
 </html>

@@ -472,6 +472,11 @@ html:not(.js-motion) .tl {
   text-align: center;
 }
 
+/* ---------------- replay section ---------------- */
+.replay {
+  padding: 12vh 0;
+}
+
 /* ---------------- artifacts ---------------- */
 .artifacts {
   padding: 10vh 0 14vh;

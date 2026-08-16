@@ -1,0 +1,233 @@
+---
+// Trace player: replays a real audit run line by line.
+// Data lives in /traces/{ca,icl}.json (built by scripts/build_trace_data.py
+// from the raw append-only traces — failures preserved verbatim).
+---
+
+<div class="player">
+  <div class="player-top">
+    <div class="run-select" role="tablist" aria-label="Choose an audit run">
+      <button class="run-btn active" role="tab" aria-selected="true" data-run="ca">
+        CA grokking · JMLR
+      </button>
+      <button class="run-btn" role="tab" aria-selected="false" data-run="icl">
+        ICL bayesian · arXiv
+      </button>
+    </div>
+    <div class="player-meta" id="player-meta">
+      <span id="meta-src">JMLR 22-1228</span> · <span id="meta-stats"></span>
+    </div>
+  </div>
+
+  <div class="terminal player-term">
+    <div class="term-bar">
+      <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-title" id="term-title">trace.jsonl — replaying live run</span>
+      <span class="player-count" id="player-count"></span>
+    </div>
+    <div class="term-body player-body" id="player-body" tabindex="0" aria-live="polite"></div>
+  </div>
+
+  <div class="player-controls">
+    <button class="pp-btn" id="pp-btn" aria-label="Play or pause the trace replay">
+      <span id="pp-icon">▶</span>
+    </button>
+    <input
+      type="range"
+      id="player-scrub"
+      class="scrub"
+      min="0"
+      max="1000"
+      value="0"
+      step="1"
+      aria-label="Scrub through the audit trace"
+    />
+    <span class="player-clock" id="player-clock">0:00</span>
+  </div>
+
+  <div class="player-final" id="player-final" hidden>
+    <span class="final-badge" id="final-badge"></span>
+    <span id="final-text"></span>
+  </div>
+</div>
+
+<style>
+  .player-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .run-select {
+    display: inline-flex;
+    border: 1px solid var(--edge);
+    border-radius: 9px;
+    overflow: hidden;
+    background: var(--card);
+  }
+
+  .run-btn {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--mut);
+    font-family: var(--font-m);
+    font-size: 0.76rem;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition:
+      background 0.15s,
+      color 0.15s;
+  }
+  .run-btn.active {
+    background: color-mix(in srgb, var(--blue) 22%, transparent);
+    color: var(--fg);
+  }
+  .run-btn:hover:not(.active) {
+    color: var(--fg);
+  }
+
+  .player-meta {
+    font-family: var(--font-m);
+    font-size: 0.72rem;
+    color: var(--dim);
+  }
+
+  .player-term .term-body {
+    height: 340px;
+    overflow-y: auto;
+    min-height: 0;
+    padding-bottom: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--edge) transparent;
+  }
+
+  .player-count {
+    margin-left: auto;
+    font-family: var(--font-m);
+    font-size: 0.68rem;
+    color: var(--dim);
+  }
+
+  .player-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .pp-btn {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--edge);
+    background: var(--card);
+    color: var(--teal);
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: transform 0.12s, border-color 0.12s;
+  }
+  .pp-btn:hover {
+    transform: scale(1.08);
+    border-color: var(--teal);
+  }
+
+  .scrub {
+    flex: 1;
+    appearance: none;
+    height: 5px;
+    border-radius: 3px;
+    background: linear-gradient(
+      90deg,
+      var(--blue) 0 20%,
+      var(--magenta) 20% 40%,
+      var(--teal) 40% 60%,
+      var(--gold) 60% 80%,
+      var(--violet) 80% 100%
+    );
+    opacity: 0.9;
+    cursor: pointer;
+  }
+  .scrub::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--fg);
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 12px rgba(79, 142, 247, 0.8);
+  }
+  .scrub::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--fg);
+    border: 3px solid var(--bg);
+    box-shadow: 0 0 12px rgba(79, 142, 247, 0.8);
+  }
+
+  .player-clock {
+    font-family: var(--font-m);
+    font-size: 0.75rem;
+    color: var(--mut);
+    min-width: 44px;
+    text-align: right;
+  }
+
+  .player-final {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    padding: 12px 16px;
+    border: 1px solid color-mix(in srgb, var(--teal) 45%, transparent);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--teal) 8%, transparent);
+    font-size: 0.85rem;
+    color: var(--fg);
+  }
+
+  .final-badge {
+    font-family: var(--font-m);
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: var(--teal);
+    border: 1px solid var(--teal);
+    padding: 3px 10px;
+    border-radius: 99px;
+  }
+
+  /* rendered trace lines */
+  .pl {
+    display: block;
+    font-family: var(--font-m);
+    font-size: 0.76rem;
+    line-height: 1.95;
+    color: var(--mut);
+    white-space: pre-wrap;
+  }
+  .pl .pl-t {
+    color: var(--dim);
+    margin-right: 10px;
+  }
+  .pl .ok { color: var(--teal); }
+  .pl .fail { color: var(--magenta); }
+  .pl .warn { color: var(--gold); }
+  .pl .info { color: var(--blue); }
+  .pl .cmd { color: var(--fg); }
+  .pl .supported { color: var(--teal); font-weight: 700; }
+  .pl .falsified { color: var(--magenta); font-weight: 700; }
+  .pl .inconclusive { color: var(--gold); font-weight: 700; }
+  .pl.milestone {
+    background: color-mix(in srgb, var(--edge) 40%, transparent);
+    border-radius: 4px;
+    padding: 0 6px;
+    margin: 2px -6px;
+  }
+</style>
