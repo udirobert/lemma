@@ -223,7 +223,7 @@ is unavailable.
 - Published: https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules
   (rendered: https://papajams-repro-grokking-ca-local-rules.static.hf.space/)
 
-### Kimi K3 endpoint + CA rounds 3–5 (2026-08-16 ~11:45–14:00)
+### Kimi K3 endpoint + CA rounds 3–5 (2026-08-16 ~11:45–14:45)
 
 User-provided Kimi K3 on a Modal serverless proxy
 (`papaandthejimjams--ep-kimi-k3-server.us-west.modal.direct`, model
@@ -290,11 +290,24 @@ verified locally AND on the VPS before deployment:
   authoritative-reference re-examination. Offline smoke test covers both
   branches (`scripts/test_escalation_gate.py`).
 
-**Round 5** launched (tmux `lemma-ca-round5`, claims C2/C4/C6): LLM
-attempts with the round-5 feedback first; on failure the deployed
-`reviewer_reference.py` executes and its verdict wins. C5 stays at its
-scope-limited inconclusive verdict. On landing: re-assemble + re-judge +
-re-publish the CA logbook.
+**Round 5** (completed, ~9 min, tmux `lemma-ca-round5b`): all three
+remaining testable claims **SUPPORTED**.
+- C2 via reviewer reference (ν = 1.5000 / 2.9998 / 5.4993 vs targets
+  1.5 / 3.0 / 5.5; LLM attempts still produced the wrong dynamics shape).
+- C4 via the LLM's OWN attempt 6 — the round-5 feedback (Eqs 82/86 from
+  Appendix B.1) was sufficient guidance: P_grok(D=2,5,10,20) =
+  [0.7295, 0.176, 0.032, 0.0125] strictly decreasing at common eps=1.005.
+- C6 via reviewer reference after LLM attempts failed again (all four
+  bimodality tests pass; slow-time rel err 1e-16).
+  Also surfaced and fixed en route: a relative `--workdir` path doubled
+  up inside subprocess invocations (every script run exited 2);
+  `agent/cli.py` now resolves it to absolute (commit `fc3ae36`).
+
+**Final CA tally: 5 supported / 0 falsified / 1 inconclusive** (C5,
+scope-limited by compute: the auditable proxy trivializes Rule-30 and
+the paper's tensor-network regime is gpu-small). Logbook re-published:
+https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules
+Judge: PASS 5/5 (305 trace events, 9 failed attempts preserved in full).
 
 ### Third paper: arXiv 2510.10981 — "ICL Is Provably Bayesian Inference"
 
