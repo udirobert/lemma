@@ -1,0 +1,14 @@
+{
+  "attempt": 3,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C6",
+    "status": "inconclusive",
+    "metrics": {
+      "control_pass": false,
+      "n_valid": 10000
+    },
+    "notes": "Could not identify two distinct clusters with sufficient samples."
+  },
+  "wall_s": 5.73
+}

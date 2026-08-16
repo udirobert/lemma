@@ -27,11 +27,16 @@ if grep -q '^LEMMA_ENDPOINTS=' .env 2>/dev/null; then
   done
 fi
 
-# macOS bash 3.2-safe expansion of the (possibly empty) SSH_OPTS array
+# rsync code + config, never paper artifacts: papers/*/results, traces,
+# judge reports and logbooks are RUN STATE that may be newer on the VPS
+# (or mid-write by a live run). Only _staging inputs go up.
 rsync -az ${SSH_OPTS[@]+"${SSH_OPTS[@]}"} --delete \
   --exclude '.venv' --exclude '__pycache__' --exclude '.ruff_cache' \
   --exclude '.pytest_cache' --exclude '.trackio' --exclude 'runs/' \
   --exclude '.DS_Store' \
+  --exclude 'papers/*/results/' --exclude 'papers/*/trace.jsonl' \
+  --exclude 'papers/*/judge_report.json' --exclude 'papers/*/.trackio/' \
+  --exclude 'papers/*/claims.json' \
   ./ "$VPS_HOST:$VPS_DIR/"
 
 ssh ${SSH_OPTS[@]+"${SSH_OPTS[@]}"} "$VPS_HOST" "cd '$VPS_DIR' && bash scripts/bootstrap_vps.sh"
