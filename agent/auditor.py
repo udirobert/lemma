@@ -175,7 +175,7 @@ def audit_one(
         # Accept a run that printed a valid SUMMARY_JSON even if the process
         # crashed afterwards (e.g. a serialization error on the very last line);
         # the evidence was still produced and is what matters.
-        if summary is not None:
+        if summary is not None and not _summary_problems(summary):
             run_path = claim_dir / f"run_attempt{attempt}.json"
             run_path.write_text(
                 json.dumps(
@@ -199,6 +199,34 @@ def audit_one(
                 wall_s=round(duration, 2),
             )
             break
+
+        if summary is not None:
+            # the script ran but its verdict contradicts its own recorded
+            # metrics (e.g. "falsified" while the control residual shows a
+            # broken implementation). Rejecting it is the honest move:
+            # record why and iterate.
+            problems = _summary_problems(summary)
+            trace.log(
+                "audit",
+                "summary_rejected",
+                claim_id=cid,
+                attempt=attempt,
+                problems=problems,
+            )
+            run_history.append(
+                f"ATTEMPT {attempt} REJECTED (verdict contradicts its own "
+                f"metrics): {problems}\nstdout+stderr tail:\n{tail}"
+            )
+            last_summary = {
+                "claim_id": cid,
+                "status": "inconclusive",
+                "metrics": {
+                    "attempts_used": attempt,
+                    "rejected_problems": problems,
+                },
+                "notes": "summary rejected: " + "; ".join(problems),
+            }
+            continue
 
         # failed attempt: record and feed back for the next iteration
         run_history.append(
@@ -265,7 +293,17 @@ def audit_one(
             len(out) + len(err),
         )
         ref_summary = _parse_summary(out)
-        if ref_summary is not None:
+        ref_ok = ref_summary is not None and not _summary_problems(ref_summary)
+        if ref_summary is not None and not ref_ok:
+            trace.log(
+                "audit",
+                "summary_rejected",
+                claim_id=cid,
+                attempt=attempt,
+                source="reviewer_reference",
+                problems=_summary_problems(ref_summary),
+            )
+        if ref_ok:
             run_path = claim_dir / f"run_attempt{attempt}.json"
             run_path.write_text(
                 json.dumps(
@@ -334,6 +372,44 @@ def _build_prompt(
     if history:
         parts += ["", "Prior attempts in this round (fix the real failure):", *history]
     return "\n".join(parts)
+
+
+def _summary_problems(summary: dict) -> list[str]:
+    """Contradictions between a verdict and its own recorded metrics.
+
+    Audit contract (AGENTS.md): a buggy statistic must read "inconclusive",
+    never "falsified"/"supported". Flagged contradictions:
+      - a claimed verdict while the script's own positive control failed
+      - a claimed verdict while a control-residual metric contradicts
+        control_pass (e.g. rel_diff_control=0.97 with control_pass=true)
+      - NaN control metrics
+    """
+    problems: list[str] = []
+    status = summary.get("status")
+    if status not in ("supported", "falsified"):
+        return problems
+    metrics = summary.get("metrics") or {}
+
+    control_pass = metrics.get("control_pass")
+    if control_pass is not None and not control_pass:
+        problems.append(f"status={status} but control_pass is false")
+
+    for name, val in metrics.items():
+        if "control" not in name.lower():
+            continue
+        if isinstance(val, float) and val != val:  # NaN
+            problems.append(f"control metric {name} is NaN")
+        if (
+            "diff" in name.lower()
+            and isinstance(val, (int, float))
+            and val == val
+            and abs(val) > 0.05
+            and control_pass
+        ):
+            problems.append(
+                f"control residual {name}={val:.3g} contradicts control_pass=true"
+            )
+    return problems
 
 
 def _parse_summary(stdout: str) -> dict | None:
