@@ -24,10 +24,11 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 "scripts/*" = ["T20"]
 "papers/*/reproduce.py" = ["T20", "B007"]
-# slide copy intentionally uses ν / − / – for presentation text
-"scripts/deck_content.py" = ["RUF001"]
+# slide copy intentionally uses ν / − / – / × for presentation text
+"scripts/deck_content.py" = ["RUF001", "RUF003"]
 "scripts/make_submission_deck.py" = ["RUF001"]
 "scripts/google_auth_flow.py" = ["RUF001"]
+"scripts/gen_deck_art.py" = ["RUF001"]
 
 [tool.ruff.format]
 quote-style = "double"
