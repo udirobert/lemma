@@ -36,6 +36,17 @@ const finalText = document.getElementById("final-text")!;
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+function track(name: string, props: Record<string, string> = {}) {
+  (
+    window as Window & {
+      plausible?: (
+        n: string,
+        o?: { props?: Record<string, string> }
+      ) => void;
+    }
+  ).plausible?.(name, { props });
+}
+
 let data: TraceData | null = null;
 const cache = new Map<string, TraceData>();
 let playing = false;
@@ -140,6 +151,7 @@ function tick(ts: number) {
   if (playhead >= data.lines.length) {
     pause();
     finalPanel.hidden = false;
+    track("player_complete", { run: data.key });
     return;
   }
   raf = requestAnimationFrame(tick);
@@ -149,6 +161,7 @@ function play() {
   if (!data || playing) return;
   if (playhead >= data.lines.length) renderUpTo(0);
   playing = true;
+  track("player_play", { run: data.key });
   ppIcon.textContent = "❚❚";
   lastTs = performance.now();
   raf = requestAnimationFrame(tick);
@@ -185,6 +198,7 @@ function switchRun(key: string) {
     b.classList.toggle("active", on);
     b.setAttribute("aria-selected", String(on));
   });
+  if (data && data.key !== key) track("player_switch", { run: key });
   void loadRun(key);
 }
 
@@ -195,9 +209,14 @@ document.querySelectorAll<HTMLButtonElement>(".run-btn").forEach((b) => {
 
 ppBtn.addEventListener("click", () => (playing ? pause() : play()));
 
+let scrubTracked = false;
 scrub.addEventListener("input", () => {
   if (!data) return;
   pause();
+  if (!scrubTracked && data) {
+    scrubTracked = true;
+    track("player_scrub", { run: data.key });
+  }
   const frac = Number(scrub.value) / 1000;
   const n = Math.round(frac * data.lines.length);
   renderUpTo(n);

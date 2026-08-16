@@ -477,6 +477,169 @@ html:not(.js-motion) .tl {
   padding: 12vh 0;
 }
 
+.replay-cta {
+  margin-top: 28px;
+  text-align: center;
+  color: var(--mut);
+  font-size: 0.92rem;
+}
+
+.cta-inline {
+  color: var(--gold);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px dashed color-mix(in srgb, var(--gold) 60%, transparent);
+}
+.cta-inline:hover {
+  color: var(--fg);
+  border-bottom-style: solid;
+}
+
+/* ---------------- waitlist ---------------- */
+.waitlist {
+  padding: 12vh 0;
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 0%,
+    rgba(120, 102, 237, 0.08),
+    transparent 70%
+  );
+}
+
+.wl-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 18px;
+  margin-top: 36px;
+}
+
+.wl-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.wl-field span {
+  font-family: var(--font-m);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--dim);
+}
+.wl-field span i {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.wl-field input,
+.wl-field select {
+  appearance: none;
+  background: var(--card);
+  border: 1px solid var(--edge);
+  border-radius: 9px;
+  color: var(--fg);
+  font-family: var(--font-d);
+  font-size: 0.9rem;
+  padding: 12px 14px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.wl-field select {
+  background-image: linear-gradient(45deg, transparent 50%, var(--mut) 50%),
+    linear-gradient(135deg, var(--mut) 50%, transparent 50%);
+  background-position:
+    calc(100% - 19px) 50%,
+    calc(100% - 14px) 50%;
+  background-size:
+    5px 5px,
+    5px 5px;
+  background-repeat: no-repeat;
+}
+
+.wl-field input:focus,
+.wl-field select:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.18);
+}
+
+.wl-field input::placeholder {
+  color: var(--dim);
+}
+
+.wl-wide {
+  grid-column: 1 / -1;
+}
+
+.wl-btn {
+  grid-column: 1 / -1;
+  justify-self: start;
+  appearance: none;
+  border: none;
+  border-radius: 99px;
+  cursor: pointer;
+  padding: 13px 30px;
+  font-family: var(--font-d);
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #0b1018;
+  background: linear-gradient(90deg, var(--blue), var(--teal));
+  box-shadow: 0 8px 30px -8px rgba(30, 194, 181, 0.55);
+  transition: transform 0.14s, box-shadow 0.14s, filter 0.14s;
+}
+.wl-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 12px 36px -8px rgba(30, 194, 181, 0.7);
+}
+
+.wl-hidden {
+  display: none;
+}
+
+.wl-alt {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 26px;
+  font-family: var(--font-m);
+  font-size: 0.78rem;
+}
+
+.star-link {
+  color: var(--gold);
+  text-decoration: none;
+  border: 1px solid color-mix(in srgb, var(--gold) 40%, transparent);
+  border-radius: 99px;
+  padding: 7px 16px;
+  transition: background 0.15s, color 0.15s;
+}
+.star-link:hover {
+  background: color-mix(in srgb, var(--gold) 14%, transparent);
+  color: var(--fg);
+}
+
+.wl-note {
+  color: var(--dim);
+}
+
+.wl-thanks {
+  grid-column: 1 / -1;
+  color: var(--teal);
+  font-size: 0.95rem;
+  padding: 18px 0;
+}
+
+@media (max-width: 640px) {
+  .wl-form {
+    grid-template-columns: 1fr;
+  }
+  .wl-alt {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
 /* ---------------- artifacts ---------------- */
 .artifacts {
   padding: 10vh 0 14vh;
