@@ -1,0 +1,40 @@
+{
+  "attempt": 3,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C4",
+    "status": "falsified",
+    "metrics": {
+      "eps_used": 1.5,
+      "lambda2": 0.01,
+      "lambda1": 0.0,
+      "N_per_class": 10,
+      "trials_per_D": 400,
+      "D_list": [
+        1,
+        2,
+        3,
+        5,
+        10,
+        20
+      ],
+      "P_grok": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "n_measurable_points": 6,
+      "monotone_non_increasing": true,
+      "n_strict_decreases": 0,
+      "endpoint_decrease_P1_gt_Pmax": false,
+      "log_linear_slope": 0.0,
+      "control_pass": true,
+      "control_slope": -0.4
+    },
+    "notes": "eps=1.5, lambda2=0.01, N=10, 400 trials/D. P_grok(D)=[1.0, 1.0, 1.0, 1.0, 1.0, 1.0]; log-slope=0.0000; monotone_non_increasing=True; strict_decreases=0."
+  },
+  "wall_s": 34.14
+}

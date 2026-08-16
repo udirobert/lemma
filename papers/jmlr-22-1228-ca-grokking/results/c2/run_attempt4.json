@@ -1,0 +1,33 @@
+{
+  "attempt": 4,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C2",
+    "status": "falsified",
+    "metrics": {
+      "control_pass": true,
+      "control_nu_D2": 1.4999999999999998,
+      "control_nu_D5": 3.0000000000000013,
+      "control_nu_D10": 5.499999999999999,
+      "nu_D2": -0.27259210626195246,
+      "nu_D5": 2.7093126339035933,
+      "nu_D10": 4.459655791719688,
+      "expected_D2": 1.5,
+      "expected_D5": 3.0,
+      "expected_D10": 5.5,
+      "err_D2": 1.7725921062619525,
+      "err_D5": 0.29068736609640666,
+      "err_D10": 1.0403442082803123,
+      "r2_D2": 0.5379540081361083,
+      "r2_D5": 0.6578540140400955,
+      "r2_D10": 0.975509377962407,
+      "per_dim": {
+        "D2": "fail",
+        "D5": "fail",
+        "D10": "fail"
+      }
+    },
+    "notes": "Exponents obtained but deviate from (D+1)/2 beyond tolerance."
+  },
+  "wall_s": 3.32
+}

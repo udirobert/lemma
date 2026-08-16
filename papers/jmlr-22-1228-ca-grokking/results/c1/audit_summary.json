@@ -1,9 +1,16 @@
 {
   "claim_id": "C1",
-  "status": "inconclusive",
+  "status": "supported",
   "metrics": {
-    "script_exit_code": 1,
-    "attempts_used": 4
+    "nu_fitted": 0.9982688954834558,
+    "nu_control": 1.0000000000000007,
+    "control_pass": true,
+    "t_eps": 1.1141999999999999,
+    "t_train_zero": 1.1021999999999998,
+    "xbar": -0.0663896187196535,
+    "xbar_fixed_point": -0.1163896187196535,
+    "Emax": 0.43312502283221105,
+    "n_fit_points": 745
   },
-  "notes": "script failed after 4 tries"
+  "notes": "Fitted critical exponent nu=0.998 within 0.05 of 1.0 (Eq. 9/10)."
 }

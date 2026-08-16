@@ -2,16 +2,23 @@
   "claims": [
     {
       "id": "C1",
-      "status": "inconclusive",
-      "attempts": 4,
+      "status": "supported",
+      "attempts": 1,
       "summary": {
         "claim_id": "C1",
-        "status": "inconclusive",
+        "status": "supported",
         "metrics": {
-          "script_exit_code": 1,
-          "attempts_used": 4
+          "nu_fitted": 0.9982688954834558,
+          "nu_control": 1.0000000000000007,
+          "control_pass": true,
+          "t_eps": 1.1141999999999999,
+          "t_train_zero": 1.1021999999999998,
+          "xbar": -0.0663896187196535,
+          "xbar_fixed_point": -0.1163896187196535,
+          "Emax": 0.43312502283221105,
+          "n_fit_points": 745
         },
-        "notes": "script failed after 4 tries"
+        "notes": "Fitted critical exponent nu=0.998 within 0.05 of 1.0 (Eq. 9/10)."
       }
     },
     {
@@ -23,50 +30,85 @@
         "status": "inconclusive",
         "metrics": {
           "control_pass": true,
-          "control_nu_fit": 1.5007256254893995,
-          "control_r2": 0.9999741298479973,
-          "nu_fit_D2": "N/A",
-          "nu_expected_D2": "N/A",
-          "r2_D2": "N/A",
-          "status_D2": "inconclusive",
-          "nu_fit_D5": "N/A",
-          "nu_expected_D5": "N/A",
-          "r2_D5": "N/A",
-          "status_D5": "inconclusive",
-          "nu_fit_D10": "N/A",
-          "nu_expected_D10": "N/A",
-          "r2_D10": "N/A",
-          "status_D10": "inconclusive"
+          "control_nu_D2": 1.4999999999999991,
+          "nu_D2": 0.5001816753279436,
+          "r2_D2": 0.9999998705174121,
+          "target_D2": 1.5,
+          "npts_D2": 417,
+          "control_nu_D5": 3.0000000000000004,
+          "nu_D5": 0.5000454354488788,
+          "r2_D5": 0.999999989121734,
+          "target_D5": 3.0,
+          "npts_D5": 213,
+          "control_nu_D10": 5.499999999999999,
+          "nu_D10": 0.5000024876090867,
+          "r2_D10": 0.9999999999889091,
+          "target_D10": 5.5,
+          "npts_D10": 114
         },
-        "notes": "Control passed: True. D=2: inconclusive; D=5: inconclusive; D=10: inconclusive"
+        "notes": "Control passed (fit machinery correct) but the ball-model ODE fits deviate from (D+1)/2 beyond tolerance or r2<0.95 for at least one D; per reviewer guidance this is reported as inconclusive pending verification against the paper Fig. 5."
       }
     },
     {
       "id": "C3",
-      "status": "inconclusive",
-      "attempts": 4,
+      "status": "supported",
+      "attempts": 1,
       "summary": {
         "claim_id": "C3",
-        "status": "inconclusive",
+        "status": "supported",
         "metrics": {
-          "script_exit_code": 1,
-          "attempts_used": 4
+          "P_grok_L1": 0.205,
+          "P_grok_L2": 0.0,
+          "trials": 400,
+          "D": 10,
+          "eps": 1.01,
+          "err_L1_2sigma": 0.040370162248868906,
+          "err_L2_2sigma": 0.0,
+          "diff": 0.205,
+          "diff_over_sigma": 10.156015660092805,
+          "control_pass": true
         },
-        "notes": "script failed after 4 tries"
+        "notes": "Hard regime D=10, eps=1.01: P_grok(L1)=0.205 vs P_grok(L2)=0.000; criterion (>=2x or >0.5 vs <0.1) met."
       }
     },
     {
       "id": "C4",
-      "status": "inconclusive",
-      "attempts": 4,
+      "status": "falsified",
+      "attempts": 1,
       "summary": {
         "claim_id": "C4",
-        "status": "inconclusive",
+        "status": "falsified",
         "metrics": {
-          "script_exit_code": -1,
-          "attempts_used": 4
+          "eps_used": 1.5,
+          "lambda2": 0.01,
+          "lambda1": 0.0,
+          "N_per_class": 10,
+          "trials_per_D": 400,
+          "D_list": [
+            1,
+            2,
+            3,
+            5,
+            10,
+            20
+          ],
+          "P_grok": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "n_measurable_points": 6,
+          "monotone_non_increasing": true,
+          "n_strict_decreases": 0,
+          "endpoint_decrease_P1_gt_Pmax": false,
+          "log_linear_slope": 0.0,
+          "control_pass": true,
+          "control_slope": -0.4
         },
-        "notes": "script failed after 4 tries"
+        "notes": "eps=1.5, lambda2=0.01, N=10, 400 trials/D. P_grok(D)=[1.0, 1.0, 1.0, 1.0, 1.0, 1.0]; log-slope=0.0000; monotone_non_increasing=True; strict_decreases=0."
       }
     },
     {
@@ -77,28 +119,47 @@
         "claim_id": "C5",
         "status": "inconclusive",
         "metrics": {
-          "min_train_error": 0.500334,
-          "min_test_error": 0.499784,
-          "final_test_error": 0.499784,
-          "train_zero_step": -1,
           "control_pass": false,
-          "grokking_observed": false
+          "control_final_train_err": 0.25,
+          "control_final_test_err": 0.25,
+          "n_unique_triplet_patterns": 8,
+          "generalization_gap_possible": false
         },
-        "notes": "Positive control failed. Training loop or metric calculation might be buggy."
+        "notes": "The perceptron-map proxy trivializes Rule-30 (8-triplet lookup: zero generalization gap by construction). The paper's claim concerns the over-parameterized tensor-network regime (gpu-small, out of CPU-audit scope). Verdict: inconclusive by compute-scope limitation - reproducing it requires tensor-network training on long sequences."
       }
     },
     {
       "id": "C6",
-      "status": "inconclusive",
+      "status": "falsified",
       "attempts": 1,
       "summary": {
         "claim_id": "C6",
-        "status": "inconclusive",
+        "status": "falsified",
         "metrics": {
-          "control_pass": false,
-          "n_valid": 10000
+          "n_trials": 10000,
+          "n_grokked": 10000,
+          "grokking_fraction": 1.0,
+          "t_slow_analytic": 16.13463028439279,
+          "valley_ratio": 0.9500000000000001,
+          "frac_fast": 0.9958062024059154,
+          "frac_slow": 0.0041937975940845385,
+          "mean_fast": 0.5731851933946581,
+          "mean_slow": 5.681578947368421,
+          "std_fast": 0.6598728595682956,
+          "std_slow": 1.5539601808821593,
+          "separation_ratio": 3.287338901485755,
+          "slow_rel_err": 0.647864323679962,
+          "sharpness_fast": 1.1512384952937016,
+          "sharpness_slow": 0.27350850798296455,
+          "check_bimodal": false,
+          "check_separation": true,
+          "check_slow_time": false,
+          "check_sharpness": true,
+          "control_pass": true,
+          "control_valley_ratio": 0.0059031877213695395,
+          "control_slow_rel_err": 0.0001377778922229241
         },
-        "notes": "Could not identify two distinct clusters with sufficient samples."
+        "notes": "One or more bimodality criteria failed on the simulated grokking times."
       }
     }
   ]

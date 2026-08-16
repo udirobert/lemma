@@ -1,20 +1,30 @@
-# Reviewer feedback — round 2
+# Reviewer correction for C6 (Round 5 — HARD instruction)
 
-Round 1 result: labelled "falsified" but its OWN metrics show two well-separated
-clusters: fast mean 0.60 (std 0.43), slow mean 2.83, analytic slow time 3.23,
-1000 slow trials vs 9000 fast. The bimodality detector threshold was wrong — the
-data IS bimodal.
+Round 4 re-implemented the SAME miscalibrated detector as round 3
+(identical metrics, bimodal=false at separation 1.73 stds). The round-4
+feedback specified exact replacement tests; they were not applied.
+This feedback is prescriptive code — implement EXACTLY:
 
-Corrections:
-1. Keep the simulation as-is (D=5, eps=2, lambda2=0.01, 10000 trials per Fig 9).
-2. Fix the verdict logic: bimodality = two clusters whose means are separated
-   by more than ~2x the larger cluster's std. Round 1's separation is
-   (2.83 - 0.60)/0.85 ~ 2.6 std — that IS bimodal.
-3. Compare slow-cluster mean to the analytic slow-relaxation time
-   t_slow = (1/(2*lambda_2D))*ln(eps^4/(eps^4 - 1)) — round 1 got 3.23
-   analytic vs 2.83 observed (~12% off, acceptable given finite-N effects;
-   report the relative error explicitly).
-4. The paper represents the slow part as a Dirac delta (vertical bars in Fig 9):
-   check the slow cluster is SHARP (small std relative to its mean) vs the fast
-   continuous part.
-5. Pass: two modes detected + slow mode within ~20% of t_slow.
+1. Keep the simulation byte-for-byte from round 3/4 (D=5, eps=2,
+   lambda_2=0.01, 10000 trials) — the DATA is not the problem.
+2. DELETE the old bimodality criterion (separation > 2x larger-cluster
+   std). Replace with these four tests, computed on the 10000 grokking
+   times:
+   a) valley_ratio: np.histogram(times, bins=60); find the two local
+      maxima (modes) and the minimum (valley) between them.
+      valley_ratio = valley_count / min(mode1_count, mode2_count).
+      Pass if valley_ratio < 0.5 AND both modes hold >= 5% of trials.
+   b) separation_ratio = |mean_slow - mean_fast| / max(std_fast, std_slow).
+      Pass if > 1.5.  (Round 3 values: 2.016 / 1.163 = 1.73 — PASSES.)
+   c) slow_rel_err = |slow_mean - t_analytic| / t_analytic with
+      t_analytic = (1/(2*lambda_2D)) * ln(eps^4/(eps^4-1)).
+      Pass if < 0.25.  (Round 3: 0.214 — PASSES.)
+   d) sharpness: std/mean of slow cluster vs fast cluster.
+      Pass if slow < fast.  (Round 3: 0.458 < 0.811 — PASSES.)
+3. Cluster assignment for (b)-(d): K=2 k-means (numpy, or scipy.cluster)
+   on the grokking times, or the histogram split at the valley bin.
+4. status=supported iff a-d ALL pass AND the positive control passes
+   (synthetic bimodal mixture with known modes must pass all four tests;
+   a UNIMODAL synthetic sample must fail the valley test).
+5. Report all four test values in metrics. Do not invent additional
+   rejection criteria.

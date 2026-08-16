@@ -3,20 +3,21 @@
   "status": "inconclusive",
   "metrics": {
     "control_pass": true,
-    "control_nu_fit": 1.5007256254893995,
-    "control_r2": 0.9999741298479973,
-    "nu_fit_D2": "N/A",
-    "nu_expected_D2": "N/A",
-    "r2_D2": "N/A",
-    "status_D2": "inconclusive",
-    "nu_fit_D5": "N/A",
-    "nu_expected_D5": "N/A",
-    "r2_D5": "N/A",
-    "status_D5": "inconclusive",
-    "nu_fit_D10": "N/A",
-    "nu_expected_D10": "N/A",
-    "r2_D10": "N/A",
-    "status_D10": "inconclusive"
+    "control_nu_D2": 1.4999999999999991,
+    "nu_D2": 0.5001816753279436,
+    "r2_D2": 0.9999998705174121,
+    "target_D2": 1.5,
+    "npts_D2": 417,
+    "control_nu_D5": 3.0000000000000004,
+    "nu_D5": 0.5000454354488788,
+    "r2_D5": 0.999999989121734,
+    "target_D5": 3.0,
+    "npts_D5": 213,
+    "control_nu_D10": 5.499999999999999,
+    "nu_D10": 0.5000024876090867,
+    "r2_D10": 0.9999999999889091,
+    "target_D10": 5.5,
+    "npts_D10": 114
   },
-  "notes": "Control passed: True. D=2: inconclusive; D=5: inconclusive; D=10: inconclusive"
+  "notes": "Control passed (fit machinery correct) but the ball-model ODE fits deviate from (D+1)/2 beyond tolerance or r2<0.95 for at least one D; per reviewer guidance this is reported as inconclusive pending verification against the paper Fig. 5."
 }

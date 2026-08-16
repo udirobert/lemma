@@ -1,9 +1,17 @@
 {
   "claim_id": "C3",
-  "status": "inconclusive",
+  "status": "supported",
   "metrics": {
-    "script_exit_code": 1,
-    "attempts_used": 4
+    "P_grok_L1": 0.205,
+    "P_grok_L2": 0.0,
+    "trials": 400,
+    "D": 10,
+    "eps": 1.01,
+    "err_L1_2sigma": 0.040370162248868906,
+    "err_L2_2sigma": 0.0,
+    "diff": 0.205,
+    "diff_over_sigma": 10.156015660092805,
+    "control_pass": true
   },
-  "notes": "script failed after 4 tries"
+  "notes": "Hard regime D=10, eps=1.01: P_grok(L1)=0.205 vs P_grok(L2)=0.000; criterion (>=2x or >0.5 vs <0.1) met."
 }

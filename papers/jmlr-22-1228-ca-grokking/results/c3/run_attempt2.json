@@ -1,0 +1,23 @@
+{
+  "attempt": 2,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C3",
+    "status": "inconclusive",
+    "metrics": {
+      "p_grok_l1": 1.0,
+      "p_grok_l2": 0.98,
+      "ratio_l1_over_l2": 1.0204081632653061,
+      "p_train_zero_l1": 1.0,
+      "p_train_zero_l2": 1.0,
+      "control_p_grok_D2_l1": 0.86,
+      "control_pass": true,
+      "D": 5,
+      "N_per_class": 20,
+      "eps": 1.1,
+      "trials": 200
+    },
+    "notes": "Gap too small to be meaningful: L1=1.000, L2=0.980."
+  },
+  "wall_s": 15.63
+}

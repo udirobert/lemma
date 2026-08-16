@@ -1,0 +1,29 @@
+{
+  "attempt": 4,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C6",
+    "status": "falsified",
+    "metrics": {
+      "n_trials": 10000,
+      "n_grok": 9999,
+      "fast_mean": 0.5220703685974151,
+      "fast_std": 0.42332883677796135,
+      "n_fast": 8356,
+      "slow_mean": 2.537875836883749,
+      "slow_std": 1.1626402196655188,
+      "n_slow": 1643,
+      "separation_stds": 1.7338170778800885,
+      "bimodal": false,
+      "t_slow_analytic": 3.226926056878558,
+      "slow_rel_error": 0.21353145620613787,
+      "slow_sharpness_std_over_mean": 0.4581154849139986,
+      "fast_spread_std_over_mean": 0.8108654737775466,
+      "control_pass": true,
+      "control_sep_stds": 6.823601075342895,
+      "control_slow_rel_error": 0.03486259635929607
+    },
+    "notes": "Two clusters: fast mean=0.522 (std=0.423), slow mean=2.538 (std=1.163), separation=1.73 stds; analytic t_slow=3.227, rel err=0.214. Slow cluster sharp (std/mean=0.458) vs fast continuous (std/mean=0.811)."
+  },
+  "wall_s": 38.29
+}

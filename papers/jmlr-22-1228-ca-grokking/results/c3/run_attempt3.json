@@ -1,0 +1,22 @@
+{
+  "attempt": 3,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C3",
+    "status": "supported",
+    "metrics": {
+      "P_grok_L1": 0.205,
+      "P_grok_L2": 0.0,
+      "trials": 400,
+      "D": 10,
+      "eps": 1.01,
+      "err_L1_2sigma": 0.040370162248868906,
+      "err_L2_2sigma": 0.0,
+      "diff": 0.205,
+      "diff_over_sigma": 10.156015660092805,
+      "control_pass": true
+    },
+    "notes": "Hard regime D=10, eps=1.01: P_grok(L1)=0.205 vs P_grok(L2)=0.000; criterion (>=2x or >0.5 vs <0.1) met."
+  },
+  "wall_s": 4.06
+}

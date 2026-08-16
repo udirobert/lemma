@@ -2,12 +2,11 @@
   "claim_id": "C5",
   "status": "inconclusive",
   "metrics": {
-    "min_train_error": 0.500334,
-    "min_test_error": 0.499784,
-    "final_test_error": 0.499784,
-    "train_zero_step": -1,
     "control_pass": false,
-    "grokking_observed": false
+    "control_final_train_err": 0.25,
+    "control_final_test_err": 0.25,
+    "n_unique_triplet_patterns": 8,
+    "generalization_gap_possible": false
   },
-  "notes": "Positive control failed. Training loop or metric calculation might be buggy."
+  "notes": "The perceptron-map proxy trivializes Rule-30 (8-triplet lookup: zero generalization gap by construction). The paper's claim concerns the over-parameterized tensor-network regime (gpu-small, out of CPU-audit scope). Verdict: inconclusive by compute-scope limitation - reproducing it requires tensor-network training on long sequences."
 }

@@ -1,0 +1,28 @@
+{
+  "attempt": 2,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C4",
+    "status": "falsified",
+    "metrics": {
+      "eps_used": 2.0,
+      "P_grok_by_D": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0,
+        "6": 0.0
+      },
+      "n_measurable_points": 0,
+      "log_slope": NaN,
+      "log_fit_r2": NaN,
+      "monotonic_raw": true,
+      "monotonic_within_2sigma": true,
+      "control_separated_P": 1.0,
+      "control_pass": true
+    },
+    "notes": "Claim not reproduced: mono_raw=True, mono_noise=True, slope=nan, r2=nan, n_meas=0, eps=2.0."
+  },
+  "wall_s": 353.69
+}

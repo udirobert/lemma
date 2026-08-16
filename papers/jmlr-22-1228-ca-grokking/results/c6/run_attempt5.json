@@ -1,0 +1,34 @@
+{
+  "attempt": 5,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C6",
+    "status": "falsified",
+    "metrics": {
+      "n_trials": 10000,
+      "n_grokked": 10000,
+      "grokking_fraction": 1.0,
+      "t_slow_analytic": 16.13463028439279,
+      "valley_ratio": 0.9500000000000001,
+      "frac_fast": 0.9958062024059154,
+      "frac_slow": 0.0041937975940845385,
+      "mean_fast": 0.5731851933946581,
+      "mean_slow": 5.681578947368421,
+      "std_fast": 0.6598728595682956,
+      "std_slow": 1.5539601808821593,
+      "separation_ratio": 3.287338901485755,
+      "slow_rel_err": 0.647864323679962,
+      "sharpness_fast": 1.1512384952937016,
+      "sharpness_slow": 0.27350850798296455,
+      "check_bimodal": false,
+      "check_separation": true,
+      "check_slow_time": false,
+      "check_sharpness": true,
+      "control_pass": true,
+      "control_valley_ratio": 0.0059031877213695395,
+      "control_slow_rel_err": 0.0001377778922229241
+    },
+    "notes": "One or more bimodality criteria failed on the simulated grokking times."
+  },
+  "wall_s": 95.14
+}

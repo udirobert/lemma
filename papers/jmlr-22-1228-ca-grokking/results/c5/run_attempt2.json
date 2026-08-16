@@ -1,0 +1,31 @@
+{
+  "attempt": 2,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C5",
+    "status": "falsified",
+    "metrics": {
+      "control_pass": true,
+      "control_final_train_err": 0.005,
+      "control_final_test_err": 0.01775,
+      "n_seeds_grokking": 0,
+      "any_train_zero": true,
+      "min_train_err": 0.0,
+      "min_test_err": 0.0,
+      "final_test_errs": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "grok_times": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "notes": "Train error reached 0 but the grokking signature (test >0.5 then <0.05) never occurred in any seed."
+  },
+  "wall_s": 628.69
+}

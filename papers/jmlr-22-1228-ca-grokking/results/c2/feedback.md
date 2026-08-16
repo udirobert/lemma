@@ -1,24 +1,33 @@
-# Reviewer feedback — round 2
+# Reviewer correction for C2 (Round 5)
 
-Round 1 result: all fitted exponents "N/A" — the fit never produced values.
-Control fit worked (nu=1.499, r2=0.9999), so the machinery is fine but the
-actual D-dimensional simulations never yielded usable E_D(t) curves.
+Round 4: control EXACT (nu 1.5/3.0/5.5), main gave nu=0.5000 at all D
+with r2=0.9999 — a perfectly fitted power law with the WRONG exponent
+means the simulated E(t) curve itself has the wrong shape (it follows
+(1-h)^{1/2}, not (1-h)^{(D+1)/2}). The ball dynamics were still not the
+paper's. Use the paper's closed forms VERBATIM (Sec 3.3, Eqs 20-23):
 
-Corrections:
-1. Model (Sec 3.3): D-dim inputs, positive/negative samples uniform in unit
-   balls shifted by +/-eps along axis 1. Student perceptron f(x)=sgn(w.x),
-   bias zero (Eq. 18). Gradient flow on w with L1+L2 regularization.
-2. To make this tractable and correct, use the paper's reduced dynamics where
-   possible: by symmetry the dynamics reduces to the norm/angle of w; if you
-   simulate the full perceptron, use moderate N (e.g. N=50-200 per class) and
-   enough steps to observe grokking (train error 0 first, test error 0 later).
-3. Grokking requires a NON-TYPICAL dataset (Sec 3.3.1): shift samples so the
-   initial margin structure delays test-error collapse. If a plain draw does
-   not grok within the step budget, increase eps slightly toward the
-   critical separation and retry.
-4. Test error E_D(t): fraction of misclassified fresh test points.
-5. Fit log(E_D) vs log(t_eps - t) in a window near the transition.
-6. Expected exponents (Eq. 23): nu = (D+1)/2 -> D=2: 1.5, D=5: 3.0, D=10: 5.5.
-   Tolerance 0.1 per dimension.
-7. If a dimension's simulation cannot reach grokking within budget, report its
-   status individually rather than N/A — partial results are fine.
+1. Linear gradient flow: dw/dt = -G w + a with
+   G = (1/(2N)) sum_i x_i x_i^T + eps_vec eps_vec^T + lambda_2 I_D,
+   a = xbar (sample mean of y_i x_i). Closed-form solution (Eq 21):
+   w(t) = w_lambda - (w_lambda - w0) exp(-G t), w_lambda = G^-1 a.
+   Compute with scipy (matrix exponential OR eigendecomposition of G).
+2. h(t) = eps * w1(t) / ||w(t)||^2 where eps = ||eps_vec||, w1 = first
+   coordinate. t_eps = first t with h >= 1 (test error zero).
+3. E_D(h) from Eq 22 via scipy.special.hyp2f1 for h <= 1:
+   E_D = 1/2 - D*Gamma(D/2)/(2*sqrt(pi)*Gamma((D+1)/2))
+         * hyp2f1(1/2, 1-D/2, 3/2, h^2) * h
+   For h near 1 the asymptotic (Eq 23) is
+   E_D ~ const * (1 - h)^{(D+1)/2}.
+4. Fit log E vs log (t_eps - t) over the window where E is between 1%
+   and 50% of its max. Pass: |nu - (D+1)/2| <= 0.1 with r2 > 0.95 for
+   D in {2, 5, 10}.
+5. Dataset: the paper's NON-TYPICAL grokking dataset (Sec 3.3.1):
+   x ~ N(0, I_D) unit-normalized then scaled by sqrt(U[r0,1]), positive
+   samples shifted by eps_vec along coord 1 AND a perpendicular coord,
+   negatives shifted opposite; N >= 500 per class, lambda_2 = 0.01.
+   If the first eps_vec choice does not produce a visible grokking
+   window (train error hits 0 while test error still > 0.1), search
+   shift magnitude in {0.5, 1.0, 1.5, 2.0} and report which one
+   worked. Record the found parameters in metrics.
+6. Keep the exact-answer control from rounds 3-4. status=supported iff
+   all three exponents match within tolerance and control passes.
