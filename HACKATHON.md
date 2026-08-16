@@ -181,30 +181,73 @@ gradient flow for C3/C4, Sec 4.2 perceptron map for C5, verdict-logic fixes for
 C4/C6). Re-audit runs on the VPS:
 `./lemma audit papers/_staging/jmlr-22-1228-ca-grokking.pdf --stages audit --claims C1,C2,C3,C4,C5,C6`
 
-### Reopen checklist (Sunday morning)
+### Round 2 results + the capability boundary (commits `e9a3588`, `5fb8914`)
 
-1. `cat runs/ssh-sentinel.log` → when did SSH recover? `ssh nuncio-vultr`
-   may need patience if sshd is again in banner timeout.
-2. On VPS: `cd ~/lemma && tail -50 runs/ca-grokking-20260815-231542.log`,
-   inspect `papers/jmlr-22-1228-ca-grokking/{trace.jsonl,results/audit_report.json,judge_report.json}`.
-3. Sync results back: from laptop `rsync -az nuncio-vultr:lemma/papers/ papers/`
-   (mind `--delete` — do NOT use it here; or commit on VPS and `git fetch`).
-4. Triage: rerun failed/inconclusive claims (`./lemma audit <pdf> --stages
-   audit` reuses `claims.json`); a falsified claim is a headline, keep it.
-5. Publish: assemble logbook (`--stages evidence`) then
-   `trackio logbook publish <HF_USERNAME>/repro-ca-grokking-local-rules`;
-   validate with `./scripts/validate_logbook.sh` if the ICML shape is kept,
-   else the built-in judge report stands as the evidence gate.
-6. Demo artifacts (boring-safe order): regression PASS → overnight claims +
-   figures + judge verdict + trace → live tiny audit if time → logbook URL.
-7. Stretch (only if 1–6 land): Adaption AutoScientist as a delegated training
-   tool for a finetuning-style claim; Benchling name-drop (their Model Hub
-   "auditable provenance" language mirrors our judge + trace story).
+Round 2 re-audited all six claims with paper-grounded feedback. **All six
+came back inconclusive; judge PASS 5/5.** Before round 3 we proved WHY with
+a controlled bake-off (`scripts/bakeoff_codegen.py`): the exact task that
+failed (implement Eq. 5–6 closed-form dynamics, expected ν≈1.0) given to
+every free endpoint — RunInfra Qwen ν=6779, DeepSeek V4 Pro ν=6072, Flash
+crashed, Pro-thinking timed out. **Free 27B-class models cannot do this
+paper's physics.** The all-inconclusive verdict is a genuine capability
+boundary, documented in the trace, not a pipeline bug. This is the honest
+headline for the demo: the agent knows when it is outgunned, says so, and
+the evidence trail shows it.
 
-**Credentials state:** all in `.env` (gitignored): `LEMMA_ENDPOINTS=HF,ORCA`
-+ per-endpoint key/URL/model/extra-body, `LEMMA_HF_EXTRA_BODY` thinking-off,
-`OPENAI_*` emptied to kill the stale gateway. HF/Modal/Trackio creds as
-before. `.env` also rsynced to `~/lemma/.env` on the VPS.
+Incident + recovery (2026-08-16 ~01:45 UTC): a `deploy_vps.sh` rsync
+`--delete` clobbered the VPS round-2 workdir with the laptop's round-1
+state. Round-2 verdicts were recoverable from `runs/round2-*.log` (log
+survived; `runs/` was excluded from sync). Fix: deploy now excludes
+`papers/*/results`, `trace.jsonl`, `claims.json`, `judge_report.json`,
+`.trackio`; `scripts/reconcile_summaries.py` rebuilds summaries from logs.
+
+### Paperclip (GXL) — verified working (commit `02297de`, `9cc1d80`)
+
+The venue key authenticates with `X-API-Key` (Bearer is rejected), so
+`agent/paperclip.py` calls the hosted MCP server directly over HTTP — no
+SDK needed. Verified end-to-end: `tools/list`, `search` found the exact
+audit paper (arXiv 2210.15435), `cat meta.json` gives full text. Every CA
+claim page now carries a "Literature context (Paperclip)" cell built from
+cached `results/<cid>/cross_check.json`; degrades to a note when the corpus
+is unavailable.
+
+### CA logbook published (2026-08-16 ~09:34)
+
+- Built: 9 pages (index, executive summary, 6 claims, conclusion), judge
+  **PASS 5/5**, 177-event trace, 3 failed attempts preserved.
+- Incident caught during build: trackio 0.35 walks UP the tree for an
+  existing logbook and silently attached the CA pages to the old root-level
+  ICML grokking state. Quarantined to `runs/icml-logbook-state-contaminated-20260816`;
+  `agent/evidence.py` now has an ancestor-state guard that refuses to build
+  unless the paper dir owns its `.trackio`.
+- Published: https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules
+  (rendered: https://papajams-repro-grokking-ca-local-rules.static.hf.space/)
+
+### Third paper (stretch, in flight on VPS)
+
+`arxiv-2510.10981` ("In-Context Learning Is Provably Bayesian Inference")
+chosen for a deliberately tractable Monte-Carlo-verifiable risk-decomposition
+identity — the shot at a **supported** verdict. Tmux `lemma-icl-bayes`,
+log `runs/icl-bayes-20260816-082855.log`, 6 claims extracted by minute 2.
+Sync + assemble only if it lands before 10:45; otherwise the CA story
+(inconclusive + boundary + published logbook) is the submission.
+
+**Credentials state (updated):** `.env` has `LEMMA_ENDPOINTS=HF,ORCA` plus
+RUNINFRA (`rp_…` free until Aug 18 11:00 UTC, needs `X-Client-Request-Id`
+uuid header) and DEEPSEEK/FLASH (OrcaRouter free v4-pro/v4-flash) configs,
+`PAPERCLIP_API_KEY=gxl_…` (X-API-Key auth), stale `OPENAI_*` emptied.
+`.env` rsynced to `~/lemma/.env` on the VPS. GXL email sent asking for
+Claude credits; round-3 on C1/C6 only if they land.
+
+**Pre-10:45 checklist:**
+1. ICL run: `ssh nuncio-vultr 'tail ~/lemma/runs/icl-bayes-*.log'` → if
+   finished with supported claims, rsync back, `--stages evidence,judge`,
+   publish as the centerpiece; if not, skip.
+2. Final regression gate: `./lemma judge --regression` → PASS.
+3. Submit: repo (github.com/udirobert/lemma, main current) + logbook URL.
+4. Demo order unchanged (regression → CA two-round story → bake-off
+   boundary → live judge/search → logbook URL).
+
 
 **Venue grab-list (check-in, Day 2 morning):**
 1. **Paperclip API key** (free for participants) → `PAPERCLIP_API_KEY=pk_...`
