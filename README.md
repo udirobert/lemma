@@ -70,14 +70,17 @@ both with self-judged evidence trails:
 | Paper | Verdict | Logbook |
 |-------|---------|---------|
 | [arXiv 2510.10981](https://arxiv.org/abs/2510.10981) — *In-Context Learning Is Provably Bayesian Inference* | **3 supported / 0 falsified / 3 inconclusive** — the Prop. 3.1 risk identity (rel. diff 0.4%, nonzero Bayes Gap), the Thm 3.3 posterior-concentration mechanism, and the m/(pN) coupling rate (slope −0.83, r²=0.995) | https://huggingface.co/spaces/Papajams/repro-icl-provably-bayesian |
-| [JMLR 22-1228](https://www.jmlr.org/papers/v22/22-1228.html) — *Grokking phase transitions in learning local rules with gradient descent* | **0 supported / 0 falsified / 6 inconclusive** — a genuine free-model capability boundary, proven by a controlled bake-off (ν≈6000 vs expected 1.0 on the exact failed task) | https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules |
+| [JMLR 22-1228](https://www.jmlr.org/papers/v22/22-1228.html) — *Grokking phase transitions in learning local rules with gradient descent* | **5 supported / 0 falsified / 1 inconclusive** — critical exponents ν=1 (1D) and ν=(D+1)/2 (D-ball), P_grok(L1)>P_grok(L2), P_grok decreasing with D (Eq 86), and bimodal grokking-time PDF; C5 inconclusive by compute scope (the CPU-auditable proxy trivializes Rule-30) | https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules |
 
-Both workdirs carry the full trace (267 and 177 events respectively, failed
+Both workdirs carry the full trace (267 and 305 events respectively, failed
 attempts preserved) and judge verdicts of **PASS 5/5**. Honest outcomes over
 green checkmarks: where the pipeline's own verdict contradicted its data, the
-trace shows the correction (human-in-the-loop feedback → re-audit). Where the
-model could not do the physics, the agent said "inconclusive" and the bake-off
-log shows why.
+trace shows the correction (human-in-the-loop feedback → re-audit;
+reviewer-reference escalation when LLM implementations stayed broken). The
+JMLR paper's early rounds documented a genuine free-model capability
+boundary (ν≈6000 vs expected 1.0 in a controlled bake-off); a later
+capability-tier swap (Kimi K3, gated by passing the same bake-off) plus
+hand-verified closed-form references closed the remaining claims.
 
 ## Prior art & validation
 
