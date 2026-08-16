@@ -9,3 +9,8 @@ anthropic>=0.40
 openai>=1.50
 requests>=2.31
 trackio>=0.32.1
+# Optional: Paperclip (GXL) SDK — not on PyPI; installed via their tooling:
+#   curl -fsSL https://paperclip.gxl.ai/install.sh | bash   (CLI)
+#   or point the agent at the hosted MCP server (https://paperclip.gxl.ai/mcp).
+# agent/paperclip.py degrades gracefully when gxl_paperclip is absent.
+# gxl-paperclip

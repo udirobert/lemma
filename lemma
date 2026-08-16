@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 # Wrapper so the demo command is just: ./lemma audit <source>
+# Prefers the repo .venv (Python 3.12 + deps) over whatever `python3` resolves to.
 set -euo pipefail
 cd "$(dirname "$0")"
-exec python3 -m agent.cli "$@"
+if [ -x ".venv/bin/python" ]; then
+  PY=".venv/bin/python"
+else
+  PY="python3"
+fi
+exec "$PY" -m agent.cli "$@"

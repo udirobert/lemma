@@ -76,9 +76,16 @@ def main() -> int:
 
 
 def _search(args: argparse.Namespace) -> int:
+    from agent import paperclip
     from agent.firecrawl import search
 
-    hits = search(args.query, args.limit, research=args.research)
+    hits: list[dict] = []
+    if paperclip.available()[0]:
+        hits = paperclip.search(args.query, args.limit)
+        if hits:
+            print(f"[lemma] via Paperclip (GXL corpus): {len(hits)} hits")
+    if not hits:
+        hits = search(args.query, args.limit, research=args.research)
     if not hits:
         print("[lemma] no results")
         return 1

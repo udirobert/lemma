@@ -124,6 +124,29 @@ def build_logbook(
                     str(png),
                 )
 
+        # literature context via Paperclip (GXL) — cached per claim so
+        # evidence rebuilds do not re-query the corpus
+        from agent import paperclip
+
+        claim_dir = results_dir / cid.lower()
+        xcheck_path = claim_dir / "cross_check.json"
+        pc_ok = paperclip.available()[0]
+        if pc_ok and not xcheck_path.is_file():
+            xcheck = paperclip.cross_check(claim, trace=trace)
+            claim_dir.mkdir(parents=True, exist_ok=True)
+            xcheck_path.write_text(json.dumps(xcheck, indent=2), encoding="utf-8")
+        if xcheck_path.is_file():
+            xcheck = json.loads(xcheck_path.read_text(encoding="utf-8"))
+            _tio(
+                workdir,
+                trace,
+                "cell",
+                "markdown",
+                "--title",
+                "Literature context",
+                paperclip.render_markdown(xcheck),
+            )
+
     # --- Conclusion ---------------------------------------------------------
     _tio(workdir, trace, "page", "Conclusion")
     concl_md = (
