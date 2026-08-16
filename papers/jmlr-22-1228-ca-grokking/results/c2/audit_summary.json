@@ -2,21 +2,21 @@
   "claim_id": "C2",
   "status": "inconclusive",
   "metrics": {
-    "control_pass": "True",
-    "control_nu": 1.4992976616776814,
-    "control_r2": 0.999928123083855,
-    "D2_nu": "N/A",
-    "D2_theoretical": "N/A",
-    "D2_r2": "N/A",
-    "D2_status": "inconclusive",
-    "D5_nu": "N/A",
-    "D5_theoretical": "N/A",
-    "D5_r2": "N/A",
-    "D5_status": "inconclusive",
-    "D10_nu": "N/A",
-    "D10_theoretical": "N/A",
-    "D10_r2": "N/A",
-    "D10_status": "inconclusive"
+    "control_pass": true,
+    "control_nu_fit": 1.5007256254893995,
+    "control_r2": 0.9999741298479973,
+    "nu_fit_D2": "N/A",
+    "nu_expected_D2": "N/A",
+    "r2_D2": "N/A",
+    "status_D2": "inconclusive",
+    "nu_fit_D5": "N/A",
+    "nu_expected_D5": "N/A",
+    "r2_D5": "N/A",
+    "status_D5": "inconclusive",
+    "nu_fit_D10": "N/A",
+    "nu_expected_D10": "N/A",
+    "r2_D10": "N/A",
+    "status_D10": "inconclusive"
   },
-  "notes": "Control passed: True. Fitted exponents vs theoretical: D=2: N/A vs N/A, D=5: N/A vs N/A, D=10: N/A vs N/A"
+  "notes": "Control passed: True. D=2: inconclusive; D=5: inconclusive; D=10: inconclusive"
 }

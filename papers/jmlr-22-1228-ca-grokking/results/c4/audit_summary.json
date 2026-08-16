@@ -1,16 +1,9 @@
 {
   "claim_id": "C4",
-  "status": "falsified",
+  "status": "inconclusive",
   "metrics": {
-    "P_grok_D5": 0.0,
-    "P_grok_D10": 0.0,
-    "P_grok_D20": 0.0,
-    "P_grok_D50": 0.0,
-    "monotonic_decrease": true,
-    "log_slope": 0,
-    "log_p_value": null,
-    "control_pass": true,
-    "P_grok_D1_control": 1.0
+    "script_exit_code": -1,
+    "attempts_used": 4
   },
-  "notes": "Grokking probabilities: D=5:0.0000, D=10:0.0000, D=20:0.0000, D=50:0.0000. Monotonic: True. Log-linear slope: 0.0000. Control (D=1): 1.0000."
+  "notes": "script failed after 4 tries"
 }

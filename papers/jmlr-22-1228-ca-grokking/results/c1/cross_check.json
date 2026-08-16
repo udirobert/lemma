@@ -1,0 +1,21 @@
+{
+  "query": "Critical exponent in 1D exponential model In the 1D exponential model, the test error $E(t)$ near the grokking transition time $t_\\epsilon$ scales as $E(t) \\propt",
+  "hits": [
+    {
+      "url": "https://doi.org/10.1103/PhysRevD.104.012012",
+      "title": "Search for the $\\eta_{c2}(1D)$ in $e^+e^-\\to\\gamma\\eta_{c2}(1D)$ at   $\\sqrt{s}$ near 10.6 GeV at Belle",
+      "description": "Belle Collaboration: S. Jia, C. P. Shen, I. Adachi, H. Aihara, S. Al Said, D. M. Asner, T. Aushev, R... | arx_2106.09224 \u00b7 arXiv \u00b7 2021 | https://doi.org/10.1103/PhysRevD.104.012012"
+    },
+    {
+      "url": "paperclip:/papers/arx_2210.15435",
+      "title": "Grokking phase transitions in learning local rules with gradient descent",
+      "description": "Bojan \\v{Z}unkovi\\v{c}, Enej Ilievski | arx_2210.15435 \u00b7 arXiv \u00b7 2022-10-26 | \"Researchers investigated grokking, or generalization beyond overfitting, in rule learning models using gradient descent. They found grokking is a phase transition with exact analytic expressions for critical exponents and"
+    },
+    {
+      "url": "paperclip:/papers/arx_2310.03789",
+      "title": "Grokking as a First Order Phase Transition in Two Layer Networks",
+      "description": "Noa Rubin, Inbar Seroussi, Zohar Ringel | arx_2310.03789 \u00b7 arXiv \u00b7 2023-10-05 | \"Researchers investigated feature learning and Grokking in two-layer neural networks using an adaptive kernel approach. They found that Grokking resembles a first-order phase transition, resulting in distinct internal re"
+    }
+  ],
+  "note": "3 related works surfaced via Paperclip (GXL) corpus search (arxiv source); listed as context only \u2014 audit verdicts rest on the numerical evidence above."
+}

@@ -33,6 +33,20 @@ def build_logbook(
     run_meta: dict,
 ) -> None:
     results_dir = workdir / "results"
+
+    # Guard: trackio walks UP the directory tree looking for an existing
+    # logbook. If an ancestor dir has one, `open` silently attaches our
+    # pages to it (this happened 2026-08-16: CA cells landed on the old
+    # ICML grokking logbook at the repo root). Refuse unless the nearest
+    # state is our own.
+    for ancestor in workdir.resolve().parents:
+        if (ancestor / ".trackio" / "logbook").is_dir():
+            raise RuntimeError(
+                f"refusing to build: ancestor {ancestor} already holds a "
+                "trackio logbook and `trackio logbook open` would attach to "
+                "it. Move/quarantine that .trackio first."
+            )
+
     _tio(
         workdir,
         trace,
@@ -121,7 +135,7 @@ def build_logbook(
                     "--title",
                     png.stem,
                     "--image",
-                    str(png),
+                    str(png.resolve()),
                 )
 
         # literature context via Paperclip (GXL) — cached per claim so

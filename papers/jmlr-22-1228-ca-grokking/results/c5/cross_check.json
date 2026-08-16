@@ -1,0 +1,21 @@
+{
+  "query": "Rule-30 CA learning exhibits grokking Training a tensor-network student model to learn the Rule-30 cellular automaton rule exhibits grokking, characterized by",
+  "hits": [
+    {
+      "url": "paperclip:/papers/arx_2210.15435",
+      "title": "Grokking phase transitions in learning local rules with gradient descent",
+      "description": "Bojan \\v{Z}unkovi\\v{c}, Enej Ilievski | arx_2210.15435 \u00b7 arXiv \u00b7 2022"
+    },
+    {
+      "url": "paperclip:/papers/arx_2503.10483",
+      "title": "Grokking as an entanglement transition in tensor network machine   learning",
+      "description": "Domenico Pomarico, Alfonso Monaco, Giuseppe Magnifico, Antonio Lacalamita, Ester Pantaleo, Loredana ... | arx_2503.10483 \u00b7 arXiv \u00b7 2025"
+    },
+    {
+      "url": "paperclip:/papers/arx_2310.06110",
+      "title": "Grokking as the Transition from Lazy to Rich Training Dynamics",
+      "description": "Tanishq Kumar, Blake Bordelon, Samuel J. Gershman, Cengiz Pehlevan | arx_2310.06110 \u00b7 arXiv \u00b7 2023 | [295ms, saved to s_40ceab83]"
+    }
+  ],
+  "note": "3 related works surfaced via Paperclip (GXL) corpus search (arxiv source); listed as context only \u2014 audit verdicts rest on the numerical evidence above."
+}

@@ -203,6 +203,10 @@ def _judge(args: argparse.Namespace) -> int:
     else:
         workdir = Path(args.workdir or ".")
         trace_path = Path(args.trace) if args.trace else None
+        if trace_path is None:
+            candidate = workdir / "trace.jsonl"
+            if candidate.is_file():
+                trace_path = candidate
 
     result = judge_run(workdir, trace_path, relative_paths=True)
     (workdir / "judge_report.json").write_text(

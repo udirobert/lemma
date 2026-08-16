@@ -1,0 +1,21 @@
+{
+  "query": "Grokking time distribution bimodality In the D-dimensional uniform ball model limit ($\\lambda_2 \\ll \\epsilon^2$), the grokking time PDF is bimodal, consisting",
+  "hits": [
+    {
+      "url": "paperclip:/papers/arx_2310.16441",
+      "title": "Grokking in Linear Estimators -- A Solvable Model that Groks without   Understanding",
+      "description": "Noam Levi and Alon Beck and Yohai Bar-Sinai | arx_2310.16441 \u00b7 arXiv \u00b7 2023"
+    },
+    {
+      "url": "paperclip:/papers/arx_2604.04655",
+      "title": "Grokking as Dimensional Phase Transition in Neural Networks",
+      "description": "arx_2604.04655 \u00b7 arXiv \u00b7 2026"
+    },
+    {
+      "url": "paperclip:/papers/arx_2502.01774",
+      "title": "Grokking Explained: A Statistical Phenomenon",
+      "description": "Breno W. Carvalho, Artur S. d'Avila Garcez, Lu\\'is C. Lamb and Em\\'ilio Vital Brazil | arx_2502.01774 \u00b7 arXiv \u00b7 2025 | [354ms, saved to s_5ba32468]"
+    }
+  ],
+  "note": "3 related works surfaced via Paperclip (GXL) corpus search (arxiv source); listed as context only \u2014 audit verdicts rest on the numerical evidence above."
+}
