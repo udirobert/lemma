@@ -421,6 +421,21 @@ Claude credits.
 - Kaggle: deliberately skipped (no CLI/API keypair available; audit trails
   fit HF datasets, not Kaggle notebooks).
 
+**Eval-prize trajectory upload (BenchFlow, 2026-08-16 ~21:40 BST):**
+- Submitted after organizer granted grace (deadline 12:30 PDT passed while
+  their upload infra was being rate-limit-stabilized for ~300 contributors
+  behind one venue NAT).
+- `scripts/to_opentraces.py` converts both papers' `trace.jsonl` into one
+  opentraces v0.3 record per paper (TAO steps: `llm_call` → thought,
+  `script_written`/`tool_run` → action + observation, lifecycle events
+  → thought). Raw lemma JSONL fell through to BenchFlow's "generic"
+  fallback and collapsed to 3 steps; converted, the report counts all
+  **624 steps** (266 thinking / 356 tool-call / 2 human), 0 secrets masked.
+- `bench traj upload tmp/traj-upload --github-id udirobert --email <addr>`;
+  digest sha256:1aa9af21…75b9be, 128.1 KiB, idempotent on retry.
+- Server revalidates in quarantine (secret rescan, hashes, 8 MiB/record cap)
+  before promoting to `sources/community/<digest>/`.
+
 ## Post-submission roadmap
 
 ### Frontend (updated 2026-08-16 evening)
