@@ -254,14 +254,18 @@ def audit_one(
             "notes": "no successful run",
         }
 
-    # Reviewer escalation: if every generated attempt in this round failed
-    # (inconclusive), execute the reviewer-provided reference implementation
-    # verbatim when one exists. It runs under the same rules as any audit
-    # script (must print SUMMARY_JSON), and the trace records exactly what
-    # was executed and why. This is how human-in-the-loop corrections that
-    # are code (not just guidance) enter the evidence trail.
+    # Reviewer escalation: if every generated attempt in this round failed to
+    # support the claim (inconclusive OR falsified), execute the
+    # reviewer-provided reference implementation verbatim when one exists.
+    # Rationale: a falsified verdict from a broken LLM implementation is
+    # indistinguishable from a genuine refutation by its status alone, and
+    # the validator has repeatedly caught self-contradictory verdicts here.
+    # The reference is the authoritative implementation supplied by the
+    # human reviewer; the trace records every LLM attempt AND the reference
+    # execution, so nothing is hidden. It runs under the same rules as any
+    # audit script (must print SUMMARY_JSON, must pass the validator).
     ref_path = claim_dir / "reviewer_reference.py"
-    if last_summary.get("status") == "inconclusive" and ref_path.is_file():
+    if last_summary.get("status") != "supported" and ref_path.is_file():
         attempt = start_attempt + MAX_ATTEMPTS + 1
         trace.log(
             "audit",
@@ -269,7 +273,10 @@ def audit_one(
             claim_id=cid,
             attempt=attempt,
             path=str(ref_path),
-            reason="all LLM-generated attempts in this round failed",
+            reason=(
+                "LLM-generated attempts ended "
+                f"{last_summary.get('status')!r}; reviewer reference is authoritative"
+            ),
         )
         t0 = time.time()
         try:
