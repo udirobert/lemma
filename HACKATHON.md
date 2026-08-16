@@ -307,7 +307,8 @@ remaining testable claims **SUPPORTED**.
 scope-limited by compute: the auditable proxy trivializes Rule-30 and
 the paper's tensor-network regime is gpu-small). Logbook re-published:
 https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules
-Judge: PASS 5/5 (305 trace events, 9 failed attempts preserved in full).
+Judge: PASS 5/5 (353 trace events after the clean rebuild, 9 failed
+attempts preserved in full).
 
 ### Third paper: arXiv 2510.10981 — "ICL Is Provably Bayesian Inference"
 
@@ -385,12 +386,15 @@ Claude credits.
 
 **Pre-10:45 checklist (deadline is 10:45 AM PDT = 18:45 BST):**
 1. ~~ICL run~~ — DONE: 3 supported / 3 inconclusive, logbook published.
-2. ~~Final regression gate~~ — PASS 5/5 confirmed after every change
-   (last run with commit `d009e1c`).
-3. Submit: repo (github.com/udirobert/lemma, main current) + logbook URLs:
+2. ~~CA run~~ — DONE: 5 supported / 0 falsified / 1 inconclusive (C5,
+   compute scope); final logbook published (judge PASS 5/5 on the
+   clean rebuild, 353-event trace).
+3. ~~Final regression gate~~ — PASS 5/5 confirmed after every change
+   (last run with commit `60b90ac`).
+4. Submit: repo (github.com/udirobert/lemma, main current) + logbook URLs:
    - https://huggingface.co/spaces/Papajams/repro-icl-provably-bayesian
    - https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules
-4. Demo order (updated, boring-safe): regression PASS → **ICL logbook**
+5. Demo order (updated, boring-safe): regression PASS → **ICL logbook**
    (the supported trio + honest inconclusives; show C1's
    reviewer_reference_executed escalation event in the trace) → CA
    two-round story + capability boundary → live judge/search → logbook
