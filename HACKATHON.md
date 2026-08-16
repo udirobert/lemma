@@ -223,6 +223,45 @@ is unavailable.
 - Published: https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules
   (rendered: https://papajams-repro-grokking-ca-local-rules.static.hf.space/)
 
+### Kimi K3 endpoint + CA round 3–4 (2026-08-16 ~11:45–12:30)
+
+User-provided Kimi K3 on a Modal serverless proxy
+(`papaandthejimjams--ep-kimi-k3-server.us-west.modal.direct`, model
+`moonshotai/Kimi-K3`, proxy bearer auth). Integration notes (commit
+`e85c9ff`):
+- Thinking mode counts reasoning tokens against max_tokens — one
+  completion burned 11.7k reasoning + 2.5k content. `LEMMA_<NAME>_MAX_TOKENS`
+  now acts as a floor; KIMI configured `reasoning_effort: low` + 16384.
+- The Modal proxy intermittently rejects with "Duplicate request ID";
+  `LEMMA_KIMI_HEADERS` sends a fresh `X-Request-Id` uuid per call.
+- Endpoint hit a usage cap mid-test (user added budget); chain is now
+  `KIMI,RUNINFRA,HF,ORCA,DEEPSEEK`.
+
+**Bake-off gate PASSED**: on the exact task every free 27B failed
+(CA closed-form 1D dynamics, expect ν=1.0), Kimi K3 produced
+**ν = 0.9911** in one generation (92s). Qwen/DeepSeek had given ν≈6000–6700.
+
+**CA round 3** (Kimi primary, ~33 min): C1 now **SUPPORTED** —
+ν = 0.9983 vs paper's 1.0, control ν = 1.0000 exact, 745 fit points.
+The headline claim of the JMLR paper is reproduced. Others: C2
+"falsified" but its own control reproduced the (D+1)/2 series EXACTLY
+(main setup bug, not physics); C3 inconclusive (regime saturation
+L1=1.000 vs L2=0.980); C4 "falsified" with zero usable observations
+(P=0 at all D, NaN slope — verdict void); C5 honest negative
+(perceptron proxy trivializes Rule-30's 8-triplet lookup; tensor-network
+claim is gpu-small, out of scope); C6 "falsified" despite its metrics
+showing the predicted bimodality (detector thresholds miscalibrated).
+
+**Validator v2** (commit `9816015`): verdicts built on NaN primary
+metrics or n_measurable_points=0 are now rejected as contradictions
+(C4's failure mode), added after round 3 exposed it.
+
+**Round 4** in flight (tmux `lemma-ca-round4`, claims C2–C6):
+closed-form ball dynamics for C2/C4, hard-regime sweep for C3,
+scope-limitation resolution for C5, histogram-valley bimodality test
+for C6. On landing: re-assemble + re-judge + re-publish the CA
+logbook.
+
 ### Third paper: arXiv 2510.10981 — "ICL Is Provably Bayesian Inference"
 
 Chosen as the deliberately tractable third paper: its Proposition 3.1 risk
