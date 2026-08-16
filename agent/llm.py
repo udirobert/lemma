@@ -69,6 +69,12 @@ def _endpoint_cfg(name: str) -> dict | None:
             extra_headers = json.loads(raw_headers)
         except json.JSONDecodeError:
             extra_headers = None
+    # reasoning models count thinking tokens against max_tokens; an endpoint
+    # can declare a floor so the caller's budget never truncates content
+    try:
+        min_max_tokens = int(os.environ.get(f"LEMMA_{name}_MAX_TOKENS") or 0)
+    except ValueError:
+        min_max_tokens = 0
     return {
         "name": name,
         "api_key": api_key,
@@ -76,6 +82,7 @@ def _endpoint_cfg(name: str) -> dict | None:
         "model": model,
         "extra_body": extra_body,
         "extra_headers": extra_headers,
+        "min_max_tokens": min_max_tokens,
     }
 
 
@@ -266,6 +273,10 @@ def _complete_one(
         ],
     }
     cfg = _endpoint_cfg(p) if p != "OPENAI" else None
+    if cfg and cfg.get("min_max_tokens"):
+        # reasoning models spend part of max_tokens on thinking; never go
+        # below the endpoint's declared floor or content gets truncated
+        kwargs["max_tokens"] = max(max_tokens, cfg["min_max_tokens"])
     if cfg and cfg.get("extra_body"):
         kwargs["extra_body"] = cfg["extra_body"]
     if cfg and cfg.get("extra_headers"):
