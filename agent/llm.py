@@ -57,12 +57,20 @@ def _endpoint_cfg(name: str) -> dict | None:
             extra_body = json.loads(raw_extra)
         except json.JSONDecodeError:
             extra_body = None
+    extra_headers = None
+    raw_headers = (os.environ.get(f"LEMMA_{name}_HEADERS") or "").strip()
+    if raw_headers:
+        try:
+            extra_headers = json.loads(raw_headers)
+        except json.JSONDecodeError:
+            extra_headers = None
     return {
         "name": name,
         "api_key": api_key,
         "base_url": base_url,
         "model": model,
         "extra_body": extra_body,
+        "extra_headers": extra_headers,
     }
 
 
@@ -241,6 +249,14 @@ def _complete_one(
     cfg = _endpoint_cfg(p) if p != "OPENAI" else None
     if cfg and cfg.get("extra_body"):
         kwargs["extra_body"] = cfg["extra_body"]
+    if cfg and cfg.get("extra_headers"):
+        # fresh uuid per request for "{uuid}" placeholders (idempotency ids)
+        import uuid as _uuid
+
+        kwargs["extra_headers"] = {
+            k: (v.format(uuid=_uuid.uuid4()) if "{uuid}" in v else v)
+            for k, v in cfg["extra_headers"].items()
+        }
     resp = client.chat.completions.create(**kwargs)
     text = resp.choices[0].message.content or ""
     if not text.strip():
