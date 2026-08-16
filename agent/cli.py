@@ -107,9 +107,16 @@ def _audit(args: argparse.Namespace) -> int:
 
     paper = resolve(
         args.source,
-        workdir=Path(args.workdir) if args.workdir else PAPERS_DIR / "_staging",
+        workdir=Path(args.workdir).resolve()
+        if args.workdir
+        else PAPERS_DIR / "_staging",
     )
-    workdir = Path(args.workdir) if args.workdir else PAPERS_DIR / paper["paper_id"]
+    # resolve() the workdir: audit scripts run via subprocess with cwd=workdir,
+    # and a relative path there doubles up (cwd joined onto the relative
+    # script path) and every script run fails with exit 2.
+    workdir = (
+        Path(args.workdir).resolve() if args.workdir else PAPERS_DIR / paper["paper_id"]
+    )
     workdir.mkdir(parents=True, exist_ok=True)
     # move staging pdf into workdir if needed
     pdf = Path(paper["pdf_path"])
