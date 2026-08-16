@@ -1,0 +1,127 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "status": "falsified",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C1",
+        "status": "falsified",
+        "metrics": {
+          "fitted_exponent_nu": 1.8257624968776296e-14,
+          "t_epsilon": 3257,
+          "control_pass": true,
+          "control_exponent": 0.9999999999999996,
+          "num_fit_points": 100
+        },
+        "notes": "Fitted critical exponent nu=0.000. t_epsilon=3257. Control passed: True."
+      }
+    },
+    {
+      "id": "C2",
+      "status": "inconclusive",
+      "attempts": 3,
+      "summary": {
+        "claim_id": "C2",
+        "status": "inconclusive",
+        "metrics": {
+          "control_pass": "True",
+          "control_nu": 1.4992976616776814,
+          "control_r2": 0.999928123083855,
+          "D2_nu": "N/A",
+          "D2_theoretical": "N/A",
+          "D2_r2": "N/A",
+          "D2_status": "inconclusive",
+          "D5_nu": "N/A",
+          "D5_theoretical": "N/A",
+          "D5_r2": "N/A",
+          "D5_status": "inconclusive",
+          "D10_nu": "N/A",
+          "D10_theoretical": "N/A",
+          "D10_r2": "N/A",
+          "D10_status": "inconclusive"
+        },
+        "notes": "Control passed: True. Fitted exponents vs theoretical: D=2: N/A vs N/A, D=5: N/A vs N/A, D=10: N/A vs N/A"
+      }
+    },
+    {
+      "id": "C3",
+      "status": "inconclusive",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C3",
+        "status": "inconclusive",
+        "metrics": {
+          "p_grok_l2": 0.0,
+          "p_grok_l1": 0.0,
+          "control_pass": false,
+          "n_trials": 200,
+          "D": 10,
+          "N": 20,
+          "epsilon": 1.01
+        },
+        "notes": "Positive control failed. Training procedure may be buggy."
+      }
+    },
+    {
+      "id": "C4",
+      "status": "falsified",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C4",
+        "status": "falsified",
+        "metrics": {
+          "P_grok_D5": 0.0,
+          "P_grok_D10": 0.0,
+          "P_grok_D20": 0.0,
+          "P_grok_D50": 0.0,
+          "monotonic_decrease": true,
+          "log_slope": 0,
+          "log_p_value": null,
+          "control_pass": true,
+          "P_grok_D1_control": 1.0
+        },
+        "notes": "Grokking probabilities: D=5:0.0000, D=10:0.0000, D=20:0.0000, D=50:0.0000. Monotonic: True. Log-linear slope: 0.0000. Control (D=1): 1.0000."
+      }
+    },
+    {
+      "id": "C5",
+      "status": "inconclusive",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C5",
+        "status": "inconclusive",
+        "metrics": {
+          "final_train_error": 0.22281,
+          "final_test_error": 0.25363,
+          "min_train_error": 0.22281,
+          "min_test_error": 0.25363,
+          "grokking_observed": false,
+          "control_pass": false
+        },
+        "notes": "Train error never reached near zero. Model failed to fit training data, control failed."
+      }
+    },
+    {
+      "id": "C6",
+      "status": "falsified",
+      "attempts": 2,
+      "summary": {
+        "claim_id": "C6",
+        "status": "falsified",
+        "metrics": {
+          "t_slow_analytical": 3.226926056878558,
+          "n_slow_trials": 1000,
+          "n_fast_trials": 9000,
+          "slow_cluster_mean": 2.8335204085086336,
+          "slow_cluster_std": 0.8542237237312467,
+          "fast_cluster_mean": 0.6003872930321899,
+          "fast_cluster_std": 0.4345814752018786,
+          "bimodal_detected": false,
+          "control_pass": true
+        },
+        "notes": "Simulated 10000 trials. Slow relaxation peak at t=3.23 (analytical). Slow cluster: mean=2.83, std=0.8542. Fast cluster: mean=0.60, std=0.43. Bimodality detected: False. Control check passed: True."
+      }
+    }
+  ]
+}

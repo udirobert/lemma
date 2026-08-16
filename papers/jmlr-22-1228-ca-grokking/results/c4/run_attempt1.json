@@ -1,0 +1,21 @@
+{
+  "attempt": 1,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C4",
+    "status": "falsified",
+    "metrics": {
+      "P_grok_D5": 0.0,
+      "P_grok_D10": 0.0,
+      "P_grok_D20": 0.0,
+      "P_grok_D50": 0.0,
+      "monotonic_decrease": true,
+      "log_slope": 0,
+      "log_p_value": null,
+      "control_pass": true,
+      "P_grok_D1_control": 1.0
+    },
+    "notes": "Grokking probabilities: D=5:0.0000, D=10:0.0000, D=20:0.0000, D=50:0.0000. Monotonic: True. Log-linear slope: 0.0000. Control (D=1): 1.0000."
+  },
+  "wall_s": 10.95
+}

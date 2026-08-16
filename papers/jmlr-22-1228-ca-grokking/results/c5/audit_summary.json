@@ -1,0 +1,13 @@
+{
+  "claim_id": "C5",
+  "status": "inconclusive",
+  "metrics": {
+    "final_train_error": 0.22281,
+    "final_test_error": 0.25363,
+    "min_train_error": 0.22281,
+    "min_test_error": 0.25363,
+    "grokking_observed": false,
+    "control_pass": false
+  },
+  "notes": "Train error never reached near zero. Model failed to fit training data, control failed."
+}

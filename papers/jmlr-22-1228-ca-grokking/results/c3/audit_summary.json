@@ -1,0 +1,14 @@
+{
+  "claim_id": "C3",
+  "status": "inconclusive",
+  "metrics": {
+    "p_grok_l2": 0.0,
+    "p_grok_l1": 0.0,
+    "control_pass": false,
+    "n_trials": 200,
+    "D": 10,
+    "N": 20,
+    "epsilon": 1.01
+  },
+  "notes": "Positive control failed. Training procedure may be buggy."
+}

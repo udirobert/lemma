@@ -36,6 +36,12 @@ def main() -> int:
     )
     p_audit.add_argument("--workdir", help="paper dir (default papers/<id>)")
     p_audit.add_argument(
+        "--claims",
+        help="comma-separated claim ids to (re-)audit only; merges into the "
+        "existing report. Combine with results/<cid>/feedback.md for "
+        "human-in-the-loop corrections.",
+    )
+    p_audit.add_argument(
         "--no-publish",
         action="store_true",
         help="do not publish logbook even if configured",
@@ -139,7 +145,11 @@ def _audit(args: argparse.Namespace) -> int:
         if not claims:
             print("[lemma] no claims; run extract first", file=sys.stderr)
             return 1
-        report = audit_all(claims, paper["text"], workdir, trace)
+        only = None
+        if getattr(args, "claims", None):
+            only = {c.strip() for c in args.claims.split(",") if c.strip()}
+            print(f"[lemma] re-auditing subset: {sorted(only)}")
+        report = audit_all(claims, paper["text"], workdir, trace, only=only)
         for c in report["claims"]:
             print(
                 f"[lemma]   {c['id']}: {c['status']} ({c.get('attempts', 0)} attempts)"

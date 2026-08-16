@@ -1,0 +1,17 @@
+{
+  "attempt": 1,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C1",
+    "status": "falsified",
+    "metrics": {
+      "fitted_exponent_nu": 1.8257624968776296e-14,
+      "t_epsilon": 3257,
+      "control_pass": true,
+      "control_exponent": 0.9999999999999996,
+      "num_fit_points": 100
+    },
+    "notes": "Fitted critical exponent nu=0.000. t_epsilon=3257. Control passed: True."
+  },
+  "wall_s": 2.6
+}

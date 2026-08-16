@@ -1,0 +1,22 @@
+{
+  "claim_id": "C2",
+  "status": "inconclusive",
+  "metrics": {
+    "control_pass": "True",
+    "control_nu": 1.4992976616776814,
+    "control_r2": 0.999928123083855,
+    "D2_nu": "N/A",
+    "D2_theoretical": "N/A",
+    "D2_r2": "N/A",
+    "D2_status": "inconclusive",
+    "D5_nu": "N/A",
+    "D5_theoretical": "N/A",
+    "D5_r2": "N/A",
+    "D5_status": "inconclusive",
+    "D10_nu": "N/A",
+    "D10_theoretical": "N/A",
+    "D10_r2": "N/A",
+    "D10_status": "inconclusive"
+  },
+  "notes": "Control passed: True. Fitted exponents vs theoretical: D=2: N/A vs N/A, D=5: N/A vs N/A, D=10: N/A vs N/A"
+}

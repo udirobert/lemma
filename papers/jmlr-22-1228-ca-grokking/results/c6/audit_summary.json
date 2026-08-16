@@ -1,0 +1,16 @@
+{
+  "claim_id": "C6",
+  "status": "falsified",
+  "metrics": {
+    "t_slow_analytical": 3.226926056878558,
+    "n_slow_trials": 1000,
+    "n_fast_trials": 9000,
+    "slow_cluster_mean": 2.8335204085086336,
+    "slow_cluster_std": 0.8542237237312467,
+    "fast_cluster_mean": 0.6003872930321899,
+    "fast_cluster_std": 0.4345814752018786,
+    "bimodal_detected": false,
+    "control_pass": true
+  },
+  "notes": "Simulated 10000 trials. Slow relaxation peak at t=3.23 (analytical). Slow cluster: mean=2.83, std=0.8542. Fast cluster: mean=0.60, std=0.43. Bimodality detected: False. Control check passed: True."
+}

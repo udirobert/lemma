@@ -56,27 +56,47 @@ Respond with ONLY a JSON object: {"script": "<full python code>", "notes": "..."
 On follow-up turns, fix the actual failure shown in the run output."""
 
 
-def audit_all(claims: list[dict], paper_text: str, workdir: Path, trace: Trace) -> dict:
+def audit_all(
+    claims: list[dict],
+    paper_text: str,
+    workdir: Path,
+    trace: Trace,
+    only: set[str] | None = None,
+) -> dict:
     results_dir = workdir / "results"
     results_dir.mkdir(exist_ok=True)
-    report = {"claims": []}
+
+    # merge with any existing report so subset re-audits preserve prior results
+    report_path = results_dir / "audit_report.json"
+    existing = (
+        json.loads(report_path.read_text(encoding="utf-8"))
+        if report_path.is_file()
+        else {}
+    )
+    report = {"claims": list(existing.get("claims", []))}
+    existing_ids = {c["id"] for c in report["claims"]}
 
     for claim in claims:
+        if only is not None and claim["id"] not in only:
+            continue
         if not claim.get("testable"):
             trace.log("audit", "skip untestable", claim_id=claim["id"])
-            report["claims"].append(
-                {"id": claim["id"], "status": "not_audited", "attempts": 0}
-            )
-            continue
-        outcome = audit_one(claim, paper_text, workdir, results_dir, trace)
-        report["claims"].append(outcome)
+            entry = {"id": claim["id"], "status": "not_audited", "attempts": 0}
+        else:
+            entry = audit_one(claim, paper_text, workdir, results_dir, trace)
+        if entry["id"] in existing_ids:
+            report["claims"] = [
+                entry if c["id"] == entry["id"] else c for c in report["claims"]
+            ]
+        else:
+            report["claims"].append(entry)
+            existing_ids.add(entry["id"])
 
-    out = results_dir / "audit_report.json"
-    out.write_text(json.dumps(report, indent=2), encoding="utf-8")
+    report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
     trace.log(
         "audit",
         "report",
-        path=str(out),
+        path=str(report_path),
         summary=[{"id": c["id"], "status": c["status"]} for c in report["claims"]],
     )
     return report
@@ -90,12 +110,26 @@ def audit_one(
     claim_dir = results_dir / claim_slug
     claim_dir.mkdir(exist_ok=True)
 
+    # Human-in-the-loop: optional reviewer feedback for this claim.
+    feedback_path = claim_dir / "feedback.md"
+    feedback = (
+        feedback_path.read_text(encoding="utf-8").strip()
+        if feedback_path.is_file()
+        else ""
+    )
+    if feedback:
+        trace.log("audit", "feedback_loaded", claim_id=cid, chars=len(feedback))
+
+    # continue attempt numbering if scripts from a prior round exist
+    prior_scripts = sorted(claim_dir.glob("audit_attempt*.py"))
+    start_attempt = len(prior_scripts)
+
     run_history: list[str] = []
     last_summary = None
 
-    for attempt in range(1, MAX_ATTEMPTS + 1):
+    for attempt in range(start_attempt + 1, start_attempt + 1 + MAX_ATTEMPTS):
         script_path = claim_dir / f"audit_attempt{attempt}.py"
-        user_prompt = _build_prompt(claim, paper_text, attempt, run_history)
+        user_prompt = _build_prompt(claim, paper_text, attempt, run_history, feedback)
         raw = complete(trace, "audit", SYSTEM, user_prompt, max_tokens=8000)
 
         try:
@@ -202,7 +236,7 @@ def audit_one(
 
 
 def _build_prompt(
-    claim: dict, paper_text: str, attempt: int, history: list[str]
+    claim: dict, paper_text: str, attempt: int, history: list[str], feedback: str = ""
 ) -> str:
     claim_slug = claim["id"].lower()
     parts = [
@@ -212,13 +246,18 @@ def _build_prompt(
         f"Test plan from extraction: {claim['test_plan']}",
         f"Success criterion: {claim['success_criterion']}",
         f"Save any plots to: results/{claim_slug}/ (directory exists)",
-        f"Attempt {attempt} of {MAX_ATTEMPTS}.",
-        "",
-        "Relevant paper text (excerpt):",
-        paper_text[:20_000],
+        f"Attempt {attempt}.",
     ]
+    if feedback:
+        parts += [
+            "",
+            "HUMAN REVIEWER FEEDBACK (authoritative — follow it over the test plan "
+            "where they conflict):",
+            feedback,
+        ]
+    parts += ["", "Relevant paper text (excerpt):", paper_text[:20_000]]
     if history:
-        parts += ["", "Prior attempts (fix the real failure):", *history]
+        parts += ["", "Prior attempts in this round (fix the real failure):", *history]
     return "\n".join(parts)
 
 
