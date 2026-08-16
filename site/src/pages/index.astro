@@ -60,16 +60,36 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
       name="description"
       content="Lemma audits papers claim by claim, keeps every failed attempt, and scores its own evidence trail. 2 papers, 12 claims, 8 reproduced — everything public."
     />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='80'>🎼</text></svg>"
-    />
+    <link rel="canonical" href="https://lemmabio.netlify.app/" />
+
+    <!-- icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- open graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lemma" />
     <meta property="og:title" content="Lemma — the AI scientist that distrusts itself" />
     <meta
       property="og:description"
-      content="An audit agent that reproduces claims, catches its own capability wall, and publishes every failure."
+      content="An audit agent that reproduces scientific claims, catches its own capability wall, and publishes every failure. Play the claim xylophone."
     />
-    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://lemmabio.netlify.app/" />
+    <meta property="og:image" content="https://lemmabio.netlify.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Lemma — spectrum glass bars over deep navy with the audit scoreboard" />
+
+    <!-- twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Lemma — the AI scientist that distrusts itself" />
+    <meta
+      name="twitter:description"
+      content="2 papers · 12 claims · 8 reproduced · every failure public. Play the claim xylophone."
+    />
+    <meta name="twitter:image" content="https://lemmabio.netlify.app/og-image.png" />
+
+    <meta name="theme-color" content="#0b1018" />
   </head>
   <body>
     <div class="spectrum-fixed" aria-hidden="true"></div>

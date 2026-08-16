@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lemmabio.netlify.app/sitemap-index.xml
