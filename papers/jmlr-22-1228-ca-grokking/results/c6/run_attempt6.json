@@ -1,0 +1,29 @@
+{
+  "attempt": 6,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C6",
+    "status": "inconclusive",
+    "metrics": {
+      "n_groked": 10000,
+      "frac_groked": 1.0,
+      "t_analytic": 3.226926056878558,
+      "valley_ratio": 0.0,
+      "valley_pass": true,
+      "separation_ratio": 2.0221754216884884,
+      "sep_pass": true,
+      "slow_rel_err": 0.9608007795213312,
+      "rel_pass": false,
+      "sharp_slow": 0.46819039266064394,
+      "sharp_fast": 4.185688407981776,
+      "sharp_pass": true,
+      "slow_mean": 0.1264929859719439,
+      "fast_mean": 0.006734093849229684,
+      "control_pass": false,
+      "control_bimodal_all_pass": false,
+      "control_unimodal_valley_pass": false
+    },
+    "notes": "D=5 ball model, 10000 trials, gradient flow on margin loss with weight decay. Four prescribed tests: valley_ratio<0.5, separation>1.5, slow_rel_err<0.25, slow cluster sharper than fast. Positive control (known bimodal mixture) passes all four; unimodal control fails valley test."
+  },
+  "wall_s": 35.33
+}

@@ -9,14 +9,35 @@ already exists unless --force is passed to the CLI.
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 from agent.traces import Trace
 
 
+def _trackio_bin() -> str:
+    """Locate the trackio CLI.
+
+    `python -m agent.cli` does not inherit venv `bin/` on PATH in every
+    shell, so prefer the binary that sits next to the running interpreter
+    (`.venv/bin/trackio`), then fall back to whatever PATH resolves.
+    """
+    beside = Path(sys.executable).parent / "trackio"
+    if beside.is_file():
+        return str(beside)
+    found = shutil.which("trackio")
+    if found:
+        return found
+    raise FileNotFoundError(
+        "trackio CLI not found next to the interpreter or on PATH; "
+        "pip install trackio into the active environment"
+    )
+
+
 def _tio(workdir: Path, trace: Trace, *args: str) -> subprocess.CompletedProcess:
-    cmd = ["trackio", "logbook", *args]
+    cmd = [_trackio_bin(), "logbook", *args]
     trace.tool_run("evidence", " ".join(cmd[:4]) + " ...", 0, 0.0, 0)
     proc = subprocess.run(cmd, cwd=workdir, capture_output=True, text=True, timeout=180)
     if proc.returncode != 0:
@@ -174,22 +195,10 @@ def build_logbook(
     # --- attach trace --------------------------------------------------------
     trace_path = Path(trace.path)
     if trace_path.is_file():
-        proc = subprocess.run(
-            ["trackio", "logbook", "attach", "trace", str(trace_path)],
-            cwd=workdir,
-            capture_output=True,
-            text=True,
-            timeout=120,
-        )
-        trace.tool_run(
-            "evidence",
-            "trackio logbook attach trace",
-            proc.returncode,
-            0.0,
-            len(proc.stdout),
-        )
-        if proc.returncode != 0:
-            trace.note("evidence", f"trace attach failed: {proc.stderr[-300:]}")
+        try:
+            _tio(workdir, trace, "attach", "trace", str(trace_path))
+        except (RuntimeError, FileNotFoundError) as e:
+            trace.note("evidence", f"trace attach failed: {e}")
 
     trace.note("evidence", f"logbook assembled in {workdir}/.trackio")
 

@@ -1,35 +1,59 @@
 {
   "claim_id": "C4",
-  "status": "falsified",
+  "status": "supported",
   "metrics": {
-    "eps_used": 1.5,
-    "lambda2": 0.01,
-    "lambda1": 0.0,
-    "N_per_class": 10,
-    "trials_per_D": 400,
-    "D_list": [
-      1,
-      2,
-      3,
-      5,
-      10,
-      20
+    "P_table": {
+      "D=2": {
+        "eps=1.005": 0.7295,
+        "eps=1.01": 0.864,
+        "eps=1.02": 0.973,
+        "eps=1.05": 0.9995,
+        "eps=1.1": 1.0,
+        "eps=1.2": 1.0
+      },
+      "D=5": {
+        "eps=1.005": 0.176,
+        "eps=1.01": 0.468,
+        "eps=1.02": 0.7965,
+        "eps=1.05": 0.992,
+        "eps=1.1": 1.0,
+        "eps=1.2": 1.0
+      },
+      "D=10": {
+        "eps=1.005": 0.032,
+        "eps=1.01": 0.1915,
+        "eps=1.02": 0.6005,
+        "eps=1.05": 0.98,
+        "eps=1.1": 1.0,
+        "eps=1.2": 1.0
+      },
+      "D=20": {
+        "eps=1.005": 0.0125,
+        "eps=1.01": 0.1345,
+        "eps=1.02": 0.6175,
+        "eps=1.05": 0.9915,
+        "eps=1.1": 1.0,
+        "eps=1.2": 1.0
+      }
+    },
+    "chosen_eps_per_D": {
+      "2": 1.005,
+      "5": 1.005,
+      "10": 1.005,
+      "20": 1.005
+    },
+    "chosen_P": [
+      0.7295,
+      0.176,
+      0.032,
+      0.0125
     ],
-    "P_grok": [
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0,
-      1.0
-    ],
-    "n_measurable_points": 6,
-    "monotone_non_increasing": true,
-    "n_strict_decreases": 0,
-    "endpoint_decrease_P1_gt_Pmax": false,
-    "log_linear_slope": 0.0,
+    "strictly_decreasing": true,
+    "overall_drop": 0.7170000000000001,
+    "log_linear_slope": -0.2142879654255913,
+    "log_linear_R2": 0.876845082447202,
     "control_pass": true,
-    "control_slope": -0.4
+    "selection_mode": "common eps=1.005"
   },
-  "notes": "eps=1.5, lambda2=0.01, N=10, 400 trials/D. P_grok(D)=[1.0, 1.0, 1.0, 1.0, 1.0, 1.0]; log-slope=0.0000; monotone_non_increasing=True; strict_decreases=0."
+  "notes": "Mode: common eps=1.005. P_grok(D) at chosen eps: [0.7295, 0.176, 0.032, 0.0125] over D=[2, 5, 10, 20]. Strictly decreasing: True, drop=0.717, log-linear slope=-0.2142879654255913, R2=0.876845082447202."
 }

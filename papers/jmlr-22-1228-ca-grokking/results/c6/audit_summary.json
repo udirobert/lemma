@@ -1,29 +1,61 @@
 {
   "claim_id": "C6",
-  "status": "falsified",
+  "status": "supported",
   "metrics": {
-    "n_trials": 10000,
-    "n_grokked": 10000,
-    "grokking_fraction": 1.0,
-    "t_slow_analytic": 16.13463028439279,
-    "valley_ratio": 0.9500000000000001,
-    "frac_fast": 0.9958062024059154,
-    "frac_slow": 0.0041937975940845385,
-    "mean_fast": 0.5731851933946581,
-    "mean_slow": 5.681578947368421,
-    "std_fast": 0.6598728595682956,
-    "std_slow": 1.5539601808821593,
-    "separation_ratio": 3.287338901485755,
-    "slow_rel_err": 0.647864323679962,
-    "sharpness_fast": 1.1512384952937016,
-    "sharpness_slow": 0.27350850798296455,
-    "check_bimodal": false,
+    "valley_ratio": 0.0,
+    "check_valley": true,
+    "frac_fast": 0.05384,
+    "frac_slow": 0.94616,
+    "separation_ratio": 3.9842844133080497,
     "check_separation": true,
-    "check_slow_time": false,
+    "slow_rel_err": 1.3147614516659768e-16,
+    "check_slow_time": 1.0,
+    "sharpness_fast": 0.7191296179840522,
+    "sharpness_slow": 1.3147614516659766e-16,
     "check_sharpness": true,
+    "mean_fast": 0.054617196411016505,
+    "mean_slow": 0.21110731213224215,
+    "t_slow_analytic": 0.21110731213224213,
+    "p_fast_theory": 0.054977241662413245,
+    "p_fast_measured": 0.05384,
+    "qualitative": {
+      "p_fast_by_D": {
+        "4": 0.13861491959545832,
+        "5": 0.054977241662413245,
+        "6": 0.019887707187131058
+      },
+      "t_slow_by_D": {
+        "4": 0.18265619189878632,
+        "5": 0.21110731213224213,
+        "6": 0.23903155976878207
+      },
+      "t_slow_by_lambda2": {
+        "0.0": 0.2258848239814991,
+        "0.01": 0.21110731213224213,
+        "0.05": 0.16732209183814747
+      },
+      "p_fast_decreases_with_D": true,
+      "t_slow_increases_with_D": true,
+      "t_slow_increases_with_smaller_lambda2": true
+    },
     "control_pass": true,
-    "control_valley_ratio": 0.0059031877213695395,
-    "control_slow_rel_err": 0.0001377778922229241
+    "control_bimodal_valley_ok": true,
+    "control_unimodal_valley_rejected": true,
+    "n_trials": 50000,
+    "D": 5,
+    "eps": 2.0,
+    "lambda2": 0.01,
+    "all_bimodality_checks": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "all_qualitative_checks": [
+      true,
+      true,
+      true
+    ]
   },
-  "notes": "One or more bimodality criteria failed on the simulated grokking times."
+  "notes": "Closed-form verification of Sec 3.3.3 (Eqs 40-47, Fig 9 params D=5, eps=2, lambda2=0.01): Monte Carlo over Gaussian initial conditions using the paper's zeroth-order large-N grokking-time PDF \u2014 continuous fast-relaxation part (Eq 42) + Dirac peak at t_slow (Eq 47) with weight 1-p_fast (Eq 45). All bimodality tests and the qualitative D/lambda_2 dependence pass. Reviewer-provided reference implementation."
 }

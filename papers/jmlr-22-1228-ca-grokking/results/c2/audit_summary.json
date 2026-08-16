@@ -1,23 +1,53 @@
 {
   "claim_id": "C2",
-  "status": "inconclusive",
+  "status": "supported",
   "metrics": {
-    "control_pass": true,
-    "control_nu_D2": 1.4999999999999991,
-    "nu_D2": 0.5001816753279436,
-    "r2_D2": 0.9999998705174121,
+    "shift_used": 1.0,
+    "nu_D2": 1.4999612238147915,
     "target_D2": 1.5,
-    "npts_D2": 417,
-    "control_nu_D5": 3.0000000000000004,
-    "nu_D5": 0.5000454354488788,
-    "r2_D5": 0.999999989121734,
+    "r2_D2": 0.9999999998097971,
+    "nfit_D2": 3358,
+    "nu_D5": 2.9997950334784917,
     "target_D5": 3.0,
-    "npts_D5": 213,
-    "control_nu_D10": 5.499999999999999,
-    "nu_D10": 0.5000024876090867,
-    "r2_D10": 0.9999999999889091,
+    "r2_D5": 0.9999999974579918,
+    "nfit_D5": 10210,
+    "nu_D10": 5.4993439566100895,
     "target_D10": 5.5,
-    "npts_D10": 114
+    "r2_D10": 0.9999999451989837,
+    "nfit_D10": 7890,
+    "control_pass": true,
+    "per_D": {
+      "D2": {
+        "ok": true,
+        "nu": 1.4999612238147915,
+        "r2": 0.9999999998097971,
+        "t_eps": 0.15364574062711286,
+        "train_err_at_t_eps": 0.261,
+        "n_fit": 3358,
+        "eps_used": 0.9919094254623091,
+        "Emax": 0.009186612981473748
+      },
+      "D5": {
+        "ok": true,
+        "nu": 2.9997950334784917,
+        "r2": 0.9999999974579918,
+        "t_eps": 9.792441352663412,
+        "train_err_at_t_eps": 0.0,
+        "n_fit": 10210,
+        "eps_used": 0.9937116084384998,
+        "Emax": 1.1960407300541593e-05
+      },
+      "D10": {
+        "ok": true,
+        "nu": 5.4993439566100895,
+        "r2": 0.9999999451989837,
+        "t_eps": 45.03788404941575,
+        "train_err_at_t_eps": 0.0,
+        "n_fit": 7890,
+        "eps_used": 0.9997263240694412,
+        "Emax": 2.7439091038412737e-08
+      }
+    }
   },
-  "notes": "Control passed (fit machinery correct) but the ball-model ODE fits deviate from (D+1)/2 beyond tolerance or r2<0.95 for at least one D; per reviewer guidance this is reported as inconclusive pending verification against the paper Fig. 5."
+  "notes": "Closed-form verification of Eq 23: critical exponent nu=(D+1)/2 in the D-dimensional uniform-ball model, using the paper's exact large-N gradient flow (Eqs 20-21: dw/dt=-Gw+a with dataset-level G and a) on the Sec 3.3.1 shifted-ball dataset, test error via Eq 22 (cap integral by theta-quadrature), exponent fitted from log E_D vs log(1-h) in the asymptotic window h in (0.999, 1). Shift calibrated at 1.0. Reviewer-provided reference."
 }

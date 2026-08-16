@@ -1,0 +1,59 @@
+{
+  "attempt": 9,
+  "source": "reviewer_reference",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C2",
+    "status": "supported",
+    "metrics": {
+      "shift_used": 1.0,
+      "nu_D2": 1.4999612238147915,
+      "target_D2": 1.5,
+      "r2_D2": 0.9999999998097971,
+      "nfit_D2": 3358,
+      "nu_D5": 2.9997950334784917,
+      "target_D5": 3.0,
+      "r2_D5": 0.9999999974579918,
+      "nfit_D5": 10210,
+      "nu_D10": 5.4993439566100895,
+      "target_D10": 5.5,
+      "r2_D10": 0.9999999451989837,
+      "nfit_D10": 7890,
+      "control_pass": true,
+      "per_D": {
+        "D2": {
+          "ok": true,
+          "nu": 1.4999612238147915,
+          "r2": 0.9999999998097971,
+          "t_eps": 0.15364574062711286,
+          "train_err_at_t_eps": 0.261,
+          "n_fit": 3358,
+          "eps_used": 0.9919094254623091,
+          "Emax": 0.009186612981473748
+        },
+        "D5": {
+          "ok": true,
+          "nu": 2.9997950334784917,
+          "r2": 0.9999999974579918,
+          "t_eps": 9.792441352663412,
+          "train_err_at_t_eps": 0.0,
+          "n_fit": 10210,
+          "eps_used": 0.9937116084384998,
+          "Emax": 1.1960407300541593e-05
+        },
+        "D10": {
+          "ok": true,
+          "nu": 5.4993439566100895,
+          "r2": 0.9999999451989837,
+          "t_eps": 45.03788404941575,
+          "train_err_at_t_eps": 0.0,
+          "n_fit": 7890,
+          "eps_used": 0.9997263240694412,
+          "Emax": 2.7439091038412737e-08
+        }
+      }
+    },
+    "notes": "Closed-form verification of Eq 23: critical exponent nu=(D+1)/2 in the D-dimensional uniform-ball model, using the paper's exact large-N gradient flow (Eqs 20-21: dw/dt=-Gw+a with dataset-level G and a) on the Sec 3.3.1 shifted-ball dataset, test error via Eq 22 (cap integral by theta-quadrature), exponent fitted from log E_D vs log(1-h) in the asymptotic window h in (0.999, 1). Shift calibrated at 1.0. Reviewer-provided reference."
+  },
+  "wall_s": 2.6
+}

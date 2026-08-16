@@ -1,0 +1,28 @@
+{
+  "attempt": 6,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C2",
+    "status": "inconclusive",
+    "metrics": {
+      "D2_nu": null,
+      "D2_r2": null,
+      "D2_nu_theory": 1.5,
+      "D2_shift": 2.0,
+      "D2_nu_control": null,
+      "D5_nu": null,
+      "D5_r2": null,
+      "D5_nu_theory": 3.0,
+      "D5_shift": 2.0,
+      "D5_nu_control": null,
+      "D10_nu": null,
+      "D10_r2": null,
+      "D10_nu_theory": 5.5,
+      "D10_shift": 2.0,
+      "D10_nu_control": null,
+      "control_pass": false
+    },
+    "notes": "Positive control failed: fitting statistic buggy; cannot judge claim."
+  },
+  "wall_s": 2.47
+}

@@ -19,7 +19,7 @@
     },
     "trace": {
       "pass": true,
-      "detail": "177 events, 11 LLM calls, 125 tool runs, 3 failed attempts preserved"
+      "detail": "305 events, 31 LLM calls, 154 tool runs, 9 failed attempts preserved"
     }
   },
   "score": "5/5",
