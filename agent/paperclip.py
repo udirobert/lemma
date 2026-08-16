@@ -105,7 +105,7 @@ def _parse_search_output(output: str) -> list[dict]:
         title = lines[0]
         meta = " | ".join(lines[1:4])
         url = ""
-        m = re.search(r"\b((?:arx|bio|med|pmc)_[0-9a-zA-Z]+)\b", block)
+        m = re.search(r"\b((?:arx|bio|med|pmc)_[0-9a-zA-Z.]+)\b", block)
         doi = re.search(r"(https://doi\.org/\S+)", block)
         if m:
             url = f"paperclip:/papers/{m.group(1)}"
