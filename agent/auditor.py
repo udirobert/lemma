@@ -225,6 +225,16 @@ def audit_one(
             "metrics": {"attempts_used": MAX_ATTEMPTS},
             "notes": "no successful run",
         }
+    # always record the final outcome so no claim silently disappears
+    # from the trace (matters when every attempt crashed)
+    trace.log(
+        "audit",
+        "claim_final",
+        claim_id=cid,
+        status=last_summary.get("status", "inconclusive"),
+        attempts=len(run_history)
+        + (0 if last_summary.get("status") == "inconclusive" else 1),
+    )
     summary_path = claim_dir / "audit_summary.json"
     summary_path.write_text(json.dumps(last_summary, indent=2), encoding="utf-8")
     return {
