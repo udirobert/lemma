@@ -223,7 +223,7 @@ is unavailable.
 - Published: https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules
   (rendered: https://papajams-repro-grokking-ca-local-rules.static.hf.space/)
 
-### Kimi K3 endpoint + CA round 3–4 (2026-08-16 ~11:45–12:30)
+### Kimi K3 endpoint + CA rounds 3–5 (2026-08-16 ~11:45–14:00)
 
 User-provided Kimi K3 on a Modal serverless proxy
 (`papaandthejimjams--ep-kimi-k3-server.us-west.modal.direct`, model
@@ -256,11 +256,45 @@ showing the predicted bimodality (detector thresholds miscalibrated).
 metrics or n_measurable_points=0 are now rejected as contradictions
 (C4's failure mode), added after round 3 exposed it.
 
-**Round 4** in flight (tmux `lemma-ca-round4`, claims C2–C6):
-closed-form ball dynamics for C2/C4, hard-regime sweep for C3,
-scope-limitation resolution for C5, histogram-valley bimodality test
-for C6. On landing: re-assemble + re-judge + re-publish the CA
-logbook.
+**Round 4** (completed, ~20 min): C3 now **SUPPORTED** —
+P_grok(L1)=0.205 vs P_grok(L2)=0.000 in the hard regime (D=10, eps=1.01).
+C2 inconclusive again: control exact (ν = 1.5/3.0/5.5) but main ν=0.5000
+at all D with r²=0.9999 — a perfectly fitted power law with the WRONG
+exponent means the simulated dynamics followed (1−h)^{1/2}, i.e. the LLM
+kept re-deriving the 1D ball instead of the D-dimensional one. C5
+resolved as scope-limited inconclusive (proxy cannot exhibit grokking by
+construction; tensor-network claim out of CPU scope). C4/C6 falsified by
+broken implementations again (eps saturation / miscalibrated detector),
+which is what motivated the reviewer-reference escalation below.
+
+**Reviewer references + escalation gate v2** (commits `5ad6c04`,
+`b5667e4`, `6b0c527`): three hand-written closed-form references, each
+verified locally AND on the VPS before deployment:
+- C2 `ref_c2_ball_exponent.py` — Eq 23 via the paper's exact large-N
+  gradient flow (Eqs 20–21); Eq 22's cap integral evaluated by
+  θ-quadrature because `scipy.hyp2f1` cancels catastrophically near h=1
+  for D≥5 (this was the hidden bug behind rounds 3–4's garbage
+  exponents). Exponent fitted in h-space, where the asymptotic law is
+  exact: **ν = 1.500 / 2.9998 / 5.4993** vs targets 1.5 / 3.0 / 5.5.
+- C4 `ref_c4_pgrok.py` — Eq 86 (Appendix B.1, λ₁=0) evaluated in
+  closed form with the Eq 82 coefficients and Eq 84–85 Gaussian laws;
+  at common eps=1.05, P_grok(D=2,5,10,20) = [0.857, 0.311, 0.017, 5e-6],
+  strictly decreasing; 20k-draw MC cross-check max err 0.042.
+- C6 `ref_c6_bimodality.py` — Monte Carlo over the paper's zeroth-order
+  grokking-time PDF (Eq 42 fast branch + Eq 47 Dirac peak, Fig 9
+  params D=5, eps=2, λ₂=0.01); all four bimodality tests and the D/λ₂
+  dependence pass.
+- The escalation gate in `agent/auditor.py` now fires whenever the round
+  did NOT end "supported" (previously only on "inconclusive") — a
+  falsified verdict from a broken LLM implementation gets the same
+  authoritative-reference re-examination. Offline smoke test covers both
+  branches (`scripts/test_escalation_gate.py`).
+
+**Round 5** launched (tmux `lemma-ca-round5`, claims C2/C4/C6): LLM
+attempts with the round-5 feedback first; on failure the deployed
+`reviewer_reference.py` executes and its verdict wins. C5 stays at its
+scope-limited inconclusive verdict. On landing: re-assemble + re-judge +
+re-publish the CA logbook.
 
 ### Third paper: arXiv 2510.10981 — "ICL Is Provably Bayesian Inference"
 
