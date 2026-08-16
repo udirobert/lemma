@@ -1,24 +1,53 @@
 ---
 import "@fontsource-variable/montserrat";
 import "@fontsource-variable/roboto-mono";
+import "../styles/global.css";
+import Xylophone from "../components/Xylophone.astro";
 
-// one bar per audited claim across both papers (8 supported / 4 inconclusive)
-const bars = [
-  { n: 1, tone: 261.63, state: "on", label: "ν = 1.00 (1D)" },
-  { n: 2, tone: 293.66, state: "on", label: "ν = 1.500 (D=2)" },
-  { n: 3, tone: 329.63, state: "on", label: "ν = 3.00 (D=4)" },
-  { n: 4, tone: 392.0, state: "on", label: "ν = 5.50 (D=10)" },
-  { n: 5, tone: 440.0, state: "on", label: "P_grok L1 > L2" },
-  { n: 6, tone: 523.25, state: "dim", label: "rule-30 scope" },
-  { n: 7, tone: 587.33, state: "on", label: "risk identity" },
-  { n: 8, tone: 659.25, state: "on", label: "concentration" },
-  { n: 9, tone: 783.99, state: "on", label: "slope −0.83" },
-  { n: 10, tone: 880.0, state: "dim", label: "coupling pN" },
-  { n: 11, tone: 987.77, state: "dim", label: "stability" },
-  { n: 12, tone: 1046.5, state: "dim", label: "variance bound" },
+const ARTIFACTS = [
+  {
+    k: "repository",
+    d: "code, traces, feedback, reviewer references",
+    u: "https://github.com/udirobert/lemma",
+  },
+  {
+    k: "logbook · CA grokking",
+    d: "5 supported / 1 inconclusive · PASS 5/5",
+    u: "https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules",
+  },
+  {
+    k: "logbook · ICL bayesian",
+    d: "3 supported / 3 inconclusive · PASS 5/5",
+    u: "https://huggingface.co/spaces/Papajams/repro-icl-provably-bayesian",
+  },
+  {
+    k: "evidence dataset · CA",
+    d: "90 files — every failed attempt included",
+    u: "https://huggingface.co/datasets/Papajams/repro-evidence-grokking-ca-local-rules",
+  },
+  {
+    k: "evidence dataset · ICL",
+    d: "81 files — every failed attempt included",
+    u: "https://huggingface.co/datasets/Papajams/repro-evidence-icl-provably-bayesian",
+  },
 ];
 
-const colors = ["c-blue", "c-magenta", "c-teal", "c-gold", "c-violet"];
+const TRACE: Array<{ tag: string; cls: string; text: string }> = [
+  { tag: "note", cls: "info", text: "lemma v0.1 · ICML 2026 agent reproductions challenge — judge PASS, end to end" },
+  { tag: "note", cls: "warn", text: "repo dormant… 3 weeks, 0 commits, 1 grokking paper on disk" },
+  { tag: "run", cls: "cmd", text: "lemma audit jmlr-22-1228 --stages extract,audit,evidence,judge" },
+  { tag: "extract", cls: "ok", text: "6 claims → C1…C6 · success criteria taken from the claims themselves" },
+  { tag: "audit", cls: "fail", text: "round 1 · Qwen3.8-27B · 0 supported / 0 falsified / 6 inconclusive" },
+  { tag: "audit", cls: "fail", text: "bake-off gate · ν ≈ 6000 vs expected 1.0 — capability boundary detected, not papered over" },
+  { tag: "run", cls: "cmd", text: "lemma audit --endpoint kimi:k3 · bake-off first" },
+  { tag: "audit", cls: "ok", text: "bake-off gate · ν = 0.9911 — PASS · model swap authorized" },
+  { tag: "audit", cls: "ok", text: "round 3 · C1 supported · ν = 0.9983 vs 1.0 · closed-form cross-check OK" },
+  { tag: "audit", cls: "ok", text: "rounds 4–5 · C3, C4, C5, C6 supported via reviewer-reference escalation" },
+  { tag: "judge", cls: "ok", text: "evidence trail PASS 5/5 · 353 trace events · all failures preserved" },
+  { tag: "run", cls: "cmd", text: "lemma audit arxiv-2510.10981" },
+  { tag: "judge", cls: "ok", text: "evidence trail PASS 5/5 · 267 events · 3 supported, 3 honestly inconclusive" },
+  { tag: "note", cls: "info", text: "inconclusive is a result — a patched false-positive is not" },
+];
 ---
 
 <!doctype html>
@@ -29,7 +58,7 @@ const colors = ["c-blue", "c-magenta", "c-teal", "c-gold", "c-violet"];
     <title>Lemma — the AI scientist that distrusts itself</title>
     <meta
       name="description"
-      content="Lemma audits ML papers claim by claim, keeps every failure, and scores itself. 2 papers, 12 claims, 8 reproduced — every attempt public."
+      content="Lemma audits papers claim by claim, keeps every failed attempt, and scores its own evidence trail. 2 papers, 12 claims, 8 reproduced — everything public."
     />
     <link
       rel="icon"
@@ -38,647 +67,152 @@ const colors = ["c-blue", "c-magenta", "c-teal", "c-gold", "c-violet"];
     <meta property="og:title" content="Lemma — the AI scientist that distrusts itself" />
     <meta
       property="og:description"
-      content="48 hours at re:AGENT: an audit agent that reproduces claims, catches its own capability wall, and publishes every failure."
+      content="An audit agent that reproduces claims, catches its own capability wall, and publishes every failure."
     />
     <meta property="og:type" content="website" />
   </head>
   <body>
-    <!-- ============ HERO: the instrument ============ -->
-    <header class="hero">
-      <p class="kicker">re:AGENT · Track A · 48 hours · built solo</p>
-      <h1>Lemma</h1>
-      <p class="tag">
-        the AI scientist that <em>distrusts itself</em>
-      </p>
-      <p class="sub">
-        It audits papers claim by claim — writes its own code, runs the math, keeps every
-        failed attempt, and scores its own evidence trail. This is its instrument:
-        <strong>12 bars, one per audited claim.</strong> Bright bars reproduced. Dim bars
-        are honest inconclusives. Play it.
-      </p>
+    <div class="spectrum-fixed" aria-hidden="true"></div>
 
-      <div class="xylo" role="group" aria-label="Playable claim xylophone">
-        {
-          bars.map((b, i) => (
-            <button
-              class={`bar ${b.state} ${colors[i % colors.length]}`}
-              style={`--h: ${34 + i * 9}px`}
-              data-freq={b.tone}
-              data-label={b.label}
-              aria-label={`Claim ${b.n}: ${b.label} (${b.state === "on" ? "supported" : "inconclusive"})`}
-            >
-              <span class="bar-label">{b.label}</span>
-            </button>
-          ))
-        }
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="hero-copy">
+    <p class="kicker">evidence over assertion</p>
+    <h1>Lemma</h1>
+    <p class="tagline">the AI scientist that <em>distrusts itself</em></p>
+    <p class="hero-sub">
+      Lemma audits papers claim by claim — writes its own code, runs the math,
+      keeps every failed attempt, and scores its own evidence trail. This is its
+      instrument: <strong>12 bars, one per audited claim.</strong> Bright bars
+      reproduced. Dim bars are honest inconclusives. Play it.
+    </p>
+    <Xylophone />
+    <p class="scroll-cue" aria-hidden="true">scroll ↓</p>
+  </div>
+</header>
+
+<!-- ================= STORY ================= -->
+<section class="story" id="story">
+  <div class="wrap">
+    <article class="beat c-blue">
+      <span class="beat-n">01</span>
+      <div>
+        <h3>the first life</h3>
+        <p>
+          Lemma was born for the ICML 2026 Agent Reproductions challenge:
+          one grokking paper, audited end to end, <strong>judge PASS</strong>.
+          Then it slept — a dormant repo with one good result on disk.
+        </p>
       </div>
-      <p class="xylo-cap" id="xylo-readout">↑ click or tap a bar — each one plays its claim</p>
-    </header>
+    </article>
 
-    <!-- ============ THE STORY ============ -->
-    <section class="story">
-      <h2>48 hours, four beats</h2>
-      <ol class="beats">
-        <li class="beat c-blue">
-          <span class="beat-n">01</span>
-          <h3>the rebirth</h3>
-          <p>
-            The repo was asleep — a shelved ICML reproducibility workspace with one
-            grokking paper and zero ambition. Friday night we woke it up and gave it a
-            new job: <strong>become the auditor, not the author.</strong>
-          </p>
-        </li>
-        <li class="beat c-magenta">
-          <span class="beat-n">02</span>
-          <h3>the night it failed</h3>
-          <p>
-            Round one on free 27B models: all six claims came back inconclusive. Not
-            wrong — just not smart enough. We gave it a physics test anyway. Expected
-            critical exponent 1.0. <strong>It returned 6000.</strong>
-          </p>
-        </li>
-        <li class="beat c-teal">
-          <span class="beat-n">03</span>
-          <h3>the turn</h3>
-          <p>
-            Most agents would have written a confident paragraph and moved on. Lemma's
-            honesty machinery auto-rejects verdicts that contradict their own metrics —
-            so we gated the fix: Kimi K3 on Modal had to pass the same bake-off first.
-            It scored <strong>0.99</strong>. Next round: <strong>0.9983</strong>.
-            The claims started falling.
-          </p>
-        </li>
-        <li class="beat c-gold">
-          <span class="beat-n">04</span>
-          <h3>the receipts</h3>
-          <p>
-            2 papers · 12 claims · <strong>8 reproduced</strong>. Both evidence trails
-            judged <strong>PASS 5/5</strong>. And every failure is still in the public
-            trace — 15 failed attempts on one paper alone. Go find them.
-          </p>
-        </li>
-      </ol>
-    </section>
+    <article class="beat c-magenta">
+      <span class="beat-n">02</span>
+      <div>
+        <h3>the night it failed</h3>
+        <p>
+          Reawakened on a JMLR paper about cellular automata, its first models
+          returned every claim inconclusive. Not wrong — just not smart enough.
+          We gave them a physics test anyway. Expected critical exponent 1.0:
+        </p>
+        <div class="big-stat">ν ≈ <span data-count="6000">0</span></div>
+      </div>
+    </article>
 
-    <!-- ============ METHOD ============ -->
-    <section class="method">
-      <h2>How an agent earns trust</h2>
-      <div class="cards">
-        <div class="card">
-          <span class="card-k">extract</span>
-          <p>paper PDF → testable claims, each with a success criterion taken from the claim itself</p>
-        </div>
-        <div class="card">
-          <span class="card-k">audit</span>
-          <p>writes self-contained numerical scripts, runs them, iterates — a positive control is mandatory</p>
-        </div>
-        <div class="card">
-          <span class="card-k">evidence</span>
-          <p>scripts, metrics, figures and reviewer feedback assemble into a live Trackio logbook</p>
-        </div>
-        <div class="card">
-          <span class="card-k">judge</span>
-          <p>an automated rubric scores whether the trail is trustworthy: PASS / CONDITIONAL / FAIL</p>
+    <article class="beat c-teal">
+      <span class="beat-n">03</span>
+      <div>
+        <h3>the turn</h3>
+        <p>
+          Most agents would have written a confident paragraph and moved on.
+          Lemma's honesty machinery auto-rejects verdicts that contradict their
+          own metrics — so we gated the fix: the next model had to pass the same
+          bake-off first. It scored
+          <strong>0.99</strong>. Next round: <strong>0.9983</strong>. The
+          claims started falling.
+        </p>
+        <div class="big-stat"><span data-count="0.9983" data-decimals="4">0</span></div>
+      </div>
+    </article>
+
+    <article class="beat c-gold">
+      <span class="beat-n">04</span>
+      <div>
+        <h3>the receipts</h3>
+        <p>
+          Two papers, twelve claims, and a trail you can reconstruct line by
+          line — including everything that failed.
+        </p>
+        <div class="receipts">
+          <div class="receipt"><b><span data-count="2">0</span></b><span>papers</span></div>
+          <div class="receipt"><b><span data-count="12">0</span></b><span>claims</span></div>
+          <div class="receipt"><b><span data-count="8">0</span></b><span>reproduced</span></div>
+          <div class="receipt"><b><span data-count="15">0</span></b><span>failures preserved</span></div>
         </div>
       </div>
-      <p class="method-note">
-        verdict-vs-metrics validator · append-only trace · hand-verified reviewer references ·
-        inconclusive is a result — a patched false-positive is not
-      </p>
-    </section>
+    </article>
+  </div>
+</section>
 
-    <!-- ============ ARTIFACTS ============ -->
-    <section class="artifacts">
-      <h2>Everything is public</h2>
-      <div class="links">
-        <a class="link" href="https://github.com/udirobert/lemma" target="_blank" rel="noopener">
-          <span class="link-k">code + traces</span>github.com/udirobert/lemma
-        </a>
-        <a
-          class="link"
-          href="https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules"
-          target="_blank"
-          rel="noopener">
-          <span class="link-k">logbook · CA grokking</span>5 supported / 1 inconclusive
-        </a>
-        <a
-          class="link"
-          href="https://huggingface.co/spaces/Papajams/repro-icl-provably-bayesian"
-          target="_blank"
-          rel="noopener">
-          <span class="link-k">logbook · ICL bayesian</span>3 supported / 3 inconclusive
-        </a>
-        <a
-          class="link"
-          href="https://huggingface.co/datasets/Papajams/repro-evidence-grokking-ca-local-rules"
-          target="_blank"
-          rel="noopener">
-          <span class="link-k">evidence dataset · CA</span>90 files, failures included
-        </a>
-        <a
-          class="link"
-          href="https://huggingface.co/datasets/Papajams/repro-evidence-icl-provably-bayesian"
-          target="_blank"
-          rel="noopener">
-          <span class="link-k">evidence dataset · ICL</span>81 files, failures included
-        </a>
-      </div>
-    </section>
-
-    <footer>
-      <div class="spectrum-strip" aria-hidden="true"></div>
+<!-- ================= TRACE ================= -->
+<section class="trace" id="trace">
+  <div class="wrap trace-pin">
+    <div class="trace-head">
+      <h2>The trail is the product</h2>
       <p>
-        built by papa for re:AGENT · Founders Inc SF ·
-        powered by Modal (Kimi K3), Paperclip/GXL, Hugging Face, Anthropic
+        Every LLM call, every script, every rejection lands in an append-only
+        trace. Scroll — the audit writes itself.
       </p>
-    </footer>
+    </div>
+    <div class="terminal" aria-label="Audit trace excerpt">
+      <div class="term-bar">
+        <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+        <span class="term-title">trace.jsonl — append-only</span>
+      </div>
+      <div class="term-body">
+        {TRACE.map((l) => (
+          <span class="tl">
+            <span class="tag">[{l.tag}]</span> <span class={l.cls}>{l.text}</span>
+          </span>
+        ))}
+        <span class="caret" aria-hidden="true"></span>
+      </div>
+    </div>
+    <p class="trace-note">extract → audit → evidence → judge · verdict validator · positive controls · reviewer-reference escalation</p>
+  </div>
+</section>
 
-    <script>
-      // playable xylophone — Web Audio, no assets
-      let ctx: AudioContext | null = null;
-      const readout = document.getElementById("xylo-readout")!;
+<!-- ================= ARTIFACTS ================= -->
+<section class="artifacts" id="artifacts">
+  <div class="wrap">
+    <h2>Everything is public</h2>
+    {ARTIFACTS.map((a) => (
+      <a class="link-row" href={a.u} target="_blank" rel="noopener">
+        <span class="k">{a.k}</span>
+        <span>{a.d}</span>
+      </a>
+    ))}
+  </div>
+</section>
 
-      function play(freq: number) {
-        ctx = ctx ?? new AudioContext();
-        if (ctx.state === "suspended") void ctx.resume();
-        const t = ctx.currentTime;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        const osc2 = ctx.createOscillator();
-        const gain2 = ctx.createGain();
-        osc.type = "triangle";
-        osc.frequency.value = freq;
-        osc2.type = "sine";
-        osc2.frequency.value = freq * 2.01; // glass overtone
-        gain.gain.setValueAtTime(0.22, t);
-        gain.gain.exponentialRampToValueAtTime(0.001, t + 1.4);
-        gain2.gain.setValueAtTime(0.06, t);
-        gain2.gain.exponentialRampToValueAtTime(0.001, t + 0.7);
-        osc.connect(gain).connect(ctx.destination);
-        osc2.connect(gain2).connect(ctx.destination);
-        osc.start(t);
-        osc2.start(t);
-        osc.stop(t + 1.5);
-        osc2.stop(t + 0.8);
-      }
+<footer>
+  <p>lemma · the trace is the demo</p>
+</footer>
 
-      for (const bar of document.querySelectorAll<HTMLButtonElement>(".bar")) {
-        bar.addEventListener("click", () => {
-          play(Number(bar.dataset.freq));
-          const state = bar.classList.contains("on") ? "supported" : "inconclusive — and we said so";
-          readout.textContent = `claim ${bar.dataset.label} · ${state}`;
-          bar.classList.add("struck");
-          setTimeout(() => bar.classList.remove("struck"), 600);
-        });
-      }
+<!-- ================= CLIP MENU ================= -->
+<button class="menu-btn" aria-label="Open navigation" aria-expanded="false">
+  <span class="bars-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+</button>
+<nav class="menu-panel" aria-label="Site navigation">
+  <ul>
+    <li><span class="menu-sub">lemma</span></li>
+    <li><a href="#story"><span class="idx">01</span>story</a></li>
+    <li><a href="#trace"><span class="idx">02</span>trace</a></li>
+    <li><a href="#artifacts"><span class="idx">03</span>artifacts</a></li>
+    <li><a href="https://github.com/udirobert/lemma" target="_blank" rel="noopener"><span class="idx">→</span>github</a></li>
+  </ul>
+</nav>
 
-      // staggered bar entrance
-      document.querySelectorAll(".bar").forEach((bar, i) => {
-        (bar as HTMLElement).style.animationDelay = `${0.15 + i * 0.06}s`;
-      });
-    </script>
+<script src="../motion.ts"></script>
   </body>
 </html>
-
-<style is:global>
-  :root {
-    --bg: #0b1018;
-    --bg2: #131925;
-    --card: #1a212f;
-    --edge: #2d374d;
-    --fg: #f1f3f6;
-    --mut: #8b96a6;
-    --dim: #646e7f;
-    --blue: #4f8ef7;
-    --magenta: #d445f2;
-    --teal: #1ec2b5;
-    --gold: #fab533;
-    --violet: #7866ed;
-    --font-d: "Montserrat Variable", system-ui, sans-serif;
-    --font-m: "Roboto Mono Variable", ui-monospace, monospace;
-  }
-
-  * {
-    box-sizing: border-box;
-    margin: 0;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: var(--font-d);
-    line-height: 1.55;
-    overflow-x: hidden;
-  }
-
-  section,
-  header,
-  footer {
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 72px 24px;
-  }
-
-  h1,
-  h2,
-  h3 {
-    letter-spacing: -0.02em;
-  }
-
-  h2 {
-    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-    margin-bottom: 36px;
-    font-weight: 800;
-  }
-
-  em {
-    font-style: normal;
-    background: linear-gradient(90deg, var(--blue), var(--magenta), var(--gold));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* ---------- hero ---------- */
-  .hero {
-    text-align: center;
-    padding-top: 84px;
-    background: radial-gradient(ellipse 90% 55% at 50% -10%, #1c2a4a 0%, transparent 70%);
-  }
-
-  .kicker {
-    font-family: var(--font-m);
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    color: var(--teal);
-    margin-bottom: 18px;
-  }
-
-  h1 {
-    font-size: clamp(3.4rem, 9vw, 6.5rem);
-    font-weight: 900;
-    line-height: 1;
-  }
-
-  .tag {
-    font-size: clamp(1.05rem, 2.4vw, 1.5rem);
-    color: var(--fg);
-    margin-top: 10px;
-    font-weight: 500;
-  }
-
-  .sub {
-    max-width: 640px;
-    margin: 22px auto 0;
-    color: var(--mut);
-    font-size: 0.98rem;
-  }
-
-  .sub strong {
-    color: var(--fg);
-  }
-
-  /* ---------- xylophone ---------- */
-  .xylo {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: clamp(4px, 1.2vw, 14px);
-    margin-top: 56px;
-    height: 300px;
-    perspective: 900px;
-  }
-
-  .bar {
-    position: relative;
-    width: clamp(26px, 4.5vw, 52px);
-    height: var(--h);
-    border: none;
-    border-radius: 9px;
-    cursor: pointer;
-    opacity: 0;
-    animation: rise 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
-    transition:
-      transform 0.18s ease,
-      filter 0.18s ease,
-      box-shadow 0.18s ease;
-    transform-origin: bottom center;
-  }
-
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(30px) rotateX(35deg);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) rotateX(0);
-    }
-  }
-
-  .bar.c-blue {
-    background: linear-gradient(180deg, #9cc0ff, var(--blue) 55%, #2b5cc0);
-    box-shadow: 0 0 22px -4px rgba(79, 142, 247, 0.55);
-  }
-  .bar.c-magenta {
-    background: linear-gradient(180deg, #efa8ff, var(--magenta) 55%, #8f25ab);
-    box-shadow: 0 0 22px -4px rgba(212, 69, 242, 0.55);
-  }
-  .bar.c-teal {
-    background: linear-gradient(180deg, #8ef2e9, var(--teal) 55%, #0e8c83);
-    box-shadow: 0 0 22px -4px rgba(30, 194, 181, 0.55);
-  }
-  .bar.c-gold {
-    background: linear-gradient(180deg, #ffd98a, var(--gold) 55%, #c07f12);
-    box-shadow: 0 0 22px -4px rgba(250, 181, 51, 0.55);
-  }
-  .bar.c-violet {
-    background: linear-gradient(180deg, #b3a6ff, var(--violet) 55%, #4c3db8);
-    box-shadow: 0 0 22px -4px rgba(120, 102, 237, 0.55);
-  }
-
-  /* glass highlight */
-  .bar::before {
-    content: "";
-    position: absolute;
-    inset: 4px 6px auto 6px;
-    height: 32%;
-    border-radius: 6px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.04));
-    pointer-events: none;
-  }
-
-  .bar.dim {
-    filter: saturate(0.25) brightness(0.55);
-    box-shadow: none;
-    opacity: 0; /* animation overrides later */
-    animation: rise 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards, dimPulse 3s ease-in-out infinite;
-  }
-
-  @keyframes dimPulse {
-    0%,
-    100% {
-      filter: saturate(0.25) brightness(0.5);
-    }
-    50% {
-      filter: saturate(0.4) brightness(0.65);
-    }
-  }
-
-  .bar:hover,
-  .bar:focus-visible {
-    transform: translateY(-10px) scale(1.05);
-    filter: brightness(1.25) saturate(1.2);
-    outline: none;
-  }
-
-  .bar.dim:hover,
-  .bar.dim:focus-visible {
-    filter: brightness(0.95) saturate(0.6);
-  }
-
-  .bar.struck {
-    animation: strike 0.5s ease;
-  }
-
-  @keyframes strike {
-    0% {
-      transform: translateY(-12px) scale(1.08);
-      filter: brightness(1.6);
-    }
-    100% {
-      transform: translateY(0) scale(1);
-    }
-  }
-
-  .bar-label {
-    position: absolute;
-    bottom: -26px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: var(--font-m);
-    font-size: 0.56rem;
-    white-space: nowrap;
-    color: var(--dim);
-    opacity: 0;
-    transition: opacity 0.15s;
-  }
-
-  .bar:hover .bar-label,
-  .bar:focus-visible .bar-label {
-    opacity: 1;
-  }
-
-  .xylo-cap {
-    margin-top: 44px;
-    font-family: var(--font-m);
-    font-size: 0.8rem;
-    color: var(--mut);
-    min-height: 1.4em;
-  }
-
-  /* ---------- story ---------- */
-  .beats {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    gap: 18px;
-  }
-
-  .beat {
-    position: relative;
-    background: var(--card);
-    border: 1px solid var(--edge);
-    border-radius: 14px;
-    padding: 26px 28px 26px 86px;
-  }
-
-  .beat::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 5px;
-    border-radius: 14px 0 0 14px;
-  }
-
-  .beat.c-blue::before {
-    background: var(--blue);
-  }
-  .beat.c-magenta::before {
-    background: var(--magenta);
-  }
-  .beat.c-teal::before {
-    background: var(--teal);
-  }
-  .beat.c-gold::before {
-    background: var(--gold);
-  }
-
-  .beat-n {
-    position: absolute;
-    left: 24px;
-    top: 26px;
-    font-family: var(--font-m);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--dim);
-  }
-
-  .beat h3 {
-    font-size: 1.05rem;
-    text-transform: lowercase;
-    margin-bottom: 8px;
-    font-weight: 700;
-  }
-
-  .beat p {
-    color: var(--mut);
-    font-size: 0.95rem;
-  }
-
-  .beat strong {
-    color: var(--fg);
-    font-family: var(--font-m);
-    font-weight: 600;
-  }
-
-  /* ---------- method ---------- */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 14px;
-  }
-
-  .card {
-    background: var(--card);
-    border: 1px solid var(--edge);
-    border-radius: 14px;
-    padding: 22px;
-  }
-
-  .card-k {
-    font-family: var(--font-m);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.18em;
-    color: var(--blue);
-    display: block;
-    margin-bottom: 10px;
-  }
-
-  .card:nth-child(2) .card-k {
-    color: var(--magenta);
-  }
-  .card:nth-child(3) .card-k {
-    color: var(--teal);
-  }
-  .card:nth-child(4) .card-k {
-    color: var(--gold);
-  }
-
-  .card p {
-    color: var(--mut);
-    font-size: 0.88rem;
-  }
-
-  .method-note {
-    margin-top: 22px;
-    font-family: var(--font-m);
-    font-size: 0.75rem;
-    color: var(--dim);
-    text-align: center;
-  }
-
-  /* ---------- artifacts ---------- */
-  .artifacts {
-    background: radial-gradient(ellipse 80% 60% at 50% 110%, #16203a 0%, transparent 70%);
-  }
-
-  .links {
-    display: grid;
-    gap: 10px;
-  }
-
-  .link {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 16px;
-    background: var(--card);
-    border: 1px solid var(--edge);
-    border-radius: 10px;
-    padding: 14px 20px;
-    color: var(--mut);
-    text-decoration: none;
-    font-family: var(--font-m);
-    font-size: 0.82rem;
-    transition:
-      border-color 0.15s,
-      transform 0.15s;
-  }
-
-  .link:hover {
-    border-color: var(--blue);
-    transform: translateX(4px);
-    color: var(--fg);
-  }
-
-  .link-k {
-    color: var(--fg);
-    font-family: var(--font-d);
-    font-weight: 700;
-    font-size: 0.9rem;
-  }
-
-  /* ---------- footer ---------- */
-  footer {
-    padding: 40px 24px 48px;
-    text-align: center;
-  }
-
-  footer p {
-    color: var(--dim);
-    font-size: 0.78rem;
-    font-family: var(--font-m);
-  }
-
-  .spectrum-strip {
-    height: 4px;
-    max-width: 260px;
-    margin: 0 auto 26px;
-    border-radius: 2px;
-    background: linear-gradient(
-      90deg,
-      var(--blue) 0 20%,
-      var(--magenta) 20% 40%,
-      var(--teal) 40% 60%,
-      var(--gold) 60% 80%,
-      var(--violet) 80% 100%
-    );
-  }
-
-  @media (max-width: 640px) {
-    .xylo {
-      gap: 3px;
-      height: 240px;
-    }
-    .beat {
-      padding-left: 24px;
-      padding-top: 56px;
-    }
-    .beat-n {
-      top: 20px;
-    }
-    .link {
-      flex-direction: column;
-      gap: 4px;
-    }
-  }
-</style>

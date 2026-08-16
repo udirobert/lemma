@@ -1,0 +1,36 @@
+---
+// 12 bars = 12 audited claims across both papers (8 supported / 4 inconclusive).
+// Frequencies form two octaves of C-major pentatonic: consonant in any order.
+const bars = [
+  { n: 1, f: 261.63, state: "on", label: "ν = 1.00 (1D)" },
+  { n: 2, f: 293.66, state: "on", label: "ν = 1.500 (D=2)" },
+  { n: 3, f: 329.63, state: "on", label: "ν = 3.00 (D=4)" },
+  { n: 4, f: 392.0, state: "on", label: "ν = 5.50 (D=10)" },
+  { n: 5, f: 440.0, state: "on", label: "P_grok L1 > L2" },
+  { n: 6, f: 523.25, state: "dim", label: "rule-30 scope" },
+  { n: 7, f: 587.33, state: "on", label: "risk identity" },
+  { n: 8, f: 659.25, state: "on", label: "concentration" },
+  { n: 9, f: 783.99, state: "on", label: "slope −0.83" },
+  { n: 10, f: 880.0, state: "dim", label: "coupling pN" },
+  { n: 11, f: 1046.5, state: "dim", label: "stability" },
+  { n: 12, f: 1174.66, state: "dim", label: "variance bound" },
+];
+const colors = ["c-blue", "c-magenta", "c-teal", "c-gold", "c-violet"];
+---
+
+<div class="xylo" role="group" aria-label="Playable claim xylophone">
+  {
+    bars.map((b, i) => (
+      <button
+        class={`bar ${b.state} ${colors[i % colors.length]}`}
+        style={`--h: ${34 + i * 9}px`}
+        data-freq={b.f}
+        data-label={b.label}
+        aria-label={`Claim ${b.n}: ${b.label} — ${b.state === "on" ? "supported" : "inconclusive"}`}
+      >
+        <span class="bar-label">{b.label}</span>
+      </button>
+    ))
+  }
+</div>
+<p class="xylo-readout" id="xylo-readout">12 bars, one per audited claim — click to play</p>
