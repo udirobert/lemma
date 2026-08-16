@@ -409,6 +409,22 @@ def _summary_problems(summary: dict) -> list[str]:
             problems.append(
                 f"control residual {name}={val:.3g} contradicts control_pass=true"
             )
+
+    # A verdict cannot rest on an unmeasured quantity. NaN / null / inf in a
+    # primary measurement (non-control) means the criterion was never
+    # actually evaluated — that is "inconclusive", never "falsified".
+    for name, val in metrics.items():
+        if "control" in name.lower():
+            continue
+        is_nan = isinstance(val, float) and val != val
+        if is_nan or val is None:
+            problems.append(
+                f"status={status} but primary metric {name} is NaN/None "
+                "(measurement never produced a usable value)"
+            )
+    n_meas = metrics.get("n_measurable_points")
+    if isinstance(n_meas, (int, float)) and n_meas == 0:
+        problems.append(f"status={status} but n_measurable_points=0 — no data to judge")
     return problems
 
 
