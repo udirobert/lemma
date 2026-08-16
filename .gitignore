@@ -115,3 +115,6 @@ coverage/
 htmlcov/
 .tox/
 nox/
+tmp/
+token.json
+slides_token.json
