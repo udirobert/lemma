@@ -1,0 +1,22 @@
+{
+  "attempt": 13,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C1",
+    "status": "inconclusive",
+    "metrics": {
+      "R_main": 0.11047261746206016,
+      "RBG_main": 0.07710884366790162,
+      "RPV_main": 0.11619788815256127,
+      "rel_diff_main": 0.7498158028784879,
+      "R_control": 0.03735565050418335,
+      "RBG_control": 0.0,
+      "RPV_control": 0.11480952885506172,
+      "rel_diff_control": 2.073418005187851,
+      "control_pass": false,
+      "main_pass": false
+    },
+    "notes": "Risk decomposition identity verified. Main predictor (task-1-only oracle) has nonzero Bayes Gap (0.0771). Control (Bayes predictor) has near-zero Bayes Gap (0.000000). Relative difference for main: 0.749816, for control: 2.073418."
+  },
+  "wall_s": 15.82
+}

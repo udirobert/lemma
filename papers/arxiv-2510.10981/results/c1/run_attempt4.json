@@ -1,0 +1,19 @@
+{
+  "attempt": 4,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C1",
+    "status": "inconclusive",
+    "metrics": {
+      "R_mean": 9.559903971309444,
+      "RBG_mean": 5.22340201385862,
+      "RPV_mean": 3.484964020319172,
+      "rel_diff": 0.08907390070938272,
+      "rel_diff_C": 0.08314509633705679,
+      "control_pass": false,
+      "M": 10000
+    },
+    "notes": "Paired sampling used. rel_diff=0.0891, control rel_diff_C=0.0831."
+  },
+  "wall_s": 8.87
+}

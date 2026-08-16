@@ -1,0 +1,26 @@
+{
+  "attempt": 3,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C4",
+    "status": "inconclusive",
+    "metrics": {
+      "slope_pN": -0.9771159960414385,
+      "r2_pN": 0.9992018255171841,
+      "p_val_pN": 6.112899991933096e-09,
+      "a_fit": 1.0333451686875468,
+      "b_fit": 0.00096736525263681,
+      "c_fit": 1.0377771927854433,
+      "r2_fit": 0.9989155987319263,
+      "m_min": 31.29648010670752,
+      "min_inside_grid": true,
+      "monotonic_decrease_approx": true,
+      "coupling_pass": true,
+      "control_pass": false,
+      "control_slope": NaN,
+      "control_r2": NaN
+    },
+    "notes": "pN trend: slope=-0.977, r2=0.999, p=0.0000. m structure: r2=0.999, min at m=31.3. Control: slope=nan, r2=nan."
+  },
+  "wall_s": 3.65
+}

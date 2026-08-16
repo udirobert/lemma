@@ -1,0 +1,22 @@
+{
+  "attempt": 3,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C1",
+    "status": "inconclusive",
+    "metrics": {
+      "R_M": 2.0310571313725734,
+      "RBG_M": 1.6832214453548775,
+      "RPV_M": 0.32719351819163833,
+      "abs_diff": 0.020642167826057545,
+      "rel_diff": 0.01016326301570243,
+      "control_R": 1.9031410375414823,
+      "control_RBG": 1.6945734300350828,
+      "control_RPV": 0.22971069664099983,
+      "control_rel_diff": 0.011109575547755181,
+      "control_pass": false
+    },
+    "notes": "Control test failed. The statistic or implementation may be buggy."
+  },
+  "wall_s": 31.41
+}

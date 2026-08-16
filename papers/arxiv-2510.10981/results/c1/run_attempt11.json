@@ -1,0 +1,21 @@
+{
+  "attempt": 11,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C1",
+    "status": "inconclusive",
+    "metrics": {
+      "R_M": 1.3794026753032003,
+      "RBG_M": 1.3719531293350105,
+      "RPV": 0.01445201719427501,
+      "RBG_plus_RPV": 1.3864051465292855,
+      "rel_diff": 0.005076451823283607,
+      "R_ctrl": 0.01507433119096387,
+      "RPV_ctrl": 0.014502347095808693,
+      "rel_diff_ctrl": 0.037944243622433184,
+      "control_pass": false
+    },
+    "notes": "Implementation is reviewer-provided after 8 failed LLM attempts. The identity verified is Proposition 3.1 (R = RBG + RPV) with a nonzero Bayes Gap (main = task-1-only oracle) and the Bayes predictor as control."
+  },
+  "wall_s": 13.8
+}

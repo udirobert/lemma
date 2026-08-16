@@ -1,0 +1,19 @@
+{
+  "attempt": 8,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C3",
+    "status": "falsified",
+    "metrics": {
+      "mean_p_true_5": 0.7843713248691414,
+      "gap_ratio_5": -5235654740436.04,
+      "slope": -3.2387138705098737,
+      "r_squared": 0.7998134837468579,
+      "control_pass": false,
+      "p_true_valid": true,
+      "gap_valid": false
+    },
+    "notes": "gap_ratio_5=-5235654740436.0400, mean_p_true_5=0.7844, slope=-3.2387, control_pass=False"
+  },
+  "wall_s": 2.85
+}

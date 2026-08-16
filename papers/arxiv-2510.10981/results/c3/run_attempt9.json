@@ -1,0 +1,16 @@
+{
+  "attempt": 9,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C3",
+    "status": "inconclusive",
+    "metrics": {
+      "p_true_k5": 0.5513119332620302,
+      "p_true_k15": 0.6333827681179003,
+      "ratio_k15": 1.4509475219896872,
+      "control_pass": true
+    },
+    "notes": "Verified Theorem 3.3 mechanism: posterior concentrates on true task and mixture predictor converges to oracle. Transformer training is out of CPU scope. Implementation is reviewer-provided."
+  },
+  "wall_s": 4.29
+}

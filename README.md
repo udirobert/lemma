@@ -62,6 +62,23 @@ lemma audit <arxiv-id | openreview-id | paper.pdf>
 Traces (append-only JSONL) live in `agent/traces/<run-id>.jsonl` and inside
 each paper's workdir for the judge to verify.
 
+## Submission results (Aug 16, 2026)
+
+Two unseen papers audited end to end overnight/overnight-adjacent on CPU,
+both with self-judged evidence trails:
+
+| Paper | Verdict | Logbook |
+|-------|---------|---------|
+| [arXiv 2510.10981](https://arxiv.org/abs/2510.10981) — *In-Context Learning Is Provably Bayesian Inference* | **3 supported / 0 falsified / 3 inconclusive** — the Prop. 3.1 risk identity (rel. diff 0.4%, nonzero Bayes Gap), the Thm 3.3 posterior-concentration mechanism, and the m/(pN) coupling rate (slope −0.83, r²=0.995) | https://huggingface.co/spaces/Papajams/repro-icl-provably-bayesian |
+| [JMLR 22-1228](https://www.jmlr.org/papers/v22/22-1228.html) — *Grokking phase transitions in learning local rules with gradient descent* | **0 supported / 0 falsified / 6 inconclusive** — a genuine free-model capability boundary, proven by a controlled bake-off (ν≈6000 vs expected 1.0 on the exact failed task) | https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules |
+
+Both workdirs carry the full trace (267 and 177 events respectively, failed
+attempts preserved) and judge verdicts of **PASS 5/5**. Honest outcomes over
+green checkmarks: where the pipeline's own verdict contradicted its data, the
+trace shows the correction (human-in-the-loop feedback → re-audit). Where the
+model could not do the physics, the agent said "inconclusive" and the bake-off
+log shows why.
+
 ## Prior art & validation
 
 `papers/5nNNVY8NW4-grokking/` is a hand-driven reproduction that **passed the
@@ -84,7 +101,8 @@ lemma/
 │   ├── judge.py         #   stage 4 — automated evidence judge
 │   ├── papers.py        #   arxiv / openreview / PDF resolution
 │   ├── firecrawl.py     #   evidence search + PDF parsing (arxiv fallback)
-│   ├── llm.py           #   multi-provider LLM wrapper (retries + fallback)
+│   ├── paperclip.py     #   GXL corpus: discovery + literature cross-check cells
+│   ├── llm.py           #   multi-endpoint LLM stack (timeouts, 429s, fallback)
 │   ├── traces.py        #   append-only JSONL trace logger
 │   └── traces/          #   run traces (gitignored)
 ├── papers/              # per-paper workdirs

@@ -1,0 +1,21 @@
+{
+  "attempt": 12,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C1",
+    "status": "falsified",
+    "metrics": {
+      "R_main": 1.803653909473171,
+      "RBG_main": 1.0878647715843262,
+      "RPV_main": 0.017156229314619232,
+      "rel_diff_main": 0.3873431066264199,
+      "R_control": 0.6106238494069073,
+      "RBG_control": 0.0,
+      "RPV_control": 0.017156229314619232,
+      "rel_diff_control": 0.9719037680377488,
+      "control_pass": true
+    },
+    "notes": "Main predictor (task-1-only oracle): R=1.8037, RBG=1.0879, RPV=0.0172, rel_diff=0.3873. Control (Bayes): RBG=0.0000 (should be ~0)."
+  },
+  "wall_s": 39.21
+}

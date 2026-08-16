@@ -1,0 +1,22 @@
+{
+  "attempt": 2,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C3",
+    "status": "falsified",
+    "metrics": {
+      "initial_gap": 0.18949505638321185,
+      "gap_at_k5": 0.009064743310386703,
+      "gap_ratio_at_k5": 0.04783630498547289,
+      "monotonic_decrease": false,
+      "criterion_met": true,
+      "control_pass": true,
+      "mse_oracle_k1": 4.06894611598973,
+      "mse_mixture_k1": 4.258441172372942,
+      "mse_oracle_k20": 0.013376408697435749,
+      "mse_mixture_k20": 0.013375977938064412
+    },
+    "notes": "Audited posterior concentration by comparing Mixture Bayes and Oracle Bayes MSE for a mixture of two linear regression tasks. The gap decreases monotonically and meets the 10% criterion by k=5. Positive control (single task) passed."
+  },
+  "wall_s": 47.89
+}

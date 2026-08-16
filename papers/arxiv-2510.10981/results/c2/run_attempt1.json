@@ -1,0 +1,17 @@
+{
+  "attempt": 1,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C2",
+    "status": "inconclusive",
+    "metrics": {
+      "r2_joint": 0.6541858630882735,
+      "r2_n_only": 0.0010486293369841304,
+      "r2_p_only": 0.12865249647240662,
+      "control_pass": false,
+      "r2_control": 0.11775441747275273
+    },
+    "notes": "Joint model R2=0.6542, N-only R2=0.0010, p-only R2=0.1287. Success criterion: R2_joint > 0.8 and > 0.1 higher than others."
+  },
+  "wall_s": 2.35
+}

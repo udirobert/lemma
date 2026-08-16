@@ -1,0 +1,21 @@
+{
+  "query": "Coupled p-N Scaling of Bayes Gap The Bayes Gap RBG(M_hat_theta) for a uniform-attention Transformer decreases as a function of the product pN (pretrainin",
+  "hits": [
+    {
+      "url": "paperclip:/papers/arx_2506.01582",
+      "title": "Bayes optimal learning of attention-indexed models",
+      "description": "arx_2506.01582 \u00b7 arXiv \u00b7 2026"
+    },
+    {
+      "url": "paperclip:/papers/arx_2605.29351",
+      "title": "Attention as In-Context Empirical Bayes: A Two-Stage View via Particle Dynamics",
+      "description": "arx_2605.29351 \u00b7 arXiv \u00b7 2026"
+    },
+    {
+      "url": "paperclip:/papers/arx_2510.01098",
+      "title": "Theory of Scaling Laws for In-Context Regression: Depth, Width, Context and Time",
+      "description": "Blake Bordelon, Mary I. Letey, Cengiz Pehlevan | arx_2510.01098 \u00b7 arXiv \u00b7 2025-10-01 | \"Researchers analyzed in-context learning for linear regression in a deep linear self-attention model. They found depth improves performance when covariances change across contexts, even with long contexts.\""
+    }
+  ],
+  "note": "3 related works surfaced via Paperclip (GXL) corpus search (arxiv source); listed as context only \u2014 audit verdicts rest on the numerical evidence above."
+}

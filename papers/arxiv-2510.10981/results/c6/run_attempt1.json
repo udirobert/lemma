@@ -1,0 +1,18 @@
+{
+  "attempt": 1,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C6",
+    "status": "inconclusive",
+    "metrics": {
+      "estimated_decay_rate": 4.744224385014646,
+      "theoretical_decay_rate": 399.99999999999994,
+      "ratio": 0.011860560962536617,
+      "control_pass": false,
+      "excess_variance_at_k_1": 0.09608233531636304,
+      "excess_variance_at_k_50": -1.700029006457271e-16
+    },
+    "notes": "Estimated decay rate 4.74 vs theoretical 400.00. Ratio 0.01. Control passed: False."
+  },
+  "wall_s": 2.35
+}

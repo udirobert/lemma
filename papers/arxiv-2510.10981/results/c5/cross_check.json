@@ -1,0 +1,21 @@
+{
+  "query": "Wasserstein Stability of Bayes Gap Under input-distribution shift, the change in the Bayes Gap between the source (pretraining) and target (inference) doma",
+  "hits": [
+    {
+      "url": "paperclip:/papers/arx_2304.07048",
+      "title": "Wasserstein PAC-Bayes Learning: Exploiting Optimisation Guarantees to   Explain Generalisation",
+      "description": "Maxime Haddouche and Benjamin Guedj | arx_2304.07048 \u00b7 arXiv \u00b7 2023"
+    },
+    {
+      "url": "paperclip:/papers/arx_2501.13430",
+      "title": "Wasserstein-regularized Conformal Prediction under General Distribution   Shift",
+      "description": "Rui Xu, Chao Chen, Yue Sun, Parvathinathan Venkitasubramaniam, Sihong Xie | arx_2501.13430 \u00b7 arXiv \u00b7 2025"
+    },
+    {
+      "url": "paperclip:/papers/arx_2512.05931",
+      "title": "On the Bayes Inconsistency of Disagreement Discrepancy Surrogates",
+      "description": "Neil G. Marchant, Andrew C. Cullen, Feng Liu, Sarah M. Erfani | arx_2512.05931 \u00b7 arXiv \u00b7 2025 | [272ms, saved to s_63015d84]"
+    }
+  ],
+  "note": "3 related works surfaced via Paperclip (GXL) corpus search (arxiv source); listed as context only \u2014 audit verdicts rest on the numerical evidence above."
+}

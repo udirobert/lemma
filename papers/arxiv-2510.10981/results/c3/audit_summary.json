@@ -1,0 +1,27 @@
+{
+  "claim_id": "C3",
+  "status": "supported",
+  "metrics": {
+    "mean_p_true_5": 0.7673844424578222,
+    "mean_p_true_15": 0.9280481568708537,
+    "ratio_1": 1.113563540367002,
+    "ratio_5": 1.1871283700814397,
+    "ratio_15": 1.0241874892254386,
+    "slope_ratio": -0.021147868378434943,
+    "r_squared": 0.9015878237550735,
+    "control_ratio_is_1": true,
+    "control_p_true_is_1": true,
+    "control_pass": true,
+    "checks": {
+      "p_true_5_ge_0.7": true,
+      "p_true_15_ge_0.9": true,
+      "ratio_15_le_1.05": true,
+      "p_true_in_01": true,
+      "ratio_ge_1": true,
+      "ratio_tail_decreasing": true,
+      "ratio_tail_r2_gt_0.7": true,
+      "control_pass": true
+    }
+  },
+  "notes": "Closed-form verification of the Theorem-3.3 mechanism on the paper's task-mixture class (linear vs degree-2 Hermite families, Definition 2.1): the mixture posterior concentrates on the true task and the Bayes-optimal mixture predictor converges to the true-family oracle, ratio(k) = excess_mix/excess_oracle >= 1 (Rao-Blackwell) decreasing to 1. The Transformer training experiment of Sec 4 needs GPU training and is out of CPU-audit scope; this verifies the Bayesian mechanism it demonstrates. Reviewer-provided reference implementation."
+}

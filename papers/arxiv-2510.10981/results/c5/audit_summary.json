@@ -1,0 +1,13 @@
+{
+  "claim_id": "C5",
+  "status": "inconclusive",
+  "metrics": {
+    "corr_w1_bayes_gap": -0.3485801191475708,
+    "corr_w1_post_var": -0.43740850303732426,
+    "mean_bayes_gap": 0.004729084377514484,
+    "mean_post_var": 0.25155781052823306,
+    "std_post_var": 0.010026844620783317,
+    "control_pass": false
+  },
+  "notes": "Correlation between W1 and Bayes Gap is -0.349, which is less than 0.9. Positive control failed: Bayes Gap did not increase as expected or Posterior Variance was not stable."
+}

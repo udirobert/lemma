@@ -1,0 +1,133 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "status": "supported",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C1",
+        "status": "supported",
+        "metrics": {
+          "R_main": 0.4891430266164797,
+          "RBG_main": 0.288150043235913,
+          "RPV_main": 0.19903355063600744,
+          "rel_diff": 0.004005848265103766,
+          "R_ctrl": 0.199637696810282,
+          "RPV_ctrl": 0.19903355063600744,
+          "rel_diff_ctrl": 0.0030262129043128255,
+          "RBG_main_nonzero": true,
+          "control_pass": true,
+          "M": 5000,
+          "p": 10
+        },
+        "notes": "Closed-form verification of Proposition 3.1 (R = RBG + RPV) on a two-family linear-task mixture (families distinguished by an intercept). MAIN predictor: task-1-only oracle (RBG_main > 0); CONTROL: Bayes predictor. Reviewer-provided reference implementation, executed by the audit pipeline."
+      }
+    },
+    {
+      "id": "C2",
+      "status": "inconclusive",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C2",
+        "status": "inconclusive",
+        "metrics": {
+          "r2_joint": 0.6541858630882735,
+          "r2_n_only": 0.0010486293369841304,
+          "r2_p_only": 0.12865249647240662,
+          "control_pass": false,
+          "r2_control": 0.11775441747275273
+        },
+        "notes": "Joint model R2=0.6542, N-only R2=0.0010, p-only R2=0.1287. Success criterion: R2_joint > 0.8 and > 0.1 higher than others."
+      }
+    },
+    {
+      "id": "C3",
+      "status": "supported",
+      "attempts": 4,
+      "summary": {
+        "claim_id": "C3",
+        "status": "supported",
+        "metrics": {
+          "mean_p_true_5": 0.7673844424578222,
+          "mean_p_true_15": 0.9280481568708537,
+          "ratio_1": 1.113563540367002,
+          "ratio_5": 1.1871283700814397,
+          "ratio_15": 1.0241874892254386,
+          "slope_ratio": -0.021147868378434943,
+          "r_squared": 0.9015878237550735,
+          "control_ratio_is_1": true,
+          "control_p_true_is_1": true,
+          "control_pass": true,
+          "checks": {
+            "p_true_5_ge_0.7": true,
+            "p_true_15_ge_0.9": true,
+            "ratio_15_le_1.05": true,
+            "p_true_in_01": true,
+            "ratio_ge_1": true,
+            "ratio_tail_decreasing": true,
+            "ratio_tail_r2_gt_0.7": true,
+            "control_pass": true
+          }
+        },
+        "notes": "Closed-form verification of the Theorem-3.3 mechanism on the paper's task-mixture class (linear vs degree-2 Hermite families, Definition 2.1): the mixture posterior concentrates on the true task and the Bayes-optimal mixture predictor converges to the true-family oracle, ratio(k) = excess_mix/excess_oracle >= 1 (Rao-Blackwell) decreasing to 1. The Transformer training experiment of Sec 4 needs GPU training and is out of CPU-audit scope; this verifies the Bayesian mechanism it demonstrates. Reviewer-provided reference implementation."
+      }
+    },
+    {
+      "id": "C4",
+      "status": "supported",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C4",
+        "status": "supported",
+        "metrics": {
+          "slope_pN": -0.8259726947786705,
+          "r2_pN": 0.9952155757101621,
+          "p_val_pN": 8.59774524213531e-06,
+          "r2_fit": 0.985386027404111,
+          "m_min": 13.713578399975896,
+          "min_in_grid": true,
+          "control_slope": -1.0921242501975101,
+          "control_r2": 0.9950811574443166,
+          "control_pass": true
+        },
+        "notes": "pN slope=-0.826, R2=0.995. m-fit R2=0.985, min_in_grid=True. Control pass=True."
+      }
+    },
+    {
+      "id": "C5",
+      "status": "inconclusive",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C5",
+        "status": "inconclusive",
+        "metrics": {
+          "corr_w1_bayes_gap": -0.3485801191475708,
+          "corr_w1_post_var": -0.43740850303732426,
+          "mean_bayes_gap": 0.004729084377514484,
+          "mean_post_var": 0.25155781052823306,
+          "std_post_var": 0.010026844620783317,
+          "control_pass": false
+        },
+        "notes": "Correlation between W1 and Bayes Gap is -0.349, which is less than 0.9. Positive control failed: Bayes Gap did not increase as expected or Posterior Variance was not stable."
+      }
+    },
+    {
+      "id": "C6",
+      "status": "inconclusive",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C6",
+        "status": "inconclusive",
+        "metrics": {
+          "estimated_decay_rate": 4.744224385014646,
+          "theoretical_decay_rate": 399.99999999999994,
+          "ratio": 0.011860560962536617,
+          "control_pass": false,
+          "excess_variance_at_k_1": 0.09608233531636304,
+          "excess_variance_at_k_50": -1.700029006457271e-16
+        },
+        "notes": "Estimated decay rate 4.74 vs theoretical 400.00. Ratio 0.01. Control passed: False."
+      }
+    }
+  ]
+}

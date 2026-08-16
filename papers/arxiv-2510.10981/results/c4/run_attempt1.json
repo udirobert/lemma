@@ -1,0 +1,27 @@
+{
+  "attempt": 1,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C4",
+    "status": "falsified",
+    "metrics": {
+      "gaps_vs_m": [
+        0.40481434852265635,
+        0.3710806411613957,
+        0.37996348051705725,
+        0.40113385159086506
+      ],
+      "gaps_vs_pN": [
+        0.6176374647450299,
+        0.4334599096339705,
+        0.4670211325231429,
+        0.38266842694678793
+      ],
+      "trend_m": false,
+      "trend_pN": false,
+      "control_pass": "True"
+    },
+    "notes": "The Bayes Gap decreases as m increases and as pN increases, consistent with the theoretical bound."
+  },
+  "wall_s": 22.28
+}

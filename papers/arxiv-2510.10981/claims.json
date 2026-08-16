@@ -1,0 +1,68 @@
+[
+  {
+    "id": "C1",
+    "title": "Risk Decomposition Identity",
+    "statement": "For any measurable bounded map M under the prompt-generating process, the ICL risk R(M) decomposes exactly into the Bayes Gap RBG(M) and the Posterior Variance RPV, such that R(M) = RBG(M) + RPV.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate the data-generating process (Definition 2.1) with a simple task mixture (e.g., linear vs. quadratic regression). Compute the empirical ICL risk R(M) for a fixed model M (e.g., a simple mean predictor or a small trained network). Independently compute the empirical Bayes Gap RBG(M) by comparing M's predictions to the analytically derived Bayes predictor (posterior mean) and the empirical Posterior Variance RPV by estimating the variance of the posterior predictive distribution. Verify that R(M) \u2248 RBG(M) + RPV within Monte Carlo error.",
+    "evidence_in_paper": "Proposition 3.1",
+    "compute": "cpu-fast",
+    "success_criterion": "The absolute difference between R(M) and (RBG(M) + RPV) is less than 0.01 * R(M) for 10,000 samples."
+  },
+  {
+    "id": "C2",
+    "title": "Coupled p-N Scaling of Bayes Gap",
+    "statement": "The Bayes Gap RBG(M_hat_theta) for a uniform-attention Transformer decreases as a function of the product pN (pretraining prompt length times number of prompts), specifically following a power-law trend BG(p, N) \u2248 a + b(pN)^-beta + c/N, which fits the data significantly better than models depending on N or p alone.",
+    "kind": "empirical_claim",
+    "testable": true,
+    "test_plan": "Train a small uniform-attention Transformer (or a simplified mean-pooling network as per Definition 2.2) on synthetic regression tasks. Sweep N in {100, 500, 1000, 2000} and p in {5, 10, 15, 20}. Compute the Bayes Gap for each (N, p) pair. Fit three models to the pooled data: (1) Joint: a + b(pN)^-beta + c/N, (2) N-only: a + bN^-beta, (3) p-only: a + cp^-gamma. Compare the R-squared values.",
+    "evidence_in_paper": "Table 1, Figure 2 (left and middle panels), Section 4 Findings (1)",
+    "compute": "gpu-small",
+    "success_criterion": "The R-squared of the joint model (pN) is greater than 0.8 and significantly higher (by at least 0.1) than the R-squared of both the N-only and p-only models."
+  },
+  {
+    "id": "C3",
+    "title": "Rapid Task-Type Identification (Posterior Concentration)",
+    "statement": "In a mixture of task types, the inference-time error (MSE) of a sufficiently pretrained Transformer rapidly approaches the 'Bayes (oracle)' curve (which assumes knowledge of the true task family) as the number of in-context examples k increases, demonstrating that the task-type identification error vanishes exponentially fast.",
+    "kind": "empirical_claim",
+    "testable": true,
+    "test_plan": "Pretrain a Transformer on a mixture of two distinct regression tasks (e.g., linear and non-linear) with large N and p to minimize the Bayes Gap. At inference time, evaluate the MSE for k = 1 to 20 in-context examples. Compare the Transformer's MSE curve to two baselines: 'Bayes (mixture)' (posterior mean over all tasks) and 'Bayes (oracle)' (posterior mean for the true task only). Measure the gap between Transformer MSE and Oracle MSE.",
+    "evidence_in_paper": "Figure 2 (right panel), Theorem 3.3, Section 4 Findings (2)",
+    "compute": "gpu-small",
+    "success_criterion": "The gap between the Transformer's MSE and the Bayes (oracle) MSE decreases monotonically with k and is less than 10% of the initial gap (at k=1) by k=5."
+  },
+  {
+    "id": "C4",
+    "title": "Bayes Gap Upper Bound Rate",
+    "statement": "The expected Bayes Gap E[RBG(M_hat_theta)] is upper bounded by a term proportional to m^(-2alpha/d_eff) + m/(pN) + 1/N (ignoring logarithmic factors), where m is the feature dimension, d_eff is the effective dimension, and alpha is the Holder exponent.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Using the synthetic setup from C2, vary the feature dimension m of the uniform-attention Transformer while keeping p and N fixed. Verify that the Bayes Gap decreases as m increases, consistent with the approximation error term m^(-2alpha/d_eff). Additionally, verify that for fixed m, the gap decreases as pN increases, consistent with the generalization term.",
+    "evidence_in_paper": "Theorem 3.2",
+    "compute": "gpu-small",
+    "success_criterion": "The Bayes Gap decreases as m increases (for fixed p, N) and decreases as pN increases (for fixed m), with the trend direction matching the theoretical bound."
+  },
+  {
+    "id": "C5",
+    "title": "Wasserstein Stability of Bayes Gap",
+    "statement": "Under input-distribution shift, the change in the Bayes Gap between the source (pretraining) and target (inference) domains is bounded by a constant times the Wasserstein distance between the prompt distributions, while the Posterior Variance remains intrinsic to the target domain and is not directly penalized by the shift in the same manner.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Pretrain a model on a source distribution P_X. Evaluate the Bayes Gap on the source domain and on a shifted target domain Q_X (e.g., shifted mean or variance of inputs). Compute the Wasserstein distance W_1 between the prompt distributions. Verify that the difference in Bayes Gaps is proportional to the Wasserstein distance. Verify that the Posterior Variance term (estimated via posterior variance) does not exhibit the same linear dependence on the shift magnitude as the Bayes Gap.",
+    "evidence_in_paper": "Theorem 3.4, Section 3.3",
+    "compute": "cpu-fast",
+    "success_criterion": "The correlation between the Wasserstein distance and the change in Bayes Gap is greater than 0.9, while the change in Posterior Variance is significantly smaller or uncorrelated with the shift magnitude."
+  },
+  {
+    "id": "C6",
+    "title": "Posterior Variance Bound by Minimax Risk",
+    "statement": "The Posterior Variance RPV is upper bounded by the minimax risk of the true task family plus a term that decays exponentially with the context length k, specifically involving factors like exp(-D_min k / 2) and exp(-C k).",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "In a two-task mixture, estimate the Posterior Variance for the true task as k increases. Compare this to the theoretical minimax risk of the true task family (which can be calculated analytically for simple linear models). Verify that the excess variance (Posterior Variance - Minimax Risk) decays exponentially with k.",
+    "evidence_in_paper": "Theorem 3.3",
+    "compute": "cpu-fast",
+    "success_criterion": "The excess Posterior Variance decreases exponentially with k, with a decay rate consistent with the theoretical constants D_min and C for the specific task mixture."
+  }
+]

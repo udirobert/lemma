@@ -1,0 +1,24 @@
+{
+  "attempt": 16,
+  "source": "reviewer_reference",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C1",
+    "status": "supported",
+    "metrics": {
+      "R_main": 0.4891430266164797,
+      "RBG_main": 0.288150043235913,
+      "RPV_main": 0.19903355063600744,
+      "rel_diff": 0.004005848265103766,
+      "R_ctrl": 0.199637696810282,
+      "RPV_ctrl": 0.19903355063600744,
+      "rel_diff_ctrl": 0.0030262129043128255,
+      "RBG_main_nonzero": true,
+      "control_pass": true,
+      "M": 5000,
+      "p": 10
+    },
+    "notes": "Closed-form verification of Proposition 3.1 (R = RBG + RPV) on a two-family linear-task mixture (families distinguished by an intercept). MAIN predictor: task-1-only oracle (RBG_main > 0); CONTROL: Bayes predictor. Reviewer-provided reference implementation, executed by the audit pipeline."
+  },
+  "wall_s": 1.06
+}

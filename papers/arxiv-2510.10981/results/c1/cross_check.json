@@ -1,0 +1,21 @@
+{
+  "query": "Risk Decomposition Identity For any measurable bounded map M under the prompt-generating process, the ICL risk R(M) decomposes exactly into the Baye",
+  "hits": [
+    {
+      "url": "paperclip:/papers/arx_2010.09629",
+      "title": "PAC$^m$-Bayes: Narrowing the Empirical Risk Gap in the Misspecified   Bayesian Regime",
+      "description": "Warren R. Morningstar, Alexander A. Alemi and Joshua V. Dillon | arx_2010.09629 \u00b7 arXiv \u00b7 2020"
+    },
+    {
+      "url": "paperclip:/papers/arx_2111.04579",
+      "title": "Information-Theoretic Bayes Risk Lower Bounds for Realizable Models",
+      "description": "Matthew Nokleby and Ahmad Beirami | arx_2111.04579 \u00b7 arXiv \u00b7 2021"
+    },
+    {
+      "url": "paperclip:/papers/arx_1410.0503",
+      "title": "On Bayes Risk Lower Bounds",
+      "description": "Xi Chen and Adityanand Guntuboyina and Yuchen Zhang | arx_1410.0503 \u00b7 arXiv \u00b7 2014 | [359ms, saved to s_de144c9c]"
+    }
+  ],
+  "note": "3 related works surfaced via Paperclip (GXL) corpus search (arxiv source); listed as context only \u2014 audit verdicts rest on the numerical evidence above."
+}

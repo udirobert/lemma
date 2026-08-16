@@ -1,0 +1,20 @@
+{
+  "attempt": 5,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C1",
+    "status": "supported",
+    "metrics": {
+      "R_avg": 0.029138725657285886,
+      "RBG_avg": 1.4438900758213455e-32,
+      "RPV_avg": 0.029138725657285886,
+      "rel_diff": 0.0,
+      "R_ctrl_avg": 0.029138725657285886,
+      "RPV_ctrl_avg": 0.029138725657285886,
+      "rel_diff_ctrl": 0.0,
+      "control_pass": true
+    },
+    "notes": "Closed-form verification of Risk Decomposition Identity. R=0.029139, RBG+RPV=0.029139, rel_diff=0.00e+00. Control: R_ctrl=0.029139, RPV_ctrl=0.029139, rel_diff_ctrl=0.00e+00."
+  },
+  "wall_s": 2.13
+}

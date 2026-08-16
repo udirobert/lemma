@@ -1,0 +1,21 @@
+{
+  "attempt": 4,
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C4",
+    "status": "supported",
+    "metrics": {
+      "slope_pN": -0.8259726947786705,
+      "r2_pN": 0.9952155757101621,
+      "p_val_pN": 8.59774524213531e-06,
+      "r2_fit": 0.985386027404111,
+      "m_min": 13.713578399975896,
+      "min_in_grid": true,
+      "control_slope": -1.0921242501975101,
+      "control_r2": 0.9950811574443166,
+      "control_pass": true
+    },
+    "notes": "pN slope=-0.826, R2=0.995. m-fit R2=0.985, min_in_grid=True. Control pass=True."
+  },
+  "wall_s": 2.9
+}
