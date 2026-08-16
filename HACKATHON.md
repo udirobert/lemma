@@ -239,11 +239,13 @@ uuid header) and DEEPSEEK/FLASH (OrcaRouter free v4-pro/v4-flash) configs,
 `.env` rsynced to `~/lemma/.env` on the VPS. GXL email sent asking for
 Claude credits; round-3 on C1/C6 only if they land.
 
-**Pre-10:45 checklist:**
+**Pre-10:45 checklist (deadline is 10:45 AM PDT = 18:45 BST; ~9h runway
+as of 09:39 BST):**
 1. ICL run: `ssh nuncio-vultr 'tail ~/lemma/runs/icl-bayes-*.log'` → if
    finished with supported claims, rsync back, `--stages evidence,judge`,
    publish as the centerpiece; if not, skip.
-2. Final regression gate: `./lemma judge --regression` → PASS.
+2. Final regression gate: `./lemma judge --regression` → PASS
+   (already confirmed at 09:39 BST, commit `33f3802`).
 3. Submit: repo (github.com/udirobert/lemma, main current) + logbook URL.
 4. Demo order unchanged (regression → CA two-round story → bake-off
    boundary → live judge/search → logbook URL).
