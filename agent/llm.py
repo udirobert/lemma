@@ -29,6 +29,11 @@ MAX_TOKENS = 8192
 MAX_RETRIES = 3
 MAX_RETRY_WAIT_S = 40.0
 FALLBACK_ERROR_WINDOW_S = 60.0
+# Hard ceiling per HTTP request. The free endpoints occasionally accept a
+# connection and then never answer; the SDK default (10 min x its own
+# retries) wedged a 24h audit once. We do our own retries, so disable the
+# SDK's and bound each call.
+HTTP_TIMEOUT_S = 240.0
 
 _clients: dict = {}
 _provider_fail_at: dict[str, float] = {}
@@ -164,7 +169,7 @@ def complete(
 def _complete_with_retry(
     provider: str, system: str, user: str, max_tokens: int, temperature: float
 ) -> tuple[str, str, float]:
-    from openai import APIStatusError, RateLimitError
+    from openai import APIConnectionError, APIStatusError, RateLimitError
 
     attempt = 0
     t0 = time.time()
@@ -181,6 +186,12 @@ def _complete_with_retry(
                 MAX_RETRY_WAIT_S,
             )
             time.sleep(wait)
+        except APIConnectionError:
+            # includes APITimeoutError — the request hung or the socket died
+            if attempt <= MAX_RETRIES:
+                time.sleep(min(2.0**attempt, 8.0))
+                continue
+            raise
         except APIStatusError as e:
             # transient server-side errors: retry a couple of times
             if e.status_code >= 500 and attempt <= MAX_RETRIES:
@@ -197,7 +208,7 @@ def _complete_one(
         import anthropic
 
         if "anthropic" not in _clients:
-            _clients["anthropic"] = anthropic.Anthropic()
+            _clients["anthropic"] = anthropic.Anthropic(timeout=HTTP_TIMEOUT_S)
         model = model_name("anthropic")
         resp = _clients["anthropic"].messages.create(
             model=model,
@@ -220,7 +231,11 @@ def _complete_one(
                 or os.environ.get("OPENAI_API_BASE")
                 or None
             )
-            kwargs = {"api_key": os.environ["OPENAI_API_KEY"]}
+            kwargs = {
+                "api_key": os.environ["OPENAI_API_KEY"],
+                "timeout": HTTP_TIMEOUT_S,
+                "max_retries": 0,
+            }
             if base_url:
                 kwargs["base_url"] = base_url
             _clients["openai"] = OpenAI(**kwargs)
@@ -230,7 +245,11 @@ def _complete_one(
         if not cfg:
             raise RuntimeError(f"endpoint {p} not configured")
         if p not in _clients:
-            kwargs = {"api_key": cfg["api_key"]}
+            kwargs = {
+                "api_key": cfg["api_key"],
+                "timeout": HTTP_TIMEOUT_S,
+                "max_retries": 0,
+            }
             if cfg["base_url"]:
                 kwargs["base_url"] = cfg["base_url"]
             _clients[p] = OpenAI(**kwargs)
