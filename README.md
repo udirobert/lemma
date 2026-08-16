@@ -72,6 +72,13 @@ both with self-judged evidence trails:
 | [arXiv 2510.10981](https://arxiv.org/abs/2510.10981) — *In-Context Learning Is Provably Bayesian Inference* | **3 supported / 0 falsified / 3 inconclusive** — the Prop. 3.1 risk identity (rel. diff 0.4%, nonzero Bayes Gap), the Thm 3.3 posterior-concentration mechanism, and the m/(pN) coupling rate (slope −0.83, r²=0.995) | https://huggingface.co/spaces/Papajams/repro-icl-provably-bayesian |
 | [JMLR 22-1228](https://www.jmlr.org/papers/v22/22-1228.html) — *Grokking phase transitions in learning local rules with gradient descent* | **5 supported / 0 falsified / 1 inconclusive** — critical exponents ν=1 (1D) and ν=(D+1)/2 (D-ball), P_grok(L1)>P_grok(L2), P_grok decreasing with D (Eq 86), and bimodal grokking-time PDF; C5 inconclusive by compute scope (the CPU-auditable proxy trivializes Rule-30) | https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules |
 
+Each paper's raw evidence trail is also published as a reusable HF Dataset
+(every audit script, run summary, figure, reviewer feedback, reference
+implementation, and the full trace — failures included):
+[ICL evidence](https://huggingface.co/datasets/Papajams/repro-evidence-icl-provably-bayesian) ·
+[CA evidence](https://huggingface.co/datasets/Papajams/repro-evidence-grokking-ca-local-rules)
+(reproducible via `scripts/publish_evidence_dataset.py papers/<id>`).
+
 Both workdirs carry the full trace (267 and 305 events respectively, failed
 attempts preserved) and judge verdicts of **PASS 5/5**. Honest outcomes over
 green checkmarks: where the pipeline's own verdict contradicted its data, the

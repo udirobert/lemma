@@ -411,6 +411,52 @@ Claude credits.
 3. Optionally: Firecrawl key (`FIRECRAWL_API_KEY`) for the 41M-paper research
    index + cleaner PDF parsing.
 
+**Published artifacts (final, 2026-08-16 ~16:40 BST):**
+- Logbook (ICL): https://huggingface.co/spaces/Papajams/repro-icl-provably-bayesian
+- Logbook (CA): https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules
+- Evidence dataset (ICL): https://huggingface.co/datasets/Papajams/repro-evidence-icl-provably-bayesian
+- Evidence dataset (CA): https://huggingface.co/datasets/Papajams/repro-evidence-grokking-ca-local-rules
+  (scripts, summaries, figures, feedback, references, trace; via
+  `scripts/publish_evidence_dataset.py papers/<id>`)
+- Kaggle: deliberately skipped (no CLI/API keypair available; audit trails
+  fit HF datasets, not Kaggle notebooks).
+
+## Post-submission roadmap
+
+### Frontend (decided 2026-08-16, after submission)
+
+The pipeline's current public surface is the Trackio logbooks — claim
+pages, figures, trace. The next layer, in order:
+
+**Phase A — static dashboard (GitHub Pages, one session of work).**
+A single `index.html` + tiny script-generated JSON listing every audited
+paper: title, source, verdict tally (supported/falsified/inconclusive),
+judge score, trace-event count, wall time, and links to the logbook Space
+and evidence dataset. Generated from `papers/*/judge_report.json` +
+`audit_report.json` — no new backend, zero hosting risk, updates on push.
+This is the portfolio view for judges and future papers.
+
+**Phase B — interactive demo (Gradio on an HF Space, later).**
+Wrap `lemma audit` as a Gradio app: paste an arXiv id → stream
+extract/audit/evidence/judge progress with the live trace visible →
+link out to the assembled logbook. Constraints to design around:
+1. real audits run 20–40 min and spend endpoint budget → ship a
+   "canned paper" mode (the grokking regression fixture) for instant demos,
+   with real audits queued/backgrounded;
+2. concurrent runs share `papers/` → per-session temp workdirs;
+3. rate-limit the public instance.
+
+**Phase C — product (weeks, not hours).**
+Claim ledger across papers, trace explorer with round-over-round verdict
+diffs, and a BenchFlow-style verifier API over the evidence trail. This is
+the "control plane" story — out of scope for the hackathon deadline.
+
+### Publishing cadence (agreed)
+
+Every completed audit publishes three artifacts: the logbook Space
+(human-readable), the evidence Dataset (machine-reusable, failures
+included), and a row on the Phase A dashboard. Kaggle is not a target.
+
 **Local env note (2026-08-16):** the laptop's old `.browser-use-env` was
 deleted; pipeline deps now live in the repo `.venv` (Python 3.12.13, built
 from `requirements-agent.txt`); `./lemma` prefers it automatically. The VPS
