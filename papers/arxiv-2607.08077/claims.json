@@ -1,0 +1,68 @@
+[
+  {
+    "id": "C1",
+    "title": "GRAM approximates multiple data-filtered models in a single run (Simple Stories)",
+    "statement": "On Simple Stories, a single GRAM-trained model with module ablation closely matches separately data-filtered models across five capability profiles: retained capabilities stay near baseline (GRAM 0.95 vs filtering 0.96 aggregated compute ratio; e.g., Aliens retained 0.99 each), forgotten categories drop well below (e.g., 0.61 GRAM vs 0.65 filtering), and core performance stays near baseline (GRAM 0.94, filtering 0.96).",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "Train an 8-layer 26M-parameter Transformer on Simple Stories (2M stories, 48 categories; 4 auxiliary categories chosen alphabetically, 44 core) for one epoch (batch 128, seq len 256). Implement GRAM with core MLP d=1856, auxiliary modules d=192, paf=1.0, pas=0.3, pcr=0.5; train data-filtered models on D1 \u222a Di per category and a full-data baseline. Fit power-law learning curves to baseline validation loss, compute compute ratios for each profile with module ablation, over 3 seeds.",
+    "evidence_in_paper": "Figure 2 and Section 4: GRAM retain CR 0.95 vs filtering 0.96; core 0.94 vs 0.96; example forget values 0.61 vs 0.65.",
+    "compute": "gpu-small",
+    "success_criterion": "Across the five profiles, GRAM's mean retain compute ratio is within ~0.02 of data filtering's (\u22480.95 vs 0.96), forget compute ratios are well below retain (\u22480.6 vs \u22480.95), and core compute ratio \u22650.9."
+  },
+  {
+    "id": "C2",
+    "title": "GRAM isolates realistic dual-use capabilities and matches data filtering at 800M scale",
+    "statement": "An 800M-parameter GRAM model trained on web/code/arXiv core plus virology, cybersecurity, nuclear physics, and Lisp auxiliary domains matches data filtering and FT-LoRA on core, retain, and forget compute ratios (core \u22480.96, retain \u22480.97, forget \u22480.53, elicit \u22480.58 for GRAM vs filtering 0.99/0.96/0.53/0.54), while using baseline training FLOPS (vs 5\u00d7 for filtering) and at most 1.1\u00d7 active MLP parameters.",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "Train 800M Transformers for one epoch on 16B core tokens (FineWeb-Edu, arXiv, The Stack minus Lisp) + 160M auxiliary tokens (~40M per domain). GRAM: core MLP d=6400, four aux modules d=640, pas=0.5, pcr=0.2, paf=4.0 (code)/3.0 (others). Baselines: all-data baseline, per-profile filtering, FT-LoRA, FT-Full, MaxEnt unlearning. Compute compute ratios via baseline learning curves; elicited forget via finetuning on 512 sequences per forget category, 3 seeds.",
+    "evidence_in_paper": "Figure 4 and Section 5: per-method compute ratios and cost table (Filtering 5\u00d7 FLOPS/5\u00d7 total params; GRAM 1\u00d7 FLOPS, 1.4\u00d7 total params).",
+    "compute": "gpu-large",
+    "success_criterion": "GRAM's core, retain, and forget compute ratios each fall within the 90% CI overlap of data filtering's values (core \u22480.96, retain \u22480.97, forget \u22480.53), and GRAM's elicited-forget compute ratio (\u22480.58) is far below MaxEnt's (\u22480.91)."
+  },
+  {
+    "id": "C3",
+    "title": "Capability isolation improves with scale and GRAM tracks data filtering from 50M to 5B",
+    "statement": "Across Chinchilla-optimal models from 50M to 5B parameters, data filtering's suppression of the forget capability widens with scale (forget compute ratio decreases) and elicited forget approaches forget, while GRAM and FT-LoRA closely track the data-filtered model's core, retain, forget, and elicited-forget compute ratios at every scale (with an anomalous GRAM retain gain at 5B attributed to hyperparameters).",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "Train models at 50M, 100M, 200M, 400M, 800M, 2B, 5B parameters with Chinchilla-optimal token counts, auxiliary data at 1% of core, modules/adapters at 10% of MLP parameters. Compare baseline, GRAM, FT-LoRA, and Core+Virology data filtering. Compute core/retain(virology)/forget/elicited-forget compute ratios at each scale (3 seeds below 2B). Verify monotone decreasing forget trend with scale for filtering and that GRAM/FT-LoRA values lie within CIs of filtering at each scale.",
+    "evidence_in_paper": "Figure 7 and Section 6: compute ratio vs model size for all four metrics; filtering forget decreases with scale; GRAM and FT-LoRA track filtering.",
+    "compute": "gpu-large",
+    "success_criterion": "Forget compute ratio for filtering decreases as model size increases from 50M to 5B, and at each scale GRAM's core, retain, forget, and elicited-forget compute ratios match filtering's within the reported 90% CIs (excluding the noted 5B retain anomaly)."
+  },
+  {
+    "id": "C4",
+    "title": "GRAM composes arbitrary capability subsets without degradation, unlike FT-LoRA",
+    "statement": "Enabling multiple GRAM auxiliary modules at inference does not degrade retained-capability performance, supporting arbitrary capability subsets (2^(N-1) profiles) from one training run, whereas FT-LoRA degrades when more than one LoRA adapter is summed; GRAM achieves this despite never training with all modules active.",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "Using the 800M dual-use models from C2, evaluate compute ratios in two configurations: (a) only the virology module/adapter active, (b) all four auxiliary modules/adapters active. Compare per-domain compute ratios for GRAM vs FT-LoRA across 3 seeds.",
+    "evidence_in_paper": "Figure 5 and Section 5: GRAM retains high virology compute ratio in both configurations; FT-LoRA compute ratios drop across categories when all adapters are active.",
+    "compute": "gpu-large",
+    "success_criterion": "GRAM's virology (retained) compute ratio with all modules active is statistically indistinguishable from the virology-only configuration, while FT-LoRA's compute ratios are lower in the all-adapters configuration."
+  },
+  {
+    "id": "C5",
+    "title": "GRAM outperforms filtering and FT-LoRA on capability removal under partial labeling",
+    "statement": "With only 50% of training data labeled (unlabeled batches activate all modules for GRAM; unlabeled data treated as core for filtering/FT-LoRA), GRAM achieves a forget compute ratio of 0.60 \u00b1 0.01 versus 0.85 \u00b1 0.01 for both filtering and FT-LoRA, while maintaining competitive core performance (0.96 vs 0.99).",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "Repeat the 800M dual-use training with labels randomly dropped for 50% of examples. GRAM: unlabeled batches run forward/backward through core and all auxiliary modules. Filtering/FT-LoRA: unlabeled data assigned to core. Measure core, forget, and elicited-forget compute ratios over 3 seeds.",
+    "evidence_in_paper": "Figure 6 and Section 5: GRAM forget 0.60\u00b10.01 vs 0.85\u00b10.01 for filtering and FT-LoRA; core 0.96/0.99/0.99; elicit 0.76/0.85/0.86.",
+    "compute": "gpu-large",
+    "success_criterion": "GRAM's aggregate forget compute ratio is significantly below filtering's and FT-LoRA's (\u22480.60 vs \u22480.85, non-overlapping 90% CIs), with core compute ratio \u22650.95."
+  },
+  {
+    "id": "C6",
+    "title": "GRAM's training cost is independent of the number of capability profiles, yielding 5\u00d7 savings over filtering",
+    "statement": "GRAM produces all capability profiles in a single training run at baseline compute, whereas data filtering requires one run per profile; in the 5-profile setting this yields a 5\u00d7 reduction in training FLOPS, with GRAM adding only ~1.4\u00d7 total MLP parameters and \u22641.1\u00d7 active parameters at inference.",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "Compute FLOPS analytically (or via profiler) for the 800M setup: count training FLOPS for one GRAM run vs five filtering runs over matched token budgets, and count active/total MLP parameters per served profile. Verify GRAM's per-run token count equals the baseline's (auxiliary oversampling offset by core undersampling).",
+    "evidence_in_paper": "Figure 4 right table: Filtering 5\u00d7 train FLOPS, 5\u00d7 total MLP params; GRAM 1\u00d7 train FLOPS, 1\u00d7 or 1.1\u00d7 active, 1.4\u00d7 total MLP params.",
+    "compute": "cpu-fast",
+    "success_criterion": "Measured/calculated GRAM training FLOPS equal baseline FLOPS (within 5%), filtering costs 5\u00d7 baseline for 5 profiles, and GRAM active parameters per profile \u22641.1\u00d7 baseline MLP."
+  }
+]

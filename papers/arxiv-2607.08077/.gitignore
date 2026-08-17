@@ -1,0 +1,13 @@
+# Auto-generated — extend the global ignore for paper-specific artifacts
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Append-only agent trace — local state, not committed (AGENTS.md policy)
+trace.jsonl
+
+# Trackio logbook local state
+.trackio/
+
+# Reference copy of the source paper — re-fetchable from arXiv 2607.08077
+arxiv-2607.08077.pdf

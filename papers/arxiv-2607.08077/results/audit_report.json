@@ -1,0 +1,26 @@
+{
+  "claims": [
+    {
+      "id": "C6",
+      "status": "supported",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C6",
+        "status": "supported",
+        "metrics": {
+          "gram_train_flops_ratio_vs_baseline": 1.04,
+          "filtering_train_flops_ratio_vs_baseline": 5.0,
+          "filtering_over_gram_savings": 4.8076923076923075,
+          "gram_total_mlp_params_ratio": 1.4,
+          "gram_active_mlp_params_per_profile_ratio": 1.1,
+          "gram_active_total_params_per_profile_ratio": 1.0666666666666669,
+          "prob_aux_module_active_per_token": 0.6000000000000001,
+          "control_pass": true,
+          "control_gram_ratio_expected_1.0": 1.0,
+          "control_filter_ratio_expected_5.0": 5.0
+        },
+        "notes": "Analytic 6*N*T FLOPS model with paper hyperparameters (80/20 core/aux token mixture, p_cr=0.5, 4 aux modules at 0.1x core MLP each => 1.4x total MLP). GRAM trains on the same token count as baseline (aux oversampling offset by core undersampling), so its FLOPS ratio is just the active-parameter ratio: 1.0400x (within 5% of 1.0). Filtering needs 5 full runs = 5.0x, i.e. 4.81x savings for GRAM. Active MLP params per served profile = 1.10x <= 1.1x. Positive control (zero-overhead degenerate case) returns exactly 1.0x/5.0x as required."
+      }
+    }
+  ]
+}
