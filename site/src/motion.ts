@@ -85,32 +85,63 @@ if (!reduced && bars.length) {
   });
 }
 
-/* ---------- pinned hero exit ---------- */
+/* ---------- pinned hero: row -> DNA helix -> spin -> exit ---------- */
 if (!reduced) {
-  gsap.to(".hero .xylo", {
-    rotateX: 58,
-    y: 90,
-    opacity: 0,
-    ease: "none",
-    transformOrigin: "bottom center",
-    scrollTrigger: {
-      trigger: ".hero",
-      start: "top top",
-      end: "bottom 20%",
-      scrub: 0.6,
-    },
-  });
-  gsap.to(".hero-copy", {
-    yPercent: -32,
-    opacity: 0.15,
-    ease: "none",
-    scrollTrigger: {
-      trigger: ".hero",
-      start: "top top",
-      end: "bottom 25%",
-      scrub: 0.6,
-    },
-  });
+  const xylo = document.querySelector<HTMLElement>(".hero .xylo");
+  const heroBars = xylo ? Array.from(xylo.querySelectorAll<HTMLElement>(".bar")) : [];
+  if (xylo && heroBars.length) {
+    const cx = xylo.clientWidth / 2;
+    const cy = xylo.clientHeight / 2;
+    const n = heroBars.length;
+    const spacing = 30;
+    // layout-based (transform-agnostic) natural centers, relative to .xylo
+    const targets = heroBars.map((bar, i) => ({
+      x: cx - (bar.offsetLeft + bar.offsetWidth / 2),
+      y: (i - (n - 1) / 2) * spacing + cy - (bar.offsetTop + bar.offsetHeight / 2),
+      rotY: i * (360 / n),
+    }));
+
+    const helix = gsap.timeline({
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "+=300%",
+        scrub: 0.6,
+        pin: true,
+        anticipatePin: 1,
+      },
+    });
+
+    // phase 0: clear the stage
+    helix.to(".hero-copy", { yPercent: -18, opacity: 0, ease: "power2.in", duration: 0.5 }, 0);
+    helix.to(".hero .xylo-readout", { opacity: 0, duration: 0.3 }, 0);
+    helix.to(".hero .scroll-cue", { opacity: 0, duration: 0.2 }, 0);
+
+    // phase 1: bars fly into a single-turn helix of horizontal rungs
+    heroBars.forEach((bar, i) => {
+      helix.to(
+        bar,
+        {
+          x: targets[i].x,
+          y: targets[i].y,
+          rotateY: targets[i].rotY,
+          rotationZ: 90,
+          transformOrigin: "50% 50%",
+          ease: "power2.inOut",
+          duration: 1.0,
+        },
+        0.35 + i * 0.04
+      );
+    });
+
+    // phase 2: spin the helix one full turn (scroll-driven conveyor)
+    heroBars.forEach((bar, i) => {
+      helix.to(bar, { rotateY: targets[i].rotY + 360, ease: "none", duration: 1.3 }, 1.7);
+    });
+
+    // phase 3: exit into the story
+    helix.to(".hero .xylo", { opacity: 0, scale: 0.82, y: -40, ease: "power2.in", duration: 0.5 }, 2.7);
+  }
 }
 
 /* ---------- beat reveals ---------- */

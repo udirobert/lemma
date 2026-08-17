@@ -72,6 +72,7 @@ a {
 /* ---------------- hero ---------------- */
 .hero {
   position: relative;
+  z-index: 1;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -130,14 +131,22 @@ a {
 }
 
 /* ---------------- xylophone ---------------- */
+.xylo-scene {
+  position: relative;
+  z-index: 1;
+  perspective: 1100px;
+  perspective-origin: 50% 40%;
+}
+
 .xylo {
+  position: relative;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   gap: clamp(5px, 1.3vw, 16px);
   margin-top: 52px;
   height: clamp(190px, 30vh, 280px);
-  perspective: 1000px;
+  transform-style: preserve-3d;
 }
 
 .bar {
@@ -253,6 +262,8 @@ a {
 }
 
 .story {
+  position: relative;
+  z-index: 1;
   padding: 12vh 0 6vh;
 }
 
@@ -357,6 +368,8 @@ a {
 
 /* ---------------- trace section ---------------- */
 .trace {
+  position: relative;
+  z-index: 1;
   padding: 16vh 0;
 }
 
@@ -474,6 +487,8 @@ html:not(.js-motion) .tl {
 
 /* ---------------- replay section ---------------- */
 .replay {
+  position: relative;
+  z-index: 1;
   padding: 12vh 0;
 }
 
@@ -497,6 +512,8 @@ html:not(.js-motion) .tl {
 
 /* ---------------- waitlist ---------------- */
 .waitlist {
+  position: relative;
+  z-index: 1;
   padding: 12vh 0;
   background: radial-gradient(
     ellipse 70% 60% at 50% 0%,
@@ -642,6 +659,8 @@ html:not(.js-motion) .tl {
 
 /* ---------------- artifacts ---------------- */
 .artifacts {
+  position: relative;
+  z-index: 1;
   padding: 10vh 0 14vh;
 }
 
@@ -650,6 +669,22 @@ html:not(.js-motion) .tl {
   font-weight: 800;
   letter-spacing: -0.02em;
   margin-bottom: 34px;
+}
+
+.artifact-group {
+  margin-bottom: 26px;
+}
+.artifact-group:last-child {
+  margin-bottom: 0;
+}
+.artifact-label {
+  display: block;
+  font-family: var(--font-m);
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--dim);
+  margin-bottom: 10px;
 }
 
 .link-row {
@@ -684,6 +719,8 @@ html:not(.js-motion) .tl {
 }
 
 footer {
+  position: relative;
+  z-index: 1;
   padding: 34px 24px 60px;
   text-align: center;
   color: var(--dim);
