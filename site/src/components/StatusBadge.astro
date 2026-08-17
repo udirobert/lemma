@@ -1,0 +1,52 @@
+---
+interface Props {
+  status: string;
+}
+const { status } = Astro.props;
+const s = (status || "").toLowerCase();
+const cls =
+  s === "supported" ? "b-supported" :
+  s === "falsified" ? "b-falsified" :
+  s === "inconclusive" ? "b-inconclusive" :
+  "b-not-audited";
+const label =
+  s === "supported" ? "supported" :
+  s === "falsified" ? "falsified" :
+  s === "inconclusive" ? "inconclusive" :
+  s === "not_audited" ? "not audited" : s || "?";
+---
+
+<span class={`status-badge ${cls}`}>{label}</span>
+
+<style>
+  .status-badge {
+    font-family: var(--font-m);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border-radius: 99px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .b-supported {
+    color: var(--teal);
+    border-color: color-mix(in srgb, var(--teal) 60%, transparent);
+    background: color-mix(in srgb, var(--teal) 10%, transparent);
+  }
+  .b-falsified {
+    color: var(--magenta);
+    border-color: color-mix(in srgb, var(--magenta) 60%, transparent);
+    background: color-mix(in srgb, var(--magenta) 10%, transparent);
+  }
+  .b-inconclusive {
+    color: var(--gold);
+    border-color: color-mix(in srgb, var(--gold) 60%, transparent);
+    background: color-mix(in srgb, var(--gold) 10%, transparent);
+  }
+  .b-not-audited {
+    color: var(--dim);
+    border-color: var(--edge);
+    background: transparent;
+  }
+</style>

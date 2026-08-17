@@ -153,15 +153,18 @@ a {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: clamp(5px, 1.3vw, 16px);
+  gap: clamp(4px, 0.8vw, 10px);
   margin-top: 52px;
+  width: min(94vw, 1080px);
   height: clamp(190px, 30vh, 280px);
   transform-style: preserve-3d;
 }
 
 .bar {
   position: relative;
-  width: clamp(26px, 4.6vw, 54px);
+  flex: 1 1 0;
+  min-width: 12px;
+  max-width: 54px;
   height: var(--h);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 10px;

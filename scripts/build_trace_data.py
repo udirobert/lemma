@@ -1,8 +1,9 @@
-"""Build player-ready trace data for the landing-page trace player.
+"""Build player-ready trace data for the site's trace player.
 
-Reads the raw append-only traces and emits site/public/traces/*.json:
-one entry per rendered line (dramatic-weighted time, class, message),
-plus run metadata (wall time, LLM calls, milestones for the scrubber).
+Reads papers/_index.json (built by scripts/build_paper_index.py) and the raw
+append-only traces, then emits site/public/traces/<slug>.json: one entry per
+rendered line (dramatic-weighted time, class, message), plus run metadata
+(wall time, LLM calls, milestones for the scrubber).
 
 Presentation choices (documented because the trail is the deliverable):
 - consecutive evidence logbook-cell commands are aggregated into one line
@@ -10,6 +11,10 @@ Presentation choices (documented because the trail is the deliverable):
 - everything else is preserved verbatim, including failed attempts;
 - playback time is real elapsed time with per-gap clamps so 85s LLM calls
   don't deaden the scrubber.
+
+Usage:
+    python scripts/build_paper_index.py   # if _index.json is stale
+    python scripts/build_trace_data.py
 """
 
 from __future__ import annotations
@@ -19,25 +24,11 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-
-PAPERS = {
-    "ca": {
-        "dir": "jmlr-22-1228-ca-grokking",
-        "title": "Grokking phase transitions in learning local rules",
-        "source": "JMLR 22-1228",
-        "judge": "PASS 5/5",
-        "final": {"supported": 5, "falsified": 0, "inconclusive": 1},
-    },
-    "icl": {
-        "dir": "arxiv-2510.10981",
-        "title": "In-Context Learning Is Provably Bayesian Inference",
-        "source": "arXiv 2510.10981",
-        "judge": "PASS 5/5",
-        "final": {"supported": 3, "falsified": 0, "inconclusive": 3},
-    },
-}
-
+INDEX_PATH = REPO / "papers" / "_index.json"
 OUT_DIR = REPO / "site" / "public" / "traces"
+
+# Legacy tab keys kept as aliases so old links/bookmarks still load.
+LEGACY_ALIAS = {"grokking-ca": "ca", "icl-bayesian": "icl"}
 
 
 def short_model(m: str) -> str:
@@ -54,9 +45,6 @@ def render(ev: dict) -> tuple[str, str] | None:
             f"lemma audit · {short_model(ev.get('model', ''))} · extract→audit→evidence→judge",
             "cmd",
         )
-    if (s, e) == ("pipeline", "done"):
-        mins = ev.get("elapsed_s", 0) / 60
-        return f"run complete · {mins:.0f} min wall", "ok"
     if (s, e) == ("extract", "llm_call"):
         return "extract: model reads the paper", "info"
     if (s, e) == ("extract", "claims_written"):
@@ -104,14 +92,26 @@ def render(ev: dict) -> tuple[str, str] | None:
     if (s, e) == ("paperclip", "cross_check"):
         return f"litcheck: {cid} · {ev.get('n_hits')} corpus hits (Paperclip)", "info"
     if e == "note":
-        return f"{s}: {str(ev.get('text') or ev.get('note') or '')[:80]}", "info"
+        return (
+            f"{s}: {str(ev.get('note') or ev.get('text') or ev.get('message') or '')[:110]}",
+            "info",
+        )
     return f"{s}/{e}", "info"
 
 
-def build(key: str, meta: dict) -> None:
-    path = REPO / "papers" / meta["dir"] / "trace.jsonl"
+def build(entry: dict) -> None:
+    key = entry["slug"]
+    trace_rel = (
+        entry.get("trace", {}).get("path") or f"papers/{entry['dir']}/trace.jsonl"
+    )
+    path = REPO / trace_rel
+    if not path.is_file():
+        print(f"{key}: no trace file at {trace_rel}, skipping")
+        return
     events = [
-        json.loads(line) for line in path.read_text().splitlines() if line.strip()
+        json.loads(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
     ]
 
     lines: list[dict] = []
@@ -151,38 +151,53 @@ def build(key: str, meta: dict) -> None:
         gap = max(0.0, t - prev_t)
         weight = 0.25 if gap <= 0 else min(6.0, max(0.25, gap**0.55))
         prev_t = t
-        entry = {"t": round(weight, 2), "c": cls, "m": msg}
+        entry_line = {"t": round(weight, 2), "c": cls, "m": msg}
         if msg.startswith("FINAL") or "ESCALATION" in msg:
-            entry["k"] = 1  # milestone marker
-        lines.append(entry)
+            entry_line["k"] = 1  # milestone marker
+        lines.append(entry_line)
     flush_evidence()
 
-    total_wall = (
-        sum(e.get("elapsed_s", 0) for e in events if e.get("event") == "done") / 60
-    )
+    judge = entry.get("judge") or {}
     data = {
         "key": key,
-        "title": meta["title"],
-        "source": meta["source"],
-        "judge": meta["judge"],
-        "final": meta["final"],
+        "title": entry.get("title", key),
+        "source": entry.get("source_label", ""),
+        "judge": f"{judge.get('verdict', '?')} {judge.get('score', '')}".strip(),
+        "final": {
+            "supported": entry["summary"]["supported"],
+            "falsified": entry["summary"]["falsified"],
+            "inconclusive": entry["summary"]["inconclusive"],
+        },
         "n_events": len(events),
         "n_llm": n_llm,
         "n_runs": runs,
-        "wall_min": round(total_wall, 1),
+        "wall_min": entry.get("trace", {}).get("wall_min", 0.0),
         "lines": lines,
     }
     out_path = OUT_DIR / f"{key}.json"
     out_path.write_text(json.dumps(data, separators=(",", ":")) + "\n")
+    alias = LEGACY_ALIAS.get(key)
+    if alias:
+        (OUT_DIR / f"{alias}.json").write_text(
+            json.dumps({**data, "key": alias}, separators=(",", ":")) + "\n"
+        )
     print(
-        f"{key}: {len(lines)} rendered lines ({len(events)} raw events) → {out_path.name} ({out_path.stat().st_size // 1024}KB)"
+        f"{key}: {len(lines)} rendered lines ({len(events)} raw events) → "
+        f"{out_path.name} ({out_path.stat().st_size // 1024}KB)"
     )
 
 
 def main() -> int:
+    if not INDEX_PATH.is_file():
+        print(
+            "papers/_index.json missing — run scripts/build_paper_index.py first",
+            file=sys.stderr,
+        )
+        return 1
+    index = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    for key, meta in PAPERS.items():
-        build(key, meta)
+    for entry in index["papers"]:
+        build(entry)
     return 0
 
 

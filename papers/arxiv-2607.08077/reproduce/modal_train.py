@@ -825,7 +825,9 @@ def _load_hf_token():
     tok = os.environ.get("HF_TOKEN", "")
     if tok:
         return tok
-    env_path = os.path.join(os.path.dirname(__file__), "..", "..", ".env")
+    env_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", ".env"
+    )
     try:
         with open(env_path) as f:
             for line in f:

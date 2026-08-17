@@ -1,8 +1,8 @@
-# scripts/gram — GRAM (arXiv 2607.08077) C1 reproduction runner
+# reproduce/ — GRAM (arXiv 2607.08077) C1 reproduction runner
 
 From-scratch reimplementation of the Simple Stories experiment (no public
-GRAM code exists). Audit state and results live in
-`papers/arxiv-2607.08077/`.
+GRAM code exists). Audit state and results live one level up
+(`papers/arxiv-2607.08077/`).
 
 ## modal_train.py (current)
 
@@ -17,9 +17,9 @@ elicitation fine-tune.
 
 ```bash
 # from the repo root, venv activated, Modal token configured
-modal run scripts/gram/modal_train.py --mode smoke    # CPU, 2k samples, pipeline check
-modal run scripts/gram/modal_train.py --mode scaled   # A10G, 150k samples (~6 min/model)
-modal run scripts/gram/modal_train.py --mode full     # A10G, full 2.1M dataset (~1h/model)
+modal run papers/arxiv-2607.08077/reproduce/modal_train.py --mode smoke    # CPU, 2k samples, pipeline check
+modal run papers/arxiv-2607.08077/reproduce/modal_train.py --mode scaled   # A10G, 150k samples (~6 min/model)
+modal run papers/arxiv-2607.08077/reproduce/modal_train.py --mode full     # A10G, full 2.1M dataset (~1h/model)
 ```
 
 Results JSON is written to the `lemma-gram-results` Modal volume at

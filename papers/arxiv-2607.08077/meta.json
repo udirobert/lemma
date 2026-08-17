@@ -1,0 +1,27 @@
+{
+  "$schema_note": "Curated paper metadata. scripts/build_paper_index.py merges this with derived data (claims.json, results/audit_report.json, judge_report.json, trace stats) into papers/_index.json.",
+  "slug": "gram",
+  "dir": "arxiv-2607.08077",
+  "title": "Modular Pretraining Enables Access Control (GRAM)",
+  "authors": "Ethan Roland (AE Studio) et al.",
+  "source_label": "arXiv 2607.08077",
+  "source_url": "https://arxiv.org/abs/2607.08077",
+  "arxiv_url": "https://arxiv.org/abs/2607.08077",
+  "audited_at": "2026-08-17",
+  "status": "complete",
+  "role": "audit",
+  "blurb": "GRAM adds gradient-routed auxiliary MLPs to a base model so capabilities can be isolated and selectively disabled. Reproduced the 26M-param Simple Stories experiment on Modal A10G; compute-ratio evaluation follows the paper's Appendix-M power-law inversion.",
+  "links": {
+    "logbook": null,
+    "dataset": null,
+    "paper": "https://arxiv.org/abs/2607.08077"
+  },
+  "xylo": [
+    {"claim": "C1", "label": "single-run ≈ filtering"},
+    {"claim": "C2", "label": "800M isolation"},
+    {"claim": "C3", "label": "scale 50M→5B"},
+    {"claim": "C4", "label": "subset composition"},
+    {"claim": "C5", "label": "partial-label removal"},
+    {"claim": "C6", "label": "5× cost savings"}
+  ]
+}

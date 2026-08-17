@@ -1,0 +1,26 @@
+{
+  "$schema_note": "Curated paper metadata. scripts/build_paper_index.py merges this with derived data (claims.json, results/audit_report.json, judge_report.json, trace stats) into papers/_index.json.",
+  "slug": "grokking-ca",
+  "title": "Grokking phase transitions in learning local rules with gradient descent",
+  "source_label": "JMLR 22-1228",
+  "source_url": "https://www.jmlr.org/papers/v22/22-1228.html",
+  "arxiv_url": null,
+  "audited_at": "2026-08-16",
+  "blurb": "Grokking in cellular-automaton rule learning: critical exponents, grokking-probability trends, and a bimodal grokking-time distribution. Audited end to end on CPU.",
+  "links": {
+    "logbook": "https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules",
+    "dataset": "https://huggingface.co/datasets/Papajams/repro-evidence-grokking-ca-local-rules",
+    "paper": "https://www.jmlr.org/papers/v22/22-1228.html"
+  },
+  "role": "audit",
+  "status": "complete",
+  "trace": "trace.jsonl",
+  "xylo": [
+    {"claim": "C1", "label": "ν = 1.00 (1D)"},
+    {"claim": "C2", "label": "ν = 1.500 (D=2)"},
+    {"claim": "C3", "label": "ν = 3.00 (D=4)"},
+    {"claim": "C4", "label": "ν = 5.50 (D=10)"},
+    {"claim": "C5", "label": "P_grok L1 > L2"},
+    {"claim": "C6", "label": "rule-30 scope"}
+  ]
+}

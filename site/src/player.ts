@@ -203,7 +203,8 @@ function switchRun(key: string) {
 }
 
 /* wiring */
-document.querySelectorAll<HTMLButtonElement>(".run-btn").forEach((b) => {
+const runBtns = Array.from(document.querySelectorAll<HTMLButtonElement>(".run-btn"));
+runBtns.forEach((b) => {
   b.addEventListener("click", () => switchRun(b.dataset.run!));
 });
 
@@ -245,4 +246,10 @@ if (!reduced) {
   io.observe(body.closest(".player") ?? body);
 }
 
-void loadRun("ca");
+/* initial run: first tab, or ?run= override (used by /papers/<slug> pages) */
+const params = new URLSearchParams(location.search);
+const initial =
+  params.get("run") && runBtns.some((b) => b.dataset.run === params.get("run"))
+    ? (params.get("run") as string)
+    : runBtns[0]?.dataset.run;
+if (initial) void loadRun(initial);

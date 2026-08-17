@@ -1,0 +1,334 @@
+---
+import "../../styles/global.css";
+import StatusBadge from "../../components/StatusBadge.astro";
+import TracePlayer from "../../components/TracePlayer.astro";
+import BgGlass from "../../components/BgGlass.astro";
+import papersData from "../../data/papers.json";
+
+export function getStaticPaths() {
+  const papers = (papersData as { papers: Array<{ slug: string }> }).papers;
+  return papers.map((p) => ({ params: { slug: p.slug }, props: { paper: p } }));
+}
+
+interface Paper {
+  slug: string;
+  dir: string;
+  title: string;
+  authors: string | null;
+  source_label: string;
+  source_url: string | null;
+  arxiv_url: string | null;
+  audited_at: string;
+  blurb: string;
+  role: string;
+  status: string;
+  links: { logbook: string | null; dataset: string | null; paper: string | null };
+  claims: Array<{ id: string; title: string; testable: boolean; status: string; attempts: number }>;
+  summary: { supported: number; falsified: number; inconclusive: number; not_audited: number };
+  judge: { verdict: string; score: string } | null;
+  trace: { n_events: number; n_llm: number; n_tool: number; wall_min: number; path: string };
+  failures_preserved: number;
+  xylo: Array<{ claim: string; label: string; state: string }>;
+  figures: string[];
+}
+const paper = Astro.props.paper as Paper;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{paper.title} — Lemma audit</title>
+    <meta name="description" content={`${paper.blurb} Verdicts: ${paper.summary.supported} supported, ${paper.summary.inconclusive} inconclusive, ${paper.summary.not_audited} not audited.`} />
+    <link rel="canonical" href={`https://lemmabio.netlify.app/papers/${paper.slug}/`} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={`${paper.title} — Lemma audit`} />
+    <meta property="og:description" content={paper.blurb} />
+    <meta property="og:url" content={`https://lemmabio.netlify.app/papers/${paper.slug}/`} />
+    <meta property="og:image" content="https://lemmabio.netlify.app/og-image.png" />
+    <meta name="theme-color" content="#0b1018" />
+  </head>
+  <body>
+    <BgGlass />
+    <div class="spectrum-fixed" aria-hidden="true"></div>
+
+    <main class="paper-detail">
+      <a href="/papers/" class="back-link">← all papers</a>
+
+      <header class="pd-header">
+        <div class="pd-meta-row">
+          <span class="pd-source">{paper.source_label}</span>
+          <span class={`pd-role ${paper.role === "fixture" ? "role-fixture" : "role-audit"}`}>{paper.role}</span>
+          {paper.judge && (
+            <span class="pd-judge">judge {paper.judge.verdict} {paper.judge.score}</span>
+          )}
+          <span class="pd-date">{paper.audited_at}</span>
+        </div>
+        <h1>{paper.title}</h1>
+        {paper.authors && <p class="pd-authors">{paper.authors}</p>}
+        <p class="pd-blurb">{paper.blurb}</p>
+        <div class="pd-links">
+          {paper.links.paper && <a href={paper.links.paper} target="_blank" rel="noopener">paper ↗</a>}
+          {paper.source_url && !paper.links.paper && <a href={paper.source_url} target="_blank" rel="noopener">source ↗</a>}
+          {paper.links.logbook && <a href={paper.links.logbook} target="_blank" rel="noopener">evidence logbook ↗</a>}
+          {paper.links.dataset && <a href={paper.links.dataset} target="_blank" rel="noopener">raw dataset ↗</a>}
+        </div>
+      </header>
+
+      <section class="pd-stats">
+        <div class="pd-stat"><b>{paper.summary.supported}</b><span>supported</span></div>
+        <div class="pd-stat"><b>{paper.summary.falsified}</b><span>falsified</span></div>
+        <div class="pd-stat"><b>{paper.summary.inconclusive}</b><span>inconclusive</span></div>
+        <div class="pd-stat"><b>{paper.summary.not_audited}</b><span>not audited</span></div>
+        <div class="pd-stat"><b>{paper.trace.n_events}</b><span>trace events</span></div>
+        <div class="pd-stat"><b>{paper.failures_preserved}</b><span>failures preserved</span></div>
+      </section>
+
+      <section class="pd-claims">
+        <h2>claims</h2>
+        <div class="claim-table">
+          {paper.claims.map((c) => (
+            <div class="claim-row" id={c.id.toLowerCase()}>
+              <span class="claim-id">{c.id}</span>
+              <span class="claim-title">{c.title}</span>
+              <span class="claim-meta">
+                {c.attempts > 0 ? `${c.attempts} attempt${c.attempts > 1 ? "s" : ""}` : "—"}
+              </span>
+              <StatusBadge status={c.status} />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {paper.figures.length > 0 && (
+        <section class="pd-figures">
+          <h2>figure evidence</h2>
+          <div class="figure-grid">
+            {paper.figures.map((f: string) => (
+              <a href={f} target="_blank" rel="noopener" class="figure-cell">
+                <img src={f} alt={f.split("/").pop() ?? "figure"} loading="lazy" />
+                <span class="figure-name">{f.split("/").pop()}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {paper.trace.n_events > 0 && (
+        <section class="pd-trace">
+          <h2>the trail</h2>
+          <p class="pd-trace-sub">
+            {paper.trace.n_llm} model calls · {paper.trace.n_tool} tool runs · {paper.trace.wall_min} min wall ·
+            append-only, failures preserved
+          </p>
+          <TracePlayer tabs={[{ key: paper.slug, label: paper.source_label || paper.slug }]} />
+        </section>
+      )}
+    </main>
+
+    <footer>
+      <p>lemma · the trace is the demo</p>
+    </footer>
+
+    <script src="../../player.ts"></script>
+    <style>
+      .paper-detail {
+        position: relative;
+        z-index: 2;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 90px 24px 80px;
+      }
+      .back-link {
+        font-family: var(--font-m);
+        font-size: 0.75rem;
+        color: var(--dim);
+        text-decoration: none;
+      }
+      .back-link:hover { color: var(--fg); }
+
+      .pd-header { margin-top: 28px; }
+      .pd-meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--font-m);
+        font-size: 0.7rem;
+        color: var(--dim);
+      }
+      .pd-role {
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        padding: 2px 8px;
+        border-radius: 4px;
+      }
+      .role-fixture {
+        color: var(--violet);
+        border: 1px solid color-mix(in srgb, var(--violet) 50%, transparent);
+      }
+      .role-audit {
+        color: var(--teal);
+        border: 1px solid color-mix(in srgb, var(--teal) 50%, transparent);
+      }
+      .pd-judge { color: var(--teal); font-weight: 700; }
+      .pd-header h1 {
+        font-size: clamp(1.7rem, 4vw, 2.6rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin-top: 14px;
+      }
+      .pd-authors {
+        font-size: 0.85rem;
+        color: var(--mut);
+        margin-top: 6px;
+      }
+      .pd-blurb {
+        font-size: 0.95rem;
+        color: var(--mut);
+        line-height: 1.7;
+        margin-top: 14px;
+        max-width: 720px;
+      }
+      .pd-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 18px;
+        font-family: var(--font-m);
+        font-size: 0.78rem;
+      }
+      .pd-links a {
+        color: var(--blue);
+        text-decoration: none;
+        border-bottom: 1px dashed color-mix(in srgb, var(--blue) 50%, transparent);
+      }
+      .pd-links a:hover { color: var(--fg); border-bottom-color: var(--fg); }
+
+      .pd-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 40px;
+      }
+      .pd-stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 108px;
+        padding: 14px 18px;
+        border: 1px solid var(--edge);
+        border-radius: 12px;
+        background: color-mix(in srgb, var(--card) 60%, transparent);
+      }
+      .pd-stat b {
+        font-size: 1.5rem;
+        font-weight: 800;
+      }
+      .pd-stat span {
+        font-family: var(--font-m);
+        font-size: 0.64rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--dim);
+        margin-top: 4px;
+      }
+
+      .paper-detail h2 {
+        font-size: 1.15rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        margin: 56px 0 18px;
+        text-transform: lowercase;
+        color: var(--fg);
+      }
+
+      .claim-table {
+        border: 1px solid var(--edge);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .claim-row {
+        display: grid;
+        grid-template-columns: 54px 1fr auto auto;
+        align-items: center;
+        gap: 14px;
+        padding: 13px 18px;
+        border-bottom: 1px solid var(--edge);
+        background: color-mix(in srgb, var(--card) 40%, transparent);
+      }
+      .claim-row:last-child { border-bottom: none; }
+      .claim-row:target {
+        background: color-mix(in srgb, var(--blue) 14%, transparent);
+      }
+      .claim-id {
+        font-family: var(--font-m);
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--blue);
+      }
+      .claim-title {
+        font-size: 0.88rem;
+        color: var(--fg);
+        line-height: 1.45;
+      }
+      .claim-meta {
+        font-family: var(--font-m);
+        font-size: 0.68rem;
+        color: var(--dim);
+        white-space: nowrap;
+      }
+
+      .figure-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+        gap: 16px;
+      }
+      .figure-cell {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px;
+        border: 1px solid var(--edge);
+        border-radius: 12px;
+        background: color-mix(in srgb, var(--card) 55%, transparent);
+        text-decoration: none;
+        transition: border-color 0.2s, transform 0.2s;
+      }
+      .figure-cell:hover {
+        border-color: var(--teal);
+        transform: translateY(-2px);
+      }
+      .figure-cell img {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid var(--edge);
+      }
+      .figure-name {
+        font-family: var(--font-m);
+        font-size: 0.64rem;
+        color: var(--dim);
+        word-break: break-all;
+      }
+
+      .pd-trace-sub {
+        font-family: var(--font-m);
+        font-size: 0.74rem;
+        color: var(--mut);
+        margin: -8px 0 18px;
+      }
+
+      @media (max-width: 640px) {
+        .claim-row {
+          grid-template-columns: 44px 1fr;
+          grid-template-rows: auto auto;
+        }
+        .claim-meta { grid-column: 2; justify-self: start; }
+        .claim-row > :last-child { grid-column: 2; justify-self: start; }
+      }
+    </style>
+  </body>
+</html>

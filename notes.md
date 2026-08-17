@@ -27,3 +27,8 @@
 - Closest per-category match to paper: "a deadline or time limit" forget core-only 0.606 (paper cites ~0.61); aliens retained 1.002 (paper 0.99).
 - Caveats recorded in `audit_summary.json`: single seed vs paper's 3; no independently trained data-filtering baseline (comparison uses paper-reported filtering values); text-only reimplementation.
 - Artifacts: `results/c1/full_results.json`, `audit_summary.json`, `run_attempt1.json`, `audit_attempt1.py` (copy of the runner), `c1_comparison.png`. Merged into `results/audit_report.json`.
+
+## 2026-08-17 (late) — GRAM judge run: PASS 5/5
+- `./lemma judge papers/arxiv-2607.08077` → PASS 5/5 (structure, evidence, integrity, cost, trace).
+- Trace now 29 events incl. the manual C1 reproduction run-id (smoke iterations preserved honestly: 3 failed smokes + 1 pass, scaled, full).
+- Committed: 554e114 (C1 full evidence) + 57018e4 (judge_report.json).

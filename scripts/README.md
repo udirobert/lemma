@@ -1,11 +1,25 @@
 # scripts/
 
-Helper scripts for the ICML 2026 Agent Reproductions hackathon.
+Repo-wide tooling. Paper-specific reproduction code lives in
+`papers/<id>/reproduce/` instead.
 
 | File | Purpose |
 |------|---------|
+| `build_paper_index.py` | Walk `papers/*/meta.json` + derived artifacts → `papers/_index.json` (the registry) |
+| `build_site_data.py` | `_index.json` → `site/src/data/papers.json` + copy figures to `site/public/papers/<slug>/figures/` |
+| `build_trace_data.py` | `_index.json` → `site/public/traces/<slug>.json` for the trace player (legacy `ca.json`/`icl.json` aliases kept) |
 | `validate_icml_logbook.py` | Canonical validator mirrored from the org Space. Run before `trackio logbook publish`; the judge runs the same checks. |
 | `validate_logbook.sh` | Thin wrapper around the validator: `./scripts/validate_logbook.sh <owner>/repro-<slug>`. |
+
+## Site data pipeline
+
+```bash
+python3 scripts/build_paper_index.py    # papers/_index.json
+python3 scripts/build_site_data.py      # site/src/data/papers.json + figures
+python3 scripts/build_trace_data.py     # site/public/traces/*.json
+```
+
+Commit the generated JSON + figures so Netlify builds need no Python.
 
 The org Space also provides a `paper_template.py` reference scaffold; we keep the per-paper working dir at `papers/<paper-orid>/` and copy it from `papers/_template/` so the agent can iterate locally.
 

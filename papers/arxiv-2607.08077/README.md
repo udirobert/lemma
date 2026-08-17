@@ -1,8 +1,9 @@
-# GRAM: Gradient-Routed Accumulation of Modules (arXiv 2607.08077)
+# Modular Pretraining Enables Access Control — GRAM (arXiv 2607.08077)
 
-**Paper:** *GRAM — capability isolation via gradient-masked auxiliary MLPs*
+**Paper:** *Modular Pretraining Enables Access Control* (Ethan Roland, AE Studio et al.)
 **arXiv:** https://arxiv.org/abs/2607.08077
 **Code link:** none public — full reimplementation from paper text
+**Judge:** PASS 5/5 (`judge_report.json`)
 **Audit context:** re:AGENT Track A build; reproduction prepared as a showcase
 for the AIAF pitch.
 
@@ -10,7 +11,7 @@ for the AIAF pitch.
 
 | ID | Claim | Status |
 |----|-------|--------|
-| C1 | GRAM approximates multiple data-filtered models in a single run (Simple Stories, 26M) | **supported** — full 2.1M-sample GPU reproduction (see `results/c1/`) |
+| C1 | GRAM approximates multiple data-filtered models in a single run (Simple Stories, 26M) | **supported** — full 2.1M-sample A10G run, CR core 0.975 / retain 0.976 / forget 0.789 / elicit 0.836 |
 | C2 | GRAM isolates realistic dual-use capabilities and matches filtering at 800M scale | not_audited — compute scope (800M, 3 seeds × 6 runs) |
 | C3 | Isolation improves with scale; GRAM tracks filtering 50M→5B | not_audited — compute scope (5B) |
 | C4 | GRAM composes arbitrary capability subsets without degradation, unlike FT-LoRA | not_audited — compute scope (800M + LoRA baselines) |
@@ -33,7 +34,7 @@ never silently skipped (AGENTS.md policy).
 - **Hypothesis:** a from-scratch 26M reproduction of Table 1 should show
   retain ≈ 1, forget substantially below retain, core ≥ 0.9, per the
   paper's compute-ratio evaluation (Appendix M power-law inversion).
-- **Implementation:** `scripts/gram/modal_train.py` — decoder-only
+- **Implementation:** `reproduce/modal_train.py` — decoder-only
   Transformer (8 layers, 8 heads, d=512, seq 256, vocab 4096, ~27.4M params).
   Baseline MLP hidden 2048; GRAM = core 1856 + 4× aux 192 (aux ≈1.58M,
   ~6% of total, matching the paper's accounting). Routing: p_af=1.0,
@@ -75,5 +76,6 @@ never silently skipped (AGENTS.md policy).
 - `claims.json` — extracted claims (stage 1)
 - `results/audit_report.json` — per-claim outcomes (stage 2)
 - `results/c6/` — C6 audit script, summary, figure
-- `results/c1/` — C1 training results: scaled + full run JSONs, comparison figure, audit summary
-- `../../scripts/gram/modal_train.py` — the Modal training/eval runner
+- `judge_report.json` — structural evidence-trustworthiness judge: PASS 5/5
+- `results/c1/` — full run JSON, audit summary, attempt record, comparison figure
+- `reproduce/` — self-contained training runner (Modal, GPU) with its own README; earlier local CPU prototype (`reproduce/train.py`) kept for reference

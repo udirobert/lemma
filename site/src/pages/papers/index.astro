@@ -1,0 +1,199 @@
+---
+import "../../styles/global.css";
+import StatusBadge from "../../components/StatusBadge.astro";
+import BgGlass from "../../components/BgGlass.astro";
+import papersData from "../../data/papers.json";
+
+const papers = papersData.papers;
+const totals = papersData.totals;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lemma — Audit Registry</title>
+    <meta name="description" content={`${totals.papers} papers audited. ${totals.supported} claims supported. Every failure preserved.`} />
+    <link rel="canonical" href="https://lemmabio.netlify.app/papers/" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Lemma — Audit Registry" />
+    <meta property="og:description" content={`${totals.papers} papers. ${totals.claims} claims. ${totals.supported} reproduced. Every failure preserved.`} />
+    <meta property="og:url" content="https://lemmabio.netlify.app/papers/" />
+    <meta property="og:image" content="https://lemmabio.netlify.app/og-image.png" />
+    <meta name="theme-color" content="#0b1018" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+  </head>
+  <body>
+    <BgGlass />
+    <div class="spectrum-fixed" aria-hidden="true"></div>
+
+    <main class="registry">
+      <header class="registry-header">
+        <a href="/" class="back-link">← lemma</a>
+        <h1>audit registry</h1>
+        <p class="registry-sub">
+          {totals.papers} papers · {totals.claims} claims extracted · {totals.supported} supported ·
+          {totals.inconclusive} inconclusive · {totals.failures_preserved} failures preserved ·
+          {totals.logbooks} evidence logbooks published
+        </p>
+      </header>
+
+      <div class="registry-grid">
+        {papers.map((p: any) => (
+          <a href={`/papers/${p.slug}/`} class="paper-card">
+            <div class="card-top">
+              <span class="card-source">{p.source_label}</span>
+              <span class={`card-role ${p.role === "fixture" ? "role-fixture" : "role-audit"}`}>
+                {p.role}
+              </span>
+            </div>
+            <h2 class="card-title">{p.title}</h2>
+            <p class="card-blurb">{p.blurb}</p>
+            <div class="card-claims">
+              {p.claims.map((c: any) => (
+                <StatusBadge status={c.status} />
+              ))}
+            </div>
+            <div class="card-footer">
+              {p.judge && (
+                <span class="card-judge">
+                  {p.judge.verdict} {p.judge.score}
+                </span>
+              )}
+              <span class="card-date">{p.audited_at}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </main>
+
+    <footer>
+      <p>lemma · the trace is the demo</p>
+    </footer>
+
+    <style>
+      .registry {
+        position: relative;
+        z-index: 2;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 100px 24px 80px;
+      }
+      .back-link {
+        font-family: var(--font-m);
+        font-size: 0.75rem;
+        color: var(--dim);
+        text-decoration: none;
+        letter-spacing: 0.05em;
+      }
+      .back-link:hover { color: var(--fg); }
+      .registry-header {
+        margin-bottom: 56px;
+      }
+      .registry-header h1 {
+        font-size: clamp(2.2rem, 5vw, 3.6rem);
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        margin-top: 16px;
+        background: linear-gradient(180deg, #ffffff 30%, #aab8d8);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .registry-sub {
+        font-family: var(--font-m);
+        font-size: 0.78rem;
+        color: var(--mut);
+        margin-top: 14px;
+        line-height: 1.8;
+      }
+      .registry-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 24px;
+      }
+      .paper-card {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 28px 24px;
+        border: 1px solid var(--edge);
+        border-radius: 14px;
+        background: color-mix(in srgb, var(--card) 70%, transparent);
+        backdrop-filter: blur(12px);
+        text-decoration: none;
+        transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      }
+      .paper-card:hover {
+        border-color: var(--blue);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 40px -12px rgba(79, 142, 247, 0.15);
+      }
+      .card-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .card-source {
+        font-family: var(--font-m);
+        font-size: 0.68rem;
+        color: var(--dim);
+        letter-spacing: 0.04em;
+      }
+      .card-role {
+        font-family: var(--font-m);
+        font-size: 0.6rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        padding: 2px 8px;
+        border-radius: 4px;
+      }
+      .role-fixture {
+        color: var(--violet);
+        border: 1px solid color-mix(in srgb, var(--violet) 50%, transparent);
+      }
+      .role-audit {
+        color: var(--teal);
+        border: 1px solid color-mix(in srgb, var(--teal) 50%, transparent);
+      }
+      .card-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        line-height: 1.35;
+        color: var(--fg);
+      }
+      .card-blurb {
+        font-size: 0.84rem;
+        color: var(--mut);
+        line-height: 1.6;
+        flex: 1;
+      }
+      .card-claims {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 8px;
+        border-top: 1px solid var(--edge);
+      }
+      .card-judge {
+        font-family: var(--font-m);
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--teal);
+      }
+      .card-date {
+        font-family: var(--font-m);
+        font-size: 0.68rem;
+        color: var(--dim);
+      }
+    </style>
+  </body>
+</html>

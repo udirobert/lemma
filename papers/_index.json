@@ -1,0 +1,458 @@
+{
+  "generated_at": "2026-08-17T23:23:02+0100",
+  "n_papers": 4,
+  "papers": [
+    {
+      "slug": "grokking-ridge",
+      "dir": "5nNNVY8NW4-grokking",
+      "title": "To Grok Grokking: Provable Grokking in Ridge Regression",
+      "source_label": "OpenReview 5nNNVY8NW4",
+      "source_url": "https://openreview.net/forum?id=5nNNVY8NW4",
+      "arxiv_url": null,
+      "audited_at": "2026-08-15",
+      "blurb": "Theory paper on provable grokking in ridge regression. Hand-driven reproduction that passed the ICML 2026 Agent Reproductions judge end to end — now the pipeline's regression fixture.",
+      "role": "fixture",
+      "status": "complete",
+      "links": {
+        "logbook": "https://huggingface.co/spaces/Papajams/repro-to-grok-grokking-ridge-regression",
+        "dataset": null,
+        "paper": "https://openreview.net/forum?id=5nNNVY8NW4"
+      },
+      "xylo": [
+        {
+          "claim": "C1",
+          "label": "grok zero-teacher"
+        },
+        {
+          "claim": "C2",
+          "label": "grok realizable"
+        },
+        {
+          "claim": "C3",
+          "label": "phase decomposition"
+        },
+        {
+          "claim": "C4",
+          "label": "hyperparam sweep"
+        },
+        {
+          "claim": "C5",
+          "label": "ReLU grokking"
+        },
+        {
+          "claim": "FALS",
+          "label": "falsification gate"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "title": "Theorem 4.1 — end-to-end grokking (zero teacher)",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        },
+        {
+          "id": "C2",
+          "title": "Theorem 4.2 — grokking with realizable teacher",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        },
+        {
+          "id": "C3",
+          "title": "Theorems 4.4-4.6 — phase decomposition",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        },
+        {
+          "id": "C4",
+          "title": "Figure 2 — hyperparameter dependence of grokking time",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        },
+        {
+          "id": "C5",
+          "title": "Figures 3-4 — two-layer ReLU grokking beyond the linear setting",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        },
+        {
+          "id": "FALS",
+          "title": "",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        }
+      ],
+      "summary": {
+        "supported": 6,
+        "falsified": 0,
+        "inconclusive": 0,
+        "not_audited": 0
+      },
+      "judge": {
+        "verdict": "PASS",
+        "score": "5/5"
+      },
+      "trace": {
+        "n_events": 10,
+        "n_llm": 0,
+        "n_tool": 0,
+        "n_note": 0,
+        "wall_min": 0.0,
+        "path": "papers/5nNNVY8NW4-grokking/results/trace.jsonl"
+      },
+      "figures": [
+        "results/c1/c1_zero_teacher.png",
+        "results/c1_negative_control_m_eq_n.png",
+        "results/c1_realizable_teacher.png",
+        "results/c4/c4_figure2.png",
+        "results/c5/c5_demo.png",
+        "results/c5/c5_figure3.png",
+        "results/c5/c5_figure4.png",
+        "results/fals/falsification.png"
+      ]
+    },
+    {
+      "slug": "icl-bayesian",
+      "dir": "arxiv-2510.10981",
+      "title": "In-Context Learning Is Provably Bayesian Inference",
+      "source_label": "arXiv 2510.10981",
+      "source_url": "https://arxiv.org/abs/2510.10981",
+      "arxiv_url": "https://arxiv.org/abs/2510.10981",
+      "audited_at": "2026-08-16",
+      "blurb": "ICL-as-Bayesian-inference theory: the risk-decomposition identity and coupled p-N scaling of the Bayes gap verified numerically; the posterior-variance bound honestly inconclusive under finite precision.",
+      "role": "audit",
+      "status": "complete",
+      "links": {
+        "logbook": "https://huggingface.co/spaces/Papajams/repro-icl-provably-bayesian",
+        "dataset": "https://huggingface.co/datasets/Papajams/repro-evidence-icl-provably-bayesian",
+        "paper": "https://arxiv.org/abs/2510.10981"
+      },
+      "xylo": [
+        {
+          "claim": "C1",
+          "label": "risk identity"
+        },
+        {
+          "claim": "C3",
+          "label": "concentration"
+        },
+        {
+          "claim": "C2",
+          "label": "slope −0.83"
+        },
+        {
+          "claim": "C4",
+          "label": "coupling pN"
+        },
+        {
+          "claim": "C5",
+          "label": "stability"
+        },
+        {
+          "claim": "C6",
+          "label": "variance bound"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "title": "Risk Decomposition Identity",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        },
+        {
+          "id": "C2",
+          "title": "Coupled p-N Scaling of Bayes Gap",
+          "testable": true,
+          "status": "inconclusive",
+          "attempts": 1
+        },
+        {
+          "id": "C3",
+          "title": "Rapid Task-Type Identification (Posterior Concentration)",
+          "testable": true,
+          "status": "supported",
+          "attempts": 4
+        },
+        {
+          "id": "C4",
+          "title": "Bayes Gap Upper Bound Rate",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        },
+        {
+          "id": "C5",
+          "title": "Wasserstein Stability of Bayes Gap",
+          "testable": true,
+          "status": "inconclusive",
+          "attempts": 1
+        },
+        {
+          "id": "C6",
+          "title": "Posterior Variance Bound by Minimax Risk",
+          "testable": true,
+          "status": "inconclusive",
+          "attempts": 1
+        }
+      ],
+      "summary": {
+        "supported": 3,
+        "falsified": 0,
+        "inconclusive": 3,
+        "not_audited": 0
+      },
+      "judge": {
+        "verdict": "PASS",
+        "score": "5/5"
+      },
+      "trace": {
+        "n_events": 268,
+        "n_llm": 33,
+        "n_tool": 95,
+        "n_note": 5,
+        "wall_min": 18.8,
+        "path": "papers/arxiv-2510.10981/trace.jsonl"
+      },
+      "figures": [
+        "results/c1/fig.png",
+        "results/c3/fig_p_true.png",
+        "results/c4/fig_m.png",
+        "results/c4/fig_pN.png"
+      ]
+    },
+    {
+      "slug": "gram",
+      "dir": "arxiv-2607.08077",
+      "title": "Modular Pretraining Enables Access Control (GRAM)",
+      "source_label": "arXiv 2607.08077",
+      "source_url": "https://arxiv.org/abs/2607.08077",
+      "arxiv_url": "https://arxiv.org/abs/2607.08077",
+      "audited_at": "2026-08-17",
+      "blurb": "GRAM adds gradient-routed auxiliary MLPs to a base model so capabilities can be isolated and selectively disabled. Reproduced the 26M-param Simple Stories experiment on Modal A10G; compute-ratio evaluation follows the paper's Appendix-M power-law inversion.",
+      "role": "audit",
+      "status": "complete",
+      "links": {
+        "logbook": null,
+        "dataset": null,
+        "paper": "https://arxiv.org/abs/2607.08077"
+      },
+      "xylo": [
+        {
+          "claim": "C1",
+          "label": "single-run ≈ filtering"
+        },
+        {
+          "claim": "C2",
+          "label": "800M isolation"
+        },
+        {
+          "claim": "C3",
+          "label": "scale 50M→5B"
+        },
+        {
+          "claim": "C4",
+          "label": "subset composition"
+        },
+        {
+          "claim": "C5",
+          "label": "partial-label removal"
+        },
+        {
+          "claim": "C6",
+          "label": "5× cost savings"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "title": "GRAM approximates multiple data-filtered models in a single run (Simple Stories)",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        },
+        {
+          "id": "C2",
+          "title": "GRAM isolates realistic dual-use capabilities and matches data filtering at 800M scale",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0
+        },
+        {
+          "id": "C3",
+          "title": "Capability isolation improves with scale and GRAM tracks data filtering from 50M to 5B",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0
+        },
+        {
+          "id": "C4",
+          "title": "GRAM composes arbitrary capability subsets without degradation, unlike FT-LoRA",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0
+        },
+        {
+          "id": "C5",
+          "title": "GRAM outperforms filtering and FT-LoRA on capability removal under partial labeling",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0
+        },
+        {
+          "id": "C6",
+          "title": "GRAM's training cost is independent of the number of capability profiles, yielding 5× savings over filtering",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        }
+      ],
+      "summary": {
+        "supported": 2,
+        "falsified": 0,
+        "inconclusive": 0,
+        "not_audited": 4
+      },
+      "judge": {
+        "verdict": "PASS",
+        "score": "5/5"
+      },
+      "trace": {
+        "n_events": 29,
+        "n_llm": 2,
+        "n_tool": 7,
+        "n_note": 5,
+        "wall_min": 225.1,
+        "path": "papers/arxiv-2607.08077/trace.jsonl"
+      },
+      "figures": [
+        "results/c1/c1_comparison.png",
+        "results/c6/flops_params.png"
+      ]
+    },
+    {
+      "slug": "grokking-ca",
+      "dir": "jmlr-22-1228-ca-grokking",
+      "title": "Grokking phase transitions in learning local rules with gradient descent",
+      "source_label": "JMLR 22-1228",
+      "source_url": "https://www.jmlr.org/papers/v22/22-1228.html",
+      "arxiv_url": null,
+      "audited_at": "2026-08-16",
+      "blurb": "Grokking in cellular-automaton rule learning: critical exponents, grokking-probability trends, and a bimodal grokking-time distribution. Audited end to end on CPU.",
+      "role": "audit",
+      "status": "complete",
+      "links": {
+        "logbook": "https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules",
+        "dataset": "https://huggingface.co/datasets/Papajams/repro-evidence-grokking-ca-local-rules",
+        "paper": "https://www.jmlr.org/papers/v22/22-1228.html"
+      },
+      "xylo": [
+        {
+          "claim": "C1",
+          "label": "ν = 1.00 (1D)"
+        },
+        {
+          "claim": "C2",
+          "label": "ν = 1.500 (D=2)"
+        },
+        {
+          "claim": "C3",
+          "label": "ν = 3.00 (D=4)"
+        },
+        {
+          "claim": "C4",
+          "label": "ν = 5.50 (D=10)"
+        },
+        {
+          "claim": "C5",
+          "label": "P_grok L1 > L2"
+        },
+        {
+          "claim": "C6",
+          "label": "rule-30 scope"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "title": "Critical exponent in 1D exponential model",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        },
+        {
+          "id": "C2",
+          "title": "Critical exponent in D-dimensional uniform ball model",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        },
+        {
+          "id": "C3",
+          "title": "Grokking probability increases with L1 regularisation",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        },
+        {
+          "id": "C4",
+          "title": "Grokking probability decreases with dimension D",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        },
+        {
+          "id": "C5",
+          "title": "Rule-30 CA learning exhibits grokking",
+          "testable": true,
+          "status": "inconclusive",
+          "attempts": 1
+        },
+        {
+          "id": "C6",
+          "title": "Grokking time distribution bimodality",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1
+        }
+      ],
+      "summary": {
+        "supported": 5,
+        "falsified": 0,
+        "inconclusive": 1,
+        "not_audited": 0
+      },
+      "judge": {
+        "verdict": "PASS",
+        "score": "5/5"
+      },
+      "trace": {
+        "n_events": 354,
+        "n_llm": 31,
+        "n_tool": 199,
+        "n_note": 3,
+        "wall_min": 39.4,
+        "path": "papers/jmlr-22-1228-ca-grokking/trace.jsonl"
+      },
+      "figures": [
+        "results/c1/fig.png",
+        "results/c2/exponent_fit.png",
+        "results/c2/exponent_fits.png",
+        "results/c3/grok_prob.png",
+        "results/c4/fig_prob.png",
+        "results/c4/p_grok_vs_D.png",
+        "results/c4/pgrok_vs_D.png",
+        "results/c5/control.png",
+        "results/c5/grokking_curves.png",
+        "results/c6/grokking_time_hist.png"
+      ]
+    }
+  ]
+}

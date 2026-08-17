@@ -5,37 +5,62 @@ import "../styles/global.css";
 import Xylophone from "../components/Xylophone.astro";
 import TracePlayer from "../components/TracePlayer.astro";
 import BgGlass from "../components/BgGlass.astro";
+import papersData from "../data/papers.json";
 
+const papers = papersData.papers as Array<{
+  slug: string;
+  title: string;
+  source_label: string;
+  source_url: string | null;
+  blurb: string;
+  role: string;
+  audited_at: string;
+  summary: { supported: number; falsified: number; inconclusive: number; not_audited: number };
+  judge: { verdict: string; score: string } | null;
+  links: { logbook: string | null; dataset: string | null; paper: string | null };
+  trace: { n_events: number; wall_min: number };
+}>;
+const totals = papersData.totals as {
+  papers: number;
+  claims: number;
+  supported: number;
+  inconclusive: number;
+  audited: number;
+  failures_preserved: number;
+  logbooks: number;
+};
+
+// Artifact links generated from the paper registry — no manual editing needed
+// when a new paper lands (meta.json → _index.json → papers.json).
 const ARTIFACTS = [
   {
-    group: "completed audits",
-    items: [
-      {
-        k: "logbook · CA grokking",
-        d: "5 supported / 1 inconclusive · PASS 5/5",
-        u: "https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules",
-      },
-      {
-        k: "logbook · ICL bayesian",
-        d: "3 supported / 3 inconclusive · PASS 5/5",
-        u: "https://huggingface.co/spaces/Papajams/repro-icl-provably-bayesian",
-      },
-    ],
+    group: "audited papers",
+    items: papers.map((p) => ({
+      k: `${p.source_label || p.slug}`,
+      d: `${p.summary.supported} supported / ${p.summary.inconclusive} inconclusive · judge ${p.judge ? `${p.judge.verdict} ${p.judge.score}` : "pending"}`,
+      u: `/papers/${p.slug}`,
+      internal: true,
+    })),
+  },
+  {
+    group: "evidence logbooks",
+    items: papers
+      .filter((p) => p.links.logbook)
+      .map((p) => ({
+        k: `logbook · ${p.slug}`,
+        d: "Trackio logbook — the inspectable evidence trail",
+        u: p.links.logbook as string,
+      })),
   },
   {
     group: "raw evidence",
-    items: [
-      {
-        k: "dataset · CA grokking",
-        d: "90 files — every failed attempt included",
-        u: "https://huggingface.co/datasets/Papajams/repro-evidence-grokking-ca-local-rules",
-      },
-      {
-        k: "dataset · ICL bayesian",
-        d: "81 files — every failed attempt included",
-        u: "https://huggingface.co/datasets/Papajams/repro-evidence-icl-provably-bayesian",
-      },
-    ],
+    items: papers
+      .filter((p) => p.links.dataset)
+      .map((p) => ({
+        k: `dataset · ${p.slug}`,
+        d: "every run output + failed attempt included",
+        u: p.links.dataset as string,
+      })),
   },
   {
     group: "code",
@@ -75,7 +100,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
     <title>Lemma — the AI scientist that distrusts itself</title>
     <meta
       name="description"
-      content="Lemma audits papers claim by claim, keeps every failed attempt, and scores its own evidence trail. 2 papers, 12 claims, 8 reproduced — everything public."
+      content={`Lemma audits papers claim by claim, keeps every failed attempt, and scores its own evidence trail. ${totals.papers} papers, ${totals.claims} claims, ${totals.supported} reproduced — everything public.`}
     />
     <link rel="canonical" href="https://lemmabio.netlify.app/" />
 
@@ -102,7 +127,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
     <meta name="twitter:title" content="Lemma — the AI scientist that distrusts itself" />
     <meta
       name="twitter:description"
-      content="2 papers · 12 claims · 8 reproduced · every failure public. Play the claim xylophone."
+      content={`${totals.papers} papers · ${totals.claims} claims · ${totals.supported} reproduced · every failure public. Play the claim xylophone.`}
     />
     <meta name="twitter:image" content="https://lemmabio.netlify.app/og-image.png" />
 
@@ -125,8 +150,8 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
     <p class="tagline">the AI scientist that <em>distrusts itself</em></p>
     <p class="hero-sub">
       Every claim gets a verdict. Every failure is preserved. Nothing is
-      patched into a pass. This is its instrument: <strong>12 bars, one per
-      audited claim.</strong> Bright bars reproduced. Dim bars are honest
+      patched into a pass. This is its instrument: <strong>{totals.audited} bars, one per
+      audited claim across {totals.papers} papers.</strong> Bright bars reproduced. Dim bars are honest
       inconclusives. Play it.
     </p>
   </div>
@@ -189,10 +214,10 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
           line — including everything that failed.
         </p>
         <div class="receipts">
-          <div class="receipt"><b><span data-count="2">0</span></b><span>papers</span></div>
-          <div class="receipt"><b><span data-count="12">0</span></b><span>claims</span></div>
-          <div class="receipt"><b><span data-count="8">0</span></b><span>reproduced</span></div>
-          <div class="receipt"><b><span data-count="15">0</span></b><span>failures preserved</span></div>
+          <div class="receipt"><b><span data-count={totals.papers}>0</span></b><span>papers</span></div>
+          <div class="receipt"><b><span data-count={totals.claims}>0</span></b><span>claims</span></div>
+          <div class="receipt"><b><span data-count={totals.supported}>0</span></b><span>reproduced</span></div>
+          <div class="receipt"><b><span data-count={totals.failures_preserved}>0</span></b><span>failures preserved</span></div>
         </div>
       </div>
     </article>
@@ -233,7 +258,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
     <div class="trace-head">
       <h2>Replay an audit, line by line</h2>
       <p>
-        The real append-only traces from two completed runs — every model call,
+        The real append-only traces from {totals.papers} completed runs — every model call,
         every script, every rejection and verdict flip. Scrub it, play it,
         watch a claim go from falsified to supported across rounds.
       </p>
@@ -303,14 +328,20 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
     {ARTIFACTS.map((g) => (
       <div class="artifact-group">
         <span class="artifact-label">{g.group}</span>
-        {g.items.map((a) => (
-          <a class="link-row" href={a.u} target="_blank" rel="noopener">
+        {g.items.map((a: { k: string; d: string; u: string; internal?: boolean }) => (
+          <a class="link-row" href={a.u} target={a.internal ? undefined : "_blank"} rel={a.internal ? undefined : "noopener"}>
             <span class="k">{a.k}</span>
             <span>{a.d}</span>
           </a>
         ))}
       </div>
     ))}
+    <div class="artifact-group">
+      <a class="link-row papers-index-link" href="/papers/">
+        <span class="k">all papers →</span>
+        <span>the full audit registry: claims, verdicts, figures, traces</span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -330,6 +361,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
     <li><a href="#replay"><span class="idx">03</span>replay</a></li>
     <li><a href="#waitlist"><span class="idx">04</span>waitlist</a></li>
     <li><a href="#artifacts"><span class="idx">05</span>artifacts</a></li>
+    <li><a href="/papers/"><span class="idx">06</span>papers</a></li>
     <li><a href="https://github.com/udirobert/lemma" target="_blank" rel="noopener"><span class="idx">→</span>github</a></li>
   </ul>
 </nav>

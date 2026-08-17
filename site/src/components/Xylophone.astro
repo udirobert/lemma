@@ -1,36 +1,75 @@
 ---
-// 12 bars = 12 audited claims across both papers (8 supported / 4 inconclusive).
-// Frequencies form two octaves of C-major pentatonic: consonant in any order.
-const bars = [
-  { n: 1, f: 261.63, state: "on", label: "ν = 1.00 (1D)" },
-  { n: 2, f: 293.66, state: "on", label: "ν = 1.500 (D=2)" },
-  { n: 3, f: 329.63, state: "on", label: "ν = 3.00 (D=4)" },
-  { n: 4, f: 392.0, state: "on", label: "ν = 5.50 (D=10)" },
-  { n: 5, f: 440.0, state: "on", label: "P_grok L1 > L2" },
-  { n: 6, f: 523.25, state: "dim", label: "rule-30 scope" },
-  { n: 7, f: 587.33, state: "on", label: "risk identity" },
-  { n: 8, f: 659.25, state: "on", label: "concentration" },
-  { n: 9, f: 783.99, state: "on", label: "slope −0.83" },
-  { n: 10, f: 880.0, state: "dim", label: "coupling pN" },
-  { n: 11, f: 1046.5, state: "dim", label: "stability" },
-  { n: 12, f: 1174.66, state: "dim", label: "variance bound" },
-];
-const colors = ["c-blue", "c-magenta", "c-teal", "c-gold", "c-violet"];
+// Xylophone of audited claims — fully data-driven.
+// Bars are flattened across ALL papers from papers.json; each paper gets one
+// palette colour so bars visually group by paper while staying playable.
+// Frequencies follow a C-major pentatonic scale (consonant in any order),
+// cycled across the bar count so any number of papers still sounds right.
+// Bar heights interpolate across the full range so N bars never overflow.
+interface Bar {
+  label: string;
+  freq: number;
+  state: "on" | "dim" | "fail";
+  claim: string;
+  slug: string;
+  color: string;
+}
+interface Props {
+  bars?: Bar[];
+}
+let { bars } = Astro.props;
+
+if (!bars) {
+  const data = await import("../data/papers.json");
+  const papers = (data as { papers: Array<{ slug: string; xylo?: Array<{ label: string; claim: string; state?: string }> }> }).papers ?? [];
+  const palette = ["c-blue", "c-magenta", "c-teal", "c-gold", "c-violet"];
+  // C-major pentatonic across ~4 octaves (ascending).
+  const scale = [
+    261.63, 293.66, 329.63, 392.0, 440.0,
+    523.25, 587.33, 659.25, 783.99, 880.0,
+    1046.5, 1174.66, 1318.51, 1567.98, 1760.0,
+    2093.0, 2349.32, 2637.02,
+  ];
+  const flat: Array<{ label: string; claim: string; state?: string; slug: string; color: string }> = [];
+  papers.forEach((p, pi) => {
+    const color = palette[pi % palette.length];
+    for (const xb of p.xylo ?? []) {
+      flat.push({ ...xb, slug: p.slug, color });
+    }
+  });
+  const n = Math.max(1, flat.length - 1);
+  bars = flat.map((b, i) => ({
+    label: b.label,
+    freq: scale[i % scale.length],
+    state: (b.state as Bar["state"]) ?? "dim",
+    claim: b.claim,
+    slug: b.slug,
+    color: b.color,
+  }));
+}
+
+// Interpolate bar heights across the instrument range so any N fits.
+const heights = bars.map((_, i) =>
+  Math.round(34 + (i / Math.max(1, bars.length - 1)) * 160)
+);
 ---
 
-<div class="xylo" role="group" aria-label="Playable claim xylophone">
+<div class="xylo" role="group" aria-label="Playable claim xylophone" data-bar-count={bars.length}>
   {
     bars.map((b, i) => (
       <button
-        class={`bar ${b.state} ${colors[i % colors.length]}`}
-        style={`--h: ${34 + i * 9}px`}
+        class={`bar ${b.state} ${b.color}`}
+        style={`--h: ${heights[i]}px`}
         data-freq={b.f}
         data-label={b.label}
-        aria-label={`Claim ${b.n}: ${b.label} — ${b.state === "on" ? "supported" : "inconclusive"}`}
+        data-slug={b.slug}
+        data-claim={b.claim}
+        aria-label={`${b.slug} ${b.claim}: ${b.label} — ${b.state === "on" ? "supported" : b.state === "fail" ? "falsified" : "inconclusive"}`}
       >
         <span class="bar-label">{b.label}</span>
       </button>
     ))
   }
 </div>
-<p class="xylo-readout" id="xylo-readout">12 bars, one per audited claim — click to play</p>
+<p class="xylo-readout" id="xylo-readout">
+  {bars.length} bars, one per audited claim across all papers — click to play
+</p>

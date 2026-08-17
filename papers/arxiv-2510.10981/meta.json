@@ -1,0 +1,26 @@
+{
+  "$schema_note": "Curated paper metadata. scripts/build_paper_index.py merges this with derived data (claims.json, results/audit_report.json, judge_report.json, trace stats) into papers/_index.json.",
+  "slug": "icl-bayesian",
+  "title": "In-Context Learning Is Provably Bayesian Inference",
+  "source_label": "arXiv 2510.10981",
+  "source_url": "https://arxiv.org/abs/2510.10981",
+  "arxiv_url": "https://arxiv.org/abs/2510.10981",
+  "audited_at": "2026-08-16",
+  "blurb": "ICL-as-Bayesian-inference theory: the risk-decomposition identity and coupled p-N scaling of the Bayes gap verified numerically; the posterior-variance bound honestly inconclusive under finite precision.",
+  "links": {
+    "logbook": "https://huggingface.co/spaces/Papajams/repro-icl-provably-bayesian",
+    "dataset": "https://huggingface.co/datasets/Papajams/repro-evidence-icl-provably-bayesian",
+    "paper": "https://arxiv.org/abs/2510.10981"
+  },
+  "role": "audit",
+  "status": "complete",
+  "trace": "trace.jsonl",
+  "xylo": [
+    {"claim": "C1", "label": "risk identity"},
+    {"claim": "C3", "label": "concentration"},
+    {"claim": "C2", "label": "slope −0.83"},
+    {"claim": "C4", "label": "coupling pN"},
+    {"claim": "C5", "label": "stability"},
+    {"claim": "C6", "label": "variance bound"}
+  ]
+}
