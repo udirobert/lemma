@@ -17,10 +17,12 @@ interface Props {
   bars?: Bar[];
 }
 let { bars } = Astro.props;
+let nPapers = 0;
 
 if (!bars) {
   const data = await import("../data/papers.json");
   const papers = (data as { papers: Array<{ slug: string; xylo?: Array<{ label: string; claim: string; state?: string }> }> }).papers ?? [];
+  nPapers = papers.length;
   const palette = ["c-blue", "c-magenta", "c-teal", "c-gold", "c-violet"];
   // C-major pentatonic across ~4 octaves (ascending).
   const scale = [
@@ -45,6 +47,7 @@ if (!bars) {
     slug: b.slug,
     color: b.color,
   }));
+  nPapers = nPapers || papers.length;
 }
 
 // Interpolate bar heights across the instrument range so any N fits.
@@ -59,10 +62,12 @@ const heights = bars.map((_, i) =>
       <button
         class={`bar ${b.state} ${b.color}`}
         style={`--h: ${heights[i]}px`}
-        data-freq={b.f}
+        data-freq={b.freq}
         data-label={b.label}
         data-slug={b.slug}
         data-claim={b.claim}
+        data-state={b.state}
+        data-state={b.state}
         aria-label={`${b.slug} ${b.claim}: ${b.label} — ${b.state === "on" ? "supported" : b.state === "fail" ? "falsified" : "inconclusive"}`}
       >
         <span class="bar-label">{b.label}</span>
@@ -71,5 +76,5 @@ const heights = bars.map((_, i) =>
   }
 </div>
 <p class="xylo-readout" id="xylo-readout">
-  {bars.length} bars, one per audited claim across all papers — click to play
+  {bars.length} bars · one per extracted claim across {nPapers} papers — click to play
 </p>

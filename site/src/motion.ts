@@ -53,9 +53,15 @@ function strike(bar: HTMLElement) {
     osc.start(t);
     osc.stop(t + dur + 0.05);
   }
-  const state = bar.classList.contains("dim")
-    ? "inconclusive — and we said so"
-    : "supported";
+  const st = bar.dataset.state;
+  const state =
+    st === "on"
+      ? "supported"
+      : st === "fail"
+        ? "falsified"
+        : st === "not_audited"
+          ? "not audited — declared, not skipped"
+          : "inconclusive — and we said so";
   if (readout) readout.textContent = `claim ${label} · ${state}`;
   if (!reduced) {
     gsap.fromTo(
@@ -93,7 +99,9 @@ if (!reduced) {
   if (xylo && scene && heroBars.length) {
     const n = heroBars.length;
     const R = 150; // helix ring radius in px
-    const spacing = 30; // vertical gap between rungs
+    // vertical gap between rungs; capped so the helix stays a similar height
+    // as the claim count grows (12 bars -> 30px, 24 bars -> 15px)
+    const spacing = Math.min(30, 360 / n);
     const cx = xylo.clientWidth / 2;
     const cy = xylo.clientHeight / 2;
 

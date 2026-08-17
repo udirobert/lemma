@@ -43,3 +43,5 @@
 - Moved `scripts/gram/` → `papers/arxiv-2607.08077/reproduce/` (paper-specific code convention); `.env` fallback path fixed to 3 levels up.
 - AGENTS.md + scripts/README.md document the registry → site pipeline; anti-pattern added: never hand-edit site data.
 - Build verified: 6 pages, 24 xylo bars, all detail pages render claims/figures/trace correctly.
+- Ran evidence stage for GRAM and published logbook: https://huggingface.co/spaces/Papajams/repro-gram-modular-pretraining (public trace/artifacts). Updated meta.json logbook link, regenerated _index.json/papers.json/traces, rebuilt site.
+- Fixed post-refactor site regression: Xylophone bars were missing data-freq (used b.f instead of b.freq), so clicking bars made no sound; also added data-state for accurate readouts and scaled helix spacing for 24 bars.
