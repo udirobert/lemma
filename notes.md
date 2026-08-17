@@ -32,3 +32,14 @@
 - `./lemma judge papers/arxiv-2607.08077` → PASS 5/5 (structure, evidence, integrity, cost, trace).
 - Trace now 29 events incl. the manual C1 reproduction run-id (smoke iterations preserved honestly: 3 failed smokes + 1 pass, scaled, full).
 - Committed: 554e114 (C1 full evidence) + 57018e4 (judge_report.json).
+
+## 2026-08-17 (night) — multi-paper architecture refactor
+- Goal: site + pipeline scale to N papers without hardcoded edits; user-facing structure for going live.
+- Added `papers/<id>/meta.json` (curated slug/title/links/blurb/xylo labels) for all 4 papers.
+- New: `scripts/build_paper_index.py` → `papers/_index.json` (claims + report + judge + trace stats + figures).
+- New: `scripts/build_site_data.py` → `site/src/data/papers.json` + copies figures to `site/public/papers/<slug>/figures/` (2 MB cap, dedupe by basename).
+- Refactored `scripts/build_trace_data.py`: index-driven, slug-keyed traces, legacy ca/icl aliases kept; note renderer now reads the `message` key too.
+- Site: landing counters/artifacts/xylo (24 bars, auto-width) /trace tabs all from papers.json; new `/papers/` registry + `/papers/<slug>/` detail pages (claims table with anchors, figure gallery, single-tab trace player).
+- Moved `scripts/gram/` → `papers/arxiv-2607.08077/reproduce/` (paper-specific code convention); `.env` fallback path fixed to 3 levels up.
+- AGENTS.md + scripts/README.md document the registry → site pipeline; anti-pattern added: never hand-edit site data.
+- Build verified: 6 pages, 24 xylo bars, all detail pages render claims/figures/trace correctly.

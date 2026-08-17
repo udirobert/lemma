@@ -80,8 +80,10 @@ implementation, and the full trace — failures included):
 [CA evidence](https://huggingface.co/datasets/Papajams/repro-evidence-grokking-ca-local-rules)
 (reproducible via `scripts/publish_evidence_dataset.py papers/<id>`).
 
-Both workdirs carry the full trace (267 and 305 events respectively, failed
-attempts preserved) and judge verdicts of **PASS 5/5**. Honest outcomes over
+Both completed CPU audits carry the full trace (354 and 268 events
+respectively, failed attempts preserved) and judge verdicts of **PASS 5/5**;
+the GRAM GPU audit's trace (29 events, incl. 3 preserved failed smoke runs)
+also judges **PASS 5/5**. Honest outcomes over
 green checkmarks: where the pipeline's own verdict contradicted its data, the
 trace shows the correction (human-in-the-loop feedback → re-audit;
 reviewer-reference escalation when LLM implementations stayed broken). The
@@ -117,9 +119,11 @@ lemma/
 │   ├── traces.py        #   append-only JSONL trace logger
 │   └── traces/          #   run traces (gitignored)
 ├── papers/              # per-paper workdirs
+│   ├── _index.json      #   generated registry (scripts/build_paper_index.py)
 │   ├── 5nNNVY8NW4-grokking/   # prior-art validation + regression fixture
-│   └── <new-id>/        # agent-generated audits
-├── scripts/             # deploy / overnight / regression-fixture helpers
+│   └── <new-id>/        # agent-generated audits (each has meta.json + reproduce/)
+├── scripts/             # repo-wide tooling: registry + site-data pipeline, deploy, fixtures
+├── site/                # Astro landing + /papers registry (data-driven from papers.json)
 ├── data/                # synthetic / small data only (large data is gitignored)
 ├── .env.example         # template — real secrets live in .env (gitignored)
 ├── .pre-commit-config.yaml
@@ -130,11 +134,29 @@ lemma/
 
 ## Expected outputs per paper
 
-Each audited paper workdir contains: `claims.json`, `results/audit_report.json`,
+Each audited paper workdir contains: `meta.json` (curated: slug, title,
+links, blurb), `claims.json`, `results/audit_report.json`,
 one `results/c<k>/*.py` audit script (fully self-contained) plus `*.png`
-figures and `*_summary.json` per claim, `trace.jsonl`, and a generated
-`judge_report.json`. All compute is **idempotent**: re-running produces the same
-structure from scratch.
+figures and `*_summary.json` per claim, `trace.jsonl`, a generated
+`judge_report.json`, and — where the claim needed training code — a
+`reproduce/` dir with the self-contained runner. All compute is
+**idempotent**: re-running produces the same structure from scratch.
+
+## Website
+
+`site/` is fully data-driven — nothing paper-specific is hardcoded. The
+pipeline regenerates everything from the paper workdirs:
+
+```bash
+python3 scripts/build_paper_index.py    # papers/_index.json (registry)
+python3 scripts/build_site_data.py      # site/src/data/papers.json + figure copies
+python3 scripts/build_trace_data.py     # site/public/traces/<slug>.json
+```
+
+Landing counters, the claim xylophone, artifact links, trace-player tabs,
+the `/papers/` registry and `/papers/<slug>/` detail pages all render from
+`papers.json`. Adding a paper = write its `meta.json` + run the three
+scripts. Generated JSON and figures are committed so Netlify needs no Python.
 
 ## Secrets & hygiene
 
