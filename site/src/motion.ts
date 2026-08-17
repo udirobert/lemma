@@ -159,15 +159,19 @@ if (!reduced) {
   const fixedXylo = document.querySelector<HTMLElement>(".xylo-scene .xylo");
   if (fixedScene && fixedXylo) {
     let handoffScroll = 0;
+    const heroEl = document.querySelector<HTMLElement>(".hero");
+    // Remember original position so we can reparent back
+    const heroCopy = heroEl!.querySelector(".hero-copy");
 
-    // Reversible handoff: fires exactly when the pin ends (forward) or when
-    // the user scrolls back into the hero (backward).
+    // Reversible handoff: reparent to <body> so position:fixed actually works
+    // (fixed inside a transformed/pinned ancestor = broken).
     ScrollTrigger.create({
       trigger: ".hero",
       start: "top top",
       end: "+=250%",
       onLeave: () => {
         handoffScroll = window.scrollY;
+        document.body.appendChild(fixedScene);
         fixedScene.classList.add("helix-fixed");
         gsap.set(fixedScene, {
           xPercent: -50,
@@ -179,20 +183,27 @@ if (!reduced) {
       },
       onEnterBack: () => {
         fixedScene.classList.remove("helix-fixed");
-        gsap.set(fixedScene, { clearProps: "transform,opacity,scale" });
+        gsap.set(fixedScene, { clearProps: "transform,opacity" });
         gsap.set(fixedXylo, { rotateY: 0 });
+        // Put it back in the hero, after hero-copy
+        if (heroCopy && heroCopy.nextSibling) {
+          heroEl!.insertBefore(fixedScene, heroCopy.nextSibling);
+        } else {
+          heroEl!.appendChild(fixedScene);
+        }
       },
     });
 
-    // Continuous rotation of the helix itself (scene keeps the perspective),
+    // Continuous rotation of the helix container (perspective stays on scene),
     // mapped so it starts at 0 exactly where the pin released.
     ScrollTrigger.create({
       trigger: document.body,
       start: "top top",
       end: "bottom bottom",
-      onUpdate: (self) => {
+      onUpdate: () => {
         if (!fixedScene.classList.contains("helix-fixed")) return;
-        const denom = Math.max(1, (document.documentElement.scrollHeight - innerHeight) - handoffScroll);
+        const total = document.documentElement.scrollHeight - innerHeight;
+        const denom = Math.max(1, total - handoffScroll);
         const since = Math.max(0, (window.scrollY - handoffScroll) / denom);
         gsap.set(fixedXylo, { rotateY: since * 540 });
       },
@@ -200,6 +211,7 @@ if (!reduced) {
 
     // Foreground pop at each story beat: helix brightens + scales, then recedes.
     const pop = (peakOpacity: number, peakScale: number) => {
+      if (!fixedScene.classList.contains("helix-fixed")) return;
       gsap.to(fixedScene, { opacity: peakOpacity, scale: peakScale, duration: 0.7, ease: "power2.out", overwrite: "auto" });
       gsap.to(fixedScene, { opacity: 0.14, scale: 0.8, duration: 1.5, ease: "power1.in", delay: 0.9, overwrite: false });
     };
