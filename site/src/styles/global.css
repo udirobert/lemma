@@ -267,6 +267,22 @@ a {
   }
 }
 
+/* mirrored xylophone at the bottom (reconstructed helix) */
+.xylo-mirror {
+  position: relative;
+  z-index: 2;
+  max-width: 1000px;
+  margin: 0 auto 40px;
+  padding: 0 24px;
+}
+.xylo-mirror .xylo {
+  margin-top: 0;
+}
+.xylo-mirror .xylo-readout {
+  text-align: center;
+  margin-top: 42px;
+}
+
 /* ---------------- story beats ---------------- */
 .wrap {
   max-width: 1000px;

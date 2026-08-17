@@ -15,8 +15,12 @@ interface Bar {
 }
 interface Props {
   bars?: Bar[];
+  /** reverse bar order (mirrored instrument at the page bottom) */
+  mirrored?: boolean;
+  /** readout element id — must be unique per instance */
+  readoutId?: string;
 }
-let { bars } = Astro.props;
+let { bars, mirrored = false, readoutId = "xylo-readout" } = Astro.props;
 let nPapers = 0;
 
 if (!bars) {
@@ -47,10 +51,10 @@ if (!bars) {
     slug: b.slug,
     color: b.color,
   }));
-  nPapers = nPapers || papers.length;
 }
 
 // Interpolate bar heights across the instrument range so any N fits.
+if (mirrored) bars = [...bars].reverse();
 const heights = bars.map((_, i) =>
   Math.round(34 + (i / Math.max(1, bars.length - 1)) * 160)
 );
@@ -67,7 +71,6 @@ const heights = bars.map((_, i) =>
         data-slug={b.slug}
         data-claim={b.claim}
         data-state={b.state}
-        data-state={b.state}
         aria-label={`${b.slug} ${b.claim}: ${b.label} — ${b.state === "on" ? "supported" : b.state === "fail" ? "falsified" : "inconclusive"}`}
       >
         <span class="bar-label">{b.label}</span>
@@ -75,6 +78,6 @@ const heights = bars.map((_, i) =>
     ))
   }
 </div>
-<p class="xylo-readout" id="xylo-readout">
+<p class="xylo-readout" id={readoutId}>
   {bars.length} bars · one per extracted claim across {nPapers} papers — click to play
 </p>

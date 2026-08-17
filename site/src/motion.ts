@@ -59,10 +59,10 @@ function strike(bar: HTMLElement) {
       ? "supported"
       : st === "fail"
         ? "falsified"
-        : st === "not_audited"
-          ? "not audited — declared, not skipped"
-          : "inconclusive — and we said so";
-  if (readout) readout.textContent = `claim ${label} · ${state}`;
+        : "unverified — and we said so";
+  const nearestReadout =
+    bar.closest(".xylo-scene, .xylo-mirror")?.querySelector<HTMLElement>(".xylo-readout") ?? readout;
+  if (nearestReadout) nearestReadout.textContent = `claim ${label} · ${state}`;
   if (!reduced) {
     gsap.fromTo(
       bar,
@@ -189,6 +189,7 @@ if (!reduced) {
   /* ---------- persistent helix: master rotation + foreground pops ---------- */
   const fixedScene = document.querySelector<HTMLElement>(".xylo-scene");
   const fixedXylo = document.querySelector<HTMLElement>(".xylo-scene .xylo");
+  const helixBars = fixedXylo ? Array.from(fixedXylo.querySelectorAll<HTMLElement>(".bar")) : [];
   if (fixedScene && fixedXylo) {
     let handoffScroll = 0;
     const heroEl = document.querySelector<HTMLElement>(".hero");
@@ -235,13 +236,41 @@ if (!reduced) {
       });
     });
 
-    // Final bow: helix fades out entirely at the footer.
-    ScrollTrigger.create({
-      trigger: "footer",
-      start: "top 90%",
-      onEnter: () => gsap.to(fixedScene, { opacity: 0, duration: 0.8, overwrite: "auto" }),
-      onEnterBack: () => gsap.to(fixedScene, { opacity: 0.14, duration: 0.5, overwrite: "auto" }),
-    });
+    // Bottom reconstruction: the helix un-coils back into a mirrored xylophone
+    // above the waitlist (instead of fading out) and hands the spotlight over.
+    const mirrorWrap = document.querySelector<HTMLElement>(".xylo-mirror");
+    if (mirrorWrap) {
+      gsap.set(mirrorWrap, { autoAlpha: 0, y: 36 });
+      const recon = gsap.timeline({
+        scrollTrigger: {
+          trigger: mirrorWrap,
+          start: "top bottom",
+          end: "top 52%",
+          scrub: 0.5,
+        },
+      });
+      // un-coil: container spin settles, bars return to a flat row
+      recon.to(fixedXylo, { rotateY: 0, duration: 0.45, ease: "none" }, 0);
+      helixBars.forEach((bar, i) => {
+        const hh = bar as HTMLElement & { _hx?: number; _hy?: number; _hz?: number; _hr?: number };
+        if (hh._hx === undefined) return;
+        recon.to(
+          bar,
+          { x: 0, y: 0, z: 0, rotateY: 0, rotationZ: 0, duration: 0.4, ease: "power1.inOut" },
+          0.05 + (i % 12) * 0.012
+        );
+      });
+      recon.to(fixedScene, { opacity: 0, scale: 0.72, duration: 0.3 }, 0.55);
+      recon.to(mirrorWrap, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.5);
+    } else {
+      // fallback: no mirror section on this page — keep the old fade-out
+      ScrollTrigger.create({
+        trigger: "footer",
+        start: "top 90%",
+        onEnter: () => gsap.to(fixedScene, { opacity: 0, duration: 0.8, overwrite: "auto" }),
+        onEnterBack: () => gsap.to(fixedScene, { opacity: 0.14, duration: 0.5, overwrite: "auto" }),
+      });
+    }
   }
 }
 
