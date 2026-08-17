@@ -113,6 +113,10 @@ if (!reduced) {
     });
 
     // Phase A: pinned assembly + spin
+    let handoffScroll = 0;
+    const heroEl = document.querySelector<HTMLElement>(".hero");
+    const heroCopy = heroEl!.querySelector(".hero-copy");
+
     const helixTl = gsap.timeline({
       scrollTrigger: {
         trigger: ".hero",
@@ -121,6 +125,28 @@ if (!reduced) {
         scrub: 0.6,
         pin: true,
         anticipatePin: 1,
+        onLeave: () => {
+          handoffScroll = window.scrollY;
+          document.body.appendChild(scene);
+          scene.classList.add("helix-fixed");
+          gsap.set(scene, {
+            xPercent: -50,
+            yPercent: -50,
+            rotateY: 0,
+            scale: 0.85,
+            opacity: 0.16,
+          });
+        },
+        onEnterBack: () => {
+          scene.classList.remove("helix-fixed");
+          gsap.set(scene, { clearProps: "transform,opacity" });
+          gsap.set(xylo, { rotateY: 0 });
+          if (heroCopy && heroCopy.nextSibling) {
+            heroEl!.insertBefore(scene, heroCopy.nextSibling);
+          } else {
+            heroEl!.appendChild(scene);
+          }
+        },
       },
     });
 
@@ -150,49 +176,14 @@ if (!reduced) {
     // spin the whole helix one full turn while pinned (container rotation,
     // preserve-3d keeps bars on the ring)
     helixTl.to(xylo, { rotateY: 360, ease: "none", duration: 1.2 }, 1.6);
-
-    // Phase B handoff is handled by the callback trigger below (reversible).
   }
 
-  /* ---------- persistent helix: handoff, master rotation, foreground pops ---------- */
+  /* ---------- persistent helix: master rotation + foreground pops ---------- */
   const fixedScene = document.querySelector<HTMLElement>(".xylo-scene");
   const fixedXylo = document.querySelector<HTMLElement>(".xylo-scene .xylo");
   if (fixedScene && fixedXylo) {
     let handoffScroll = 0;
     const heroEl = document.querySelector<HTMLElement>(".hero");
-    // Remember original position so we can reparent back
-    const heroCopy = heroEl!.querySelector(".hero-copy");
-
-    // Reversible handoff: reparent to <body> so position:fixed actually works
-    // (fixed inside a transformed/pinned ancestor = broken).
-    ScrollTrigger.create({
-      trigger: ".hero",
-      start: "top top",
-      end: "+=250%",
-      onLeave: () => {
-        handoffScroll = window.scrollY;
-        document.body.appendChild(fixedScene);
-        fixedScene.classList.add("helix-fixed");
-        gsap.set(fixedScene, {
-          xPercent: -50,
-          yPercent: -50,
-          rotateY: 0,
-          scale: 0.85,
-          opacity: 0.16,
-        });
-      },
-      onEnterBack: () => {
-        fixedScene.classList.remove("helix-fixed");
-        gsap.set(fixedScene, { clearProps: "transform,opacity" });
-        gsap.set(fixedXylo, { rotateY: 0 });
-        // Put it back in the hero, after hero-copy
-        if (heroCopy && heroCopy.nextSibling) {
-          heroEl!.insertBefore(fixedScene, heroCopy.nextSibling);
-        } else {
-          heroEl!.appendChild(fixedScene);
-        }
-      },
-    });
 
     // Continuous rotation of the helix container (perspective stays on scene),
     // mapped so it starts at 0 exactly where the pin released.
