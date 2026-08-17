@@ -10,7 +10,7 @@ for the AIAF pitch.
 
 | ID | Claim | Status |
 |----|-------|--------|
-| C1 | GRAM approximates multiple data-filtered models in a single run (Simple Stories, 26M) | **in progress** — GPU reproduction running on Modal (full 2.1M-sample dataset, baseline + GRAM, seed 42) |
+| C1 | GRAM approximates multiple data-filtered models in a single run (Simple Stories, 26M) | **supported** — full 2.1M-sample GPU reproduction (see `results/c1/`) |
 | C2 | GRAM isolates realistic dual-use capabilities and matches filtering at 800M scale | not_audited — compute scope (800M, 3 seeds × 6 runs) |
 | C3 | Isolation improves with scale; GRAM tracks filtering 50M→5B | not_audited — compute scope (5B) |
 | C4 | GRAM composes arbitrary capability subsets without degradation, unlike FT-LoRA | not_audited — compute scope (800M + LoRA baselines) |
@@ -53,10 +53,17 @@ never silently skipped (AGENTS.md policy).
      compute ratios core 0.868 / retain 0.886 / forget 0.894 / elicit
      0.852. Directionally sensible but undertrained at this scale
      (retain/forget gap not yet separated). Saved: `results/c1/scaled_results.json`.
-  3. **Full (2,115,696 samples, 16,528 steps, A10G): launched 2026-08-17
-     ~17:37 BST, ETA ~2.5h.** Modal app
-     https://modal.com/apps/ungethe/main/ap-EqyB7x0g4gDA7fjsL273t8 —
-     update this row with results when it lands.
+  3. **Full (2,115,696 samples, 16,528 steps, A10G): COMPLETE, 2026-08-17.**
+     Baseline wall 3839 s, GRAM wall 3853 s (ratio 1.003 — training-cost
+     independence corroborates C6 empirically). Modal app
+     https://modal.com/apps/ungethe/main/ap-EqyB7x0g4gDA7fjsL273t8.
+     **Aggregate compute ratios (1 seed):** core 0.975 / retain 0.976 /
+     forget 0.789 / elicit 0.836. All three success-criterion thresholds
+     met: core ≥ 0.9 ✓; retain within 0.014 of paper filtering 0.962
+     (threshold ~0.02) ✓; forget well below retain (gap 0.187, matching
+     paper gap 0.186) ✓. Elicit 0.836 ≈ paper 0.855 with partial-recovery
+     pattern reproduced (elicit > forget). Saved: `results/c1/full_results.json`,
+     `results/c1/c1_comparison.png`, `results/c1/audit_summary.json`.
 - **Paper reference (Table 1):** GRAM core 0.938 / retain 0.952 /
   forget 0.766 / elicit 0.855. Filtering: 0.961 / 0.962 / 0.780 / 0.870.
 - **Known deviations (disclosed):** reimplementation from text only — no
@@ -68,5 +75,5 @@ never silently skipped (AGENTS.md policy).
 - `claims.json` — extracted claims (stage 1)
 - `results/audit_report.json` — per-claim outcomes (stage 2)
 - `results/c6/` — C6 audit script, summary, figure
-- `results/c1/` — C1 training results (scaled so far; full pending)
+- `results/c1/` — C1 training results: scaled + full run JSONs, comparison figure, audit summary
 - `../../scripts/gram/modal_train.py` — the Modal training/eval runner

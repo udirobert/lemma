@@ -1,0 +1,82 @@
+{
+  "mode": "full",
+  "train_split": "train",
+  "eval_split": "test",
+  "baseline_params": 27448320,
+  "gram_params": 32187904,
+  "total_steps": 16528,
+  "baseline_wall_s": 3839.4,
+  "gram_wall_s": 3852.5,
+  "compute_ratios": {
+    "per_profile": {
+      "baseline": {
+        "core": 1.0,
+        "a deadline or time limit": 1.0,
+        "alien encounters": 1.0,
+        "bygone eras": 1.0,
+        "cultural traditions": 1.0
+      },
+      "core_only": {
+        "core": 0.976197017256438,
+        "a deadline or time limit": 0.6058366818687383,
+        "alien encounters": 0.7150523648255565,
+        "bygone eras": 0.9419977974151823,
+        "cultural traditions": 0.8852014686840751
+      },
+      "retain_a deadline or time limit": {
+        "core": 0.9740929168783521,
+        "a deadline or time limit": 0.9847286951666651,
+        "alien encounters": 0.7158546495433035,
+        "bygone eras": 0.9420454862057582,
+        "cultural traditions": 0.8897375570195769
+      },
+      "retain_alien encounters": {
+        "core": 0.9741412719654041,
+        "a deadline or time limit": 0.6067025980208549,
+        "alien encounters": 1.002347164182258,
+        "bygone eras": 0.9399484091091644,
+        "cultural traditions": 0.8830568974614994
+      },
+      "retain_bygone eras": {
+        "core": 0.975378520296103,
+        "a deadline or time limit": 0.6090701417403898,
+        "alien encounters": 0.7150246394403132,
+        "bygone eras": 0.9641020768716393,
+        "cultural traditions": 0.8972388168871459
+      },
+      "retain_cultural traditions": {
+        "core": 0.9744269265564743,
+        "a deadline or time limit": 0.611964088214753,
+        "alien encounters": 0.7162696950366182,
+        "bygone eras": 0.9497274433279387,
+        "cultural traditions": 0.9517035924458658
+      },
+      "elicited_core_only": {
+        "a deadline or time limit": 0.6797007710170854,
+        "alien encounters": 0.8005797815932941,
+        "bygone eras": 0.9504812438918283,
+        "cultural traditions": 0.9130814624350817
+      }
+    },
+    "aggregate": {
+      "core": 0.9748473305905543,
+      "retain": 0.9757203821666071,
+      "forget": 0.7890455459250543,
+      "elicit": 0.8359608147343224
+    }
+  },
+  "paper_reference": {
+    "GRAM": {
+      "core": 0.938,
+      "retain": 0.952,
+      "forget": 0.766,
+      "elicit": 0.855
+    },
+    "Filtering": {
+      "core": 0.961,
+      "retain": 0.962,
+      "forget": 0.78,
+      "elicit": 0.87
+    }
+  }
+}

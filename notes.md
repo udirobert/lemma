@@ -19,3 +19,11 @@
 - Full run pace (A10G): ~0.23 s/step → baseline ~63 min for 16,528 steps, both models + eval + elicit ETA ~2.5 h. Loss converging normally (8.38 → 2.2 by step 1k).
 - Scaled GPU wall: 350 s baseline / 357 s GRAM for 1,171 steps (confirms routing overhead ≈ baseline FLOPs, consistent with C6).
 - Docs staged for commit: per-paper `.gitignore` (trace.jsonl + PDF ignored), `papers/arxiv-2607.08077/README.md` (claims table + repro log), `scripts/gram/README.md`, GRAM row in root README submission table.
+
+## 2026-08-17 (later) — C1 full-run results landed: SUPPORTED
+- Full 2.1M-sample run completed on A10G: baseline 3839.4 s, GRAM 3852.5 s (wall-time ratio 1.003 — empirical corroboration of C6 cost independence).
+- Aggregate compute ratios (single seed): core 0.975, retain 0.976, forget 0.789, elicit 0.836.
+- Success criterion check: core ≥ 0.9 ✓ (0.975); retain within ~0.02 of data filtering ✓ (0.976 vs paper filtering 0.962, diff 0.014); forget well below retain ✓ (0.789 vs 0.976, gap 0.187 vs paper gap 0.186). Verdict: supported.
+- Closest per-category match to paper: "a deadline or time limit" forget core-only 0.606 (paper cites ~0.61); aliens retained 1.002 (paper 0.99).
+- Caveats recorded in `audit_summary.json`: single seed vs paper's 3; no independently trained data-filtering baseline (comparison uses paper-reported filtering values); text-only reimplementation.
+- Artifacts: `results/c1/full_results.json`, `audit_summary.json`, `run_attempt1.json`, `audit_attempt1.py` (copy of the runner), `c1_comparison.png`. Merged into `results/audit_report.json`.

@@ -1,0 +1,47 @@
+{
+  "claim_id": "C1",
+  "status": "supported",
+  "metrics": {
+    "core_compute_ratio": 0.9748,
+    "retain_compute_ratio_mean": 0.9757,
+    "forget_compute_ratio_mean": 0.789,
+    "elicit_compute_ratio_mean": 0.836,
+    "retain_vs_paper_filtering_abs_diff": 0.0137,
+    "retain_minus_forget_gap": 0.1867,
+    "core_ratio_ge_0.9": true,
+    "retain_within_0.02_of_filtering": true,
+    "forget_well_below_retain": true,
+    "paper_gram_core": 0.938,
+    "paper_gram_retain": 0.952,
+    "paper_gram_forget": 0.766,
+    "paper_gram_elicit": 0.855,
+    "paper_filtering_core": 0.961,
+    "paper_filtering_retain": 0.962,
+    "paper_filtering_forget": 0.78,
+    "paper_filtering_elicit": 0.87,
+    "per_cat_retain": {
+      "a deadline or time limit": 0.9847,
+      "alien encounters": 1.0023,
+      "bygone eras": 0.9641,
+      "cultural traditions": 0.9517
+    },
+    "per_cat_forget_core_only": {
+      "a deadline or time limit": 0.6058,
+      "alien encounters": 0.7151,
+      "bygone eras": 0.942,
+      "cultural traditions": 0.8852
+    },
+    "baseline_params": 27448320,
+    "gram_total_params": 32187904,
+    "gram_aux_params_each": 1578496,
+    "total_steps": 16528,
+    "baseline_wall_s": 3839.4,
+    "gram_wall_s": 3852.5,
+    "gram_over_baseline_walltime_ratio": 1.0034,
+    "seeds": 1,
+    "gpu": "Modal A10G",
+    "train_split": "train",
+    "eval_split": "test"
+  },
+  "notes": "Full 2.1M-sample Simple Stories reproduction (train split -> test-split eval), 1 epoch, 16,528 steps, batch 128, seq 256, A10G. Reimplemented from paper text (no public code): 26M decoder-only Transformer, GRAM = core MLP 1856 + 4x aux MLP 192 (1.58M/aux ~= 6% of baseline, matches paper), p_af=1.0, p_as=0.3, p_cr=0.5, heterogeneous accumulation, AdamW b=0.9/0.95 wd=0.1, LR 5e-3 WSD 10/80/10, bf16. Compute ratios via Appendix-M power-law inversion of the baseline learning curve. RESULT: core 0.975 >= 0.9 PASS; retain 0.976 within 0.014 of paper filtering 0.962 (threshold ~0.02) PASS; forget 0.789 well below retain (gap 0.187, matching paper gap 0.186) PASS; elicit 0.836 ~ paper 0.855 with partial-recovery pattern (elicit > forget) reproduced. Training wall time GRAM/baseline = 1.003 (cost independence corroborates C6). CAVEATS: single seed (paper: 3, pooled); data-filtering baseline not re-trained, so retain-vs-filtering uses the paper's reported filtering numbers; text-only reimplementation may differ in unreported details. Per-category: aliens retained 1.002 (paper 0.99), deadline forgotten hardest core-only 0.606 (paper 0.61 example)."
+}

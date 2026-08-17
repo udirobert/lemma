@@ -71,7 +71,7 @@ both with self-judged evidence trails:
 |-------|---------|---------|
 | [arXiv 2510.10981](https://arxiv.org/abs/2510.10981) — *In-Context Learning Is Provably Bayesian Inference* | **3 supported / 0 falsified / 3 inconclusive** — the Prop. 3.1 risk identity (rel. diff 0.4%, nonzero Bayes Gap), the Thm 3.3 posterior-concentration mechanism, and the m/(pN) coupling rate (slope −0.83, r²=0.995) | https://huggingface.co/spaces/Papajams/repro-icl-provably-bayesian |
 | [JMLR 22-1228](https://www.jmlr.org/papers/v22/22-1228.html) — *Grokking phase transitions in learning local rules with gradient descent* | **5 supported / 0 falsified / 1 inconclusive** — critical exponents ν=1 (1D) and ν=(D+1)/2 (D-ball), P_grok(L1)>P_grok(L2), P_grok decreasing with D (Eq 86), and bimodal grokking-time PDF; C5 inconclusive by compute scope (the CPU-auditable proxy trivializes Rule-30) | https://huggingface.co/spaces/Papajams/repro-grokking-ca-local-rules |
-| [arXiv 2607.08077](https://arxiv.org/abs/2607.08077) — *GRAM: Gradient-Routed Accumulation of Modules* | **1 supported / 0 falsified / 4 not_audited (compute scope)** — C6 analytic cost model verified (1.04× train-FLOPs vs 5× filtering, active MLP 1.10×); C1 26M Simple-Stories GPU reproduction in progress on Modal | `papers/arxiv-2607.08077/` |
+| [arXiv 2607.08077](https://arxiv.org/abs/2607.08077) — *GRAM: Gradient-Routed Accumulation of Modules* | **2 supported / 4 not_audited (compute scope)** — C1 (26M Simple-Stories GPU repro) + C6 (cost model); details in the workdir | [`papers/arxiv-2607.08077/`](papers/arxiv-2607.08077/README.md) |
 
 Each paper's raw evidence trail is also published as a reusable HF Dataset
 (every audit script, run summary, figure, reviewer feedback, reference
