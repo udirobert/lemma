@@ -138,6 +138,16 @@ a {
   perspective-origin: 50% 40%;
 }
 
+/* When handed off to the persistent background helix */
+.xylo-scene.helix-fixed {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  pointer-events: none;
+  margin: 0;
+}
+
 .xylo {
   position: relative;
   display: flex;

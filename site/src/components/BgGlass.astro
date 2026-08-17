@@ -13,7 +13,7 @@
     height: 100%;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.42;
+    opacity: 0.55;
   }
 </style>
 
@@ -121,12 +121,12 @@
         float glass = 1. - pow(rad, 1.8)*.5;
         float edge = smoothstep(0., 1.8, abs(d)) * (1.-smoothstep(1.8, 4., abs(d)));
 
-        // Compose — very low intensity
-        vec3 col = cc * glass * inside * .07;
-        col += vec3(.65,.75,.95) * edge * .035;
+        // Compose — visible but subtle
+        vec3 col = cc * glass * inside * .14;
+        col += vec3(.65,.75,.95) * edge * .06;
 
         // Deep navy base
-        vec3 bg = mix(vec3(.035,.055,.086), vec3(.055,.078,.125), v.y);
+        vec3 bg = mix(vec3(.045,.065,.100), vec3(.065,.090,.145), v.y);
         vec3 fin = bg + col;
 
         // Vignette
