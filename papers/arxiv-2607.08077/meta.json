@@ -12,16 +12,34 @@
   "role": "audit",
   "blurb": "GRAM adds gradient-routed auxiliary MLPs to a base model so capabilities can be isolated and selectively disabled. Reproduced the 26M-param Simple Stories experiment on Modal A10G; compute-ratio evaluation follows the paper's Appendix-M power-law inversion.",
   "links": {
-    "logbook": null,
+    "logbook": "https://huggingface.co/spaces/Papajams/repro-gram-modular-pretraining",
     "dataset": null,
     "paper": "https://arxiv.org/abs/2607.08077"
   },
   "xylo": [
-    {"claim": "C1", "label": "single-run ≈ filtering"},
-    {"claim": "C2", "label": "800M isolation"},
-    {"claim": "C3", "label": "scale 50M→5B"},
-    {"claim": "C4", "label": "subset composition"},
-    {"claim": "C5", "label": "partial-label removal"},
-    {"claim": "C6", "label": "5× cost savings"}
+    {
+      "claim": "C1",
+      "label": "single-run ≈ filtering"
+    },
+    {
+      "claim": "C2",
+      "label": "800M isolation"
+    },
+    {
+      "claim": "C3",
+      "label": "scale 50M→5B"
+    },
+    {
+      "claim": "C4",
+      "label": "subset composition"
+    },
+    {
+      "claim": "C5",
+      "label": "partial-label removal"
+    },
+    {
+      "claim": "C6",
+      "label": "5× cost savings"
+    }
   ]
 }

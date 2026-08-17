@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-17T23:23:02+0100",
+  "generated_at": "2026-08-17T23:38:26+0100",
   "totals": {
     "papers": 4,
     "claims": 24,
@@ -9,7 +9,7 @@
     "not_audited": 4,
     "audited": 20,
     "failures_preserved": 54,
-    "logbooks": 3
+    "logbooks": 4
   },
   "papers": [
     {
@@ -267,7 +267,7 @@
       "role": "audit",
       "status": "complete",
       "links": {
-        "logbook": null,
+        "logbook": "https://huggingface.co/spaces/Papajams/repro-gram-modular-pretraining",
         "dataset": null,
         "paper": "https://arxiv.org/abs/2607.08077"
       },
@@ -326,10 +326,10 @@
         "score": "5/5"
       },
       "trace": {
-        "n_events": 29,
+        "n_events": 64,
         "n_llm": 2,
-        "n_tool": 7,
-        "n_note": 5,
+        "n_tool": 37,
+        "n_note": 6,
         "wall_min": 225.1,
         "path": "papers/arxiv-2607.08077/trace.jsonl"
       },
