@@ -112,12 +112,19 @@ if (!reduced) {
       const angle = (i / n) * Math.PI * 2; // radians
       const natX = bar.offsetLeft + bar.offsetWidth / 2;
       const natY = bar.offsetTop + bar.offsetHeight / 2;
-      return {
+      const t = {
         x: cx - natX + R * Math.sin(angle),
         y: cy - natY + (i - (n - 1) / 2) * spacing,
         z: R * Math.cos(angle),
         rotY: (i / n) * 360,
       };
+      // remember helix offsets on the element so the bottom
+      // reconstruction can un-coil them back into a row
+      (bar as HTMLElement & { _hx?: number })._hx = t.x;
+      (bar as HTMLElement & { _hy?: number })._hy = t.y;
+      (bar as HTMLElement & { _hz?: number })._hz = t.z;
+      (bar as HTMLElement & { _hr?: number })._hr = t.rotY;
+      return t;
     });
 
     // Phase A: pinned assembly + spin
@@ -192,16 +199,19 @@ if (!reduced) {
   const helixBars = fixedXylo ? Array.from(fixedXylo.querySelectorAll<HTMLElement>(".bar")) : [];
   if (fixedScene && fixedXylo) {
     let handoffScroll = 0;
+    let reconP = 0; // 0 = free-floating helix, 1 = reconstructed at waitlist
     const heroEl = document.querySelector<HTMLElement>(".hero");
 
     // Continuous rotation of the helix container (perspective stays on scene),
-    // mapped so it starts at 0 exactly where the pin released.
+    // mapped so it starts at 0 exactly where the pin released. Rotation is
+    // scaled down as the bottom reconstruction takes over.
     ScrollTrigger.create({
       trigger: document.body,
       start: "top top",
       end: "bottom bottom",
       onUpdate: () => {
         if (!fixedScene.classList.contains("helix-fixed")) return;
+        if (reconP > 0.02) return; // reconstruction timeline owns rotateY now
         const total = document.documentElement.scrollHeight - innerHeight;
         const denom = Math.max(1, total - handoffScroll);
         const since = Math.max(0, (window.scrollY - handoffScroll) / denom);
@@ -211,7 +221,7 @@ if (!reduced) {
 
     // Foreground pop at each story beat: helix brightens + scales, then recedes.
     const pop = (peakOpacity: number, peakScale: number) => {
-      if (!fixedScene.classList.contains("helix-fixed")) return;
+      if (!fixedScene.classList.contains("helix-fixed") || reconP > 0.02) return;
       gsap.to(fixedScene, { opacity: peakOpacity, scale: peakScale, duration: 0.7, ease: "power2.out", overwrite: "auto" });
       gsap.to(fixedScene, { opacity: 0.14, scale: 0.8, duration: 1.5, ease: "power1.in", delay: 0.9, overwrite: false });
     };
@@ -238,6 +248,8 @@ if (!reduced) {
 
     // Bottom reconstruction: the helix un-coils back into a mirrored xylophone
     // above the waitlist (instead of fading out) and hands the spotlight over.
+    // Ends when the mirror's centre reaches viewport centre, so the crossfade
+    // happens exactly where the fixed scene sits — a seamless handover.
     const mirrorWrap = document.querySelector<HTMLElement>(".xylo-mirror");
     if (mirrorWrap) {
       gsap.set(mirrorWrap, { autoAlpha: 0, y: 36 });
@@ -245,8 +257,11 @@ if (!reduced) {
         scrollTrigger: {
           trigger: mirrorWrap,
           start: "top bottom",
-          end: "top 52%",
+          end: "center center",
           scrub: 0.5,
+          onUpdate: (self) => {
+            reconP = self.progress;
+          },
         },
       });
       // un-coil: container spin settles, bars return to a flat row
