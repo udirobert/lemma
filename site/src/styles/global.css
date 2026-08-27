@@ -965,6 +965,27 @@ footer {
   text-transform: uppercase;
 }
 
+/* ---------- tablet helix re-tune (641–1024px) ----------
+   The desktop helix (R=120, H=320, tilt=42°) assumes ~1000px+ width. On a
+   768px iPad the rungs clip off-screen and the perspective flattens. Shrink
+   the geometry so the coil reads at tablet scale without breaking. */
+@media (max-width: 1024px) and (min-width: 641px) {
+  :root {
+    --helix-turns: 2.0;
+    --helix-height: 240;
+    --helix-radius: 85;
+    --helix-tilt: 32;
+    --helix-scale: 0.78;
+  }
+  .xylo-scene {
+    perspective: 850px;
+  }
+  .xylo {
+    height: clamp(160px, 24vh, 240px);
+    margin-top: 38px;
+  }
+}
+
 @media (max-width: 640px) {
   .beat {
     grid-template-columns: 1fr;

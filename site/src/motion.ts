@@ -158,16 +158,16 @@ if (!reduced && !isMobile) {
   const heroBars = xylo ? Array.from(xylo.querySelectorAll<HTMLElement>(".bar")) : [];
   if (xylo && scene && heroBars.length) {
     const n = heroBars.length;
-    const cfg = loadHelixConfig();
-    const TURNS = cfg.turns;         // full twists along the helix
-    const HELIX_H = cfg.height;      // vertical extent (px)
-    const R = cfg.radius;            // strand radius / half rung length (px)
-    const RUNG_LEN = R * 2;          // every claim becomes an equal-length rung
+    let cfg = loadHelixConfig();
+    let TURNS = cfg.turns;         // full twists along the helix
+    let HELIX_H = cfg.height;      // vertical extent (px)
+    let R = cfg.radius;            // strand radius / half rung length (px)
+    let RUNG_LEN = R * 2;          // every claim becomes an equal-length rung
     const AUTO = cfg.autoRotate;     // auto-rotation (rad/s)
-    const BASE_O = cfg.baseOpacity;  // resting opacity while fixed in the background
-    const BASE_S = cfg.baseScale;    // resting scale while fixed
+    let BASE_O = cfg.baseOpacity;  // resting opacity while fixed in the background
+    let BASE_S = cfg.baseScale;    // resting scale while fixed
     const FINAL_O = cfg.finalOpacity; // finale spectrum opacity (the answer, revealed)
-    const TILT_DEG = cfg.tiltDeg;    // peak helix lean for the depth reveal
+    let TILT_DEG = cfg.tiltDeg;    // peak helix lean for the depth reveal
     const clamp01 = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
@@ -184,6 +184,25 @@ if (!reduced && !isMobile) {
         state: el.dataset.state ?? "dim", rank: i, specX: 0,
       };
     });
+
+    // re-read CSS vars (breakpoint may have changed on resize) and
+    // recompute each bar's helix geometry to match the new values.
+    function reloadHelix() {
+      cfg = loadHelixConfig();
+      TURNS = cfg.turns;
+      HELIX_H = cfg.height;
+      R = cfg.radius;
+      RUNG_LEN = R * 2;
+      BASE_O = cfg.baseOpacity;
+      BASE_S = cfg.baseScale;
+      TILT_DEG = cfg.tiltDeg;
+      for (const b of bars) {
+        const t = n > 1 ? b.i / (n - 1) : 0.5;
+        b.theta = t * Math.PI * 2 * TURNS;
+        b.y = (t - 0.5) * HELIX_H;
+        b.rungScale = RUNG_LEN / (b.el.offsetHeight || 100);
+      }
+    }
 
     // natural flex centres (relative to the xylo) — the m = 0 row targets,
     // and the spectrum reuses these evenly-spaced slots in verdict-sorted order.
@@ -205,7 +224,7 @@ if (!reduced && !isMobile) {
     let resizeT: ReturnType<typeof setTimeout> | undefined;
     addEventListener("resize", () => {
       clearTimeout(resizeT);
-      resizeT = setTimeout(captureRow, 150);
+      resizeT = setTimeout(() => { reloadHelix(); captureRow(); }, 150);
     });
 
     // shared state
