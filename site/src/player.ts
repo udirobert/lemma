@@ -175,12 +175,29 @@ function pause() {
 
 async function loadRun(key: string) {
   pause();
+  // show the skeleton while fetching; clear any previous run's content
+  ppBtn.disabled = true;
+  body.textContent = "";
   let d = cache.get(key);
   if (!d) {
-    const res = await fetch(`/traces/${key}.json`);
-    d = (await res.json()) as TraceData;
-    cache.set(key, d);
+    const skel = document.getElementById("player-skeleton");
+    if (skel) skel.style.display = "";
+    try {
+      const res = await fetch(`/traces/${key}.json`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      d = (await res.json()) as TraceData;
+      cache.set(key, d);
+    } catch (err) {
+      // fetch failed — show a clear error instead of a blank terminal
+      if (skel) skel.style.display = "none";
+      body.textContent = `[error] failed to load trace: ${err instanceof Error ? err.message : "unknown"}. Refresh or try another run.`;
+      body.className = "term-body player-body";
+      return;
+    }
   }
+  // hide skeleton now that data is ready
+  const skel = document.getElementById("player-skeleton");
+  if (skel) skel.style.display = "none";
   data = d;
   buildTimes();
   metaSrc.textContent = d.source;
@@ -190,6 +207,7 @@ async function loadRun(key: string) {
   finalText.textContent = `${d.final.supported} supported · ${d.final.falsified} falsified · ${d.final.inconclusive} inconclusive · judge ${d.judge}`;
   finalPanel.hidden = true;
   renderUpTo(0);
+  ppBtn.disabled = false;
 }
 
 function switchRun(key: string) {

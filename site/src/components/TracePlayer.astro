@@ -48,11 +48,24 @@ if (!tabs) {
       <span class="term-title" id="term-title">trace.jsonl — replaying live run</span>
       <span class="player-count" id="player-count"></span>
     </div>
-    <div class="term-body player-body" id="player-body" tabindex="0" aria-live="polite"></div>
+    <div class="term-body player-body" id="player-body" tabindex="0" aria-live="polite">
+      <!-- loading skeleton: shimmering placeholder lines shown while the
+           trace JSON is being fetched. Replaced once data arrives. -->
+      <div class="player-skeleton" id="player-skeleton" aria-hidden="true">
+        <span class="sk-line" style="width:68%"></span>
+        <span class="sk-line" style="width:52%"></span>
+        <span class="sk-line" style="width:74%"></span>
+        <span class="sk-line" style="width:45%"></span>
+        <span class="sk-line" style="width:63%"></span>
+        <span class="sk-line" style="width:38%"></span>
+        <span class="sk-line" style="width:71%"></span>
+        <span class="sk-line" style="width:55%"></span>
+      </div>
+    </div>
   </div>
 
   <div class="player-controls">
-    <button class="pp-btn" id="pp-btn" aria-label="Play or pause the trace replay">
+    <button class="pp-btn" id="pp-btn" aria-label="Play or pause the trace replay" disabled>
       <span id="pp-icon">▶</span>
     </button>
     <input
@@ -202,6 +215,35 @@ if (!tabs) {
     color: var(--mut);
     min-width: 44px;
     text-align: right;
+  }
+
+  /* loading skeleton */
+  .player-skeleton {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 4px 0;
+  }
+  .sk-line {
+    height: 0.76rem;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--edge) 50%, transparent);
+    animation: sk-pulse 1.4s ease-in-out infinite;
+  }
+  .sk-line:nth-child(odd) { animation-delay: 0.1s; }
+  .sk-line:nth-child(even) { animation-delay: 0.25s; }
+  @keyframes sk-pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+
+  .pp-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+  .pp-btn:disabled:hover {
+    transform: none;
+    border-color: var(--edge);
   }
 
   .player-final {

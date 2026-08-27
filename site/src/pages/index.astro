@@ -308,8 +308,15 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
       </label>
       <label class="wl-field wl-wide">
         <span>which paper, and why <i>(optional)</i></span>
-        <input type="text" name="paper" placeholder="arXiv id + what you'd want checked" />
+        <input type="text" name="paper" id="paper-input" placeholder="arXiv id + what you'd want checked" />
       </label>
+      <div class="wl-preview" id="claim-preview" hidden>
+        <div class="wl-preview-bar">
+          <span class="wl-preview-label">extract</span>
+          <span class="wl-preview-status" id="preview-status">awaiting arxiv id…</span>
+        </div>
+        <div class="wl-preview-list" id="preview-claims"></div>
+      </div>
       <button type="submit" class="wl-btn" data-cta="waitlist-submit">get early access</button>
     </form>
     <div class="wl-alt">

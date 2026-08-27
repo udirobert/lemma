@@ -10,6 +10,10 @@ import Lenis from "lenis";
 gsap.registerPlugin(ScrollTrigger);
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+// The 3D helix journey needs desktop-sized geometry (R=120, H=320) to read
+// well. On small screens the perspective collapses and the transforms break.
+// Skip the helix entirely on mobile — bars stay as a playable xylophone row.
+const isMobile = matchMedia("(max-width: 640px)").matches;
 
 /* ---------- CSS-var reader with safe fallbacks ---------- */
 function cssVar(name: string, fallback: number): number {
@@ -145,8 +149,10 @@ if (!reduced && bars.length) {
    (and arrow-key nudges), and a wake/idle doze keeps the loop asleep between
    interactions. Bars keep their note + verdict colours throughout. The old
    static mirror handoff is gone — the bars are always on-screen, transforming
-   to the end. All helix geometry is CSS-var tunable (see loadHelixConfig). */
-if (!reduced) {
+   to the end. All helix geometry is CSS-var tunable (see loadHelixConfig).
+   Skipped on mobile (< 640px) where the 3D perspective collapses — the
+   bars stay as a playable xylophone row instead. */
+if (!reduced && !isMobile) {
   const xylo = document.querySelector<HTMLElement>(".hero .xylo")!;
   const scene = document.querySelector<HTMLElement>(".hero .xylo-scene")!;
   const heroBars = xylo ? Array.from(xylo.querySelectorAll<HTMLElement>(".bar")) : [];

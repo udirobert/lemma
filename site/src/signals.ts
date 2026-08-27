@@ -92,4 +92,58 @@ if (form) {
   });
 }
 
+/* ---------- mini claim-extractor preview ---------- */
+/* When a user types something that looks like an arXiv id into the "which
+   paper" field, show a simulated extraction preview — 3 plausible claim
+   strings appear one by one, giving a taste of what lemma does. This is
+   purely client-side (no real fetch); it's a teaser, not a real audit. */
+(function miniExtractor() {
+  const input = document.getElementById("paper-input") as HTMLInputElement | null;
+  const preview = document.getElementById("claim-preview");
+  const status = document.getElementById("preview-status");
+  const list = document.getElementById("preview-claims");
+  if (!input || !preview || !status || !list) return;
+
+  const ARXIV_RE = /^(?:arxiv:?)?\d{4}\.\d{4,5}(v\d+)?$/i;
+  const SAMPLE_CLAIMS = [
+    "the proposed method outperforms the baseline by ≥15% on the benchmark",
+    "convergence is achieved within 10k training steps under all tested configs",
+    "the learned representation is linearly separable across all probe tasks",
+  ];
+  let fired = false;
+  let debounceT: ReturnType<typeof setTimeout> | undefined;
+
+  function runPreview(id: string) {
+    if (fired) return;
+    fired = true;
+    preview.hidden = false;
+    status.textContent = `extracting claims from ${id}…`;
+    list.innerHTML = "";
+    let i = 0;
+    const reveal = () => {
+      if (i >= SAMPLE_CLAIMS.length) {
+        status.textContent = `${SAMPLE_CLAIMS.length} claims extracted · these are illustrative — the real audit runs the numbers`;
+        track("mini_extract", { id });
+        return;
+      }
+      const el = document.createElement("div");
+      el.className = "wl-claim";
+      el.style.animationDelay = "0s";
+      el.innerHTML = `<span class="tag">C${i + 1}</span><span class="txt">${SAMPLE_CLAIMS[i]}</span>`;
+      list.append(el);
+      i++;
+      setTimeout(reveal, 700);
+    };
+    setTimeout(reveal, 600);
+  }
+
+  input.addEventListener("input", () => {
+    clearTimeout(debounceT);
+    const v = input.value.trim();
+    debounceT = setTimeout(() => {
+      if (ARXIV_RE.test(v)) runPreview(v);
+    }, 400);
+  });
+})();
+
 export {};
