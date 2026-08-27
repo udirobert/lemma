@@ -283,6 +283,36 @@ a {
   margin-top: 42px;
 }
 
+/* helix mode — bars become base-pair rungs of the persistent double helix */
+.xylo.helix-on .bar {
+  transform-origin: 50% 50%;
+  pointer-events: auto;        /* scene is pointer-events:none; re-enable rungs */
+  touch-action: none;          /* let drags spin the helix, not scroll the page */
+  cursor: grab;
+}
+.xylo.helix-on .bar:active { cursor: grabbing; }
+.xylo.helix-on .bar::before { display: none; }   /* drop the glass sheen while spinning */
+
+/* drag-to-spin hint — echoes the DNA demo's base-pair readout */
+.helix-badge {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 60;
+  padding: 7px 13px;
+  border-radius: 7px;
+  background: rgba(8, 12, 20, 0.7);
+  border: 1px solid rgba(96, 165, 250, 0.25);
+  color: #bfdbfe;
+  font: 12px ui-monospace, "Roboto Mono Variable", monospace;
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  opacity: 0;
+  animation: helix-badge-in 0.5s ease 0.2s forwards;
+}
+.helix-badge b { color: #fff; font-weight: 600; }
+@keyframes helix-badge-in { to { opacity: 1; } }
+
 /* ---------------- story beats ---------------- */
 .wrap {
   max-width: 1000px;
