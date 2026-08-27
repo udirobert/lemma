@@ -220,6 +220,8 @@ if (!reduced) {
       unfold = clamp01((j - 0.55) / 0.4);                 // B3: 0.55 → 0.95
       tilt = clamp01((j - 0.4) / 0.12) * (1 - clamp01((j - 0.55) / 0.12)); // B2 hump
       if (fixed) xylo!.style.transform = `rotateX(${(tilt * TILT_DEG).toFixed(2)}deg)`;
+      // fade in spectrum hairline as the unwind begins
+      if (fixed && hairline) hairline.style.opacity = `${clamp01((j - 0.45) / 0.15).toFixed(2)}`;
 
       for (const b of bars) {
         // coil: row (m=0) → helix (m=1)
@@ -295,7 +297,7 @@ if (!reduced) {
       "scroll",
       () => {
         const y = scrollY;
-        if (y < lastY && fixed && unfold <= 0 && performance.now() >= awakeUntil) wake(3000);
+        if (y < lastY && fixed && performance.now() >= awakeUntil) wake(3000);
         lastY = y;
       },
       { passive: true }
@@ -383,6 +385,11 @@ if (!reduced) {
     badge.className = "helix-badge";
     badge.innerHTML = `${n} base pairs · <b>drag to spin</b>`;
 
+    // spectrum hairline — gradient bar at the bottom that fades in during the unwind
+    const hairline = document.createElement("div");
+    hairline.className = "spectrum-fixed";
+    hairline.style.opacity = "0";
+
     const heroEl = document.querySelector<HTMLElement>(".hero")!;
     const heroCopy = heroEl.querySelector(".hero-copy");
     function fixScene() {
@@ -392,6 +399,7 @@ if (!reduced) {
       xylo.classList.add("helix-on");
       gsap.set(scene, { xPercent: -50, yPercent: -50, rotateY: 0, scale: BASE_S, opacity: BASE_O });
       document.body.appendChild(badge);
+      document.body.appendChild(hairline);
       wake(6000);
       // make bars focusable for keyboard accessibility
       for (const b of bars) {
@@ -407,6 +415,7 @@ if (!reduced) {
       gsap.set(xylo, { clearProps: "transform" });
       for (const b of bars) b.el.style.transform = "";
       badge.remove();
+      hairline.remove();
       // clean up keyboard listeners and tabindex
       for (const b of bars) {
         b.el.removeAttribute("tabindex");
@@ -443,7 +452,7 @@ if (!reduced) {
     // Pops use `filter: brightness` (not opacity/scale) so the journey
     // timeline can own opacity/scale for the finale without any conflict.
     const pop = (peakB: number) => {
-      if (!fixed || unfold > 0.08) return;        // stop pulsing once it unwinds
+      if (!fixed) return;              // only pulse the fixed helix
       wake(4500);
       gsap.to(scene, { filter: `brightness(${peakB})`, duration: 0.7, ease: "power2.out", overwrite: "auto" });
       gsap.to(scene, { filter: "brightness(1)", duration: 1.4, ease: "power1.in", delay: 0.8, overwrite: false });
