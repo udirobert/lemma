@@ -11,6 +11,25 @@ gsap.registerPlugin(ScrollTrigger);
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+/* ---------- CSS-var reader with safe fallbacks ---------- */
+function cssVar(name: string, fallback: number): number {
+  const val = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  if (!val) return fallback;
+  const num = parseFloat(val);
+  return isNaN(num) ? fallback : num;
+}
+
+function loadHelixConfig() {
+  return {
+    turns: cssVar("--helix-turns", 2.5),
+    height: cssVar("--helix-height", 320),
+    radius: cssVar("--helix-radius", 120),
+    autoRotate: cssVar("--helix-auto-rotate", 0.5),
+    baseOpacity: cssVar("--helix-opacity", 0.22),
+    baseScale: cssVar("--helix-scale", 0.85),
+  };
+}
+
 /* ---------- smooth scroll ---------- */
 let lenis: Lenis | null = null;
 if (!reduced) {
@@ -106,13 +125,14 @@ if (!reduced) {
   const heroBars = xylo ? Array.from(xylo.querySelectorAll<HTMLElement>(".bar")) : [];
   if (xylo && scene && heroBars.length) {
     const n = heroBars.length;
-    const TURNS = 2.5;       // full twists along the helix
-    const HELIX_H = 320;     // vertical extent (px)
-    const R = 120;           // strand radius / half rung length (px)
-    const RUNG_LEN = R * 2;  // every claim becomes an equal-length rung
-    const AUTO = 0.5;        // auto-rotation (rad/s)
-    const BASE_O = 0.22;     // resting opacity while fixed in the background
-    const BASE_S = 0.85;     // resting scale while fixed
+    const cfg = loadHelixConfig();
+    const TURNS = cfg.turns;         // full twists along the helix
+    const HELIX_H = cfg.height;      // vertical extent (px)
+    const R = cfg.radius;            // strand radius / half rung length (px)
+    const RUNG_LEN = R * 2;          // every claim becomes an equal-length rung
+    const AUTO = cfg.autoRotate;     // auto-rotation (rad/s)
+    const BASE_O = cfg.baseOpacity;  // resting opacity while fixed in the background
+    const BASE_S = cfg.baseScale;    // resting scale while fixed
 
     // per-bar helix geometry: bar i is a rung at height y, phase theta
     const bars = heroBars.map((el, i) => {
@@ -278,6 +298,28 @@ if (!reduced) {
     addEventListener("pointercancel", onUp as EventListener, true);
     for (const b of bars) b.el.addEventListener("pointerdown", onDown);
 
+    // keyboard controls for the fixed helix — arrow keys spin, Enter/Space strikes a note
+    function onKey(e: KeyboardEvent) {
+      if (!fixed) return;
+      const key = e.key;
+      if (key === "ArrowLeft") {
+        e.preventDefault();
+        spin -= 0.15;
+        vel = -0.15;
+        wake(4000);
+      } else if (key === "ArrowRight") {
+        e.preventDefault();
+        spin += 0.15;
+        vel = 0.15;
+        wake(4000);
+      } else if ((key === "Enter" || key === " ") && document.activeElement) {
+        e.preventDefault();
+        const el = document.activeElement as HTMLElement | null;
+        if (el?.classList.contains("bar")) strike(el);
+      }
+    }
+    addEventListener("keydown", onKey);
+
     // hint badge — echoes the DNA demo's "base pairs · double helix" readout
     const badge = document.createElement("div");
     badge.className = "helix-badge";
@@ -293,6 +335,10 @@ if (!reduced) {
       gsap.set(scene, { xPercent: -50, yPercent: -50, rotateY: 0, scale: BASE_S, opacity: BASE_O });
       document.body.appendChild(badge);
       wake(6000);
+      // make bars focusable for keyboard accessibility
+      for (const b of bars) {
+        b.el.setAttribute("tabindex", "0");
+      }
     }
     function unfixScene() {
       fixed = false;
@@ -302,6 +348,10 @@ if (!reduced) {
       gsap.set(xylo, { rotateY: 0 });
       for (const b of bars) b.el.style.transform = "";
       badge.remove();
+      // clean up keyboard listeners and tabindex
+      for (const b of bars) {
+        b.el.removeAttribute("tabindex");
+      }
       // hard-reset accumulated rotation/handoff so re-entering the hero
       // never replays leftover spin (fix 3: state reset)
       morph = 0; spin = 0; vel = 0; reconP = 0;

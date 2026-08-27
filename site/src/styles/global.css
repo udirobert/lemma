@@ -16,6 +16,14 @@
   --violet: #7866ed;
   --font-d: "Montserrat Variable", system-ui, sans-serif;
   --font-m: "Roboto Mono Variable", ui-monospace, monospace;
+
+  /* ---------- helix tunables (tweak these to reshape the DNA) ---------- */
+  --helix-turns: 2.5;        /* full twists along the helix       */
+  --helix-height: 320;       /* vertical extent in px              */
+  --helix-radius: 120;       /* strand radius / half rung length   */
+  --helix-auto-rotate: 0.5;  /* auto-rotation speed (rad/s)        */
+  --helix-opacity: 0.22;     /* resting opacity when fixed         */
+  --helix-scale: 0.85;       /* resting scale when fixed           */
 }
 
 * {
@@ -292,6 +300,17 @@ a {
 }
 .xylo.helix-on .bar:active { cursor: grabbing; }
 .xylo.helix-on .bar::before { display: none; }   /* drop the glass sheen while spinning */
+
+/* keyboard focus ring for helix bars (visible only when tab-focused) */
+.xylo.helix-on .bar:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  z-index: 10;
+}
+.xylo.helix-on .bar:focus-visible .bar-label {
+  opacity: 1;
+  color: var(--fg);
+}
 
 /* drag-to-spin hint — echoes the DNA demo's base-pair readout */
 .helix-badge {
