@@ -2,6 +2,7 @@
 import "../../styles/global.css";
 import StatusBadge from "../../components/StatusBadge.astro";
 import BgGlass from "../../components/BgGlass.astro";
+import ClipMenu from "../../components/ClipMenu.astro";
 import papersData from "../../data/papers.json";
 
 const papers = papersData.papers;
@@ -73,6 +74,7 @@ const totals = papersData.totals;
     <footer>
       <p>lemma · the trace is the demo</p>
     </footer>
+    <ClipMenu />
 
     <style>
       .registry {

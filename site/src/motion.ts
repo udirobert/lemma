@@ -262,8 +262,12 @@ if (!reduced && !isMobile) {
       unfold = clamp01((j - 0.55) / 0.4);                 // B3: 0.55 → 0.95
       tilt = clamp01((j - 0.4) / 0.12) * (1 - clamp01((j - 0.55) / 0.12)); // B2 hump
       if (fixed) xylo!.style.transform = `rotateX(${(tilt * TILT_DEG).toFixed(2)}deg)`;
-      // fade in spectrum hairline as the unwind begins
-      if (fixed && hairline) hairline.style.opacity = `${clamp01((j - 0.45) / 0.15).toFixed(2)}`;
+      // fade in spectrum hairline + axis caption as the unwind begins
+      if (fixed && hairline) {
+        const op = clamp01((j - 0.45) / 0.15);
+        hairline.style.opacity = op.toFixed(2);
+        axisCaption.style.opacity = op.toFixed(2);
+      }
 
       for (const b of bars) {
         // coil: row (m=0) → helix (m=1)
@@ -432,6 +436,16 @@ if (!reduced && !isMobile) {
     hairline.className = "spectrum-fixed";
     hairline.style.opacity = "0";
 
+    // spectrum axis caption — labels the verdict sort so the finale reads as
+    // an answer, not just a rearrangement. Fades in with the hairline.
+    const axisCaption = document.createElement("div");
+    axisCaption.className = "spectrum-axis";
+    axisCaption.innerHTML =
+      '<span class="ax-l">supported</span>' +
+      '<span class="ax-m">inconclusive</span>' +
+      '<span class="ax-r">falsified</span>';
+    axisCaption.style.opacity = "0";
+
     const heroEl = document.querySelector<HTMLElement>(".hero")!;
     const heroCopy = heroEl.querySelector(".hero-copy");
     function fixScene() {
@@ -442,6 +456,7 @@ if (!reduced && !isMobile) {
       gsap.set(scene, { xPercent: -50, yPercent: -50, rotateY: 0, scale: BASE_S, opacity: BASE_O });
       document.body.appendChild(badge);
       document.body.appendChild(hairline);
+      document.body.appendChild(axisCaption);
       wake(6000);
       // make bars focusable for keyboard accessibility
       for (const b of bars) {
@@ -461,6 +476,7 @@ if (!reduced && !isMobile) {
       for (const b of bars) b.el.style.transform = "";
       badge.remove();
       hairline.remove();
+      axisCaption.remove();
       // clean up keyboard listeners and tabindex
       for (const b of bars) {
         b.el.removeAttribute("tabindex");

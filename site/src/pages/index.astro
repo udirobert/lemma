@@ -5,6 +5,7 @@ import "../styles/global.css";
 import Xylophone from "../components/Xylophone.astro";
 import TracePlayer from "../components/TracePlayer.astro";
 import BgGlass from "../components/BgGlass.astro";
+import ClipMenu from "../components/ClipMenu.astro";
 import papersData from "../data/papers.json";
 
 const papers = papersData.papers as Array<{
@@ -356,25 +357,9 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
   <p>lemma · the trace is the demo</p>
 </footer>
 
-<!-- ================= CLIP MENU ================= -->
-<button class="menu-btn" aria-label="Open navigation" aria-expanded="false">
-  <span class="bars-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-</button>
-<nav class="menu-panel" aria-label="Site navigation">
-  <ul>
-    <li><span class="menu-sub">lemma</span></li>
-    <li><a href="#story"><span class="idx">01</span>story</a></li>
-    <li><a href="#trace"><span class="idx">02</span>trace</a></li>
-    <li><a href="#replay"><span class="idx">03</span>replay</a></li>
-    <li><a href="#waitlist"><span class="idx">04</span>waitlist</a></li>
-    <li><a href="#artifacts"><span class="idx">05</span>artifacts</a></li>
-    <li><a href="/papers/"><span class="idx">06</span>papers</a></li>
-    <li><a href="https://github.com/udirobert/lemma" target="_blank" rel="noopener"><span class="idx">→</span>github</a></li>
-  </ul>
-</nav>
-
 <script src="../motion.ts"></script>
 <script src="../player.ts"></script>
 <script src="../signals.ts"></script>
+<ClipMenu />
   </body>
 </html>

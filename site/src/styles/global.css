@@ -79,6 +79,24 @@ a {
   );
 }
 
+/* spectrum axis caption — labels the verdict sort below the hairline */
+.spectrum-axis {
+  position: fixed;
+  inset: auto 0 8px 0;
+  z-index: 60;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24px;
+  font-family: var(--font-m);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  pointer-events: none;
+}
+.spectrum-axis .ax-l { color: var(--teal); }
+.spectrum-axis .ax-m { color: var(--gold); }
+.spectrum-axis .ax-r { color: var(--magenta); }
+
 /* ---------------- hero ---------------- */
 .hero {
   position: relative;
@@ -931,6 +949,19 @@ footer {
 }
 .menu-panel.open {
   visibility: visible;
+}
+
+/* CSS-only fallback for pages without motion.ts (paper/registry pages).
+   The .clip-fallback variant toggles clip-path directly via CSS + a tiny
+   inline script, no GSAP needed. */
+.menu-panel.clip-fallback {
+  transition: clip-path 0.5s ease;
+}
+.menu-panel.clip-fallback.open {
+  clip-path: circle(142% at calc(100% - 55px) calc(100% - 55px));
+}
+.menu-panel.clip-fallback:not(.open) {
+  clip-path: circle(0% at calc(100% - 55px) calc(100% - 55px));
 }
 .menu-panel ul {
   list-style: none;

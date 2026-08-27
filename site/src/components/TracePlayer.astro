@@ -6,6 +6,7 @@
 interface TraceTab {
   key: string;
   label: string;
+  tip?: string;
 }
 interface Props {
   tabs?: TraceTab[];
@@ -14,10 +15,14 @@ let { tabs } = Astro.props;
 
 if (!tabs) {
   const data = await import("../data/papers.json");
-  const papers = (data as { papers: Array<{ slug: string; source_label: string; trace?: { n_events?: number } }> }).papers ?? [];
+  const papers = (data as any).papers ?? [];
   tabs = papers
-    .filter((p) => (p.trace?.n_events ?? 0) > 0)
-    .map((p) => ({ key: p.slug, label: p.source_label || p.slug }));
+    .filter((p: any) => (p.trace?.n_events ?? 0) > 0)
+    .map((p: any) => ({
+      key: p.slug,
+      label: p.source_label || p.slug,
+      tip: p.summary ? p.summary.supported + " supported / " + p.summary.inconclusive + " inconclusive" : "",
+    }));
 }
 ---
 
@@ -31,6 +36,7 @@ if (!tabs) {
             role="tab"
             aria-selected={i === 0 ? "true" : "false"}
             data-run={t.key}
+            data-tip={t.tip}
           >
             {t.label}
           </button>

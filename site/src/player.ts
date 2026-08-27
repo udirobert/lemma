@@ -224,6 +224,8 @@ function switchRun(key: string) {
 const runBtns = Array.from(document.querySelectorAll<HTMLButtonElement>(".run-btn"));
 runBtns.forEach((b) => {
   b.addEventListener("click", () => switchRun(b.dataset.run!));
+  // move data-tip to title for native hover tooltips
+  if (b.dataset.tip) b.title = b.dataset.tip;
 });
 
 ppBtn.addEventListener("click", () => (playing ? pause() : play()));

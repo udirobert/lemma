@@ -1,0 +1,63 @@
+---
+/* Shared clip-path navigation — used on every page so no surface is stranded.
+   The open/close animation lives in motion.ts (landing page only).
+   Pages that don't load motion.ts get a CSS-only fallback via the .clip-fallback
+   class, which toggles visibility + clip-path on click via a tiny inline script. */
+const links = [
+  { href: "/#story", idx: "01", label: "story", ext: false },
+  { href: "/#trace", idx: "02", label: "trace", ext: false },
+  { href: "/#replay", idx: "03", label: "replay", ext: false },
+  { href: "/#waitlist", idx: "04", label: "waitlist", ext: false },
+  { href: "/#artifacts", idx: "05", label: "artifacts", ext: false },
+  { href: "/papers/", idx: "06", label: "papers", ext: false },
+  { href: "https://github.com/udirobert/lemma", idx: "→", label: "github", ext: true },
+];
+---
+
+<button class="menu-btn" aria-label="Open navigation" aria-expanded="false">
+  <span class="bars-icon" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+</button>
+<nav class="menu-panel clip-fallback" aria-label="Site navigation">
+  <ul>
+    <li><span class="menu-sub">lemma</span></li>
+    {links.map((l) => (
+      <li>
+        <a href={l.href} target={l.ext ? "_blank" : undefined} rel={l.ext ? "noopener" : undefined}>
+          <span class="idx">{l.idx}</span>{l.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<script>
+  // CSS-only fallback for pages that don't load motion.ts (paper detail, registry).
+  // Toggles .open on the panel + aria-expanded on the button. The clip-path
+  // transition is handled purely by CSS on .clip-fallback.
+  const btn = document.querySelector(".menu-btn");
+  const panel = document.querySelector(".menu-panel.clip-fallback");
+  if (btn && panel && !document.querySelector("script[src*='motion']")) {
+    let open = false;
+    btn.addEventListener("click", () => {
+      open = !open;
+      btn.setAttribute("aria-expanded", String(open));
+      panel.classList.toggle("open", open);
+    });
+    // close on link click
+    panel.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => {
+        open = false;
+        btn.setAttribute("aria-expanded", "false");
+        panel.classList.remove("open");
+      });
+    });
+    // close on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && open) {
+        open = false;
+        btn.setAttribute("aria-expanded", "false");
+        panel.classList.remove("open");
+      }
+    });
+  }
+</script>

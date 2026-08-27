@@ -3,6 +3,7 @@ import "../../styles/global.css";
 import StatusBadge from "../../components/StatusBadge.astro";
 import TracePlayer from "../../components/TracePlayer.astro";
 import BgGlass from "../../components/BgGlass.astro";
+import ClipMenu from "../../components/ClipMenu.astro";
 import papersData from "../../data/papers.json";
 
 export function getStaticPaths() {
@@ -132,6 +133,7 @@ const paper = Astro.props.paper as Paper;
     <footer>
       <p>lemma · the trace is the demo</p>
     </footer>
+    <ClipMenu />
 
     <script src="../../player.ts"></script>
     <style>
