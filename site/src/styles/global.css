@@ -815,32 +815,44 @@ html:not(.js-motion) .tl {
   }
 }
 
-/* ---------------- paper detail motion (progressive) ----------------
+/* ---------------- paper detail + registry motion (progressive) ----------------
    Hidden states only apply once paperMotion.ts adds .pd-motion to <html>.
    No JS → fully visible page. Reduced-motion → the class is never added.
-   Easing matches the landing's power3.out reveal vocabulary. */
-html.pd-motion .pd-meta-row,
-html.pd-motion .pd-header h1,
-html.pd-motion .pd-authors,
-html.pd-motion .pd-blurb,
-html.pd-motion .pd-links,
-html.pd-motion .pd-stat,
-html.pd-motion .claim-row,
-html.pd-motion .pd-figures h2,
-html.pd-motion .figure-cell,
-html.pd-motion .pd-trace h2,
-html.pd-motion .pd-trace-sub,
-html.pd-motion .pd-trace .player {
+   Easing matches the landing's power3.out reveal vocabulary. Reveals use
+   the `translate` property so native hover `transform`s on cards/cells
+   never conflict; after the transition, JS swaps .is-in for .pd-done and
+   the element returns fully to its native styles. */
+html.pd-motion :is(
+    .pd-meta-row,
+    .pd-header h1,
+    .pd-authors,
+    .pd-blurb,
+    .pd-links,
+    .pd-stat,
+    .claim-row,
+    .pd-figures h2,
+    .figure-cell,
+    .pd-trace h2,
+    .pd-trace-sub,
+    .pd-trace .player,
+    .registry-header h1,
+    .registry-sub,
+    .paper-card
+  ) {
   opacity: 0;
-  transform: translateY(22px);
+  translate: 0 22px;
 }
 html.pd-motion .is-in {
   opacity: 1;
-  transform: none;
+  translate: none;
   transition:
     opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
-    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+    translate 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
   transition-delay: var(--pd-delay, 0s);
+}
+html.pd-motion .pd-done {
+  opacity: 1;
+  translate: none;
 }
 
 /* figure loading: shimmer placeholder until the img fades in */

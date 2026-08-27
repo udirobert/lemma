@@ -1,19 +1,24 @@
-/* Paper-detail motion: section reveals, staggered claim rows/stats/figures,
-   count-up stats, and figure load fade-in with shimmer placeholder.
-   IntersectionObserver + CSS transitions — no GSAP, so paper pages stay light
+/* Paper-detail + registry motion: section reveals, staggered claim rows/stats/
+   figures/paper-cards, count-up stats, and figure load fade-in with shimmer.
+   IntersectionObserver + CSS transitions — no GSAP, so these pages stay light
    while matching the landing's easing vocabulary (power3.out ≈ this bezier).
+   Reveals use the `translate` property (not `transform`) so native hover
+   transforms on cards/cells never conflict with the reveal.
    Progressive: hidden states only exist under html.pd-motion, which this
    script adds. No JS → everything visible. Reduced-motion → no animation. */
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* sequential header items — revealed top-to-bottom on page load */
+/* sequential header items — revealed top-to-bottom on page load.
+   Both page families listed; each page only matches its own. */
 const HEADER_ORDER = [
   ".pd-meta-row",
   ".pd-header h1",
   ".pd-authors",
   ".pd-blurb",
   ".pd-links",
+  ".registry-header h1",
+  ".registry-sub",
 ];
 
 /* scroll-revealed singles (section headings, player) */
@@ -26,7 +31,7 @@ const SINGLES = [
 ];
 
 /* staggered groups — items reveal in sibling order */
-const GROUPS = [".pd-stat", ".claim-row", ".figure-cell"];
+const GROUPS = [".pd-stat", ".claim-row", ".figure-cell", ".paper-card"];
 
 const REVEAL_EASE = "cubic-bezier(0.22, 0.61, 0.36, 1)"; // ≈ power3.out
 
@@ -63,13 +68,14 @@ function init() {
   const reveal: HTMLElement[] = [];
   const delayFor = new Map<HTMLElement, number>();
 
-  for (const sel of HEADER_ORDER) {
-    const el = document.querySelector<HTMLElement>(sel);
-    if (el) {
-      reveal.push(el);
-      delayFor.set(el, HEADER_ORDER.indexOf(sel) * 80);
-    }
-  }
+  /* header cascade: delay by position among the items this page actually has */
+  const headerItems = HEADER_ORDER.map((sel) => document.querySelector<HTMLElement>(sel)).filter(
+    (el): el is HTMLElement => el !== null,
+  );
+  headerItems.forEach((el, i) => {
+    reveal.push(el);
+    delayFor.set(el, i * 80);
+  });
   for (const sel of SINGLES) {
     document.querySelectorAll<HTMLElement>(sel).forEach((el) => {
       reveal.push(el);
@@ -104,6 +110,18 @@ function init() {
       const b = el.querySelector("b");
       if (b) countUp(b);
     }
+    /* once the reveal transition finishes, hand the element back to its
+       native styles (pd-done) so hover transforms/transitions on cards
+       and figure cells behave exactly as unstyled */
+    el.addEventListener(
+      "transitionend",
+      (ev) => {
+        if (ev.target !== el) return;
+        el.classList.remove("is-in");
+        el.classList.add("pd-done");
+      },
+      { once: true },
+    );
   };
 
   try {
