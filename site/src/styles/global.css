@@ -92,8 +92,8 @@ a {
   padding: 72px 24px 48px;
   background:
     radial-gradient(ellipse 70% 45% at 20% 0%, rgba(79, 142, 247, 0.16), transparent 65%),
-    radial-gradient(ellipse 60% 40% at 85% 8%, rgba(212, 69, 242, 0.12), transparent 65%),
-    var(--bg);
+    radial-gradient(ellipse 60% 40% at 85% 8%, rgba(212, 69, 242, 0.12), transparent 65%);
+    /* no opaque base — the organic-cells canvas shows through */
 }
 
 .kicker {

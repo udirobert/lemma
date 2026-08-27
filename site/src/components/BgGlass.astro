@@ -1,6 +1,10 @@
 ---
-// Ambient hex-grid glass backdrop — soft, slow, non-interactive.
-// Sits behind all content at low opacity. Respects prefers-reduced-motion.
+// Organic cells backdrop — "When Cells Collide" inspired.
+// JS verlet cell bodies (drift flow field + pair separation + cursor repel)
+// rendered as soft blobs into a half-res FBO, blurred (goo), then
+// color-graded: luminance maps through the brand spectrum ramp
+// (the After Effects "Colorama" trick from the Unseen write-up).
+// Zero dependencies. Respects prefers-reduced-motion.
 ---
 
 <canvas id="bg-glass" aria-hidden="true"></canvas>
@@ -13,7 +17,6 @@
     height: 100%;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.55;
   }
 </style>
 
@@ -26,13 +29,36 @@
     antialias: false,
     depth: false,
     stencil: false,
+    premultipliedAlpha: true,
     powerPreference: "low-power",
   });
 
   if (!gl) {
     canvas?.remove();
   } else {
+    /* ---------------- tunables ---------------- */
+    const TUNE = {
+      areaPerCell: 26000, // viewport px² per cell (count scales with screen)
+      minCells: 26,
+      maxCells: 78,
+      radius: [12, 34] as const, // css px
+      flowStrength: 30, // px/s² drift force
+      flowScale: 0.0042, // spatial frequency of the flow field
+      pairPush: 70, // cell-cell separation px/s²
+      cursorRadius: 170, // css px repel radius
+      cursorPush: 950, // px/s² at cursor center
+      maxSpeed: 260, // px/s
+      damping: 2.4, // exp(-damping*dt)
+      boundMargin: 40, // css px soft walls
+      boundSpring: 260, // px/s² per px past margin
+      blurSpacing: 3.5, // gaussian tap spacing in FBO texels
+      blurPasses: 2, // ping-pong iterations
+      cellIntensity: 0.8, // how strongly the color ramp shows
+      cursorRipple: 0.05, // ramp phase ripple around the cursor
+    };
+
     const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+    const FBO_SCALE = 0.5 * DPR; // cells render at half-res, blur hides it
 
     function resize() {
       const w = Math.floor(innerWidth * DPR);
@@ -42,98 +68,218 @@
         canvas!.height = h;
         gl!.viewport(0, 0, w, h);
       }
+      return [innerWidth, innerHeight] as const;
     }
-    addEventListener("resize", resize);
-    resize();
 
-    const VERT = `
-      attribute vec2 a;
-      varying vec2 v;
+    /* ---------------- cell simulation ---------------- */
+    type Cell = { x: number; y: number; vx: number; vy: number; r: number };
+    let cells: Cell[] = [];
+    let bounds = { w: 0, h: 0 };
+
+    function initCells(w: number, h: number) {
+      bounds = { w, h };
+      const n = Math.max(
+        TUNE.minCells,
+        Math.min(TUNE.maxCells, Math.round((w * h) / TUNE.areaPerCell)),
+      );
+      cells = Array.from({ length: n }, () => {
+        // radius weighted toward the small end — few large, many small
+        const t = Math.pow(Math.random(), 1.6);
+        return {
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 30,
+          vy: (Math.random() - 0.5) * 30,
+          r: TUNE.radius[0] + t * (TUNE.radius[1] - TUNE.radius[0]),
+        };
+      });
+    }
+
+    const mouse = { x: -9999, y: -9999, on: false };
+    addEventListener(
+      "pointermove",
+      (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+        mouse.on = true;
+      },
+      { passive: true },
+    );
+    addEventListener("pointerleave", () => (mouse.on = false));
+
+    function step(dt: number, t: number) {
+      const { w, h } = bounds;
+      const m = TUNE.boundMargin;
+
+      for (const c of cells) {
+        // organic drift: two crossed sine fields, slowly evolving
+        const s = TUNE.flowScale;
+        c.vx +=
+          TUNE.flowStrength *
+          (Math.sin(c.y * s + t * 0.35) + 0.6 * Math.sin(c.y * s * 2.7 - t * 0.23)) *
+          dt;
+        c.vy +=
+          TUNE.flowStrength *
+          (Math.cos(c.x * s - t * 0.31) + 0.6 * Math.cos(c.x * s * 2.3 + t * 0.19)) *
+          dt;
+      }
+
+      // pairwise separation — O(n²), n ≤ 78, trivial
+      const arr = cells;
+      for (let i = 0; i < arr.length; i++) {
+        const a = arr[i];
+        for (let j = i + 1; j < arr.length; j++) {
+          const b = arr[j];
+          const dx = b.x - a.x,
+            dy = b.y - a.y;
+          const minD = (a.r + b.r) * 0.92;
+          const d2 = dx * dx + dy * dy;
+          if (d2 > 0.01 && d2 < minD * minD) {
+            const d = Math.sqrt(d2);
+            const push = ((minD - d) / minD) * TUNE.pairPush * dt;
+            const ux = dx / d,
+              uy = dy / d;
+            a.vx -= ux * push;
+            a.vy -= uy * push;
+            b.vx += ux * push;
+            b.vy += uy * push;
+          }
+        }
+      }
+
+      for (const c of cells) {
+        // cursor repel (the "sphere collider" from the concept)
+        if (mouse.on) {
+          const dx = c.x - mouse.x,
+            dy = c.y - mouse.y;
+          const d = Math.hypot(dx, dy);
+          if (d < TUNE.cursorRadius && d > 0.5) {
+            const f = Math.pow(1 - d / TUNE.cursorRadius, 2) * TUNE.cursorPush * dt;
+            c.vx += (dx / d) * f;
+            c.vy += (dy / d) * f;
+          }
+        }
+
+        // soft bounds
+        if (c.x < m) c.vx += (m - c.x) * TUNE.boundSpring * dt;
+        if (c.x > w - m) c.vx -= (c.x - (w - m)) * TUNE.boundSpring * dt;
+        if (c.y < m) c.vy += (m - c.y) * TUNE.boundSpring * dt;
+        if (c.y > h - m) c.vy -= (c.y - (h - m)) * TUNE.boundSpring * dt;
+
+        // damping + speed clamp + integrate
+        const damp = Math.exp(-TUNE.damping * dt);
+        c.vx *= damp;
+        c.vy *= damp;
+        const sp = Math.hypot(c.vx, c.vy);
+        if (sp > TUNE.maxSpeed) {
+          c.vx = (c.vx / sp) * TUNE.maxSpeed;
+          c.vy = (c.vy / sp) * TUNE.maxSpeed;
+        }
+        c.x += c.vx * dt;
+        c.y += c.vy * dt;
+      }
+    }
+
+    /* ---------------- shaders ---------------- */
+    const VERT_FULL = `
+      attribute vec2 a; varying vec2 v;
       void main(){ v = .5*(a+1.); gl_Position = vec4(a,0,1); }
     `;
 
-    const FRAG = `
+    // Pass A — cells as soft point sprites, additive, into half-res FBO
+    const VERT_CELLS = `
+      attribute vec2 aPos; attribute float aRad;
+      uniform vec2 uCss; uniform float uScale; // fbo px per css px
+      void main(){
+        vec2 ndc = vec2(aPos.x/uCss.x*2.-1., 1.-aPos.y/uCss.y*2.);
+        gl_Position = vec4(ndc, 0., 1.);
+        gl_PointSize = 2. * aRad * uScale;
+      }
+    `;
+    const FRAG_CELLS = `
       #ifdef GL_ES
       precision mediump float;
       #endif
-      uniform vec2 R;
-      uniform float T;
+      void main(){
+        float d = length(gl_PointCoord - .5) * 2.;
+        if (d > 1.) discard;
+        float body = pow(smoothstep(1., 0., d), 1.6);
+        float membrane = smoothstep(.72, .92, d) * smoothstep(1., .92, d) * .3;
+        float fall = body + membrane;
+        gl_FragColor = vec4(fall, fall, fall, fall);
+      }
+    `;
+
+    // Pass B — separable gaussian (ping-pong), the "camera + compound blur"
+    const FRAG_BLUR = `
+      #ifdef GL_ES
+      precision mediump float;
+      #endif
+      uniform sampler2D T; uniform vec2 uDir; // texel-space dir * spacing
+      varying vec2 v;
+      void main(){
+        float w0=.227027, w1=.194594, w2=.121621, w3=.054054, w4=.016216;
+        vec3 c = texture2D(T, v).rgb * w0;
+        c += texture2D(T, v + uDir).rgb * w1;
+        c += texture2D(T, v - uDir).rgb * w1;
+        c += texture2D(T, v + uDir*2.).rgb * w2;
+        c += texture2D(T, v - uDir*2.).rgb * w2;
+        c += texture2D(T, v + uDir*3.).rgb * w3;
+        c += texture2D(T, v - uDir*3.).rgb * w3;
+        c += texture2D(T, v + uDir*4.).rgb * w4;
+        c += texture2D(T, v - uDir*4.).rgb * w4;
+        gl_FragColor = vec4(c, 1.);
+      }
+    `;
+
+    // Pass C — composite: lifted base + luminance→spectrum ramp (the "Colorama")
+    const FRAG_COMP = `
+      #ifdef GL_ES
+      precision mediump float;
+      #endif
+      uniform sampler2D T;
+      uniform vec2 uCss;
+      uniform float uT;
+      uniform vec2 uMouse;
+      uniform float uMouseOn;
+      uniform float uIntensity;
+      uniform float uRipple;
       varying vec2 v;
 
-      // Hex grid helpers
-      vec2 h2a(vec2 p, float s){
-        return vec2((1.7320508/3.*p.x - .3333333*p.y)/s, .6666667*p.y/s);
-      }
-      vec3 cubeRound(vec3 c){
-        vec3 r = floor(c+.5);
-        vec3 d = abs(r-c);
-        if(d.x>d.y && d.x>d.z) r.x=-r.y-r.z;
-        else if(d.y>d.z) r.y=-r.x-r.z;
-        else r.z=-r.x-r.y;
-        return r;
-      }
-      vec2 a2h(vec2 q, float s){
-        return vec2(s*(1.7320508*q.x+.8660254*q.y), s*1.5*q.y);
-      }
-      float sdHex(vec2 p, float r){
-        p=abs(p);
-        return max(dot(p,normalize(vec2(1.,1.7320508)))-r, p.x-r);
-      }
-
-      // Palette: blue, magenta, teal, gold, violet — very muted
-      vec3 pal(float t){
-        t = mod(t, 5.);
-        vec3 a=vec3(.31,.56,.96), b=vec3(.83,.27,.95),
-             c=vec3(.12,.76,.71), d=vec3(.98,.71,.20),
-             e=vec3(.47,.40,.93);
-        if(t<1.) return mix(a,b,t);
-        if(t<2.) return mix(b,c,t-1.);
-        if(t<3.) return mix(c,d,t-2.);
-        if(t<4.) return mix(d,e,t-3.);
-        return mix(e,a,t-4.);
+      vec3 rampColor(float t){
+        vec3 blue   = vec3(.31,.56,.96);
+        vec3 violet = vec3(.47,.40,.93);
+        vec3 magenta= vec3(.83,.27,.95);
+        vec3 teal   = vec3(.12,.76,.71);
+        vec3 gold   = vec3(.98,.71,.20);
+        vec3 c = mix(blue, violet, smoothstep(.12,.34,t));
+        c = mix(c, magenta, smoothstep(.34,.56,t));
+        c = mix(c, teal, smoothstep(.56,.76,t));
+        c = mix(c, gold, smoothstep(.78,.97,t));
+        return c;
       }
 
       void main(){
-        vec2 p = (v-.5)*R;
-        float cell = 56.;
-        float t = T * .08; // very slow drift
+        // lifted base — lighter than the old near-black navy
+        vec3 base = mix(vec3(.068,.088,.132), vec3(.105,.132,.192), v.y);
 
-        // Gentle breathing
-        float breath = sin(p.x*.002 + p.y*.003 + t)*.06;
-        float lc = cell*(1.+breath);
+        float lum = texture2D(T, v).r;
+        lum = pow(min(lum * 1.3, 1.), .85);
 
-        // Hex cell lookup
-        vec2 q = h2a(p, lc);
-        vec3 cb = cubeRound(vec3(q.x, -q.x-q.y, q.y));
-        vec2 ctr = a2h(cb.xz, lc);
-        vec2 lp = p - ctr;
-        float d = sdHex(lp, lc*.88);
+        // cursor "fluid" ripple nudges the grade phase, Unseen-style
+        vec2 m = uMouse / uCss;
+        float md = distance(v, vec2(m.x, 1.-m.y)) * uCss.y;
+        float rip = sin(md*.045 - uT*2.2) * exp(-md/240.) * uRipple * uMouseOn;
+        lum += rip;
 
-        // Soft inside mask
-        float inside = 1. - smoothstep(-.5, 1.5, d);
+        vec3 col = base + rampColor(clamp(lum, 0., 1.)) * uIntensity * lum;
+        col += base * lum * .35;
 
-        // Per-cell colour drift
-        float id = cb.x*.37 + cb.z*.61;
-        vec3 cc = pal(id + t*.03);
+        // gentle vignette (weaker than before)
+        float vig = 1. - smoothstep(.55, 1.5, length((v-.5)*vec2(uCss.x/uCss.y,1.)));
+        col *= mix(.92, 1., vig);
 
-        // Glass: radial falloff + faint edge sheen
-        float rad = clamp(length(lp)/(lc*.88), 0., 1.);
-        float glass = 1. - pow(rad, 1.8)*.5;
-        float edge = smoothstep(0., 1.8, abs(d)) * (1.-smoothstep(1.8, 4., abs(d)));
-
-        // Compose — visible but subtle
-        vec3 col = cc * glass * inside * .14;
-        col += vec3(.65,.75,.95) * edge * .06;
-
-        // Deep navy base
-        vec3 bg = mix(vec3(.045,.065,.100), vec3(.065,.090,.145), v.y);
-        vec3 fin = bg + col;
-
-        // Vignette
-        float vig = 1. - smoothstep(.4, 1.4, length((v-.5)*vec2(R.x/R.y,1.)));
-        fin *= mix(.8, 1., vig);
-
-        gl_FragColor = vec4(fin, 1.);
+        gl_FragColor = vec4(col, 1.);
       }
     `;
 
@@ -148,47 +294,213 @@
       return s;
     }
 
-    const vs = sh(gl.VERTEX_SHADER, VERT);
-    const fs = sh(gl.FRAGMENT_SHADER, FRAG);
-    if (!vs || !fs) {
+    function program(vsSrc: string, fsSrc: string) {
+      const vs = sh(gl!.VERTEX_SHADER, vsSrc);
+      const fs = sh(gl!.FRAGMENT_SHADER, fsSrc);
+      if (!vs || !fs) return null;
+      const p = gl!.createProgram()!;
+      gl!.attachShader(p, vs);
+      gl!.attachShader(p, fs);
+      gl!.linkProgram(p);
+      if (!gl!.getProgramParameter(p, gl!.LINK_STATUS)) {
+        console.error(gl!.getProgramInfoLog(p));
+        return null;
+      }
+      return p;
+    }
+
+    function makeFbo(w: number, h: number) {
+      const tex = gl!.createTexture()!;
+      gl!.bindTexture(gl!.TEXTURE_2D, tex);
+      gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGBA, w, h, 0, gl!.RGBA, gl!.UNSIGNED_BYTE, null);
+      gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MIN_FILTER, gl!.LINEAR);
+      gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MAG_FILTER, gl!.LINEAR);
+      gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_S, gl!.CLAMP_TO_EDGE);
+      gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_T, gl!.CLAMP_TO_EDGE);
+      const fbo = gl!.createFramebuffer()!;
+      gl!.bindFramebuffer(gl!.FRAMEBUFFER, fbo);
+      gl!.framebufferTexture2D(gl!.FRAMEBUFFER, gl!.COLOR_ATTACHMENT0, gl!.TEXTURE_2D, tex, 0);
+      gl!.bindFramebuffer(gl!.FRAMEBUFFER, null);
+      return { fbo, tex, w, h };
+    }
+
+    const pCells = program(VERT_CELLS, FRAG_CELLS);
+    const pBlur = program(VERT_FULL, FRAG_BLUR);
+    const pComp = program(VERT_FULL, FRAG_COMP);
+
+    if (!pCells || !pBlur || !pComp) {
       canvas!.remove();
     } else {
-      const pr = gl.createProgram()!;
-      gl.attachShader(pr, vs);
-      gl.attachShader(pr, fs);
-      gl.linkProgram(pr);
-      if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) {
-        console.error(gl.getProgramInfoLog(pr));
-        canvas!.remove();
-      } else {
-        gl.useProgram(pr);
-        const buf = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), gl.STATIC_DRAW);
-        const a = gl.getAttribLocation(pr, "a");
+      // full-screen quad for blur + composite
+      const quad = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]), gl.STATIC_DRAW);
+
+      // per-cell buffers
+      const posBuf = gl.createBuffer();
+      const radBuf = gl.createBuffer();
+
+      const uC = {
+        css: gl.getUniformLocation(pCells, "uCss"),
+        scale: gl.getUniformLocation(pCells, "uScale"),
+        pos: gl.getAttribLocation(pCells, "aPos"),
+        rad: gl.getAttribLocation(pCells, "aRad"),
+      };
+      const uB = { dir: gl.getUniformLocation(pBlur, "uDir"), t: gl.getUniformLocation(pBlur, "T") };
+      const uP = {
+        t: gl.getUniformLocation(pComp, "T"),
+        css: gl.getUniformLocation(pComp, "uCss"),
+        time: gl.getUniformLocation(pComp, "uT"),
+        mouse: gl.getUniformLocation(pComp, "uMouse"),
+        mon: gl.getUniformLocation(pComp, "uMouseOn"),
+        inten: gl.getUniformLocation(pComp, "uIntensity"),
+        rip: gl.getUniformLocation(pComp, "uRipple"),
+      };
+
+      let fboA: ReturnType<typeof makeFbo>;
+      let fboB: ReturnType<typeof makeFbo>;
+      let fboC: ReturnType<typeof makeFbo>;
+      let fw = 0;
+      let fh = 0;
+
+      function ensureFbos() {
+        const w = Math.max(2, Math.floor(innerWidth * FBO_SCALE));
+        const h = Math.max(2, Math.floor(innerHeight * FBO_SCALE));
+        if (w === fw && h === fh) return;
+        fw = w;
+        fh = h;
+        fboA = makeFbo(w, h);
+        fboB = makeFbo(w, h);
+        fboC = makeFbo(w, h);
+      }
+
+      function bindFbo(f: ReturnType<typeof makeFbo>) {
+        gl!.bindFramebuffer(gl!.FRAMEBUFFER, f.fbo);
+        gl!.viewport(0, 0, f.w, f.h);
+      }
+
+      function fullQuadPass(prog: WebGLProgram) {
+        gl.useProgram(prog);
+        gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+        const a = gl.getAttribLocation(prog, "a");
         gl.enableVertexAttribArray(a);
         gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
+      }
 
-        const uR = gl.getUniformLocation(pr, "R");
-        const uT = gl.getUniformLocation(pr, "T");
+      function draw(t: number) {
+        const [cw, ch] = resize();
+        ensureFbos();
+        const scale = fw / cw; // fbo px per css px
 
-        let raf = 0;
+        // A — cells (additive)
+        bindFbo(fboA);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.useProgram(pCells);
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.ONE, gl.ONE);
+        const n = cells.length;
+        const posArr = new Float32Array(n * 2);
+        const radArr = new Float32Array(n);
+        for (let i = 0; i < n; i++) {
+          posArr[i * 2] = cells[i].x;
+          posArr[i * 2 + 1] = cells[i].y;
+          radArr[i] = cells[i].r;
+        }
+        gl.bindBuffer(gl.ARRAY_BUFFER, posBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, posArr, gl.DYNAMIC_DRAW);
+        gl.enableVertexAttribArray(uC.pos);
+        gl.vertexAttribPointer(uC.pos, 2, gl.FLOAT, false, 0, 0);
+        gl.bindBuffer(gl.ARRAY_BUFFER, radBuf);
+        gl.bufferData(gl.ARRAY_BUFFER, radArr, gl.DYNAMIC_DRAW);
+        gl.enableVertexAttribArray(uC.rad);
+        gl.vertexAttribPointer(uC.rad, 1, gl.FLOAT, false, 0, 0);
+        gl.uniform2f(uC.css, cw, ch);
+        gl.uniform1f(uC.scale, scale);
+        gl.drawArrays(gl.POINTS, 0, n);
 
-        function draw(ms: number) {
-          resize();
-          gl!.uniform2f(uR, canvas!.width, canvas!.height);
-          gl!.uniform1f(uT, reduced ? 42.0 : ms * 0.001);
-          gl!.drawArrays(gl!.TRIANGLES, 0, 6);
-          if (!reduced) raf = requestAnimationFrame(draw);
+        // B — blur ping-pong (H then V per iteration)
+        gl.disable(gl.BLEND);
+        let src = fboA;
+        for (let i = 0; i < TUNE.blurPasses; i++) {
+          const sp = TUNE.blurSpacing * ((i + 1) / TUNE.blurPasses);
+
+          const hDst = i % 2 === 0 ? fboB : fboC;
+          bindFbo(hDst);
+          fullQuadPass(pBlur);
+          gl.activeTexture(gl.TEXTURE0);
+          gl.bindTexture(gl.TEXTURE_2D, src.tex);
+          gl.uniform1i(uB.t, 0);
+          gl.uniform2f(uB.dir, sp / src.w, 0);
+          gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+          const vDst = i % 2 === 0 ? fboC : fboB;
+          bindFbo(vDst);
+          gl.activeTexture(gl.TEXTURE0);
+          gl.bindTexture(gl.TEXTURE_2D, hDst.tex);
+          gl.uniform2f(uB.dir, 0, sp / hDst.h);
+          gl.drawArrays(gl.TRIANGLES, 0, 6);
+          src = vDst;
         }
 
-        // Pause when tab hidden
-        document.addEventListener("visibilitychange", () => {
-          if (document.hidden) cancelAnimationFrame(raf);
-          else if (!reduced) raf = requestAnimationFrame(draw);
-        });
+        // C — composite to screen
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.viewport(0, 0, canvas!.width, canvas!.height);
+        fullQuadPass(pComp);
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, src.tex);
+        gl.uniform1i(uP.t, 0);
+        gl.uniform2f(uP.css, cw, ch);
+        gl.uniform1f(uP.time, t);
+        gl.uniform2f(uP.mouse, mouse.x, mouse.y);
+        gl.uniform1f(uP.mon, mouse.on ? 1 : 0);
+        gl.uniform1f(uP.inten, TUNE.cellIntensity);
+        gl.uniform1f(uP.rip, TUNE.cursorRipple);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+      }
 
-        raf = requestAnimationFrame(draw);
+      // init
+      const [w0, h0] = resize();
+      initCells(w0, h0);
+      addEventListener("resize", () => {
+        const [w, h] = resize();
+        // reflow if the screen size changed a lot, else just keep cells in view
+        if (Math.abs(w - bounds.w) > 120 || Math.abs(h - bounds.h) > 120) initCells(w, h);
+        bounds = { w, h };
+        for (const c of cells) {
+          c.x = Math.min(Math.max(c.x, 0), w);
+          c.y = Math.min(Math.max(c.y, 0), h);
+        }
+      });
+
+      if (reduced) {
+        // settle to a pleasant static frame — no animation
+        const DT = 1 / 60;
+        for (let i = 0; i < 600; i++) step(DT, 10 + i * DT);
+        mouse.on = false;
+        draw(10);
+      } else {
+        let raf = 0;
+        let last = performance.now();
+        function loop(ms: number) {
+          let dt = (ms - last) / 1000;
+          last = ms;
+          dt = Math.min(dt, 0.05); // clamp tab-away gaps
+          const t = ms * 0.001;
+          step(dt, t);
+          draw(t);
+          raf = requestAnimationFrame(loop);
+        }
+        raf = requestAnimationFrame(loop);
+
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) {
+            cancelAnimationFrame(raf);
+          } else {
+            last = performance.now();
+            raf = requestAnimationFrame(loop);
+          }
+        });
       }
     }
   }
