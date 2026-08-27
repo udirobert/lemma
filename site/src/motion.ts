@@ -33,6 +33,7 @@ let actx: AudioContext | null = null;
 const readout = document.getElementById("xylo-readout");
 
 function strike(bar: HTMLElement) {
+  if (bar.dataset.dragged) { delete bar.dataset.dragged; return; }
   const freq = Number(bar.dataset.freq);
   const label = bar.dataset.label ?? "";
   actx = actx ?? new AudioContext();
@@ -63,7 +64,7 @@ function strike(bar: HTMLElement) {
   const nearestReadout =
     bar.closest(".xylo-scene, .xylo-mirror")?.querySelector<HTMLElement>(".xylo-readout") ?? readout;
   if (nearestReadout) nearestReadout.textContent = `claim ${label} · ${state}`;
-  if (!reduced) {
+  if (!reduced && !bar.closest(".xylo.helix-on")) {
     gsap.fromTo(
       bar,
       { y: -14, scale: 1.06 },
@@ -91,199 +92,284 @@ if (!reduced && bars.length) {
   });
 }
 
-/* ---------- pinned hero: row -> DNA helix -> persistent spin ---------- */
+/* ---------- helix: playable bars → double helix → bars ----------
+   One rAF loop owns every bar transform. `morph` (0 = xylophone row, 1 = helix)
+   is driven by two scrubbed ScrollTriggers: the hero pin coils bars into a
+   multi-turn double helix (each claim = one base-pair rung), the waitlist
+   reassembly un-coils them back into a mirrored row. `spin` accumulates a
+   gentle auto-rotation plus pointer/touch drag with inertia, so the helix is
+   always alive and grabbable — like the OrbitControls DNA demo it's inspired
+   by. Bars keep their note + verdict colours; the helix just re-uses them. */
 if (!reduced) {
-  const xylo = document.querySelector<HTMLElement>(".hero .xylo");
-  const scene = document.querySelector<HTMLElement>(".hero .xylo-scene");
+  const xylo = document.querySelector<HTMLElement>(".hero .xylo")!;
+  const scene = document.querySelector<HTMLElement>(".hero .xylo-scene")!;
   const heroBars = xylo ? Array.from(xylo.querySelectorAll<HTMLElement>(".bar")) : [];
   if (xylo && scene && heroBars.length) {
     const n = heroBars.length;
-    const R = 150; // helix ring radius in px
-    // vertical gap between rungs; capped so the helix stays a similar height
-    // as the claim count grows (12 bars -> 30px, 24 bars -> 15px)
-    const spacing = Math.min(30, 360 / n);
-    const cx = xylo.clientWidth / 2;
-    const cy = xylo.clientHeight / 2;
+    const TURNS = 2.5;       // full twists along the helix
+    const HELIX_H = 320;     // vertical extent (px)
+    const R = 120;           // strand radius / half rung length (px)
+    const RUNG_LEN = R * 2;  // every claim becomes an equal-length rung
+    const AUTO = 0.5;        // auto-rotation (rad/s)
+    const BASE_O = 0.22;     // resting opacity while fixed in the background
+    const BASE_S = 0.85;     // resting scale while fixed
 
-    // Helix targets: each bar placed on a ring via sin/cos, laid horizontal as a
-    // rung. x/y are offsets from the bar's natural flex position so the ring
-    // ends up centered in the xylophone container.
-    const targets = heroBars.map((bar, i) => {
-      const angle = (i / n) * Math.PI * 2; // radians
-      const natX = bar.offsetLeft + bar.offsetWidth / 2;
-      const natY = bar.offsetTop + bar.offsetHeight / 2;
-      const t = {
-        x: cx - natX + R * Math.sin(angle),
-        y: cy - natY + (i - (n - 1) / 2) * spacing,
-        z: R * Math.cos(angle),
-        rotY: (i / n) * 360,
-      };
-      // remember helix offsets on the element so the bottom
-      // reconstruction can un-coil them back into a row
-      (bar as HTMLElement & { _hx?: number })._hx = t.x;
-      (bar as HTMLElement & { _hy?: number })._hy = t.y;
-      (bar as HTMLElement & { _hz?: number })._hz = t.z;
-      (bar as HTMLElement & { _hr?: number })._hr = t.rotY;
-      return t;
+    // per-bar helix geometry: bar i is a rung at height y, phase theta
+    const bars = heroBars.map((el, i) => {
+      const t = n > 1 ? i / (n - 1) : 0.5;
+      const theta = t * Math.PI * 2 * TURNS;
+      const y = (t - 0.5) * HELIX_H;
+      const h = el.offsetHeight || 100;
+      return { el, i, theta, y, rungScale: RUNG_LEN / h };
     });
 
-    // Phase A: pinned assembly + spin
-    let handoffScroll = 0;
-    const heroEl = document.querySelector<HTMLElement>(".hero");
-    const heroCopy = heroEl!.querySelector(".hero-copy");
+    // natural flex centres (relative to the xylo) — the m = 0 row targets
+    let rowCX: number[] = [];
+    let rowCY: number[] = [];
+    function captureRow() {
+      const cx = xylo!.clientWidth / 2;
+      const cy = xylo!.clientHeight / 2;
+      rowCX = bars.map((b) => b.el.offsetLeft + b.el.offsetWidth / 2 - cx);
+      rowCY = bars.map((b) => b.el.offsetTop + b.el.offsetHeight / 2 - cy);
+    }
+    captureRow();
+    let resizeT: ReturnType<typeof setTimeout> | undefined;
+    addEventListener("resize", () => {
+      clearTimeout(resizeT);
+      resizeT = setTimeout(captureRow, 150);
+    });
 
+    // shared state
+    let morph = 0;        // 0 = row, 1 = helix
+    let spin = 0;         // accumulated rotation (rad)
+    let vel = 0;          // drag velocity, decays to 0 (rad/s)
+    let fixed = false;    // scene detached to body as the persistent helix?
+    let reconP = 0;       // 0 = free helix, 1 = reassembled at the waitlist
+    let dragging = false;
+    let dragMoved = false;
+    let dragLastX = 0;
+    let dragLastT = 0;
+    let dragBar: HTMLElement | null = null;
+    let pendingDrag: { id: number; x: number; y: number } | null = null; // down not yet classified
+    let running = false;
+    let rafId = 0;
+    let lastTs = 0;
+    // deep-read saver: the free-running loop dozes off this many ms after the
+    // last beat pop / interaction, and wakes on pops, drags, tab focus
+    let awakeUntil = 0;
+    const wake = (ms: number) => { awakeUntil = performance.now() + ms; ensureRunning(); };
+
+    // Build each bar's transform from `morph` + `spin`. The bar (a vertical
+    // element whose height is its rung length) is scaled to a uniform rung,
+    // laid flat (rotateZ 90·m), yawed to its rung phase (rotateY m·(θ+spin)),
+    // and translated from its flex spot onto the helix axis. CSS perspective
+    // foreshortens the rungs into a real 3D double helix.
+    function apply() {
+      for (const b of bars) {
+        const ang = morph * (b.theta + spin);   // rung angle (rad)
+        const rz = 90 * morph;                    // lay flat as a rung
+        const s = 1 + (b.rungScale - 1) * morph;  // uniform rung length
+        const tx = morph * -rowCX[b.i];
+        const ty = morph * (b.y - rowCY[b.i]);
+        b.el.style.transform =
+          `translate3d(${tx.toFixed(2)}px,${ty.toFixed(2)}px,0)` +
+          ` rotateY(${(ang * 180 / Math.PI).toFixed(2)}deg)` +
+          ` rotateZ(${rz.toFixed(2)}deg) scaleY(${s.toFixed(3)})`;
+      }
+    }
+
+    function frame(ts: number) {
+      if (!running) return;
+      const dt = lastTs ? Math.min(0.05, (ts - lastTs) / 1000) : 0;
+      lastTs = ts;
+      if (!dragging && reconP <= 0) {   // spin ownership: the recon timeline takes over at progress > 0
+        spin += (AUTO + vel) * dt;
+        vel *= Math.exp(-3.7 * dt);    // frame-rate-independent inertia decay
+        if (Math.abs(vel) < 0.002) vel = 0;
+      }
+      apply();
+      // sleep when nothing needs us: row settled, or helix dozing between
+      // pops/interactions, or recon finished handing off to the mirror
+      const idleRow = !fixed && morph < 0.003;
+      const idleHelix =
+        fixed && reconP === 0 && performance.now() >= awakeUntil && Math.abs(vel) < 0.002;
+      const idleDone = reconP >= 1;
+      if (!dragging && (idleRow || idleHelix || idleDone)) { running = false; return; }
+      rafId = requestAnimationFrame(frame);
+    }
+    function ensureRunning() {
+      if (!running) { running = true; lastTs = performance.now(); rafId = requestAnimationFrame(frame); }
+    }
+    // pause when the tab is hidden; on return, the helix gets a short grace
+    // window before it dozes again
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) { cancelAnimationFrame(rafId); running = false; }
+      else if (fixed || morph > 0.003 || dragging) {
+        if (fixed) wake(2500);
+        else ensureRunning();
+      }
+    });
+
+    // wake when scrolling back up through the page (the reader is heading
+    // toward content again); downward reading stays asleep
+    let lastY = scrollY;
+    addEventListener(
+      "scroll",
+      () => {
+        const y = scrollY;
+        if (y < lastY && fixed && reconP <= 0 && performance.now() >= awakeUntil) wake(3000);
+        lastY = y;
+      },
+      { passive: true }
+    );
+
+    // drag to spin (pointer + touch). Starts on a rung, so it never blocks the
+    // text scrolling behind the helix. Intent is classified once: a
+    // predominantly horizontal gesture grabs the helix, a vertical one falls
+    // through to native scrolling (touch-action: pan-y). A real drag
+    // suppresses the click-note; a tap still plays.
+    function onDown(e: PointerEvent) {
+      if (!fixed) return;
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      pendingDrag = { id: e.pointerId, x: e.clientX, y: e.clientY };
+      dragMoved = false; vel = 0;
+      dragBar = e.currentTarget as HTMLElement;
+      wake(6000);
+    }
+    function onMove(e: PointerEvent) {
+      if (pendingDrag) {
+        if (e.pointerId !== pendingDrag.id) return;
+        const dx = e.clientX - pendingDrag.x;
+        const dy = e.clientY - pendingDrag.y;
+        if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return; // dead zone: still deciding
+        pendingDrag = null;
+        if (Math.abs(dx) < Math.abs(dy)) return;          // vertical intent → let the page scroll
+        dragging = true;
+        dragLastX = e.clientX;
+        dragLastT = e.timeStamp;
+        try { dragBar?.setPointerCapture(e.pointerId); } catch { /* stale id */ }
+        ensureRunning();
+        return;
+      }
+      if (!dragging || !dragBar?.hasPointerCapture?.(e.pointerId)) return;
+      const dx = e.clientX - dragLastX;
+      const dms = Math.max(8, e.timeStamp - dragLastT);
+      dragLastT = e.timeStamp;
+      if (Math.abs(dx) > 3) dragMoved = true;
+      spin += dx * 0.01;
+      vel = Math.max(-10, Math.min(10, dx * 0.01 / (dms / 1000))); // device-independent release speed
+      dragLastX = e.clientX;
+    }
+    function onUp(e?: PointerEvent) {
+      if (!dragging && !pendingDrag) return;
+      pendingDrag = null;
+      if (e && dragging && dragBar?.hasPointerCapture?.(e.pointerId)) {
+        try { dragBar.releasePointerCapture(e.pointerId); } catch { /* already released */ }
+      }
+      if (dragMoved && dragBar) {
+        dragBar.dataset.dragged = "1";
+        setTimeout(() => { if (dragBar) delete dragBar.dataset.dragged; }, 80);
+      }
+      dragging = false;
+      dragMoved = false;
+    }
+    addEventListener("pointermove", onMove);
+    addEventListener("pointerup", onUp as EventListener, true);
+    addEventListener("pointercancel", onUp as EventListener, true);
+    for (const b of bars) b.el.addEventListener("pointerdown", onDown);
+
+    // hint badge — echoes the DNA demo's "base pairs · double helix" readout
+    const badge = document.createElement("div");
+    badge.className = "helix-badge";
+    badge.innerHTML = `${n} base pairs · <b>drag to spin</b>`;
+
+    const heroEl = document.querySelector<HTMLElement>(".hero")!;
+    const heroCopy = heroEl.querySelector(".hero-copy");
+    function fixScene() {
+      fixed = true;
+      document.body.appendChild(scene);
+      scene.classList.add("helix-fixed", "helix-on");
+      xylo.classList.add("helix-on");
+      gsap.set(scene, { xPercent: -50, yPercent: -50, rotateY: 0, scale: BASE_S, opacity: BASE_O });
+      document.body.appendChild(badge);
+      wake(6000);
+    }
+    function unfixScene() {
+      fixed = false;
+      scene.classList.remove("helix-fixed", "helix-on");
+      xylo.classList.remove("helix-on");
+      gsap.set(scene, { clearProps: "transform,opacity" });
+      gsap.set(xylo, { rotateY: 0 });
+      for (const b of bars) b.el.style.transform = "";
+      badge.remove();
+      // hard-reset accumulated rotation/handoff so re-entering the hero
+      // never replays leftover spin (fix 3: state reset)
+      morph = 0; spin = 0; vel = 0; reconP = 0;
+      pendingDrag = null; dragging = false; dragMoved = false;
+      cancelAnimationFrame(rafId); running = false;
+      if (heroCopy && heroCopy.nextSibling) heroEl.insertBefore(scene, heroCopy.nextSibling);
+      else heroEl.appendChild(scene);
+    }
+
+    // Phase A — pinned hero: the row coils into a double helix
     const helixTl = gsap.timeline({
       scrollTrigger: {
         trigger: ".hero",
         start: "top top",
-        end: "+=250%",
+        end: "+=220%",
         scrub: 0.6,
         pin: true,
         anticipatePin: 1,
-        onLeave: () => {
-          handoffScroll = window.scrollY;
-          document.body.appendChild(scene);
-          scene.classList.add("helix-fixed");
-          gsap.set(scene, {
-            xPercent: -50,
-            yPercent: -50,
-            rotateY: 0,
-            scale: 0.85,
-            opacity: 0.16,
-          });
-        },
-        onEnterBack: () => {
-          scene.classList.remove("helix-fixed");
-          gsap.set(scene, { clearProps: "transform,opacity" });
-          gsap.set(xylo, { rotateY: 0 });
-          if (heroCopy && heroCopy.nextSibling) {
-            heroEl!.insertBefore(scene, heroCopy.nextSibling);
-          } else {
-            heroEl!.appendChild(scene);
-          }
-        },
+        onEnter: () => { captureRow(); ensureRunning(); },
+        onUpdate: (self) => { morph = self.progress; ensureRunning(); },
+        onLeave: () => fixScene(),
+        onEnterBack: () => unfixScene(),
       },
     });
-
-    // clear the stage
     helixTl.to(".hero-copy", { yPercent: -18, opacity: 0, ease: "power2.in", duration: 0.4 }, 0);
     helixTl.to(".hero .xylo-readout", { opacity: 0, duration: 0.25 }, 0);
     helixTl.to(".hero .scroll-cue", { opacity: 0, duration: 0.2 }, 0);
 
-    // bars fly into helix ring
-    heroBars.forEach((bar, i) => {
-      helixTl.to(
-        bar,
-        {
-          x: targets[i].x,
-          y: targets[i].y,
-          z: targets[i].z,
-          rotateY: targets[i].rotY,
-          rotationZ: 90,
-          transformOrigin: "50% 50%",
-          ease: "power2.inOut",
-          duration: 1.0,
-        },
-        0.3 + i * 0.035
-      );
-    });
-
-    // spin the whole helix one full turn while pinned (container rotation,
-    // preserve-3d keeps bars on the ring)
-    helixTl.to(xylo, { rotateY: 360, ease: "none", duration: 1.2 }, 1.6);
-  }
-
-  /* ---------- persistent helix: master rotation + foreground pops ---------- */
-  const fixedScene = document.querySelector<HTMLElement>(".xylo-scene");
-  const fixedXylo = document.querySelector<HTMLElement>(".xylo-scene .xylo");
-  const helixBars = fixedXylo ? Array.from(fixedXylo.querySelectorAll<HTMLElement>(".bar")) : [];
-  if (fixedScene && fixedXylo) {
-    let handoffScroll = 0;
-    let reconP = 0; // 0 = free-floating helix, 1 = reconstructed at waitlist
-    const heroEl = document.querySelector<HTMLElement>(".hero");
-
-    // Continuous rotation of the helix container (perspective stays on scene),
-    // mapped so it starts at 0 exactly where the pin released. Rotation is
-    // scaled down as the bottom reconstruction takes over.
-    ScrollTrigger.create({
-      trigger: document.body,
-      start: "top top",
-      end: "bottom bottom",
-      onUpdate: () => {
-        if (!fixedScene.classList.contains("helix-fixed")) return;
-        if (reconP > 0.02) return; // reconstruction timeline owns rotateY now
-        const total = document.documentElement.scrollHeight - innerHeight;
-        const denom = Math.max(1, total - handoffScroll);
-        const since = Math.max(0, (window.scrollY - handoffScroll) / denom);
-        gsap.set(fixedXylo, { rotateY: since * 540 });
-      },
-    });
-
-    // Foreground pop at each story beat: helix brightens + scales, then recedes.
-    const pop = (peakOpacity: number, peakScale: number) => {
-      if (!fixedScene.classList.contains("helix-fixed") || reconP > 0.02) return;
-      gsap.to(fixedScene, { opacity: peakOpacity, scale: peakScale, duration: 0.7, ease: "power2.out", overwrite: "auto" });
-      gsap.to(fixedScene, { opacity: 0.14, scale: 0.8, duration: 1.5, ease: "power1.in", delay: 0.9, overwrite: false });
+    // Phase B — persistent background helix: brighten + breathe at each beat
+    const pop = (peakO: number, peakS: number) => {
+      if (!fixed || reconP > 0) return;
+      wake(4500);
+      gsap.to(scene, { opacity: peakO, scale: peakS, duration: 0.7, ease: "power2.out", overwrite: "auto" });
+      gsap.to(scene, { opacity: BASE_O, scale: BASE_S, duration: 1.4, ease: "power1.in", delay: 0.8, overwrite: false });
     };
     document.querySelectorAll(".beat").forEach((beat) => {
-      ScrollTrigger.create({
-        trigger: beat,
-        start: "top 82%",
-        onEnter: () => pop(0.55, 1.06),
-        onEnterBack: () => pop(0.55, 1.06),
-      });
+      ScrollTrigger.create({ trigger: beat, start: "top 82%", onEnter: () => pop(0.6, 1.07), onEnterBack: () => pop(0.6, 1.07) });
     });
-
-    // Softer pop at the remaining section heads.
     [".trace .trace-head", ".replay .trace-head", ".artifacts h2", ".waitlist .trace-head"].forEach((sel) => {
       const el = document.querySelector(sel);
       if (!el) return;
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 85%",
-        onEnter: () => pop(0.4, 1.0),
-        onEnterBack: () => pop(0.4, 1.0),
-      });
+      ScrollTrigger.create({ trigger: el, start: "top 85%", onEnter: () => pop(0.42, 1.0), onEnterBack: () => pop(0.42, 1.0) });
     });
 
-    // Bottom reconstruction: the helix un-coils back into a mirrored xylophone
-    // above the waitlist (instead of fading out) and hands the spotlight over.
-    // Ends when the mirror's centre reaches viewport centre, so the crossfade
-    // happens exactly where the fixed scene sits — a seamless handover.
+    // Phase C — reassembly: the helix un-coils into the mirrored xylophone.
+    // morph 1→0 relaxes every rung back to a bar; the scene fades as the mirror
+    // fades in — a seamless handover exactly where the fixed helix sits.
     const mirrorWrap = document.querySelector<HTMLElement>(".xylo-mirror");
     if (mirrorWrap) {
       gsap.set(mirrorWrap, { autoAlpha: 0, y: 36 });
-      const recon = gsap.timeline({
+      gsap.timeline({
         scrollTrigger: {
           trigger: mirrorWrap,
           start: "top bottom",
           end: "center center",
           scrub: 0.5,
-          onUpdate: (self) => {
-            reconP = self.progress;
-          },
+          onEnter: () => ensureRunning(),
+          onUpdate: (self) => { reconP = self.progress; morph = 1 - self.progress; ensureRunning(); },
         },
-      });
-      // un-coil: container spin settles, bars return to a flat row
-      recon.to(fixedXylo, { rotateY: 0, duration: 0.45, ease: "none" }, 0);
-      helixBars.forEach((bar, i) => {
-        const hh = bar as HTMLElement & { _hx?: number; _hy?: number; _hz?: number; _hr?: number };
-        if (hh._hx === undefined) return;
-        recon.to(
-          bar,
-          { x: 0, y: 0, z: 0, rotateY: 0, rotationZ: 0, duration: 0.4, ease: "power1.inOut" },
-          0.05 + (i % 12) * 0.012
-        );
-      });
-      recon.to(fixedScene, { opacity: 0, scale: 0.72, duration: 0.3 }, 0.55);
-      recon.to(mirrorWrap, { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.5);
+      })
+        .to(scene, { opacity: 0, scale: 0.72, duration: 0.5, ease: "power2.in" }, 0.1)
+        .to(mirrorWrap, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.2);
     } else {
-      // fallback: no mirror section on this page — keep the old fade-out
       ScrollTrigger.create({
         trigger: "footer",
         start: "top 90%",
-        onEnter: () => gsap.to(fixedScene, { opacity: 0, duration: 0.8, overwrite: "auto" }),
-        onEnterBack: () => gsap.to(fixedScene, { opacity: 0.14, duration: 0.5, overwrite: "auto" }),
+        onEnter: () => gsap.to(scene, { opacity: 0, duration: 0.8, overwrite: "auto" }),
+        onEnterBack: () => gsap.to(scene, { opacity: BASE_O, duration: 0.5, overwrite: "auto" }),
       });
     }
   }
