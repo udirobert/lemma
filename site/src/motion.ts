@@ -267,22 +267,22 @@ if (!reduced && !isMobile) {
       // every window completes at J = 1 — the absolute page bottom — so the
       // finale is the last thing, not a mid-page afterthought.
       const j = fixed ? J : 0;
-      unfold = clamp01((j - 0.62) / 0.28);                                  // 0.62→0.90 verdict sort
-      tilt = clamp01((j - 0.45) / 0.12) * (1 - clamp01((j - 0.62) / 0.12)); // 0.45→0.62 depth hump
-      const rev = clamp01((j - 0.9) / 0.1);                                 // 0.90→1.00 mirror
-      const park = clamp01((j - 0.93) / 0.07);                              // 0.93→1.00 park low
+      unfold = clamp01((j - 0.6) / 0.2);                                    // 0.60→0.80 verdict sort
+      tilt = clamp01((j - 0.45) / 0.12) * (1 - clamp01((j - 0.6) / 0.12));  // 0.45→0.60 depth hump
+      const rev = clamp01((j - 0.9) / 0.1);                                 // 0.90→1.00 mirror wave
+      const park = clamp01((j - 0.78) / 0.1);                               // 0.78→0.88 descend to stage
       if (fixed) {
         xylo!.style.transform = `rotateX(${(tilt * TILT_DEG).toFixed(2)}deg)`;
-        // colour: dim background helix → finale opacity → full colour bookend
-        const ramp = clamp01((j - 0.6) / 0.25);
-        const op = lerp(lerp(BASE_O, FINAL_O, ramp), 1, clamp01((j - 0.85) / 0.15));
+        // colour: dim helix → finale brightness with the unwind → full colour
+        // exactly as the mirror wave begins, so the final act plays bright
+        const ramp = clamp01((j - 0.6) / 0.2);
+        const op = lerp(lerp(BASE_O, FINAL_O, ramp), 1, clamp01((j - 0.78) / 0.12));
         const sc = lerp(BASE_S, 1, ramp);
         gsap.set(scene, { opacity: op, scale: sc, y: park * parkY() });
       }
-      // fade the verdict hairline + axis in during the unwind, and fade them
-      // back out during the mirror — by then the verdict story has been told
+      // verdict hairline + axis: in during the unwind, out during the mirror
       if (fixed && hairline) {
-        const op = clamp01((j - 0.55) / 0.15) * (1 - rev);
+        const op = clamp01((j - 0.5) / 0.12) * (1 - rev);
         hairline.style.opacity = op.toFixed(2);
         axisCaption.style.opacity = op.toFixed(2);
       }
@@ -296,11 +296,13 @@ if (!reduced && !isMobile) {
         const coilS = 1 + (b.rungScale - 1) * morph;
         // spectrum target: natural row, but in verdict-sorted horizontal slots
         const specTX = b.specX - rowCX[b.i];
-        // finale target: mirror of the hero row — bar i takes slot n-1-i
+        // finale target: mirror of the hero row — bar i takes slot n-1-i.
+        // per-bar stagger: a left-to-right wave, not a simultaneous scramble
         const revTX = rowCX[n - 1 - b.i] - rowCX[b.i];
-        // compose: coil → verdict spectrum (unfold) → mirrored row (rev)
-        const flat = Math.max(unfold, rev);
-        const tx = lerp(lerp(coilTX, specTX, unfold), revTX, rev);
+        const bRev = clamp01((rev - (b.i / Math.max(1, n - 1)) * 0.25) / 0.75);
+        // compose: coil → verdict spectrum (unfold) → mirrored row (bRev)
+        const flat = Math.max(unfold, bRev);
+        const tx = lerp(lerp(coilTX, specTX, unfold), revTX, bRev);
         const ty = lerp(coilTY, 0, flat);
         const ry = lerp(coilRY, 0, flat);
         const rz = lerp(coilRZ, 0, flat);
@@ -312,11 +314,12 @@ if (!reduced && !isMobile) {
       }
     }
 
-    // vertical offset that parks the scene just above the viewport bottom,
-    // so at the page end the bars sit below the footer text
+    // vertical offset that parks the scene centered in the footer stage —
+    // the band reserved below the footer caption via CSS (--xylo-h + 88px),
+    // so the closing frame sits fully inside it, clear of the caption
     let sceneH = 0;
     function parkY() {
-      return innerHeight / 2 - sceneH / 2 - 28;
+      return innerHeight / 2 - sceneH / 2 - 44;
     }
 
     function frame(ts: number) {

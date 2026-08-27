@@ -26,6 +26,10 @@
   --helix-scale: 0.85;       /* resting scale when fixed           */
   --helix-final-opacity: 0.42; /* finale spectrum opacity (the answer) */
   --helix-tilt: 42;          /* peak helix lean for the depth reveal (deg) */
+
+  /* xylophone height — shared by the instrument and the footer finale stage
+     (the band reserved below the footer caption where the helix parks) */
+  --xylo-h: clamp(190px, 30vh, 280px);
 }
 
 * {
@@ -184,7 +188,7 @@ a {
   gap: clamp(4px, 0.8vw, 10px);
   margin-top: 52px;
   width: min(94vw, 1080px);
-  height: clamp(190px, 30vh, 280px);
+  height: var(--xylo-h);
   transform-style: preserve-3d;
 }
 
@@ -957,6 +961,15 @@ footer {
   font-size: 0.72rem;
 }
 
+/* finale stage — reserves the band the helix parks in at the page end:
+   xylophone height + 44px gap above and below. Desktop + motion only
+   (mobile skips the helix; reduced-motion never fixes the scene). */
+@media (min-width: 641px) {
+  html.js-motion footer {
+    padding-bottom: calc(var(--xylo-h) + 88px);
+  }
+}
+
 /* ---------------- clip menu (easeReverse) ---------------- */
 .menu-btn {
   position: fixed;
@@ -1078,12 +1091,12 @@ footer {
     --helix-radius: 85;
     --helix-tilt: 32;
     --helix-scale: 0.78;
+    --xylo-h: clamp(160px, 24vh, 240px);
   }
   .xylo-scene {
     perspective: 850px;
   }
   .xylo {
-    height: clamp(160px, 24vh, 240px);
     margin-top: 38px;
   }
 }
