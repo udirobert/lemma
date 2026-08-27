@@ -161,8 +161,14 @@ if (!reduced && !isMobile) {
   if (xylo && scene && heroBars.length) {
     const n = heroBars.length;
     let cfg = loadHelixConfig();
-    let TURNS = cfg.turns;         // full twists along the helix
-    let HELIX_H = cfg.height;      // vertical extent (px)
+    // adaptive geometry: the registry grows one rung per audited claim, so
+    // twist + height scale with bar count to keep rung spacing readable as
+    // papers accumulate. The CSS vars remain the base for small n; the caps
+    // (base×1.4 turns, base×1.35 height) keep the helix legible at any size.
+    const turnsFor = (base: number) => Math.min(base * 1.4, Math.max(base, n * 0.18));
+    const heightFor = (base: number) => base * Math.min(1.35, Math.max(1, n / 14));
+    let TURNS = turnsFor(cfg.turns);       // full twists along the helix
+    let HELIX_H = heightFor(cfg.height);   // vertical extent (px)
     let R = cfg.radius;            // strand radius / half rung length (px)
     let RUNG_LEN = R * 2;          // every claim becomes an equal-length rung
     const AUTO = cfg.autoRotate;     // auto-rotation (rad/s)
@@ -191,8 +197,8 @@ if (!reduced && !isMobile) {
     // recompute each bar's helix geometry to match the new values.
     function reloadHelix() {
       cfg = loadHelixConfig();
-      TURNS = cfg.turns;
-      HELIX_H = cfg.height;
+      TURNS = turnsFor(cfg.turns);
+      HELIX_H = heightFor(cfg.height);
       R = cfg.radius;
       RUNG_LEN = R * 2;
       BASE_O = cfg.baseOpacity;
@@ -276,7 +282,9 @@ if (!reduced && !isMobile) {
         // colour: dim helix → finale brightness with the unwind → full colour
         // exactly as the mirror wave begins, so the final act plays bright
         const ramp = clamp01((j - 0.6) / 0.2);
-        const op = lerp(lerp(BASE_O, FINAL_O, ramp), 1, clamp01((j - 0.78) / 0.12));
+        // readability zones dim the instrument inside dense content; the
+        // dim fades out as the scene parks in its stage below all content
+        const op = lerp(lerp(BASE_O, FINAL_O, ramp), 1, clamp01((j - 0.78) / 0.12)) * lerp(zoneDim, 1, park);
         const sc = lerp(BASE_S, 1, ramp);
         gsap.set(scene, { opacity: op, scale: sc, y: park * parkY() });
       }
@@ -337,6 +345,8 @@ if (!reduced && !isMobile) {
         vel *= Math.exp(-3.7 * dt);
         if (Math.abs(vel) < 0.002) vel = 0;
       }
+      // ease the readability dim toward its zone target
+      zoneDim += (zoneTarget - zoneDim) * Math.min(1, dt * 5);
       apply();
       // sleep when nothing needs us: the row is settled, or the fixed helix
       // is dozing between pops/interactions. While fixed, all geometry is a
@@ -567,6 +577,30 @@ if (!reduced && !isMobile) {
       endTrigger: "footer",
       end: "bottom bottom",
       onUpdate: (self) => { J = self.progress; wake(2500); },
+    });
+
+    // readability zones — dense-content sections (terminal, player, form,
+    // link cards) dim the instrument while the viewport is inside them, so
+    // text always wins over the backdrop. Eased per-frame, not snapped.
+    // The parked finale is exempt: the dim fades out with `park`, and the
+    // stage sits below all content anyway.
+    const ZONE_DIM = 0.55;
+    let zoneDim = 1;
+    let zoneTarget = 1;
+    const denseActive = new Set<string>();
+    [".trace", ".replay", ".waitlist", ".artifacts"].forEach((sel) => {
+      const el = document.querySelector(sel);
+      if (!el) return;
+      ScrollTrigger.create({
+        trigger: el,
+        start: "top 55%",
+        end: "bottom 45%",
+        onToggle: (self) => {
+          if (self.isActive) denseActive.add(sel);
+          else denseActive.delete(sel);
+          zoneTarget = denseActive.size > 0 ? ZONE_DIM : 1;
+        },
+      });
     });
   }
 }
