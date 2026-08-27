@@ -51,7 +51,23 @@ function scrollTo(hash: string) {
 
 /* ---------- xylophone audio ---------- */
 let actx: AudioContext | null = null;
+let actxSuspendT: ReturnType<typeof setTimeout> | undefined;
 const readout = document.getElementById("xylo-readout");
+
+// auto-suspend the AudioContext after 10s of silence so the browser can
+// release the audio graph; it resumes on the next strike. (Mobile Safari
+// is especially aggressive about backgrounding audio threads.)
+function scheduleActxSuspend() {
+  clearTimeout(actxSuspendT);
+  actxSuspendT = setTimeout(() => {
+    if (actx && actx.state === "running") void actx.suspend();
+  }, 10000);
+}
+addEventListener("pagehide", () => {
+  clearTimeout(actxSuspendT);
+  if (actx) void actx.close();
+  actx = null;
+});
 
 function strike(bar: HTMLElement) {
   if (bar.dataset.dragged) { delete bar.dataset.dragged; return; }
@@ -59,6 +75,7 @@ function strike(bar: HTMLElement) {
   const label = bar.dataset.label ?? "";
   actx = actx ?? new AudioContext();
   if (actx.state === "suspended") void actx.resume();
+  scheduleActxSuspend();
   const t = actx.currentTime;
   for (const [mult, gain0, dur, type] of [
     [1, 0.2, 1.5, "triangle"],
@@ -413,6 +430,9 @@ if (!reduced) {
       xylo.classList.remove("helix-on");
       gsap.set(scene, { clearProps: "transform,opacity,filter" });
       gsap.set(xylo, { clearProps: "transform" });
+      // the Phase A timeline animates hero-copy to yPercent:-18 / opacity:0;
+      // clear it so the re-inserted scene lines up with a non-transformed hero.
+      if (heroCopy) gsap.set(heroCopy, { clearProps: "transform,opacity" });
       for (const b of bars) b.el.style.transform = "";
       badge.remove();
       hairline.remove();
@@ -536,6 +556,9 @@ if (!reduced && lines.length) {
       end: "bottom 45%",
       scrub: 0.4,
       pin: ".trace-pin",
+      // pinnedContainer requires GSAP 3.11+ (ScrollTrigger). If the project
+      // ever downgrades GSAP, this option is silently ignored and the pin
+      // may double its spacer — verify the pinned GSAP version in package.json.
       pinnedContainer: ".trace",
     },
   });
