@@ -148,10 +148,16 @@ if (!reduced) {
     let dragging = false;
     let dragMoved = false;
     let dragLastX = 0;
+    let dragLastT = 0;
     let dragBar: HTMLElement | null = null;
+    let pendingDrag: { id: number; x: number; y: number } | null = null; // down not yet classified
     let running = false;
     let rafId = 0;
     let lastTs = 0;
+    // deep-read saver: the free-running loop dozes off this many ms after the
+    // last beat pop / interaction, and wakes on pops, drags, tab focus
+    let awakeUntil = 0;
+    const wake = (ms: number) => { awakeUntil = performance.now() + ms; ensureRunning(); };
 
     // Build each bar's transform from `morph` + `spin`. The bar (a vertical
     // element whose height is its rung length) is scaled to a uniform rung,
@@ -174,53 +180,102 @@ if (!reduced) {
 
     function frame(ts: number) {
       if (!running) return;
-      const dt = Math.min(0.05, (ts - lastTs) / 1000 || 0);
+      const dt = lastTs ? Math.min(0.05, (ts - lastTs) / 1000) : 0;
       lastTs = ts;
-      if (!dragging) {
+      if (!dragging && reconP <= 0) {   // spin ownership: the recon timeline takes over at progress > 0
         spin += (AUTO + vel) * dt;
-        vel *= 0.94;                 // inertia decay
+        vel *= Math.exp(-3.7 * dt);    // frame-rate-independent inertia decay
         if (Math.abs(vel) < 0.002) vel = 0;
       }
       apply();
-      // idle out when neither fixed, morphing, nor grabbed (saves battery)
-      if ((!fixed || reconP > 0.98) && morph < 0.003 && !dragging) { running = false; return; }
+      // sleep when nothing needs us: row settled, or helix dozing between
+      // pops/interactions, or recon finished handing off to the mirror
+      const idleRow = !fixed && morph < 0.003;
+      const idleHelix =
+        fixed && reconP === 0 && performance.now() >= awakeUntil && Math.abs(vel) < 0.002;
+      const idleDone = reconP >= 1;
+      if (!dragging && (idleRow || idleHelix || idleDone)) { running = false; return; }
       rafId = requestAnimationFrame(frame);
     }
     function ensureRunning() {
       if (!running) { running = true; lastTs = performance.now(); rafId = requestAnimationFrame(frame); }
     }
-    // pause when the tab is hidden
+    // pause when the tab is hidden; on return, the helix gets a short grace
+    // window before it dozes again
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) { cancelAnimationFrame(rafId); running = false; }
-      else if (fixed || morph > 0.003 || dragging) ensureRunning();
+      else if (fixed || morph > 0.003 || dragging) {
+        if (fixed) wake(2500);
+        else ensureRunning();
+      }
     });
 
+    // wake when scrolling back up through the page (the reader is heading
+    // toward content again); downward reading stays asleep
+    let lastY = scrollY;
+    addEventListener(
+      "scroll",
+      () => {
+        const y = scrollY;
+        if (y < lastY && fixed && reconP <= 0 && performance.now() >= awakeUntil) wake(3000);
+        lastY = y;
+      },
+      { passive: true }
+    );
+
     // drag to spin (pointer + touch). Starts on a rung, so it never blocks the
-    // text scrolling behind the helix. A drag suppresses the click-note.
+    // text scrolling behind the helix. Intent is classified once: a
+    // predominantly horizontal gesture grabs the helix, a vertical one falls
+    // through to native scrolling (touch-action: pan-y). A real drag
+    // suppresses the click-note; a tap still plays.
     function onDown(e: PointerEvent) {
       if (!fixed) return;
-      dragging = true; dragMoved = false; dragLastX = e.clientX; vel = 0;
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      pendingDrag = { id: e.pointerId, x: e.clientX, y: e.clientY };
+      dragMoved = false; vel = 0;
       dragBar = e.currentTarget as HTMLElement;
-      ensureRunning();
+      wake(6000);
     }
     function onMove(e: PointerEvent) {
-      if (!dragging) return;
+      if (pendingDrag) {
+        if (e.pointerId !== pendingDrag.id) return;
+        const dx = e.clientX - pendingDrag.x;
+        const dy = e.clientY - pendingDrag.y;
+        if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return; // dead zone: still deciding
+        pendingDrag = null;
+        if (Math.abs(dx) < Math.abs(dy)) return;          // vertical intent → let the page scroll
+        dragging = true;
+        dragLastX = e.clientX;
+        dragLastT = e.timeStamp;
+        try { dragBar?.setPointerCapture(e.pointerId); } catch { /* stale id */ }
+        ensureRunning();
+        return;
+      }
+      if (!dragging || !dragBar?.hasPointerCapture?.(e.pointerId)) return;
       const dx = e.clientX - dragLastX;
+      const dms = Math.max(8, e.timeStamp - dragLastT);
+      dragLastT = e.timeStamp;
       if (Math.abs(dx) > 3) dragMoved = true;
       spin += dx * 0.01;
-      vel = dx * 0.05;
+      vel = Math.max(-10, Math.min(10, dx * 0.01 / (dms / 1000))); // device-independent release speed
       dragLastX = e.clientX;
     }
-    function onUp() {
+    function onUp(e?: PointerEvent) {
+      if (!dragging && !pendingDrag) return;
+      pendingDrag = null;
+      if (e && dragging && dragBar?.hasPointerCapture?.(e.pointerId)) {
+        try { dragBar.releasePointerCapture(e.pointerId); } catch { /* already released */ }
+      }
       if (dragMoved && dragBar) {
         dragBar.dataset.dragged = "1";
         setTimeout(() => { if (dragBar) delete dragBar.dataset.dragged; }, 80);
       }
       dragging = false;
+      dragMoved = false;
     }
     addEventListener("pointermove", onMove);
-    addEventListener("pointerup", onUp);
-    addEventListener("pointercancel", onUp);
+    addEventListener("pointerup", onUp as EventListener, true);
+    addEventListener("pointercancel", onUp as EventListener, true);
     for (const b of bars) b.el.addEventListener("pointerdown", onDown);
 
     // hint badge — echoes the DNA demo's "base pairs · double helix" readout
@@ -237,7 +292,7 @@ if (!reduced) {
       xylo.classList.add("helix-on");
       gsap.set(scene, { xPercent: -50, yPercent: -50, rotateY: 0, scale: BASE_S, opacity: BASE_O });
       document.body.appendChild(badge);
-      ensureRunning();
+      wake(6000);
     }
     function unfixScene() {
       fixed = false;
@@ -247,6 +302,11 @@ if (!reduced) {
       gsap.set(xylo, { rotateY: 0 });
       for (const b of bars) b.el.style.transform = "";
       badge.remove();
+      // hard-reset accumulated rotation/handoff so re-entering the hero
+      // never replays leftover spin (fix 3: state reset)
+      morph = 0; spin = 0; vel = 0; reconP = 0;
+      pendingDrag = null; dragging = false; dragMoved = false;
+      cancelAnimationFrame(rafId); running = false;
       if (heroCopy && heroCopy.nextSibling) heroEl.insertBefore(scene, heroCopy.nextSibling);
       else heroEl.appendChild(scene);
     }
@@ -272,7 +332,8 @@ if (!reduced) {
 
     // Phase B — persistent background helix: brighten + breathe at each beat
     const pop = (peakO: number, peakS: number) => {
-      if (!fixed || reconP > 0.02) return;
+      if (!fixed || reconP > 0) return;
+      wake(4500);
       gsap.to(scene, { opacity: peakO, scale: peakS, duration: 0.7, ease: "power2.out", overwrite: "auto" });
       gsap.to(scene, { opacity: BASE_O, scale: BASE_S, duration: 1.4, ease: "power1.in", delay: 0.8, overwrite: false });
     };

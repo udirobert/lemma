@@ -287,7 +287,7 @@ a {
 .xylo.helix-on .bar {
   transform-origin: 50% 50%;
   pointer-events: auto;        /* scene is pointer-events:none; re-enable rungs */
-  touch-action: none;          /* let drags spin the helix, not scroll the page */
+  touch-action: pan-y;         /* vertical drags scroll; horizontal drags spin helix */
   cursor: grab;
 }
 .xylo.helix-on .bar:active { cursor: grabbing; }
