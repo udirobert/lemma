@@ -144,7 +144,9 @@ if (!reduced && bars.length) {
      Phase B2 — the helix leans back (rotateX hump) for a depth reveal.
      Phase B3 — the helix unwinds (`unfold` 0→1) into a flat spectrum where the
               bars re-sort by verdict (supported → inconclusive → falsified).
-     Phase C — that spectrum IS the closing answer: it brightens as the finale.
+     Phase C — the closing bookend: colour ramps back to full, the verdict
+              sort dissolves into a mirrored version of the hero row, and the
+              scene parks below the footer as the page's last frame.
    `spin` accumulates gentle auto-rotation + pointer/touch drag with inertia
    (and arrow-key nudges), and a wake/idle doze keeps the loop asleep between
    interactions. Bars keep their note + verdict colours throughout. The old
@@ -166,7 +168,7 @@ if (!reduced && !isMobile) {
     const AUTO = cfg.autoRotate;     // auto-rotation (rad/s)
     let BASE_O = cfg.baseOpacity;  // resting opacity while fixed in the background
     let BASE_S = cfg.baseScale;    // resting scale while fixed
-    const FINAL_O = cfg.finalOpacity; // finale spectrum opacity (the answer, revealed)
+    const FINAL_O = cfg.finalOpacity; // mid-journey spectrum brightness, before the full-colour bookend
     let TILT_DEG = cfg.tiltDeg;    // peak helix lean for the depth reveal
     const clamp01 = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);
     const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -256,15 +258,31 @@ if (!reduced && !isMobile) {
     // (rotateY m·(θ+spin)), and translated from its flex spot onto the helix
     // axis. As `unfold` rises the rungs un-flatten, un-yaw, and slide into
     // verdict-sorted horizontal slots — the helix resolving into its answer.
+    // The final act reverses the resolution: the sort dissolves into a
+    // mirrored version of the hero row (the journey's bookend), the scene
+    // returns to full colour, and it parks below the footer text so the
+    // closing frame sits beneath all the page content.
     function apply() {
-      // journey-derived scalars (only meaningful once the scene is fixed)
+      // journey-derived scalars (only meaningful once the scene is fixed).
+      // every window completes at J = 1 — the absolute page bottom — so the
+      // finale is the last thing, not a mid-page afterthought.
       const j = fixed ? J : 0;
-      unfold = clamp01((j - 0.55) / 0.4);                 // B3: 0.55 → 0.95
-      tilt = clamp01((j - 0.4) / 0.12) * (1 - clamp01((j - 0.55) / 0.12)); // B2 hump
-      if (fixed) xylo!.style.transform = `rotateX(${(tilt * TILT_DEG).toFixed(2)}deg)`;
-      // fade in spectrum hairline + axis caption as the unwind begins
+      unfold = clamp01((j - 0.62) / 0.28);                                  // 0.62→0.90 verdict sort
+      tilt = clamp01((j - 0.45) / 0.12) * (1 - clamp01((j - 0.62) / 0.12)); // 0.45→0.62 depth hump
+      const rev = clamp01((j - 0.9) / 0.1);                                 // 0.90→1.00 mirror
+      const park = clamp01((j - 0.93) / 0.07);                              // 0.93→1.00 park low
+      if (fixed) {
+        xylo!.style.transform = `rotateX(${(tilt * TILT_DEG).toFixed(2)}deg)`;
+        // colour: dim background helix → finale opacity → full colour bookend
+        const ramp = clamp01((j - 0.6) / 0.25);
+        const op = lerp(lerp(BASE_O, FINAL_O, ramp), 1, clamp01((j - 0.85) / 0.15));
+        const sc = lerp(BASE_S, 1, ramp);
+        gsap.set(scene, { opacity: op, scale: sc, y: park * parkY() });
+      }
+      // fade the verdict hairline + axis in during the unwind, and fade them
+      // back out during the mirror — by then the verdict story has been told
       if (fixed && hairline) {
-        const op = clamp01((j - 0.45) / 0.15);
+        const op = clamp01((j - 0.55) / 0.15) * (1 - rev);
         hairline.style.opacity = op.toFixed(2);
         axisCaption.style.opacity = op.toFixed(2);
       }
@@ -278,21 +296,27 @@ if (!reduced && !isMobile) {
         const coilS = 1 + (b.rungScale - 1) * morph;
         // spectrum target: natural row, but in verdict-sorted horizontal slots
         const specTX = b.specX - rowCX[b.i];
-        const specTY = 0;
-        const specRY = 0;
-        const specRZ = 0;
-        const specS = 1;
-        // compose: lerp(coil, spectrum, unfold)
-        const tx = lerp(coilTX, specTX, unfold);
-        const ty = lerp(coilTY, specTY, unfold);
-        const ry = lerp(coilRY, specRY, unfold);
-        const rz = lerp(coilRZ, specRZ, unfold);
-        const s = lerp(coilS, specS, unfold);
+        // finale target: mirror of the hero row — bar i takes slot n-1-i
+        const revTX = rowCX[n - 1 - b.i] - rowCX[b.i];
+        // compose: coil → verdict spectrum (unfold) → mirrored row (rev)
+        const flat = Math.max(unfold, rev);
+        const tx = lerp(lerp(coilTX, specTX, unfold), revTX, rev);
+        const ty = lerp(coilTY, 0, flat);
+        const ry = lerp(coilRY, 0, flat);
+        const rz = lerp(coilRZ, 0, flat);
+        const s = lerp(coilS, 1, flat);
         b.el.style.transform =
           `translate3d(${tx.toFixed(2)}px,${ty.toFixed(2)}px,0)` +
           ` rotateY(${(ry * 180 / Math.PI).toFixed(2)}deg)` +
           ` rotateZ(${rz.toFixed(2)}deg) scaleY(${s.toFixed(3)})`;
       }
+    }
+
+    // vertical offset that parks the scene just above the viewport bottom,
+    // so at the page end the bars sit below the footer text
+    let sceneH = 0;
+    function parkY() {
+      return innerHeight / 2 - sceneH / 2 - 28;
     }
 
     function frame(ts: number) {
@@ -311,16 +335,14 @@ if (!reduced && !isMobile) {
         if (Math.abs(vel) < 0.002) vel = 0;
       }
       apply();
-      // sleep when nothing needs us: row settled, helix dozing between
-      // pops/interactions, mid-unwind dozing between scroll nudges, or the
-      // spectrum fully resolved (static finale). awakeUntil is refreshed by
-      // pops, drags, keyboard, and the journey's scroll onUpdate.
+      // sleep when nothing needs us: the row is settled, or the fixed helix
+      // is dozing between pops/interactions. While fixed, all geometry is a
+      // pure function of J (scroll-driven — every J update wakes us), so
+      // dozing mid-journey is always safe. awakeUntil is refreshed by pops,
+      // drags, keyboard, and the journey's scroll onUpdate.
       const idleRow = !fixed && morph < 0.003;
       const dozing = performance.now() >= awakeUntil && Math.abs(vel) < 0.002;
-      const idleHelix = fixed && unfold <= 0 && dozing;
-      const idleUnfold = fixed && unfold > 0 && unfold < 0.985 && dozing;
-      const idleDone = unfold >= 0.985;
-      if (!dragging && (idleRow || idleHelix || idleUnfold || idleDone)) { running = false; return; }
+      if (!dragging && (idleRow || (fixed && dozing))) { running = false; return; }
       rafId = requestAnimationFrame(frame);
     }
     function ensureRunning() {
@@ -454,6 +476,7 @@ if (!reduced && !isMobile) {
       scene.classList.add("helix-fixed", "helix-on");
       xylo.classList.add("helix-on");
       gsap.set(scene, { xPercent: -50, yPercent: -50, rotateY: 0, scale: BASE_S, opacity: BASE_O });
+      sceneH = scene.offsetHeight; // cached for the finale park offset
       document.body.appendChild(badge);
       document.body.appendChild(hairline);
       document.body.appendChild(axisCaption);
@@ -527,27 +550,21 @@ if (!reduced && !isMobile) {
       ScrollTrigger.create({ trigger: el, start: "top 85%", onEnter: () => pop(1.45), onEnterBack: () => pop(1.45) });
     });
 
-    // Phase B2 + B3 + C — the post-hero journey: a single scrubbed timeline
-    // from the first story beat to the page bottom. Its progress `J` drives the
-    // helix tilt (depth reveal) and the unfold into the verdict spectrum (both
-    // applied per-frame in apply()), and it lifts the scene opacity/scale so
-    // the resolved spectrum reads as the closing answer. No mirror handoff —
+    // Phase B2 + B3 + C — the post-hero journey: one scrubbed ScrollTrigger
+    // from the first story beat to the absolute page bottom. Its progress `J`
+    // drives everything per-frame in apply(): the depth-lean hump, the unfold
+    // into the verdict spectrum, the colour ramp back to full colour, the
+    // mirror into reversed hero order, and the final park below the footer.
+    // No tween owns scene opacity/scale anymore — apply() does, so the whole
+    // closing act is a pure function of scroll position. No mirror handoff —
     // the bars are always on-screen, transforming all the way down.
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: ".story",
-        start: "top 85%",
-        endTrigger: "footer",
-        end: "bottom bottom",
-        scrub: 0.6,
-        onUpdate: (self) => { J = self.progress; wake(2500); },
-      },
-    }).fromTo(
-      scene,
-      { opacity: BASE_O, scale: BASE_S },
-      { opacity: FINAL_O, scale: 1, ease: "none", duration: 0.42, immediateRender: false },
-      0.58
-    );
+    ScrollTrigger.create({
+      trigger: ".story",
+      start: "top 85%",
+      endTrigger: "footer",
+      end: "bottom bottom",
+      onUpdate: (self) => { J = self.progress; wake(2500); },
+    });
   }
 }
 
