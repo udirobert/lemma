@@ -62,7 +62,7 @@ function strike(bar: HTMLElement) {
         ? "falsified"
         : "unverified — and we said so";
   const nearestReadout =
-    bar.closest(".xylo-scene, .xylo-mirror")?.querySelector<HTMLElement>(".xylo-readout") ?? readout;
+    bar.closest(".xylo-scene")?.querySelector<HTMLElement>(".xylo-readout") ?? readout;
   if (nearestReadout) nearestReadout.textContent = `claim ${label} · ${state}`;
   if (!reduced && !bar.closest(".xylo.helix-on")) {
     gsap.fromTo(
@@ -92,14 +92,20 @@ if (!reduced && bars.length) {
   });
 }
 
-/* ---------- helix: playable bars → double helix → bars ----------
-   One rAF loop owns every bar transform. `morph` (0 = xylophone row, 1 = helix)
-   is driven by two scrubbed ScrollTriggers: the hero pin coils bars into a
-   multi-turn double helix (each claim = one base-pair rung), the waitlist
-   reassembly un-coils them back into a mirrored row. `spin` accumulates a
-   gentle auto-rotation plus pointer/touch drag with inertia, so the helix is
-   always alive and grabbable — like the OrbitControls DNA demo it's inspired
-   by. Bars keep their note + verdict colours; the helix just re-uses them. */
+/* ---------- helix: playable bars → double helix → verdict spectrum ----------
+   One rAF loop owns every bar transform. The scroll journey is a single
+   narrative arc with no dead handoff:
+     Phase A — pinned hero: the row coils into a multi-turn double helix
+              (each claim = one base-pair rung). `morph` 0→1.
+     Phase B — fixed background helix: auto-rotation + drag-to-spin + beat
+              brightness pops.
+     Phase B2 — the helix leans back (rotateX hump) for a depth reveal.
+     Phase B3 — the helix unwinds (`unfold` 0→1) into a flat spectrum where the
+              bars re-sort by verdict (supported → inconclusive → falsified).
+     Phase C — that spectrum IS the closing answer: it brightens as the finale.
+   `spin` accumulates gentle auto-rotation + pointer/touch drag with inertia.
+   Bars keep their note + verdict colours throughout. The old static mirror
+   handoff is gone — the bars are always on-screen, transforming to the end. */
 if (!reduced) {
   const xylo = document.querySelector<HTMLElement>(".hero .xylo")!;
   const scene = document.querySelector<HTMLElement>(".hero .xylo-scene")!;
@@ -111,19 +117,29 @@ if (!reduced) {
     const R = 120;           // strand radius / half rung length (px)
     const RUNG_LEN = R * 2;  // every claim becomes an equal-length rung
     const AUTO = 0.5;        // auto-rotation (rad/s)
-    const BASE_O = 0.22;     // resting opacity while fixed in the background
+    const BASE_O = 0.2;      // resting opacity while fixed in the background
     const BASE_S = 0.85;     // resting scale while fixed
+    const FINAL_O = 0.42;    // finale spectrum opacity (the answer, revealed)
+    const TILT_DEG = 42;     // peak helix lean for the depth reveal
+    const clamp01 = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
-    // per-bar helix geometry: bar i is a rung at height y, phase theta
+    // per-bar helix geometry + verdict. bar i is a rung at height y, phase
+    // theta; `state` drives the spectrum sort, `rank`/`specX` its sorted slot.
+    const order: Record<string, number> = { on: 0, dim: 1, fail: 2 };
     const bars = heroBars.map((el, i) => {
       const t = n > 1 ? i / (n - 1) : 0.5;
       const theta = t * Math.PI * 2 * TURNS;
       const y = (t - 0.5) * HELIX_H;
       const h = el.offsetHeight || 100;
-      return { el, i, theta, y, rungScale: RUNG_LEN / h };
+      return {
+        el, i, theta, y, rungScale: RUNG_LEN / h,
+        state: el.dataset.state ?? "dim", rank: i, specX: 0,
+      };
     });
 
-    // natural flex centres (relative to the xylo) — the m = 0 row targets
+    // natural flex centres (relative to the xylo) — the m = 0 row targets,
+    // and the spectrum reuses these evenly-spaced slots in verdict-sorted order.
     let rowCX: number[] = [];
     let rowCY: number[] = [];
     function captureRow() {
@@ -131,6 +147,12 @@ if (!reduced) {
       const cy = xylo!.clientHeight / 2;
       rowCX = bars.map((b) => b.el.offsetLeft + b.el.offsetWidth / 2 - cx);
       rowCY = bars.map((b) => b.el.offsetTop + b.el.offsetHeight / 2 - cy);
+      // sort by verdict (supported → inconclusive → falsified), stable within
+      // each verdict, then assign each bar the horizontal slot of its rank.
+      const sorted = [...bars].sort(
+        (a, b) => (order[a.state] ?? 1) - (order[b.state] ?? 1) || a.i - b.i
+      );
+      sorted.forEach((b, rank) => { b.rank = rank; b.specX = rowCX[rank]; });
     }
     captureRow();
     let resizeT: ReturnType<typeof setTimeout> | undefined;
@@ -140,11 +162,13 @@ if (!reduced) {
     });
 
     // shared state
-    let morph = 0;        // 0 = row, 1 = helix
+    let morph = 0;        // 0 = row, 1 = helix (Phase A)
     let spin = 0;         // accumulated rotation (rad)
     let vel = 0;          // drag velocity, decays to 0 (rad/s)
     let fixed = false;    // scene detached to body as the persistent helix?
-    let reconP = 0;       // 0 = free helix, 1 = reassembled at the waitlist
+    let J = 0;            // post-hero journey progress (0..1): tilt + spectrum
+    let unfold = 0;       // 0 = helix, 1 = flat verdict-sorted spectrum (from J)
+    let tilt = 0;         // helix lean 0..1, a mid-journey hump for depth (from J)
     let dragging = false;
     let dragMoved = false;
     let dragLastX = 0;
@@ -153,21 +177,42 @@ if (!reduced) {
     let rafId = 0;
     let lastTs = 0;
 
-    // Build each bar's transform from `morph` + `spin`. The bar (a vertical
-    // element whose height is its rung length) is scaled to a uniform rung,
-    // laid flat (rotateZ 90·m), yawed to its rung phase (rotateY m·(θ+spin)),
-    // and translated from its flex spot onto the helix axis. CSS perspective
-    // foreshortens the rungs into a real 3D double helix.
+    // Build each bar's transform from `morph` (row→helix) then `unfold`
+    // (helix→verdict spectrum), plus a container `tilt` for the depth reveal.
+    // The bar (a vertical element whose height is its rung length) is scaled to
+    // a uniform rung, laid flat (rotateZ 90·m), yawed to its rung phase
+    // (rotateY m·(θ+spin)), and translated from its flex spot onto the helix
+    // axis. As `unfold` rises the rungs un-flatten, un-yaw, and slide into
+    // verdict-sorted horizontal slots — the helix resolving into its answer.
     function apply() {
+      // journey-derived scalars (only meaningful once the scene is fixed)
+      const j = fixed ? J : 0;
+      unfold = clamp01((j - 0.55) / 0.4);                 // B3: 0.55 → 0.95
+      tilt = clamp01((j - 0.4) / 0.12) * (1 - clamp01((j - 0.55) / 0.12)); // B2 hump
+      if (fixed) xylo!.style.transform = `rotateX(${(tilt * TILT_DEG).toFixed(2)}deg)`;
+
       for (const b of bars) {
-        const ang = morph * (b.theta + spin);   // rung angle (rad)
-        const rz = 90 * morph;                    // lay flat as a rung
-        const s = 1 + (b.rungScale - 1) * morph;  // uniform rung length
-        const tx = morph * -rowCX[b.i];
-        const ty = morph * (b.y - rowCY[b.i]);
+        // coil: row (m=0) → helix (m=1)
+        const coilTX = -rowCX[b.i] * morph;
+        const coilTY = (b.y - rowCY[b.i]) * morph;
+        const coilRY = (b.theta + spin) * morph;
+        const coilRZ = 90 * morph;
+        const coilS = 1 + (b.rungScale - 1) * morph;
+        // spectrum target: natural row, but in verdict-sorted horizontal slots
+        const specTX = b.specX - rowCX[b.i];
+        const specTY = 0;
+        const specRY = 0;
+        const specRZ = 0;
+        const specS = 1;
+        // compose: lerp(coil, spectrum, unfold)
+        const tx = lerp(coilTX, specTX, unfold);
+        const ty = lerp(coilTY, specTY, unfold);
+        const ry = lerp(coilRY, specRY, unfold);
+        const rz = lerp(coilRZ, specRZ, unfold);
+        const s = lerp(coilS, specS, unfold);
         b.el.style.transform =
           `translate3d(${tx.toFixed(2)}px,${ty.toFixed(2)}px,0)` +
-          ` rotateY(${(ang * 180 / Math.PI).toFixed(2)}deg)` +
+          ` rotateY(${(ry * 180 / Math.PI).toFixed(2)}deg)` +
           ` rotateZ(${rz.toFixed(2)}deg) scaleY(${s.toFixed(3)})`;
       }
     }
@@ -182,14 +227,15 @@ if (!reduced) {
         if (Math.abs(vel) < 0.002) vel = 0;
       }
       apply();
-      // idle out when neither fixed, morphing, nor grabbed (saves battery)
-      if ((!fixed || reconP > 0.98) && morph < 0.003 && !dragging) { running = false; return; }
+      // idle out when the spectrum has fully resolved (static finale), or when
+      // not fixed and not mid-coil and not grabbed (saves battery). Drag/morph
+      // always re-arm the loop via ensureRunning().
+      if (morph < 0.003 && !dragging && (!fixed || unfold > 0.985)) { running = false; return; }
       rafId = requestAnimationFrame(frame);
     }
     function ensureRunning() {
       if (!running) { running = true; lastTs = performance.now(); rafId = requestAnimationFrame(frame); }
     }
-    // pause when the tab is hidden
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) { cancelAnimationFrame(rafId); running = false; }
       else if (fixed || morph > 0.003 || dragging) ensureRunning();
@@ -241,10 +287,11 @@ if (!reduced) {
     }
     function unfixScene() {
       fixed = false;
+      J = 0; unfold = 0; tilt = 0;
       scene.classList.remove("helix-fixed", "helix-on");
       xylo.classList.remove("helix-on");
-      gsap.set(scene, { clearProps: "transform,opacity" });
-      gsap.set(xylo, { rotateY: 0 });
+      gsap.set(scene, { clearProps: "transform,opacity,filter" });
+      gsap.set(xylo, { rotateY: 0, clearProps: "transform" });
       for (const b of bars) b.el.style.transform = "";
       badge.remove();
       if (heroCopy && heroCopy.nextSibling) heroEl.insertBefore(scene, heroCopy.nextSibling);
@@ -270,47 +317,44 @@ if (!reduced) {
     helixTl.to(".hero .xylo-readout", { opacity: 0, duration: 0.25 }, 0);
     helixTl.to(".hero .scroll-cue", { opacity: 0, duration: 0.2 }, 0);
 
-    // Phase B — persistent background helix: brighten + breathe at each beat
-    const pop = (peakO: number, peakS: number) => {
-      if (!fixed || reconP > 0.02) return;
-      gsap.to(scene, { opacity: peakO, scale: peakS, duration: 0.7, ease: "power2.out", overwrite: "auto" });
-      gsap.to(scene, { opacity: BASE_O, scale: BASE_S, duration: 1.4, ease: "power1.in", delay: 0.8, overwrite: false });
+    // Phase B — persistent background helix: a brightness pulse at each beat.
+    // Pops use `filter: brightness` (not opacity/scale) so the journey timeline
+    // can own opacity/scale for the finale without any property conflict.
+    const pop = (peakB: number) => {
+      if (!fixed || unfold > 0.08) return;        // stop pulsing once it unwinds
+      gsap.to(scene, { filter: `brightness(${peakB})`, duration: 0.7, ease: "power2.out", overwrite: "auto" });
+      gsap.to(scene, { filter: "brightness(1)", duration: 1.4, ease: "power1.in", delay: 0.8, overwrite: false });
     };
     document.querySelectorAll(".beat").forEach((beat) => {
-      ScrollTrigger.create({ trigger: beat, start: "top 82%", onEnter: () => pop(0.6, 1.07), onEnterBack: () => pop(0.6, 1.07) });
+      ScrollTrigger.create({ trigger: beat, start: "top 82%", onEnter: () => pop(1.8), onEnterBack: () => pop(1.8) });
     });
     [".trace .trace-head", ".replay .trace-head", ".artifacts h2", ".waitlist .trace-head"].forEach((sel) => {
       const el = document.querySelector(sel);
       if (!el) return;
-      ScrollTrigger.create({ trigger: el, start: "top 85%", onEnter: () => pop(0.42, 1.0), onEnterBack: () => pop(0.42, 1.0) });
+      ScrollTrigger.create({ trigger: el, start: "top 85%", onEnter: () => pop(1.45), onEnterBack: () => pop(1.45) });
     });
 
-    // Phase C — reassembly: the helix un-coils into the mirrored xylophone.
-    // morph 1→0 relaxes every rung back to a bar; the scene fades as the mirror
-    // fades in — a seamless handover exactly where the fixed helix sits.
-    const mirrorWrap = document.querySelector<HTMLElement>(".xylo-mirror");
-    if (mirrorWrap) {
-      gsap.set(mirrorWrap, { autoAlpha: 0, y: 36 });
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: mirrorWrap,
-          start: "top bottom",
-          end: "center center",
-          scrub: 0.5,
-          onEnter: () => ensureRunning(),
-          onUpdate: (self) => { reconP = self.progress; morph = 1 - self.progress; ensureRunning(); },
-        },
-      })
-        .to(scene, { opacity: 0, scale: 0.72, duration: 0.5, ease: "power2.in" }, 0.1)
-        .to(mirrorWrap, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.2);
-    } else {
-      ScrollTrigger.create({
-        trigger: "footer",
-        start: "top 90%",
-        onEnter: () => gsap.to(scene, { opacity: 0, duration: 0.8, overwrite: "auto" }),
-        onEnterBack: () => gsap.to(scene, { opacity: BASE_O, duration: 0.5, overwrite: "auto" }),
-      });
-    }
+    // Phase B2 + B3 + C — the post-hero journey: a single scrubbed timeline
+    // from the first story beat to the page bottom. Its progress `J` drives the
+    // helix tilt (depth reveal) and the unfold into the verdict spectrum (both
+    // applied per-frame in apply()), and it lifts the scene opacity/scale so
+    // the resolved spectrum reads as the closing answer. No mirror handoff —
+    // the bars are always on-screen, transforming all the way down.
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: ".story",
+        start: "top 85%",
+        endTrigger: "footer",
+        end: "bottom bottom",
+        scrub: 0.6,
+        onUpdate: (self) => { J = self.progress; ensureRunning(); },
+      },
+    }).fromTo(
+      scene,
+      { opacity: BASE_O, scale: BASE_S },
+      { opacity: FINAL_O, scale: 1, ease: "none", duration: 0.42, immediateRender: false },
+      0.58
+    );
   }
 }
 
