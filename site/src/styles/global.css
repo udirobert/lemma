@@ -815,6 +815,65 @@ html:not(.js-motion) .tl {
   }
 }
 
+/* ---------------- paper detail motion (progressive) ----------------
+   Hidden states only apply once paperMotion.ts adds .pd-motion to <html>.
+   No JS → fully visible page. Reduced-motion → the class is never added.
+   Easing matches the landing's power3.out reveal vocabulary. */
+html.pd-motion .pd-meta-row,
+html.pd-motion .pd-header h1,
+html.pd-motion .pd-authors,
+html.pd-motion .pd-blurb,
+html.pd-motion .pd-links,
+html.pd-motion .pd-stat,
+html.pd-motion .claim-row,
+html.pd-motion .pd-figures h2,
+html.pd-motion .figure-cell,
+html.pd-motion .pd-trace h2,
+html.pd-motion .pd-trace-sub,
+html.pd-motion .pd-trace .player {
+  opacity: 0;
+  transform: translateY(22px);
+}
+html.pd-motion .is-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--pd-delay, 0s);
+}
+
+/* figure loading: shimmer placeholder until the img fades in */
+.figure-cell {
+  position: relative;
+}
+@keyframes fig-shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+html.pd-motion .figure-cell:not(.fig-done)::before {
+  content: "";
+  position: absolute;
+  inset: 10px 10px 34px;
+  border-radius: 8px;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.04) 40%,
+    rgba(255, 255, 255, 0.09) 50%,
+    rgba(255, 255, 255, 0.04) 60%
+  );
+  background-size: 200% 100%;
+  animation: fig-shimmer 1.2s linear infinite;
+  pointer-events: none;
+}
+html.pd-motion .figure-cell img {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+html.pd-motion .figure-cell img.is-loaded {
+  opacity: 1;
+}
+
 /* ---------------- artifacts ---------------- */
 .artifacts {
   position: relative;
