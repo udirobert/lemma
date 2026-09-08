@@ -59,37 +59,74 @@ def trace_stats(trace_path: Path) -> dict:
     }
 
 
-def build_entry(paper_dir: Path, meta: dict) -> dict:
+def build_entry(paper_dir: Path, meta: dict, prior: dict | None = None) -> dict:
+    """Merge one paper workdir into an index entry.
+
+    `prior` is the previous committed entry for the same dir (if any). Some
+    artifacts are deliberately local-only (e.g. 5nNNVY8NW4-grokking gitignores
+    results/, several trace.jsonl files are not committed), so a fresh clone
+    cannot recompute them. When a local artifact is absent we carry the prior
+    values forward instead of silently downgrading the published registry.
+    """
     slug = meta.get("slug") or paper_dir.name
     claims = load_json(paper_dir / "claims.json") or []
     report = load_json(paper_dir / "results" / "audit_report.json") or {}
     judge = load_json(paper_dir / "judge_report.json")
+    prior = prior or {}
+    prior_claims = {c["id"]: c for c in prior.get("claims", [])}
+    has_report = bool(report.get("claims"))
 
     report_by_id = {c["id"]: c for c in report.get("claims", [])}
+
+    def claim_entry(cid: str, src: dict) -> dict:
+        """Normalize a claim row from either a local report or the prior index."""
+        osummary = src.get("summary") or {}
+        metrics = osummary.get("metrics") or {}
+        return {
+            "id": cid,
+            "title": src.get("title", ""),
+            "testable": src.get("testable", True),
+            "status": src.get("status", "not_audited"),
+            "attempts": src.get("attempts", 0),
+            # surfaced for the site's claim dossiers — the auditor's own
+            # words and numbers, not a marketing rewrite
+            "notes": osummary.get("notes", ""),
+            "metrics": metrics,
+            "control_pass": metrics.get("control_pass"),
+        }
+
     merged = []
+    seen_ids: set[str] = set()
+
+    # 1) local claims.json — verdicts from the local report, falling back to
+    #    the prior committed outcome when the report is absent (fresh clone)
     for c in claims:
-        outcome = report_by_id.get(c["id"], {})
-        merged.append(
-            {
-                "id": c["id"],
-                "title": c.get("title", c.get("claim", "")),
-                "testable": c.get("testable", True),
-                "status": outcome.get("status", "not_audited"),
-                "attempts": outcome.get("attempts", 0),
-            }
-        )
-    # claims present in the report but missing from claims.json (defensive)
-    for cid, outcome in report_by_id.items():
-        if not any(m["id"] == cid for m in merged):
+        cid = c["id"]
+        seen_ids.add(cid)
+        title = c.get("title", c.get("claim", ""))
+        if has_report and cid in report_by_id:
             merged.append(
-                {
-                    "id": cid,
-                    "title": "",
-                    "testable": True,
-                    "status": outcome.get("status", "?"),
-                    "attempts": outcome.get("attempts", 0),
-                }
+                claim_entry(cid, {**report_by_id[cid], "title": title})
             )
+        elif cid in prior_claims:
+            merged.append(
+                claim_entry(cid, {**prior_claims[cid], "title": title})
+            )
+        else:
+            merged.append(claim_entry(cid, {"title": title}))
+
+    # 2) claims present in the local report but missing from claims.json
+    for cid, outcome in report_by_id.items():
+        if cid not in seen_ids:
+            seen_ids.add(cid)
+            merged.append(claim_entry(cid, outcome))
+
+    # 3) claims only in the prior index (e.g. a gitignored results/ tree) —
+    #    keep them so the registry never silently loses claims
+    for cid, pclaim in prior_claims.items():
+        if cid not in seen_ids:
+            seen_ids.add(cid)
+            merged.append(claim_entry(cid, pclaim))
 
     summary = {s: sum(1 for m in merged if m["status"] == s) for s in STATUS_ORDER}
 
@@ -103,10 +140,21 @@ def build_entry(paper_dir: Path, meta: dict) -> dict:
                 continue
             seen.add(png.name.lower())
             figures.append(str(png.relative_to(paper_dir)))
+    # a gitignored results/ tree yields no local figures — keep the prior
+    # inventory rather than wiping the published figure gallery
+    if not figures and prior.get("figures"):
+        figures = list(prior["figures"])
 
     trace_rel = meta.get("trace", "trace.jsonl")
     stats = trace_stats(paper_dir / trace_rel)
     stats["path"] = f"papers/{paper_dir.name}/{trace_rel}"
+    prior_trace = prior.get("trace") or {}
+    if stats["n_events"] == 0 and prior_trace.get("n_events", 0) > 0:
+        # trace.jsonl is not always committed — carry the prior stats forward
+        stats = {**prior_trace}
+    prior_judge = prior.get("judge")
+    if judge is None and prior_judge:
+        judge = prior_judge
 
     return {
         "slug": slug,
@@ -124,7 +172,12 @@ def build_entry(paper_dir: Path, meta: dict) -> dict:
         "claims": merged,
         "summary": summary,
         "judge": (
-            {"verdict": judge.get("verdict"), "score": judge.get("score")}
+            {
+                "verdict": judge.get("verdict"),
+                "score": judge.get("score"),
+                # full rubric so the site can show *why* the trail is trusted
+                "rubric": judge.get("rubric", {}),
+            }
             if judge
             else None
         ),
@@ -139,6 +192,8 @@ def main() -> int:
     args = parser.parse_args()
 
     papers_dir = REPO / args.papers_dir
+    prior_index = load_json(papers_dir / "_index.json") or {}
+    prior_by_dir = {p.get("dir"): p for p in prior_index.get("papers", [])}
     entries = []
     for paper_dir in sorted(papers_dir.iterdir()):
         if not paper_dir.is_dir() or paper_dir.name.startswith("_"):
@@ -147,7 +202,7 @@ def main() -> int:
         if meta is None:
             print(f"[skip] {paper_dir.name}: no meta.json", file=sys.stderr)
             continue
-        entries.append(build_entry(paper_dir, meta))
+        entries.append(build_entry(paper_dir, meta, prior_by_dir.get(paper_dir.name)))
 
     index = {
         "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),

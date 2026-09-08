@@ -66,6 +66,13 @@ def build() -> int:
         return 1
 
     index = json.loads(INDEX_PATH.read_text(encoding="utf-8"))
+    # Prior published site data — used to keep figures/failure counts when a
+    # fresh clone lacks gitignored local artifacts (e.g. grokking-ridge
+    # results/ tree). Prevents a rebuild from silently downgrading the site.
+    prior_site = {}
+    if SITE_DATA_DIR.joinpath("papers.json").is_file():
+        prior_site = json.loads(SITE_DATA_DIR.joinpath("papers.json").read_text(encoding="utf-8"))
+    prior_by_slug = {p.get("slug"): p for p in prior_site.get("papers", [])}
     papers_out = []
 
     for paper in index["papers"]:
@@ -85,22 +92,33 @@ def build() -> int:
 
         copied: list[str] = []
         seen: set[str] = set()
+        prior_figs_by_name: dict[str, str] = {}
+        for prior_path in prior_by_slug.get(slug, {}).get("figures", []):
+            prior_figs_by_name[prior_path.rsplit("/", 1)[-1].lower()] = prior_path
         for rel in paper.get("figures", []):
             src = paper_dir / rel
             name = src.name.lower()
-            if not src.is_file() or name in seen:
+            if name in seen:
                 continue
-            if src.stat().st_size > MAX_FIGURE_BYTES:
-                print(
-                    f"[skip-large] {slug}: {rel} ({src.stat().st_size} bytes)",
-                    file=sys.stderr,
-                )
+            if src.is_file():
+                if src.stat().st_size > MAX_FIGURE_BYTES:
+                    print(
+                        f"[skip-large] {slug}: {rel} ({src.stat().st_size} bytes)",
+                        file=sys.stderr,
+                    )
+                    continue
+                fig_dir.mkdir(parents=True, exist_ok=True)
+                dst = fig_dir / src.name
+                shutil.copy2(src, dst)
+                seen.add(name)
+                copied.append(f"/papers/{slug}/figures/{src.name}")
                 continue
-            fig_dir.mkdir(parents=True, exist_ok=True)
-            dst = fig_dir / src.name
-            shutil.copy2(src, dst)
-            seen.add(name)
-            copied.append(f"/papers/{slug}/figures/{src.name}")
+            # Figure committed in site/public but absent from this clone's
+            # workdir (gitignored results/). Keep the already-published path.
+            prior_site_path = prior_figs_by_name.get(name)
+            if prior_site_path and (PUBLIC_PAPERS_DIR / slug / "figures" / src.name).is_file():
+                seen.add(name)
+                copied.append(prior_site_path)
 
         papers_out.append(
             {
@@ -125,7 +143,8 @@ def build() -> int:
                     / paper.get("trace", {}).get(
                         "path", f"papers/{paper['dir']}/trace.jsonl"
                     )
-                ),
+                )
+                or prior_by_slug.get(slug, {}).get("failures_preserved", 0),
                 "xylo": xylo,
                 "figures": copied,
             }
@@ -152,6 +171,15 @@ def build() -> int:
         ),
         "failures_preserved": sum(p.get("failures_preserved", 0) for p in papers_out),
         "logbooks": sum(1 for p in papers_out if (p.get("links") or {}).get("logbook")),
+        # cost-of-honesty aggregates — the site discloses what auditing costs
+        "llm_calls": sum(p.get("trace", {}).get("n_llm", 0) for p in papers_out),
+        "tool_runs": sum(p.get("trace", {}).get("n_tool", 0) for p in papers_out),
+        "wall_min": round(
+            sum(p.get("trace", {}).get("wall_min", 0) for p in papers_out), 1
+        ),
+        "attempts": sum(
+            c.get("attempts", 0) for p in papers_out for c in p.get("claims", [])
+        ),
     }
 
     SITE_DATA_DIR.mkdir(parents=True, exist_ok=True)

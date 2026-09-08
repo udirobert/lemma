@@ -1,0 +1,344 @@
+---
+// PipelineExplorer — "how an audit works", interactively.
+// Each tab shows a REAL artifact from the registry at build time
+// (featured paper: grokking-ca, the JMLR cellular-automaton audit).
+import "../styles/global.css";
+import papersData from "../data/papers.json";
+
+type AnyPaper = {
+  slug: string;
+  title: string;
+  source_label: string;
+  claims: Array<{
+    id: string;
+    title: string;
+    status: string;
+    attempts: number;
+    notes?: string;
+    metrics?: Record<string, unknown>;
+    control_pass?: boolean | null;
+  }>;
+  summary: { supported: number; falsified: number; inconclusive: number; not_audited: number };
+  judge: { verdict: string; score: string; rubric?: Record<string, { pass: boolean; detail: string }> } | null;
+  trace: { n_llm: number; n_tool: number; wall_min: number };
+  links: { logbook: string | null };
+  figures: string[];
+  failures_preserved: number;
+};
+
+const papers = (papersData as { papers: AnyPaper[] }).papers;
+const featured = papers.find((p) => p.slug === "grokking-ca") ?? papers[0];
+const c1 = featured.claims.find((c) => c.id === "C1") ?? featured.claims[0];
+const firstMetrics = Object.entries(c1.metrics ?? {}).slice(0, 5);
+const rubricDims = Object.entries(featured.judge?.rubric ?? {});
+const STAGES = [
+  {
+    id: "extract",
+    num: "1",
+    name: "extract",
+    claim: "an unseen paper becomes testable claims",
+    detail: "Success criteria come from the claims themselves — nothing is back-filled after the fact.",
+    artifactTitle: `claims.json · ${featured.title}`,
+    lines: featured.claims.slice(0, 4).map((cl) => ({
+      tag: "claim",
+      cls: cl.status === "supported" ? "ok" : cl.status === "inconclusive" ? "warn" : "info",
+      text: `${cl.id} — ${cl.title}`,
+    })),
+    foot: `${featured.claims.length} claims extracted · untestable ones declared, never silently skipped`,
+  },
+  {
+    id: "audit",
+    num: "2",
+    name: "audit",
+    claim: "each claim → a self-contained script → a verdict",
+    detail: "The auditor writes a numpy script per claim, runs it, iterates at most 3×. A positive control is mandatory on every run.",
+    artifactTitle: `audit_summary.json · ${c1.id}`,
+    lines: [
+      { tag: "run", cls: "cmd", text: "python audit_c1.py · positive control first" },
+      ...firstMetrics.map(([k, v]) => ({
+        tag: "metric",
+        cls: k === "control_pass" ? "ok" : "info",
+        text: `${k} = ${typeof v === "number" ? Number(v).toPrecision(4) : JSON.stringify(v)}`,
+      })),
+      ...(c1.control_pass === true
+        ? [{ tag: "control", cls: "ok", text: "control_pass: true — the statistic isn't lying" }]
+        : []),
+    ],
+    foot: `${featured.summary.supported} supported · ${featured.summary.inconclusive} honestly inconclusive · failures kept, never patched`,
+  },
+  {
+    id: "evidence",
+    num: "3",
+    name: "evidence",
+    claim: "results become an inspectable evidence trail",
+    detail: "Run outputs, figures, failed attempts and reviewer references assemble into a Trackio logbook — the trail is the product.",
+    artifactTitle: "Trackio logbook · evidence trail",
+    lines: [
+      { tag: "cell", cls: "info", text: `${featured.claims.length} claim results → logbook cells` },
+      { tag: "cell", cls: "ok", text: `${featured.failures_preserved} failed attempts preserved verbatim` },
+      { tag: "cell", cls: "info", text: `${featured.figures.length} evidence figures published` },
+      { tag: "cell", cls: "info", text: "literature-context cross-checks attached (Paperclip)" },
+    ],
+    foot: featured.links.logbook ? "" : "logbook cells built for every audited paper",
+    footLink: featured.links.logbook,
+  },
+  {
+    id: "judge",
+    num: "4",
+    name: "judge",
+    claim: "the agent scores its own evidence trail",
+    detail: "An automated judge checks structure, evidence, integrity, cost disclosure and trace completeness. The verdict is bound to the trail, not the outcome.",
+    artifactTitle: `judge_report.json · ${featured.judge?.verdict ?? "—"} ${featured.judge?.score ?? ""}`,
+    lines: rubricDims.map(([dim, r]) => ({
+      tag: r.pass ? "pass" : "fail",
+      cls: r.pass ? "ok" : "fail",
+      text: `${dim.replace("_", " ")} — ${r.pass ? "pass" : "fail"} · ${r.detail}`,
+    })),
+    foot: `${featured.trace.n_llm} LLM calls · ${featured.trace.n_tool} tool runs · ${featured.trace.wall_min} min wall`,
+  },
+] as const;
+---
+<section class="pipeline" id="pipeline">
+  <div class="wrap">
+    <p class="pl-kicker">how an audit works</p>
+    <h2 class="pl-title">one paper, four stages,<br />zero skipped failures</h2>
+
+    <div class="pl-stages" role="tablist" aria-label="Audit pipeline stages">
+      {STAGES.map((s, i) => (
+        <div class="pl-stage-wrap">
+          {i > 0 && <span class="pl-arrow" aria-hidden="true">→</span>}
+          <button class={`pl-stage${i === 0 ? " active" : ""}`} role="tab" aria-selected={i === 0 ? "true" : "false"} data-plstage={s.id}>
+            <span class="pl-num">{s.num}</span>
+            <span class="pl-name">{s.name}</span>
+            <span class="pl-claim">{s.claim}</span>
+          </button>
+        </div>
+      ))}
+    </div>
+
+    <div class="pl-panels" aria-live="polite">
+      {STAGES.map((s, i) => (
+        <div class={`pl-panel${i === 0 ? " show" : ""}`} data-plpanel={s.id} hidden={i !== 0}>
+          <p class="pl-detail">{s.detail}</p>
+          <div class="pl-artifact">
+            <div class="pl-art-bar">
+              <span class="pl-art-dot r"></span><span class="pl-art-dot y"></span><span class="pl-art-dot g"></span>
+              <span class="pl-art-title">{s.artifactTitle}</span>
+            </div>
+            <div class="pl-art-body">
+              {s.lines.map((l) => (
+                <span class="pl-line"><span class="pl-tag">[{l.tag}]</span> <span class={l.cls}>{l.text}</span></span>
+              ))}
+              <span class="caret" aria-hidden="true"></span>
+            </div>
+          </div>
+          <p class="pl-foot">
+            {s.foot}
+            {s.footLink && <a href={s.footLink} target="_blank" rel="noopener">open the published logbook →</a>}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    <p class="pl-closer">Each stage re-runs idempotently — the trace records every attempt, including the failures.</p>
+  </div>
+<style>
+  .pipeline {
+    position: relative;
+    z-index: 2;
+    padding: 130px 0 60px;
+  }
+  .pl-kicker {
+    font-family: var(--font-m);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .pl-title {
+    font-size: clamp(2rem, 4.6vw, 3.4rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    margin: 14px 0 46px;
+    background: linear-gradient(180deg, #ffffff 30%, #aab8d8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .pl-stages {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .pl-stage-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1 1 200px;
+  }
+  .pl-arrow {
+    color: var(--dim);
+    font-family: var(--font-m);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .pl-stage {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 14px 16px;
+    border: 1px solid var(--edge);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--card) 60%, transparent);
+    color: var(--mut);
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-d);
+    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  }
+  .pl-stage:hover {
+    border-color: var(--blue);
+    transform: translateY(-2px);
+  }
+  .pl-stage.active {
+    border-color: var(--teal);
+    background: color-mix(in srgb, var(--teal) 10%, var(--card));
+    color: var(--fg);
+  }
+  .pl-num {
+    font-family: var(--font-m);
+    font-size: 0.62rem;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+  }
+  .pl-name {
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  .pl-claim {
+    font-size: 0.72rem;
+    line-height: 1.45;
+    color: var(--dim);
+  }
+  .pl-stage.active .pl-claim {
+    color: var(--mut);
+  }
+
+  .pl-panel {
+    display: none;
+  }
+  .pl-panel.show {
+    display: block;
+  }
+  .pl-detail {
+    max-width: 640px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--mut);
+    margin-bottom: 18px;
+  }
+  .pl-artifact {
+    border: 1px solid var(--edge);
+    border-radius: 12px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--card) 70%, transparent);
+  }
+  .pl-art-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--edge);
+    background: color-mix(in srgb, var(--bg2) 80%, transparent);
+  }
+  .pl-art-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .pl-art-dot.r { background: #ff5f57; }
+  .pl-art-dot.y { background: #febc2e; }
+  .pl-art-dot.g { background: #28c840; }
+  .pl-art-title {
+    margin-left: 6px;
+    font-family: var(--font-m);
+    font-size: 0.72rem;
+    color: var(--fg);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .pl-art-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 16px 18px;
+    font-family: var(--font-m);
+    font-size: 0.76rem;
+    line-height: 1.9;
+  }
+  .pl-line {
+    display: block;
+    white-space: pre-wrap;
+  }
+  .pl-tag {
+    color: var(--dim);
+    margin-right: 8px;
+  }
+  .pl-line .ok { color: var(--teal); }
+  .pl-line .fail { color: var(--magenta); }
+  .pl-line .warn { color: var(--gold); }
+  .pl-line .info { color: var(--blue); }
+  .pl-line .cmd { color: var(--fg); }
+  .pl-foot {
+    margin-top: 14px;
+    font-family: var(--font-m);
+    font-size: 0.72rem;
+    color: var(--dim);
+  }
+  .pl-foot a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+  .pl-foot a:hover {
+    text-decoration: underline;
+  }
+  .pl-closer {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 1.05rem;
+    color: var(--mut);
+    font-style: italic;
+  }
+  .pl-closer::before,
+  .pl-closer::after {
+    content: "\2014";
+    color: var(--dim);
+    padding: 0 10px;
+  }
+</style>
+
+<script>
+  const plStages = Array.from(document.querySelectorAll<HTMLElement>("[data-plstage]"));
+  const plPanels = Array.from(document.querySelectorAll<HTMLElement>("[data-plpanel]"));
+  plStages.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.plstage;
+      plStages.forEach((b) => {
+        b.classList.toggle("active", b === btn);
+        b.setAttribute("aria-selected", b === btn ? "true" : "false");
+      });
+      plPanels.forEach((p) => {
+        const show = p.dataset.plpanel === id;
+        p.classList.toggle("show", show);
+        if (p.hidden !== undefined) p.hidden = !show;
+      });
+    });
+  });
+</script>
+</section>

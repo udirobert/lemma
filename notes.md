@@ -45,3 +45,49 @@
 - Build verified: 6 pages, 24 xylo bars, all detail pages render claims/figures/trace correctly.
 - Ran evidence stage for GRAM and published logbook: https://huggingface.co/spaces/Papajams/repro-gram-modular-pretraining (public trace/artifacts). Updated meta.json logbook link, regenerated _index.json/papers.json/traces, rebuilt site.
 - Fixed post-refactor site regression: Xylophone bars were missing data-freq (used b.f instead of b.freq), so clicking bars made no sound; also added data-state for accurate readouts and scaled helix spacing for 24 bars.
+
+## 2026-09-08 — UX/product pass: industry context + interactivity + utility
+
+Feedback received: the site should contextualize lemma within the wider AI-science
+industry, and improve interactivity, engagement and utility. Three-part response:
+
+**1. Industry context (landing):** new `Landscape` section — "everyone is
+ generating, nobody is checking." Led by the reproducibility-crisis numbers
+ (Nature 2016 survey: 70% failed to reproduce another lab, >50% their own),
+ then an interactive comparison of the AI-science landscape: generators
+ (Sakana / Google co-scientist), literature copilots (FutureHouse / Elicit),
+ benchmarks & harnesses (PaperBench / ICML Agent Reproductions), and lemma as
+ the audit layer ("you are here"). Each category shows "what it produces" and
+ "who checks the checker". Sources linked directly.
+
+**2. Interactivity (landing + paper pages):**
+ - New `PipelineExplorer`: extract → audit → evidence → judge as clickable
+   stages, each rendering a REAL artifact from the registry (grokking-ca
+   claims.json lines, audit metrics incl. nu_fitted + control_pass, logbook
+   cells + failures preserved, judge rubric rows). Data-driven at build time.
+ - Paper detail: claims are now expandable dossiers (disclosure buttons) —
+   auditor notes, metrics grid, attempt count, positive-control badge; fallback
+   text when a claim has no summary in the registry snapshot. New "why the
+   judge trusts this trail" card renders the 5-dimension rubric with
+   pass/fail dots + details.
+ - Registry: "every claim, one table" — a cross-paper claim explorer with
+   verdict filter chips + title search; each row links to the claim dossier.
+
+**3. Utility / honesty disclosure:**
+ - Cost-of-honesty receipts on landing (wall minutes, model calls, tool runs,
+   audit attempts) + per-paper stats row (model calls / tool runs / wall min /
+   failures kept).
+
+**Data pipeline changes (build_paper_index.py / build_site_data.py):**
+ - Claims now carry `notes`, `metrics`, `control_pass` (from results/audit_report.json
+   summaries) into _index.json → papers.json; judge carries full `rubric`.
+ - Totals gain `llm_calls`, `tool_runs`, `wall_min`, `attempts`.
+ - **Fresh-clone preservation:** several artifacts are intentionally local-only
+   (5nNNVY8NW4-grokking gitignores results/; some trace.jsonl not committed),
+   so a bare rebuild used to silently downgrade the registry (grokking-ridge
+   went 6S→0S). Both builders now fall back to the prior committed entry when
+   a local artifact is absent (claims, trace stats, figures, failure counts,
+   judge). Verified: rebuilt totals match the committed baseline exactly
+   (24 claims, 16 supported, 4 inconclusive, 4 not_audited, 54 failures).
+
+Verified: `npm run build` 6 pages green; `npm test` 10/10; builders idempotent.

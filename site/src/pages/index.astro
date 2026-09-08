@@ -6,6 +6,8 @@ import Xylophone from "../components/Xylophone.astro";
 import TracePlayer from "../components/TracePlayer.astro";
 import BgGlass from "../components/BgGlass.astro";
 import ClipMenu from "../components/ClipMenu.astro";
+import Landscape from "../components/Landscape.astro";
+import PipelineExplorer from "../components/PipelineExplorer.astro";
 import papersData from "../data/papers.json";
 
 const papers = papersData.papers as Array<{
@@ -29,6 +31,10 @@ const totals = papersData.totals as {
   audited: number;
   failures_preserved: number;
   logbooks: number;
+  llm_calls: number;
+  tool_runs: number;
+  wall_min: number;
+  attempts: number;
 };
 
 // Artifact links generated from the paper registry — no manual editing needed
@@ -219,11 +225,22 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
           <div class="receipt"><b><span data-count={totals.claims}>0</span></b><span>claims</span></div>
           <div class="receipt"><b><span data-count={totals.supported}>0</span></b><span>reproduced</span></div>
           <div class="receipt"><b><span data-count={totals.failures_preserved}>0</span></b><span>failures preserved</span></div>
+          <div class="receipt"><b><span data-count={totals.wall_min} data-decimals="0">0</span></b><span>wall minutes</span></div>
+          <div class="receipt"><b><span data-count={totals.llm_calls}>0</span></b><span>model calls</span></div>
+          <div class="receipt"><b><span data-count={totals.tool_runs}>0</span></b><span>tool runs</span></div>
+          <div class="receipt"><b><span data-count={totals.attempts}>0</span></b><span>audit attempts</span></div>
         </div>
+        <p class="receipts-note">the cost of honesty — every number was spent to find out, not to prove.</p>
       </div>
     </article>
   </div>
 </section>
+
+<!-- ================= LANDSCAPE ================= -->
+<Landscape />
+
+<!-- ================= PIPELINE ================= -->
+<PipelineExplorer />
 
 <!-- ================= TRACE ================= -->
 <section class="trace" id="trace">

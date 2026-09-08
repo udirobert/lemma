@@ -7,6 +7,21 @@ import papersData from "../../data/papers.json";
 
 const papers = papersData.papers;
 const totals = papersData.totals;
+
+// flattened cross-paper claim index for the explorer table
+const claimRows = papers
+  .flatMap((p: any) =>
+    (p.claims ?? []).map((c: any) => ({
+      paperHref: `/papers/${p.slug}/`,
+      paperLabel: p.source_label || p.slug,
+      id: c.id,
+      title: c.title || "",
+      status: c.status || "not_audited",
+      attempts: c.attempts ?? 0,
+      notes: c.notes || "",
+    }))
+  )
+  .sort((a, b) => (a.paperLabel < b.paperLabel ? -1 : 1));
 ---
 
 <!doctype html>
@@ -69,6 +84,44 @@ const totals = papersData.totals;
           </a>
         ))}
       </div>
+
+      <section class="explorer" id="explorer">
+        <div class="explorer-head">
+          <h2>every claim, one table</h2>
+          <p class="explorer-sub">
+            {claimRows.length} claims across {papers.length} papers · filter by verdict, search by title · each row opens the paper's claim dossier
+          </p>
+        </div>
+        <div class="explorer-controls">
+          <input type="search" id="claim-search" class="explorer-search" placeholder="search claims…" aria-label="Search claims" />
+          <div class="explorer-chips" role="group" aria-label="Filter by verdict">
+            <button class="chip active" data-filter="all" type="button">all</button>
+            <button class="chip" data-filter="supported" type="button">supported</button>
+            <button class="chip" data-filter="falsified" type="button">falsified</button>
+            <button class="chip" data-filter="inconclusive" type="button">inconclusive</button>
+            <button class="chip" data-filter="not_audited" type="button">not audited</button>
+          </div>
+        </div>
+        <div class="explorer-table" aria-label="All claims across audited papers">
+          <div class="explorer-row explorer-th">
+            <span>paper</span>
+            <span>claim</span>
+            <span>verdict</span>
+            <span>attempts</span>
+            <span>auditor's note</span>
+          </div>
+          {claimRows.map((r) => (
+            <a class="explorer-row" href={r.paperHref} data-status={r.status}>
+              <span class="ex-paper">{r.paperLabel}</span>
+              <span class="ex-claim"><b>{r.id}</b> {r.title}</span>
+              <span class="ex-status"><StatusBadge status={r.status} /></span>
+              <span class="ex-attempts">{r.attempts > 0 ? r.attempts : "—"}</span>
+              <span class="ex-notes">{r.notes ? r.notes.slice(0, 130) + (r.notes.length > 130 ? "…" : "") : "—"}</span>
+            </a>
+          ))}
+        </div>
+        <p class="explorer-empty" id="explorer-empty" hidden>no claims match that filter + search</p>
+      </section>
     </main>
 
     <footer>
@@ -78,6 +131,37 @@ const totals = papersData.totals;
 
     <script>
       import "../../paperMotion.ts";
+    </script>
+    <script is:inline>
+      (function () {
+        var search = document.getElementById("claim-search");
+        var chips = document.querySelectorAll(".chip[data-filter]");
+        var rows = document.querySelectorAll(".explorer-row[data-status]");
+        var empty = document.getElementById("explorer-empty");
+        var currentFilter = "all";
+        function apply() {
+          var q = (search && search.value || "").toLowerCase();
+          var visible = 0;
+          rows.forEach(function (row) {
+            var st = row.getAttribute("data-status") || "";
+            var text = (row.textContent || "").toLowerCase();
+            var matchFilter = currentFilter === "all" || st === currentFilter;
+            var matchSearch = !q || text.indexOf(q) !== -1;
+            var ok = matchFilter && matchSearch;
+            row.hidden = !ok;
+            if (ok) visible++;
+          });
+          if (empty) empty.hidden = visible !== 0;
+        }
+        chips.forEach(function (chip) {
+          chip.addEventListener("click", function () {
+            currentFilter = chip.getAttribute("data-filter") || "all";
+            chips.forEach(function (c) { c.classList.toggle("active", c === chip); });
+            apply();
+          });
+        });
+        if (search) search.addEventListener("input", apply);
+      })();
     </script>
 
     <style>
@@ -200,6 +284,152 @@ const totals = papersData.totals;
         font-size: 0.68rem;
         color: var(--dim);
       }
+    .explorer {
+        margin-top: 72px;
+        padding-top: 48px;
+        border-top: 1px solid var(--edge);
+      }
+      .explorer-head h2 {
+        font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        color: var(--fg);
+      }
+      .explorer-sub {
+        font-family: var(--font-m);
+        font-size: 0.74rem;
+        color: var(--mut);
+        margin-top: 10px;
+        line-height: 1.7;
+      }
+      .explorer-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: center;
+        margin: 22px 0 18px;
+      }
+      .explorer-search {
+        flex: 1 1 220px;
+        max-width: 320px;
+        padding: 9px 14px;
+        border: 1px solid var(--edge);
+        border-radius: 10px;
+        background: color-mix(in srgb, var(--card) 70%, transparent);
+        color: var(--fg);
+        font-family: var(--font-m);
+        font-size: 0.78rem;
+      }
+      .explorer-search:focus {
+        outline: none;
+        border-color: var(--blue);
+      }
+      .explorer-search::placeholder {
+        color: var(--dim);
+      }
+      .explorer-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .chip {
+        font-family: var(--font-m);
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding: 6px 12px;
+        border: 1px solid var(--edge);
+        border-radius: 99px;
+        background: transparent;
+        color: var(--mut);
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s, background 0.15s;
+      }
+      .chip:hover {
+        border-color: var(--blue);
+        color: var(--fg);
+      }
+      .chip.active {
+        border-color: var(--teal);
+        background: color-mix(in srgb, var(--teal) 14%, transparent);
+        color: var(--teal);
+      }
+      .explorer-table {
+        border: 1px solid var(--edge);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+      .explorer-row {
+        display: grid;
+        grid-template-columns: 120px 1.6fr 110px 70px 1.8fr;
+        gap: 14px;
+        align-items: center;
+        padding: 11px 16px;
+        border-bottom: 1px solid var(--edge);
+        background: color-mix(in srgb, var(--card) 40%, transparent);
+        font-size: 0.82rem;
+        color: var(--mut);
+        text-decoration: none;
+        transition: background 0.15s, border-color 0.15s;
+      }
+      .explorer-row:last-child {
+        border-bottom: none;
+      }
+      .explorer-row[data-status]:hover {
+        background: color-mix(in srgb, var(--blue) 10%, transparent);
+      }
+      .explorer-th {
+        grid-template-columns: 120px 1.6fr 110px 70px 1.8fr;
+        font-family: var(--font-m);
+        font-size: 0.64rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--dim);
+        background: color-mix(in srgb, var(--bg2) 80%, transparent);
+      }
+      .ex-paper {
+        font-family: var(--font-m);
+        font-size: 0.7rem;
+        color: var(--blue);
+      }
+      .ex-claim b {
+        color: var(--teal);
+        font-family: var(--font-m);
+        margin-right: 6px;
+      }
+      .ex-attempts {
+        font-family: var(--font-m);
+        font-size: 0.74rem;
+      }
+      .ex-notes {
+        font-size: 0.76rem;
+        line-height: 1.5;
+        color: var(--dim);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .explorer-empty {
+        margin-top: 16px;
+        font-family: var(--font-m);
+        font-size: 0.76rem;
+        color: var(--dim);
+      }
+
+      @media (max-width: 720px) {
+        .explorer-row,
+        .explorer-th {
+          grid-template-columns: 90px 1fr 70px;
+        }
+        .ex-notes,
+        .explorer-table > .explorer-th > span:nth-child(5) {
+          display: none;
+        }
+        .ex-attempts {
+          grid-column: 3;
+        }
+      }
+
     </style>
   </body>
 </html>
