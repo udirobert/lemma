@@ -27,11 +27,14 @@
   --helix-final-opacity: 0.42; /* finale spectrum opacity (the answer) */
   --helix-tilt: 42;          /* peak helix lean for the depth reveal (deg) */
 
-  /* xylophone height — shared by the instrument and the footer finale stage
-     (the band reserved below the footer caption where the helix parks).
-     Tall enough to show the full uncoiling DNA at morph→1 (bars reach ~500px
-     at full morph with --helix-radius: 200 and exponential coil). */
-  --xylo-h: clamp(500px, 65vh, 700px);
+  /* xylophone height — the playable row only. Keep short so the hero fits
+     in 100vh on load. Uncoiled helix rungs are transforms (they paint
+     outside the container, no layout cost) so this must NOT grow for the
+     helix — see --helix-stage-h for the footer park band. */
+  --xylo-h: clamp(190px, 30vh, 280px);
+  /* footer finale stage — the band reserved below the footer caption where
+     the helix parks. Sized for R=200 rungs + HELIX_H extent. */
+  --helix-stage-h: clamp(420px, 60vh, 640px);
 }
 
 * {
@@ -114,6 +117,7 @@ a {
   justify-content: center;
   text-align: center;
   padding: 72px 24px 48px;
+  overflow: visible;
   background:
     radial-gradient(ellipse 70% 45% at 20% 0%, rgba(79, 142, 247, 0.16), transparent 65%),
     radial-gradient(ellipse 60% 40% at 85% 8%, rgba(212, 69, 242, 0.12), transparent 65%);
@@ -170,6 +174,7 @@ a {
   z-index: 1;
   perspective: 1100px;
   perspective-origin: 50% 40%;
+  overflow: visible;
 }
 
 /* When handed off to the persistent background helix */
@@ -192,6 +197,7 @@ a {
   width: min(94vw, 1080px);
   height: var(--xylo-h);
   transform-style: preserve-3d;
+  overflow: visible;
 }
 
 .bar {
@@ -983,11 +989,11 @@ footer {
 }
 
 /* finale stage — reserves the band the helix parks in at the page end:
-   xylophone height + 44px gap above and below. Desktop + motion only
+   helix stage height + 44px gap above and below. Desktop + motion only
    (mobile skips the helix; reduced-motion never fixes the scene). */
 @media (min-width: 641px) {
   html.js-motion footer {
-    padding-bottom: calc(var(--xylo-h) + 88px);
+    padding-bottom: calc(var(--helix-stage-h) + 88px);
   }
 }
 
@@ -1113,6 +1119,7 @@ footer {
     --helix-tilt: 32;
     --helix-scale: 0.78;
     --xylo-h: clamp(160px, 24vh, 240px);
+    --helix-stage-h: clamp(300px, 40vh, 420px);
   }
   .xylo-scene {
     perspective: 850px;

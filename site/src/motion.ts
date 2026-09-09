@@ -301,12 +301,12 @@ if (!reduced && !isMobile) {
         const coilTY = (b.y - rowCY[b.i]) * morph;
         const coilRY = (b.theta + spin) * morph;
         const coilRZ = 90 * morph;
-        // exponential morph^8: bars stay compact through morph<0.75 (column
-        // visible, no overflow), then uncoil to full DNA width rapidly near
-        // morph→1.  With R=200 the strands are at ±200px; a bar that is
-        // 400px tall (scaleY=4×) becomes a 400px-wide horizontal rung when
-        // rotateZ(90°) — spanning the full helix diameter.
-        const coilS = 1 + Math.pow(morph, 8) * (b.rungScale - 1);
+        // progressive morph^2.5: helix starts forming by morph~0.4 (twist
+        // visible early) and reaches full DNA width at morph→1. With R=200
+        // the strands are at ±200px; a bar scaled to 400px tall becomes a
+        // 400px-wide horizontal rung at rotateZ(90°) — the helix diameter.
+        // (morph^8 stayed a column for 75% of the scroll then popped.)
+        const coilS = 1 + Math.pow(morph, 2.5) * (b.rungScale - 1);
         // spectrum target: natural row, but in verdict-sorted horizontal slots
         const specTX = b.specX - rowCX[b.i];
         // finale target: mirror of the hero row — bar i takes slot n-1-i.
