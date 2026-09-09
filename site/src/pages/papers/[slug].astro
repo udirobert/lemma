@@ -46,6 +46,7 @@ interface Paper {
   figures: string[];
 }
 const paper = Astro.props.paper as Paper;
+const auditedCount = paper.claims.filter((c) => c.status !== "not_audited").length;
 
 function fmtMetric(v: unknown): string {
   if (typeof v === "number") return Number.isFinite(v) ? Number(v).toPrecision(4) : String(v);
@@ -114,7 +115,7 @@ function fmtMetric(v: unknown): string {
       <section class="pd-claims">
         <h2>claims</h2>
         <p class="pd-claims-sub">
-          {paper.summary.audited > 0 ? `${paper.summary.audited} audited` : ""} · click a claim to open the auditor's own summary — metrics, notes, control status
+          {auditedCount > 0 ? `${auditedCount} audited` : ""} · click a claim to open the auditor's own summary — metrics, notes, control status
         </p>
         <div class="claim-table">
           {paper.claims.map((c) => (
