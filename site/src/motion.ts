@@ -247,6 +247,10 @@ if (!reduced && !isMobile) {
     let unfold = 0;       // 0 = helix, 1 = flat mirrored row (single resolve from J)
     let tilt = 0;         // helix lean 0..1, a mid-journey hump for depth (from J)
     let landed = false;   // true once parked: helix-off, hero-style striking, no drag
+    // sceneH is cached at fix time; re-measure when the descent starts so a
+    // stale value (fonts/layout settling mid-journey) can't push the parked
+    // row past the page end. One read, not per-frame.
+    let parkMeasured = false;
     let dragging = false;
     let dragMoved = false;
     let dragLastX = 0;
@@ -295,6 +299,10 @@ if (!reduced && !isMobile) {
       tilt = clamp01((j - 0.45) / 0.12) * (1 - clamp01((j - 0.6) / 0.12));  // 0.45→0.60 depth hump
       const rev = unfold;                                                   // mirror wave rides the same window
       const park = clamp01((j - 0.88) / 0.1);                               // 0.88→0.98 descend to stage
+      if (fixed && park > 0 && !parkMeasured) {
+        parkMeasured = true;
+        sceneH = scene.offsetHeight;
+      }
       if (fixed) {
         xylo!.style.transform = `rotateX(${(tilt * TILT_DEG).toFixed(2)}deg)`;
         // colour: dim helix → bright just before the unwind → full colour landed
@@ -358,7 +366,7 @@ if (!reduced && !isMobile) {
     }
 
     // vertical offset that parks the scene centered in the footer stage —
-    // the band reserved below the footer caption via CSS (--helix-stage-h + 88px),
+    // the band reserved below the footer caption via CSS (--xylo-h + 150px),
     // so the closing frame sits fully inside it, clear of the caption
     let sceneH = 0;
     function parkY() {
@@ -522,6 +530,7 @@ if (!reduced && !isMobile) {
     function fixScene() {
       fixed = true;
       landed = false;
+      parkMeasured = false;
       document.body.appendChild(scene);
       scene.classList.add("helix-fixed", "helix-on");
       xylo.classList.add("helix-on");
@@ -539,6 +548,7 @@ if (!reduced && !isMobile) {
     function unfixScene() {
       fixed = false;
       landed = false;
+      parkMeasured = false;
       J = 0; unfold = 0; tilt = 0;
       scene.classList.remove("helix-fixed", "helix-on");
       xylo.classList.remove("helix-on");

@@ -30,11 +30,8 @@
   /* xylophone height — the playable row only. Keep short so the hero fits
      in 100vh on load. Uncoiled helix rungs are transforms (they paint
      outside the container, no layout cost) so this must NOT grow for the
-     helix — see --helix-stage-h for the footer park band. */
+     helix. The footer park band derives from it (see footer rule). */
   --xylo-h: clamp(190px, 30vh, 280px);
-  /* footer finale stage — the band reserved below the footer caption where
-     the helix parks. Sized for R=200 rungs + HELIX_H extent. */
-  --helix-stage-h: clamp(420px, 60vh, 640px);
 }
 
 * {
@@ -334,6 +331,10 @@ a {
 }
 .xylo.helix-on .bar:active { cursor: grabbing; }
 .xylo.helix-on .bar::before { display: none; }   /* drop the glass sheen while spinning */
+
+/* landed finale: helix-on is off (hero look/origin back) but the rungs must
+   stay clickable inside the pointer-events:none fixed scene */
+.xylo-scene.helix-fixed .bar { pointer-events: auto; }
 
 /* keyboard focus ring for helix bars (visible only when tab-focused) */
 .xylo.helix-on .bar:focus-visible {
@@ -980,20 +981,22 @@ html.pd-motion .figure-cell img.is-loaded {
 
 footer {
   position: relative;
-  z-index: 2; /* above the parked finale spectrum so the text stays readable */
+  z-index: 2; /* above the parked finale row so the text stays readable */
   padding: 34px 24px 60px;
   text-align: center;
   color: var(--dim);
   font-family: var(--font-m);
   font-size: 0.72rem;
+  pointer-events: none; /* caption only — never steal taps from the parked bars below it */
 }
 
-/* finale stage — reserves the band the helix parks in at the page end:
-   helix stage height + 44px gap above and below. Desktop + motion only
-   (mobile skips the helix; reduced-motion never fixes the scene). */
+/* finale stage — reserves the band the mirrored row parks in at the page end:
+   row height + readout (~70px) + ~40px gap above and below. Sized to the
+   parked content (a flat row, not the helix extent) so there is no void.
+   Desktop + motion only (mobile skips the helix; reduced-motion never fixes). */
 @media (min-width: 641px) {
   html.js-motion footer {
-    padding-bottom: calc(var(--helix-stage-h) + 88px);
+    padding-bottom: calc(var(--xylo-h) + 150px);
   }
 }
 
@@ -1119,7 +1122,6 @@ footer {
     --helix-tilt: 32;
     --helix-scale: 0.78;
     --xylo-h: clamp(160px, 24vh, 240px);
-    --helix-stage-h: clamp(300px, 40vh, 420px);
   }
   .xylo-scene {
     perspective: 850px;
