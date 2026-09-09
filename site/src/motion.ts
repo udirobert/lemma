@@ -535,7 +535,7 @@ if (!reduced && !isMobile) {
         scrub: 0.6,
         pin: true,
         anticipatePin: 1,
-        onEnter: () => { captureRow(); ensureRunning(); },
+        onEnter: () => ensureRunning(),
         onUpdate: (self) => { morph = self.progress; ensureRunning(); },
         onLeave: () => fixScene(),
         onEnterBack: () => unfixScene(),
