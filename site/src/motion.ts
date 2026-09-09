@@ -134,19 +134,19 @@ if (!reduced && bars.length) {
   });
 }
 
-/* ---------- helix: playable bars → double helix → verdict spectrum ----------
+/* ---------- helix: playable bars → double helix → mirrored row ----------
    One rAF loop owns every bar transform. The scroll journey is a single
    narrative arc with no dead handoff:
      Phase A — pinned hero: the row coils into a multi-turn double helix
               (each claim = one base-pair rung). `morph` 0→1.
      Phase B — fixed background helix: auto-rotation + drag-to-spin + beat
-              brightness pops.
+              brightness pops. Stays a helix through the dense content.
      Phase B2 — the helix leans back (rotateX hump) for a depth reveal.
-     Phase B3 — the helix unwinds (`unfold` 0→1) into a flat spectrum where the
-              bars re-sort by verdict (supported → inconclusive → falsified).
-     Phase C — the closing bookend: colour ramps back to full, the verdict
-              sort dissolves into a mirrored version of the hero row, and the
-              scene parks below the footer as the page's last frame.
+     Phase B3 — the helix unwinds once (`unfold` 0→1), directly into the
+              mirrored hero row. No intermediate verdict-sorted flat row.
+     Phase C — the closing bookend: the scene lands playable below the
+              footer (helix mode off, hero-style striking) and parks in
+              its stage as the page's last frame.
    `spin` accumulates gentle auto-rotation + pointer/touch drag with inertia
    (and arrow-key nudges), and a wake/idle doze keeps the loop asleep between
    interactions. Bars keep their note + verdict colours throughout. The old
@@ -241,8 +241,9 @@ if (!reduced && !isMobile) {
     let vel = 0;          // drag velocity, decays to 0 (rad/s)
     let fixed = false;    // scene detached to body as the persistent helix?
     let J = 0;            // post-hero journey progress (0..1): tilt + spectrum
-    let unfold = 0;       // 0 = helix, 1 = flat verdict-sorted spectrum (from J)
+    let unfold = 0;       // 0 = helix, 1 = flat mirrored row (single resolve from J)
     let tilt = 0;         // helix lean 0..1, a mid-journey hump for depth (from J)
+    let landed = false;   // true once parked: helix-off, hero-style striking, no drag
     let dragging = false;
     let dragMoved = false;
     let dragLastX = 0;
@@ -273,24 +274,32 @@ if (!reduced && !isMobile) {
       // every window completes at J = 1 — the absolute page bottom — so the
       // finale is the last thing, not a mid-page afterthought.
       const j = fixed ? J : 0;
-      unfold = clamp01((j - 0.6) / 0.2);                                    // 0.60→0.80 verdict sort
+      // single resolve: the helix stays a helix through the dense content and
+      // unwinds once, directly into the mirrored hero row (0.84→0.94). No
+      // intermediate verdict-sorted flat row — that was the "wrong shape"
+      // shuffling twice (unfold to spectrum, then re-shuffle to mirror).
+      unfold = clamp01((j - 0.84) / 0.1);                                   // 0.84→0.94 unwind
       tilt = clamp01((j - 0.45) / 0.12) * (1 - clamp01((j - 0.6) / 0.12));  // 0.45→0.60 depth hump
-      const rev = clamp01((j - 0.9) / 0.1);                                 // 0.90→1.00 mirror wave
-      const park = clamp01((j - 0.78) / 0.1);                               // 0.78→0.88 descend to stage
+      const rev = unfold;                                                   // mirror wave rides the same window
+      const park = clamp01((j - 0.88) / 0.1);                               // 0.88→0.98 descend to stage
       if (fixed) {
         xylo!.style.transform = `rotateX(${(tilt * TILT_DEG).toFixed(2)}deg)`;
-        // colour: dim helix → finale brightness with the unwind → full colour
-        // exactly as the mirror wave begins, so the final act plays bright
-        const ramp = clamp01((j - 0.6) / 0.2);
+        // colour: dim helix → bright just before the unwind → full colour landed
+        const ramp = clamp01((j - 0.75) / 0.15);
         // readability zones dim the instrument inside dense content; the
         // dim fades out as the scene parks in its stage below all content
-        const op = lerp(lerp(BASE_O, FINAL_O, ramp), 1, clamp01((j - 0.78) / 0.12)) * lerp(zoneDim, 1, park);
+        const op = lerp(lerp(BASE_O, FINAL_O, ramp), 1, park) * lerp(zoneDim, 1, park);
         const sc = lerp(BASE_S, 1, ramp);
         gsap.set(scene, { opacity: op, scale: sc, y: park * parkY() });
+        // landed: drop helix mode so the finale is a real xylophone again —
+        // bottom-center origin, glass sheen, elastic strike, no drag swallow.
+        // Re-applied on scroll-up (park < 1) so the journey reverses cleanly.
+        landed = park >= 1;
+        xylo!.classList.toggle("helix-on", !landed);
       }
-      // verdict hairline + axis: in during the unwind, out during the mirror
+      // verdict hairline + axis: in just before the unwind, out as we land
       if (fixed && hairline) {
-        const op = clamp01((j - 0.5) / 0.12) * (1 - rev);
+        const op = clamp01((j - 0.8) / 0.08) * (1 - clamp01((j - 0.95) / 0.05));
         hairline.style.opacity = op.toFixed(2);
         axisCaption.style.opacity = op.toFixed(2);
       }
@@ -307,15 +316,14 @@ if (!reduced && !isMobile) {
         // 400px-wide horizontal rung at rotateZ(90°) — the helix diameter.
         // (morph^8 stayed a column for 75% of the scroll then popped.)
         const coilS = 1 + Math.pow(morph, 2.5) * (b.rungScale - 1);
-        // spectrum target: natural row, but in verdict-sorted horizontal slots
-        const specTX = b.specX - rowCX[b.i];
         // finale target: mirror of the hero row — bar i takes slot n-1-i.
         // per-bar stagger: a left-to-right wave, not a simultaneous scramble
         const revTX = rowCX[n - 1 - b.i] - rowCX[b.i];
         const bRev = clamp01((rev - (b.i / Math.max(1, n - 1)) * 0.25) / 0.75);
-        // compose: coil → verdict spectrum (unfold) → mirrored row (bRev)
-        const flat = Math.max(unfold, bRev);
-        const tx = lerp(lerp(coilTX, specTX, unfold), revTX, bRev);
+        // compose: coil → mirrored row (bRev). One unwind, no intermediate
+        // verdict-sorted flat row.
+        const flat = bRev;
+        const tx = lerp(coilTX, revTX, bRev);
         const ty = lerp(coilTY, 0, flat);
         const ry = lerp(coilRY, 0, flat);
         const rz = lerp(coilRZ, 0, flat);
@@ -328,7 +336,7 @@ if (!reduced && !isMobile) {
     }
 
     // vertical offset that parks the scene centered in the footer stage —
-    // the band reserved below the footer caption via CSS (--xylo-h + 88px),
+    // the band reserved below the footer caption via CSS (--helix-stage-h + 88px),
     // so the closing frame sits fully inside it, clear of the caption
     let sceneH = 0;
     function parkY() {
@@ -395,7 +403,7 @@ if (!reduced && !isMobile) {
     // through to native scrolling (touch-action: pan-y). A real drag
     // suppresses the click-note; a tap still plays.
     function onDown(e: PointerEvent) {
-      if (!fixed) return;
+      if (!fixed || landed) return; // landed finale is a xylophone, not a helix
       if (e.pointerType === "mouse" && e.button !== 0) return;
       pendingDrag = { id: e.pointerId, x: e.clientX, y: e.clientY };
       dragMoved = false; vel = 0;
@@ -444,16 +452,17 @@ if (!reduced && !isMobile) {
     addEventListener("pointercancel", onUp as EventListener, true);
     for (const b of bars) b.el.addEventListener("pointerdown", onDown);
 
-    // keyboard controls for the fixed helix — arrow keys spin, Enter/Space strikes a note
+    // keyboard controls for the fixed helix — arrow keys spin (until landed),
+    // Enter/Space strikes a note (always, including the landed finale)
     function onKey(e: KeyboardEvent) {
       if (!fixed) return;
       const key = e.key;
-      if (key === "ArrowLeft") {
+      if (key === "ArrowLeft" && !landed) {
         e.preventDefault();
         spin -= 0.15;
         vel = -0.15;
         wake(4000);
-      } else if (key === "ArrowRight") {
+      } else if (key === "ArrowRight" && !landed) {
         e.preventDefault();
         spin += 0.15;
         vel = 0.15;
@@ -490,6 +499,7 @@ if (!reduced && !isMobile) {
     const heroCopy = heroEl.querySelector(".hero-copy");
     function fixScene() {
       fixed = true;
+      landed = false;
       document.body.appendChild(scene);
       scene.classList.add("helix-fixed", "helix-on");
       xylo.classList.add("helix-on");
@@ -506,6 +516,7 @@ if (!reduced && !isMobile) {
     }
     function unfixScene() {
       fixed = false;
+      landed = false;
       J = 0; unfold = 0; tilt = 0;
       scene.classList.remove("helix-fixed", "helix-on");
       xylo.classList.remove("helix-on");
