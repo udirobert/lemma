@@ -120,6 +120,9 @@ for (const bar of document.querySelectorAll<HTMLElement>(".bar")) {
 }
 
 /* ---------- bar entrance ---------- */
+// Transform tween on the same elements the coil owns. The Phase A coil kills
+// it on first scroll (see killEntrance): two writers to el.style.transform
+// fight and the bars-to-helix handoff judders.
 const bars = Array.from(document.querySelectorAll<HTMLElement>(".bar"));
 if (!reduced && bars.length) {
   gsap.from(bars, {
@@ -257,6 +260,16 @@ if (!reduced && !isMobile) {
     // last beat pop / interaction, and wakes on pops, drags, tab focus
     let awakeUntil = 0;
     const wake = (ms: number) => { awakeUntil = performance.now() + ms; ensureRunning(); };
+    // The entrance tween and the coil both write bar transforms. The moment
+    // Phase A takes over, the entrance dies: killed mid-flight we force
+    // opacity:1 (apply() never touches opacity) so no bar sticks half-faded.
+    let entranceDead = false;
+    function killEntrance() {
+      if (entranceDead) return;
+      entranceDead = true;
+      gsap.killTweensOf(heroBars);
+      gsap.set(heroBars, { opacity: 1, clearProps: "transform" });
+    }
 
     // Build each bar's transform from `morph` (row→helix) then `unfold`
     // (helix→verdict spectrum), plus a container `tilt` for the depth reveal.
@@ -294,8 +307,17 @@ if (!reduced && !isMobile) {
         // landed: drop helix mode so the finale is a real xylophone again —
         // bottom-center origin, glass sheen, elastic strike, no drag swallow.
         // Re-applied on scroll-up (park < 1) so the journey reverses cleanly.
+        // (While coiling, helix-on is owned by the origin flip below.)
         landed = park >= 1;
-        xylo!.classList.toggle("helix-on", !landed);
+        if (landed) xylo!.classList.remove("helix-on");
+      }
+      // Helix geometry pivots about bar centers; the hero row rests on
+      // bottom-center. Flip the origin the moment the coil starts so bars
+      // twist in place instead of arcing around their base (that arc reads
+      // as judder). Runs for the pinned coil; the landed branch above owns
+      // the parked finale.
+      if (!fixed) {
+        xylo!.classList.toggle("helix-on", morph > 0.001);
       }
       // verdict hairline + axis: in just before the unwind, out as we land
       if (fixed && hairline) {
@@ -551,8 +573,8 @@ if (!reduced && !isMobile) {
         scrub: 0.6,
         pin: true,
         anticipatePin: 1,
-        onEnter: () => ensureRunning(),
-        onUpdate: (self) => { morph = self.progress; ensureRunning(); },
+        onEnter: () => { killEntrance(); ensureRunning(); },
+        onUpdate: (self) => { killEntrance(); morph = self.progress; ensureRunning(); },
         onLeave: () => fixScene(),
         onEnterBack: () => unfixScene(),
       },
