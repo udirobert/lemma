@@ -20,7 +20,7 @@
   /* ---------- helix tunables (tweak these to reshape the DNA) ---------- */
   --helix-turns: 2.5;        /* full twists along the helix       */
   --helix-height: 320;       /* vertical extent in px              */
-  --helix-radius: 120;       /* strand radius / half rung length   */
+  --helix-radius: 200;       /* strand radius / half rung length — wider spread for a proper DNA helix */
   --helix-auto-rotate: 0.5;  /* auto-rotation speed (rad/s)        */
   --helix-opacity: 0.22;     /* resting opacity when fixed         */
   --helix-scale: 0.85;       /* resting scale when fixed           */
@@ -28,8 +28,10 @@
   --helix-tilt: 42;          /* peak helix lean for the depth reveal (deg) */
 
   /* xylophone height — shared by the instrument and the footer finale stage
-     (the band reserved below the footer caption where the helix parks) */
-  --xylo-h: clamp(190px, 30vh, 280px);
+     (the band reserved below the footer caption where the helix parks).
+     Tall enough to show the full uncoiling DNA at morph→1 (bars reach ~500px
+     at full morph with --helix-radius: 200 and exponential coil). */
+  --xylo-h: clamp(500px, 65vh, 700px);
 }
 
 * {
