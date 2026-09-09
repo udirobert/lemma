@@ -58,6 +58,14 @@ let actx: AudioContext | null = null;
 let actxSuspendT: ReturnType<typeof setTimeout> | undefined;
 const readout = document.getElementById("xylo-readout");
 
+// Composed strike bounce: the helix rAF loop owns bar transforms, so the pop
+// lives inside apply() as per-bar hit timestamps. A GSAP y/scale tween would
+// overwrite the parked slot transform (finale bars jumping to natural seats).
+// Mobile has no loop and keeps the direct GSAP bounce.
+const helixHits = new Map<HTMLElement, number>();
+let helixBounceUntil = 0;
+let helixWake: ((ms: number) => void) | null = null;
+
 // auto-suspend the AudioContext after 10s of silence so the browser can
 // release the audio graph; it resumes on the next strike. (Mobile Safari
 // is especially aggressive about backgrounding audio threads.)
@@ -107,11 +115,19 @@ function strike(bar: HTMLElement) {
     bar.closest(".xylo-scene")?.querySelector<HTMLElement>(".xylo-readout") ?? readout;
   if (nearestReadout) nearestReadout.textContent = `claim ${label} · ${state}`;
   if (!reduced && !bar.closest(".xylo.helix-on")) {
-    gsap.fromTo(
-      bar,
-      { y: -14, scale: 1.06 },
-      { y: 0, scale: 1, duration: 0.55, ease: "elastic.out(1.1, 0.42)" }
-    );
+    if (helixWake) {
+      // desktop: the loop owns transforms — record the hit, apply() pops
+      helixHits.set(bar, performance.now());
+      helixBounceUntil = performance.now() + 600;
+      helixWake(700);
+    } else {
+      // mobile (no helix loop): nothing else writes transform, tween directly
+      gsap.fromTo(
+        bar,
+        { y: -14, scale: 1.06 },
+        { y: 0, scale: 1, duration: 0.55, ease: "elastic.out(1.1, 0.42)" }
+      );
+    }
   }
 }
 
@@ -264,6 +280,7 @@ if (!reduced && !isMobile) {
     // last beat pop / interaction, and wakes on pops, drags, tab focus
     let awakeUntil = 0;
     const wake = (ms: number) => { awakeUntil = performance.now() + ms; ensureRunning(); };
+    helixWake = wake;
     // The entrance tween and the coil both write bar transforms. The moment
     // Phase A takes over, the entrance dies: killed mid-flight we force
     // opacity:1 (apply() never touches opacity) so no bar sticks half-faded.
@@ -354,10 +371,21 @@ if (!reduced && !isMobile) {
         // verdict-sorted flat row.
         const flat = bRev;
         const tx = lerp(coilTX, revTX, bRev);
-        const ty = lerp(coilTY, 0, flat);
+        // composed strike pop: a decaying bounce added to the owned transform.
+        // (A GSAP y/scale tween here would overwrite the slot position — the
+        // bug where clicked finale bars jumped to their natural seats.)
+        const hitAt = helixHits.get(b.el) ?? 0;
+        const hu = (performance.now() - hitAt) / 550;
+        let popY = 0, popS = 1;
+        if (hitAt && hu < 1) {
+          const e = Math.exp(-4 * hu) * Math.cos(hu * Math.PI * 3);
+          popY = -14 * e;
+          popS = 1 + 0.06 * e;
+        } else if (hitAt) helixHits.delete(b.el);
+        const ty = lerp(coilTY, 0, flat) + popY;
         const ry = lerp(coilRY, 0, flat);
         const rz = lerp(coilRZ, 0, flat);
-        const s = lerp(coilS, 1, flat);
+        const s = lerp(coilS, 1, flat) * popS;
         b.el.style.transform =
           `translate3d(${tx.toFixed(2)}px,${ty.toFixed(2)}px,0)` +
           ` rotateY(${(ry * 180 / Math.PI).toFixed(2)}deg)` +
@@ -398,7 +426,8 @@ if (!reduced && !isMobile) {
       // drags, keyboard, and the journey's scroll onUpdate.
       const idleRow = !fixed && morph < 0.003;
       const dozing = performance.now() >= awakeUntil && Math.abs(vel) < 0.002;
-      if (!dragging && (idleRow || (fixed && dozing))) { running = false; return; }
+      const bouncing = performance.now() < helixBounceUntil;
+      if (!dragging && !bouncing && (idleRow || (fixed && dozing))) { running = false; return; }
       rafId = requestAnimationFrame(frame);
     }
     function ensureRunning() {
