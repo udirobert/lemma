@@ -24,15 +24,37 @@ interface Paper {
   role: string;
   status: string;
   links: { logbook: string | null; dataset: string | null; paper: string | null };
-  claims: Array<{ id: string; title: string; testable: boolean; status: string; attempts: number }>;
+  claims: Array<{
+    id: string;
+    title: string;
+    testable: boolean;
+    status: string;
+    attempts: number;
+    notes?: string;
+    metrics?: Record<string, unknown>;
+    control_pass?: boolean | null;
+  }>;
   summary: { supported: number; falsified: number; inconclusive: number; not_audited: number };
-  judge: { verdict: string; score: string } | null;
+  judge: {
+    verdict: string;
+    score: string;
+    rubric?: Record<string, { pass: boolean; detail: string }>;
+  } | null;
   trace: { n_events: number; n_llm: number; n_tool: number; wall_min: number; path: string };
   failures_preserved: number;
   xylo: Array<{ claim: string; label: string; state: string }>;
   figures: string[];
 }
 const paper = Astro.props.paper as Paper;
+const auditedCount = paper.claims.filter((c) => c.status !== "not_audited").length;
+
+function fmtMetric(v: unknown): string {
+  if (typeof v === "number") return Number.isFinite(v) ? Number(v).toPrecision(4) : String(v);
+  if (typeof v === "boolean") return v ? "true" : "false";
+  if (v === null || v === undefined) return "—";
+  if (typeof v === "string") return v.length > 80 ? v.slice(0, 80) + "…" : v;
+  return JSON.stringify(v);
+}
 ---
 
 <!doctype html>
@@ -84,25 +106,98 @@ const paper = Astro.props.paper as Paper;
         <div class="pd-stat"><b>{paper.summary.falsified}</b><span>falsified</span></div>
         <div class="pd-stat"><b>{paper.summary.inconclusive}</b><span>inconclusive</span></div>
         <div class="pd-stat"><b>{paper.summary.not_audited}</b><span>not audited</span></div>
-        <div class="pd-stat"><b>{paper.trace.n_events}</b><span>trace events</span></div>
-        <div class="pd-stat"><b>{paper.failures_preserved}</b><span>failures preserved</span></div>
+        <div class="pd-stat"><b>{paper.trace.n_llm}</b><span>model calls</span></div>
+        <div class="pd-stat"><b>{paper.trace.n_tool}</b><span>tool runs</span></div>
+        <div class="pd-stat"><b>{paper.trace.wall_min}</b><span>wall min</span></div>
+        <div class="pd-stat"><b>{paper.failures_preserved}</b><span>failures kept</span></div>
       </section>
 
       <section class="pd-claims">
         <h2>claims</h2>
+        <p class="pd-claims-sub">
+          {auditedCount > 0 ? `${auditedCount} audited` : ""} · click a claim to open the auditor's own summary — metrics, notes, control status
+        </p>
         <div class="claim-table">
           {paper.claims.map((c) => (
-            <div class="claim-row" id={c.id.toLowerCase()}>
-              <span class="claim-id">{c.id}</span>
-              <span class="claim-title">{c.title}</span>
-              <span class="claim-meta">
-                {c.attempts > 0 ? `${c.attempts} attempt${c.attempts > 1 ? "s" : ""}` : "—"}
-              </span>
-              <StatusBadge status={c.status} />
+            <div class="claim-item" id={c.id.toLowerCase()}>
+              <button
+                class="claim-row claim-toggle"
+                data-claim-toggle={`panel-${c.id}`}
+                aria-expanded="false"
+                aria-controls={`panel-${c.id}`}
+              >
+                <span class="claim-id">{c.id}</span>
+                <span class="claim-title">{c.title}</span>
+                <span class="claim-meta">
+                  {c.attempts > 0 ? `${c.attempts} attempt${c.attempts > 1 ? "s" : ""}` : "—"}
+                </span>
+                <span class="claim-badge-wrap"><StatusBadge status={c.status} /></span>
+                <span class="claim-chevron" data-chevron aria-hidden="true">▾</span>
+              </button>
+              <div class="claim-panel" id={`panel-${c.id}`} hidden>
+                <div class="cp-meta-row">
+                  <span class="cp-label">attempts</span>
+                  <span class="cp-val">{c.attempts > 0 ? c.attempts : "—"}</span>
+                  {c.control_pass !== null && c.control_pass !== undefined && (
+                    <>
+                      <span class="cp-label">positive control</span>
+                      <span class={`cp-val ${c.control_pass ? "ok" : "bad"}`}>
+                        {c.control_pass ? "passed" : "failed"}
+                      </span>
+                    </>
+                  )}
+                </div>
+                {c.notes && c.notes.trim().length > 0 && (
+                  <div class="cp-row">
+                    <span class="cp-label">auditor's note</span>
+                    <span class="cp-val cp-notes">{c.notes}</span>
+                  </div>
+                )}
+                {c.metrics && Object.keys(c.metrics).length > 0 ? (
+                  <div class="cp-metrics">
+                    {Object.entries(c.metrics).map(([k, v]) => (
+                      <div class="cp-metric">
+                        <span class="cp-metric-k">{k}</span>
+                        <span class="cp-metric-v">{fmtMetric(v)}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p class="cp-none">
+                    no per-claim summary in this registry snapshot — verdict preserved from the prior run.
+                  </p>
+                )}
+              </div>
             </div>
           ))}
         </div>
       </section>
+
+      {paper.judge?.rubric && (
+        <section class="pd-judge-card">
+          <div class="judge-head">
+            <div>
+              <h2>why the judge trusts this trail</h2>
+              <p class="judge-sub">
+                The verdict is bound to the evidence trail, not the outcome — five dimensions, all checked.
+              </p>
+            </div>
+            <div class="judge-score">
+              <b>{paper.judge.score}</b>
+              <span>{paper.judge.verdict}</span>
+            </div>
+          </div>
+          <div class="judge-rows">
+            {Object.entries(paper.judge.rubric).map(([dim, r]) => (
+              <div class="judge-row">
+                <span class={`judge-dot ${r.pass ? "pass" : "fail"}`} aria-hidden="true"></span>
+                <span class="judge-dim">{dim.replace("_", " ")}</span>
+                <span class="judge-detail">{r.detail}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {paper.figures.length > 0 && (
         <section class="pd-figures">
@@ -138,6 +233,21 @@ const paper = Astro.props.paper as Paper;
     <script src="../../player.ts"></script>
     <script>
       import "../../paperMotion.ts";
+    </script>
+    <script is:inline>
+      (function () {
+        var toggles = document.querySelectorAll("[data-claim-toggle]");
+        toggles.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var id = btn.getAttribute("data-claim-toggle") || "";
+            var panel = document.getElementById(id);
+            if (!panel) return;
+            var open = panel.hidden;
+            panel.hidden = !open;
+            btn.setAttribute("aria-expanded", open ? "true" : "false");
+          });
+        });
+      })();
     </script>
     <style>
       .paper-detail {
@@ -258,7 +368,7 @@ const paper = Astro.props.paper as Paper;
       }
       .claim-row {
         display: grid;
-        grid-template-columns: 54px 1fr auto auto;
+        grid-template-columns: 54px 1fr auto auto auto;
         align-items: center;
         gap: 14px;
         padding: 13px 18px;
@@ -326,13 +436,213 @@ const paper = Astro.props.paper as Paper;
         margin: -8px 0 18px;
       }
 
+      .pd-claims-sub {
+        font-family: var(--font-m);
+        font-size: 0.72rem;
+        color: var(--dim);
+        margin: -8px 0 18px;
+      }
+      .claim-toggle {
+        width: 100%;
+        border: none;
+        font-family: var(--font-d);
+        cursor: pointer;
+        text-align: left;
+        background: transparent;
+        color: inherit;
+      }
+      .claim-toggle:hover {
+        background: color-mix(in srgb, var(--blue) 8%, transparent);
+      }
+      .claim-toggle .claim-title {
+        color: var(--fg);
+      }
+      .claim-chevron {
+        font-size: 0.7rem;
+        color: var(--dim);
+        transition: transform 0.15s;
+        justify-self: end;
+      }
+      .claim-toggle[aria-expanded="true"] .claim-chevron {
+        transform: rotate(180deg);
+      }
+      .claim-panel {
+        padding: 6px 18px 18px 54px;
+        border-bottom: 1px solid var(--edge);
+        background: color-mix(in srgb, var(--bg2) 45%, transparent);
+      }
+      .claim-panel:last-child {
+        border-bottom: none;
+      }
+      .cp-meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 14px;
+        align-items: baseline;
+        font-family: var(--font-m);
+        font-size: 0.72rem;
+        padding-top: 12px;
+      }
+      .cp-row {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 14px;
+        margin-top: 10px;
+        align-items: baseline;
+      }
+      .cp-label {
+        font-family: var(--font-m);
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--dim);
+      }
+      .cp-val {
+        font-family: var(--font-m);
+        font-size: 0.76rem;
+        color: var(--mut);
+      }
+      .cp-val.ok {
+        color: var(--teal);
+        font-weight: 700;
+      }
+      .cp-val.bad {
+        color: var(--magenta);
+        font-weight: 700;
+      }
+      .cp-notes {
+        font-family: var(--font-d);
+        font-size: 0.84rem;
+        line-height: 1.6;
+        color: var(--fg);
+        white-space: pre-wrap;
+      }
+      .cp-metrics {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 6px 16px;
+        margin-top: 12px;
+      }
+      .cp-metric {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 5px 10px;
+        border: 1px solid var(--edge);
+        border-radius: 8px;
+        background: color-mix(in srgb, var(--card) 60%, transparent);
+        font-family: var(--font-m);
+        font-size: 0.7rem;
+      }
+      .cp-metric-k {
+        color: var(--dim);
+      }
+      .cp-metric-v {
+        color: var(--teal);
+        text-align: right;
+        word-break: break-all;
+      }
+      .cp-none {
+        margin-top: 12px;
+        font-family: var(--font-m);
+        font-size: 0.72rem;
+        color: var(--dim);
+      }
+
+      .pd-judge-card {
+        margin-top: 16px;
+        border: 1px solid var(--edge);
+        border-radius: 14px;
+        background: color-mix(in srgb, var(--card) 55%, transparent);
+        padding: 24px;
+      }
+      .judge-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .judge-head h2 {
+        margin: 0 0 6px;
+      }
+      .judge-sub {
+        font-size: 0.84rem;
+        color: var(--mut);
+        line-height: 1.6;
+        max-width: 560px;
+      }
+      .judge-score {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 12px 18px;
+        border: 1px solid color-mix(in srgb, var(--teal) 45%, transparent);
+        border-radius: 12px;
+        background: color-mix(in srgb, var(--teal) 8%, transparent);
+      }
+      .judge-score b {
+        font-size: 1.9rem;
+        font-weight: 800;
+        color: var(--teal);
+        line-height: 1;
+      }
+      .judge-score span {
+        font-family: var(--font-m);
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--teal);
+        margin-top: 4px;
+      }
+      .judge-rows {
+        margin-top: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .judge-row {
+        display: grid;
+        grid-template-columns: 14px 130px 1fr;
+        gap: 12px;
+        align-items: baseline;
+        font-size: 0.84rem;
+      }
+      .judge-dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        justify-self: center;
+        align-self: center;
+      }
+      .judge-dot.pass {
+        background: var(--teal);
+        box-shadow: 0 0 8px rgba(30, 194, 181, 0.6);
+      }
+      .judge-dot.fail {
+        background: var(--magenta);
+        box-shadow: 0 0 8px rgba(212, 69, 242, 0.6);
+      }
+      .judge-dim {
+        font-family: var(--font-m);
+        font-size: 0.72rem;
+        color: var(--fg);
+      }
+      .judge-detail {
+        color: var(--mut);
+        line-height: 1.5;
+      }
+
       @media (max-width: 640px) {
         .claim-row {
-          grid-template-columns: 44px 1fr;
-          grid-template-rows: auto auto;
+          grid-template-columns: 44px 1fr auto;
+          grid-template-rows: auto auto auto;
         }
-        .claim-meta { grid-column: 2; justify-self: start; }
-        .claim-row > :last-child { grid-column: 2; justify-self: start; }
+        .claim-meta { grid-column: 2; grid-row: 2; justify-self: start; }
+        .claim-badge-wrap { grid-column: 3; grid-row: 1; justify-self: end; }
+        .claim-chevron { grid-column: 3; grid-row: 2; justify-self: end; }
+        .claim-panel { padding: 6px 14px 16px 44px; }
+        .cp-row { grid-template-columns: 100px 1fr; }
       }
     </style>
   </body>

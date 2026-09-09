@@ -469,6 +469,25 @@ a {
 .receipt:nth-child(4) b {
   color: var(--gold);
 }
+.receipt:nth-child(5) b {
+  color: var(--violet);
+}
+.receipt:nth-child(6) b {
+  color: var(--blue);
+}
+.receipt:nth-child(7) b {
+  color: var(--magenta);
+}
+.receipt:nth-child(8) b {
+  color: var(--teal);
+}
+.receipts-note {
+  margin-top: 14px;
+  font-family: var(--font-m);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--dim);
+}
 
 /* ---------------- trace section ---------------- */
 .trace {

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-17T23:38:26+0100",
+  "generated_at": "2026-09-08T22:47:03+0000",
   "totals": {
     "papers": 4,
     "claims": 24,
@@ -9,7 +9,11 @@
     "not_audited": 4,
     "audited": 20,
     "failures_preserved": 54,
-    "logbooks": 4
+    "logbooks": 4,
+    "llm_calls": 66,
+    "tool_runs": 331,
+    "wall_min": 283.3,
+    "attempts": 23
   },
   "papers": [
     {
@@ -35,42 +39,60 @@
           "title": "Theorem 4.1 — end-to-end grokking (zero teacher)",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
         },
         {
           "id": "C2",
           "title": "Theorem 4.2 — grokking with realizable teacher",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
         },
         {
           "id": "C3",
           "title": "Theorems 4.4-4.6 — phase decomposition",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
         },
         {
           "id": "C4",
           "title": "Figure 2 — hyperparameter dependence of grokking time",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
         },
         {
           "id": "C5",
           "title": "Figures 3-4 — two-layer ReLU grokking beyond the linear setting",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
         },
         {
           "id": "FALS",
           "title": "",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
         }
       ],
       "summary": {
@@ -81,7 +103,29 @@
       },
       "judge": {
         "verdict": "PASS",
-        "score": "5/5"
+        "score": "5/5",
+        "rubric": {
+          "structure": {
+            "pass": true,
+            "detail": "claims.json (5 claims), audit_report.json present"
+          },
+          "evidence": {
+            "pass": true,
+            "detail": "6 audited claims; issues: none"
+          },
+          "integrity": {
+            "pass": true,
+            "detail": "0 claims skipped as untestable, all declared untestable at extraction"
+          },
+          "cost_disclosure": {
+            "pass": true,
+            "detail": "per-claim attempt counts recorded; wall time in run files + trace"
+          },
+          "trace": {
+            "pass": true,
+            "detail": "10 events; legacy hand-driven run — adaptation documented by 10 fixture events (no LLM/tool calls captured by construction)"
+          }
+        }
       },
       "trace": {
         "n_events": 10,
@@ -158,42 +202,123 @@
           "title": "Risk Decomposition Identity",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "Closed-form verification of Proposition 3.1 (R = RBG + RPV) on a two-family linear-task mixture (families distinguished by an intercept). MAIN predictor: task-1-only oracle (RBG_main > 0); CONTROL: Bayes predictor. Reviewer-provided reference implementation, executed by the audit pipeline.",
+          "metrics": {
+            "R_main": 0.4891430266164797,
+            "RBG_main": 0.288150043235913,
+            "RPV_main": 0.19903355063600744,
+            "rel_diff": 0.004005848265103766,
+            "R_ctrl": 0.199637696810282,
+            "RPV_ctrl": 0.19903355063600744,
+            "rel_diff_ctrl": 0.0030262129043128255,
+            "RBG_main_nonzero": true,
+            "control_pass": true,
+            "M": 5000,
+            "p": 10
+          },
+          "control_pass": true
         },
         {
           "id": "C2",
           "title": "Coupled p-N Scaling of Bayes Gap",
           "testable": true,
           "status": "inconclusive",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "Joint model R2=0.6542, N-only R2=0.0010, p-only R2=0.1287. Success criterion: R2_joint > 0.8 and > 0.1 higher than others.",
+          "metrics": {
+            "r2_joint": 0.6541858630882735,
+            "r2_n_only": 0.0010486293369841304,
+            "r2_p_only": 0.12865249647240662,
+            "control_pass": false,
+            "r2_control": 0.11775441747275273
+          },
+          "control_pass": false
         },
         {
           "id": "C3",
           "title": "Rapid Task-Type Identification (Posterior Concentration)",
           "testable": true,
           "status": "supported",
-          "attempts": 4
+          "attempts": 4,
+          "notes": "Closed-form verification of the Theorem-3.3 mechanism on the paper's task-mixture class (linear vs degree-2 Hermite families, Definition 2.1): the mixture posterior concentrates on the true task and the Bayes-optimal mixture predictor converges to the true-family oracle, ratio(k) = excess_mix/excess_oracle >= 1 (Rao-Blackwell) decreasing to 1. The Transformer training experiment of Sec 4 needs GPU training and is out of CPU-audit scope; this verifies the Bayesian mechanism it demonstrates. Reviewer-provided reference implementation.",
+          "metrics": {
+            "mean_p_true_5": 0.7673844424578222,
+            "mean_p_true_15": 0.9280481568708537,
+            "ratio_1": 1.113563540367002,
+            "ratio_5": 1.1871283700814397,
+            "ratio_15": 1.0241874892254386,
+            "slope_ratio": -0.021147868378434943,
+            "r_squared": 0.9015878237550735,
+            "control_ratio_is_1": true,
+            "control_p_true_is_1": true,
+            "control_pass": true,
+            "checks": {
+              "p_true_5_ge_0.7": true,
+              "p_true_15_ge_0.9": true,
+              "ratio_15_le_1.05": true,
+              "p_true_in_01": true,
+              "ratio_ge_1": true,
+              "ratio_tail_decreasing": true,
+              "ratio_tail_r2_gt_0.7": true,
+              "control_pass": true
+            }
+          },
+          "control_pass": true
         },
         {
           "id": "C4",
           "title": "Bayes Gap Upper Bound Rate",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "pN slope=-0.826, R2=0.995. m-fit R2=0.985, min_in_grid=True. Control pass=True.",
+          "metrics": {
+            "slope_pN": -0.8259726947786705,
+            "r2_pN": 0.9952155757101621,
+            "p_val_pN": 8.59774524213531e-06,
+            "r2_fit": 0.985386027404111,
+            "m_min": 13.713578399975896,
+            "min_in_grid": true,
+            "control_slope": -1.0921242501975101,
+            "control_r2": 0.9950811574443166,
+            "control_pass": true
+          },
+          "control_pass": true
         },
         {
           "id": "C5",
           "title": "Wasserstein Stability of Bayes Gap",
           "testable": true,
           "status": "inconclusive",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "Correlation between W1 and Bayes Gap is -0.349, which is less than 0.9. Positive control failed: Bayes Gap did not increase as expected or Posterior Variance was not stable.",
+          "metrics": {
+            "corr_w1_bayes_gap": -0.3485801191475708,
+            "corr_w1_post_var": -0.43740850303732426,
+            "mean_bayes_gap": 0.004729084377514484,
+            "mean_post_var": 0.25155781052823306,
+            "std_post_var": 0.010026844620783317,
+            "control_pass": false
+          },
+          "control_pass": false
         },
         {
           "id": "C6",
           "title": "Posterior Variance Bound by Minimax Risk",
           "testable": true,
           "status": "inconclusive",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "Estimated decay rate 4.74 vs theoretical 400.00. Ratio 0.01. Control passed: False.",
+          "metrics": {
+            "estimated_decay_rate": 4.744224385014646,
+            "theoretical_decay_rate": 399.99999999999994,
+            "ratio": 0.011860560962536617,
+            "control_pass": false,
+            "excess_variance_at_k_1": 0.09608233531636304,
+            "excess_variance_at_k_50": -1.700029006457271e-16
+          },
+          "control_pass": false
         }
       ],
       "summary": {
@@ -204,7 +329,29 @@
       },
       "judge": {
         "verdict": "PASS",
-        "score": "5/5"
+        "score": "5/5",
+        "rubric": {
+          "structure": {
+            "pass": true,
+            "detail": "claims.json (6 claims), audit_report.json present"
+          },
+          "evidence": {
+            "pass": true,
+            "detail": "6 audited claims; issues: none"
+          },
+          "integrity": {
+            "pass": true,
+            "detail": "0 claims skipped as untestable, all declared untestable at extraction"
+          },
+          "cost_disclosure": {
+            "pass": true,
+            "detail": "per-claim attempt counts recorded; wall time in run files + trace"
+          },
+          "trace": {
+            "pass": true,
+            "detail": "267 events, 33 LLM calls, 95 tool runs, 15 failed attempts preserved"
+          }
+        }
       },
       "trace": {
         "n_events": 268,
@@ -277,42 +424,112 @@
           "title": "GRAM approximates multiple data-filtered models in a single run (Simple Stories)",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "Full 2.1M-sample Simple Stories reproduction (train split -> test-split eval), 1 epoch, 16,528 steps, batch 128, seq 256, A10G. Reimplemented from paper text (no public code): 26M decoder-only Transformer, GRAM = core MLP 1856 + 4x aux MLP 192 (1.58M/aux ~= 6% of baseline, matches paper), p_af=1.0, p_as=0.3, p_cr=0.5, heterogeneous accumulation, AdamW b=0.9/0.95 wd=0.1, LR 5e-3 WSD 10/80/10, bf16. Compute ratios via Appendix-M power-law inversion of the baseline learning curve. RESULT: core 0.975 >= 0.9 PASS; retain 0.976 within 0.014 of paper filtering 0.962 (threshold ~0.02) PASS; forget 0.789 well below retain (gap 0.187, matching paper gap 0.186) PASS; elicit 0.836 ~ paper 0.855 with partial-recovery pattern (elicit > forget) reproduced. Training wall time GRAM/baseline = 1.003 (cost independence corroborates C6). CAVEATS: single seed (paper: 3, pooled); data-filtering baseline not re-trained, so retain-vs-filtering uses the paper's reported filtering numbers; text-only reimplementation may differ in unreported details. Per-category: aliens retained 1.002 (paper 0.99), deadline forgotten hardest core-only 0.606 (paper 0.61 example).",
+          "metrics": {
+            "core_compute_ratio": 0.9748,
+            "retain_compute_ratio_mean": 0.9757,
+            "forget_compute_ratio_mean": 0.789,
+            "elicit_compute_ratio_mean": 0.836,
+            "retain_vs_paper_filtering_abs_diff": 0.0137,
+            "retain_minus_forget_gap": 0.1867,
+            "core_ratio_ge_0.9": true,
+            "retain_within_0.02_of_filtering": true,
+            "forget_well_below_retain": true,
+            "paper_gram_core": 0.938,
+            "paper_gram_retain": 0.952,
+            "paper_gram_forget": 0.766,
+            "paper_gram_elicit": 0.855,
+            "paper_filtering_core": 0.961,
+            "paper_filtering_retain": 0.962,
+            "paper_filtering_forget": 0.78,
+            "paper_filtering_elicit": 0.87,
+            "per_cat_retain": {
+              "a deadline or time limit": 0.9847,
+              "alien encounters": 1.0023,
+              "bygone eras": 0.9641,
+              "cultural traditions": 0.9517
+            },
+            "per_cat_forget_core_only": {
+              "a deadline or time limit": 0.6058,
+              "alien encounters": 0.7151,
+              "bygone eras": 0.942,
+              "cultural traditions": 0.8852
+            },
+            "baseline_params": 27448320,
+            "gram_total_params": 32187904,
+            "gram_aux_params_each": 1578496,
+            "total_steps": 16528,
+            "baseline_wall_s": 3839.4,
+            "gram_wall_s": 3852.5,
+            "gram_over_baseline_walltime_ratio": 1.0034,
+            "seeds": 1,
+            "gpu": "Modal A10G",
+            "train_split": "train",
+            "eval_split": "test"
+          },
+          "control_pass": null
         },
         {
           "id": "C2",
           "title": "GRAM isolates realistic dual-use capabilities and matches data filtering at 800M scale",
           "testable": true,
           "status": "not_audited",
-          "attempts": 0
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
         },
         {
           "id": "C3",
           "title": "Capability isolation improves with scale and GRAM tracks data filtering from 50M to 5B",
           "testable": true,
           "status": "not_audited",
-          "attempts": 0
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
         },
         {
           "id": "C4",
           "title": "GRAM composes arbitrary capability subsets without degradation, unlike FT-LoRA",
           "testable": true,
           "status": "not_audited",
-          "attempts": 0
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
         },
         {
           "id": "C5",
           "title": "GRAM outperforms filtering and FT-LoRA on capability removal under partial labeling",
           "testable": true,
           "status": "not_audited",
-          "attempts": 0
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
         },
         {
           "id": "C6",
           "title": "GRAM's training cost is independent of the number of capability profiles, yielding 5× savings over filtering",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "Analytic 6*N*T FLOPS model with paper hyperparameters (80/20 core/aux token mixture, p_cr=0.5, 4 aux modules at 0.1x core MLP each => 1.4x total MLP). GRAM trains on the same token count as baseline (aux oversampling offset by core undersampling), so its FLOPS ratio is just the active-parameter ratio: 1.0400x (within 5% of 1.0). Filtering needs 5 full runs = 5.0x, i.e. 4.81x savings for GRAM. Active MLP params per served profile = 1.10x <= 1.1x. Positive control (zero-overhead degenerate case) returns exactly 1.0x/5.0x as required.",
+          "metrics": {
+            "gram_train_flops_ratio_vs_baseline": 1.04,
+            "filtering_train_flops_ratio_vs_baseline": 5.0,
+            "filtering_over_gram_savings": 4.8076923076923075,
+            "gram_total_mlp_params_ratio": 1.4,
+            "gram_active_mlp_params_per_profile_ratio": 1.1,
+            "gram_active_total_params_per_profile_ratio": 1.0666666666666669,
+            "prob_aux_module_active_per_token": 0.6000000000000001,
+            "control_pass": true,
+            "control_gram_ratio_expected_1.0": 1.0,
+            "control_filter_ratio_expected_5.0": 5.0
+          },
+          "control_pass": true
         }
       ],
       "summary": {
@@ -323,7 +540,29 @@
       },
       "judge": {
         "verdict": "PASS",
-        "score": "5/5"
+        "score": "5/5",
+        "rubric": {
+          "structure": {
+            "pass": true,
+            "detail": "claims.json (6 claims), audit_report.json present"
+          },
+          "evidence": {
+            "pass": true,
+            "detail": "2 audited claims; issues: none"
+          },
+          "integrity": {
+            "pass": true,
+            "detail": "0 claims skipped as untestable, all declared untestable at extraction"
+          },
+          "cost_disclosure": {
+            "pass": true,
+            "detail": "per-claim attempt counts recorded; wall time in run files + trace"
+          },
+          "trace": {
+            "pass": true,
+            "detail": "29 events, 2 LLM calls, 7 tool runs, 0 failed attempts preserved"
+          }
+        }
       },
       "trace": {
         "n_events": 64,
@@ -394,42 +633,242 @@
           "title": "Critical exponent in 1D exponential model",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "Fitted critical exponent nu=0.998 within 0.05 of 1.0 (Eq. 9/10).",
+          "metrics": {
+            "nu_fitted": 0.9982688954834558,
+            "nu_control": 1.0000000000000007,
+            "control_pass": true,
+            "t_eps": 1.1141999999999999,
+            "t_train_zero": 1.1021999999999998,
+            "xbar": -0.0663896187196535,
+            "xbar_fixed_point": -0.1163896187196535,
+            "Emax": 0.43312502283221105,
+            "n_fit_points": 745
+          },
+          "control_pass": true
         },
         {
           "id": "C2",
           "title": "Critical exponent in D-dimensional uniform ball model",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "Closed-form verification of Eq 23: critical exponent nu=(D+1)/2 in the D-dimensional uniform-ball model, using the paper's exact large-N gradient flow (Eqs 20-21: dw/dt=-Gw+a with dataset-level G and a) on the Sec 3.3.1 shifted-ball dataset, test error via Eq 22 (cap integral by theta-quadrature), exponent fitted from log E_D vs log(1-h) in the asymptotic window h in (0.999, 1). Shift calibrated at 1.0. Reviewer-provided reference.",
+          "metrics": {
+            "shift_used": 1.0,
+            "nu_D2": 1.4999612238147915,
+            "target_D2": 1.5,
+            "r2_D2": 0.9999999998097971,
+            "nfit_D2": 3358,
+            "nu_D5": 2.9997950334784917,
+            "target_D5": 3.0,
+            "r2_D5": 0.9999999974579918,
+            "nfit_D5": 10210,
+            "nu_D10": 5.4993439566100895,
+            "target_D10": 5.5,
+            "r2_D10": 0.9999999451989837,
+            "nfit_D10": 7890,
+            "control_pass": true,
+            "per_D": {
+              "D2": {
+                "ok": true,
+                "nu": 1.4999612238147915,
+                "r2": 0.9999999998097971,
+                "t_eps": 0.15364574062711286,
+                "train_err_at_t_eps": 0.261,
+                "n_fit": 3358,
+                "eps_used": 0.9919094254623091,
+                "Emax": 0.009186612981473748
+              },
+              "D5": {
+                "ok": true,
+                "nu": 2.9997950334784917,
+                "r2": 0.9999999974579918,
+                "t_eps": 9.792441352663412,
+                "train_err_at_t_eps": 0.0,
+                "n_fit": 10210,
+                "eps_used": 0.9937116084384998,
+                "Emax": 1.1960407300541593e-05
+              },
+              "D10": {
+                "ok": true,
+                "nu": 5.4993439566100895,
+                "r2": 0.9999999451989837,
+                "t_eps": 45.03788404941575,
+                "train_err_at_t_eps": 0.0,
+                "n_fit": 7890,
+                "eps_used": 0.9997263240694412,
+                "Emax": 2.7439091038412737e-08
+              }
+            }
+          },
+          "control_pass": true
         },
         {
           "id": "C3",
           "title": "Grokking probability increases with L1 regularisation",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "Hard regime D=10, eps=1.01: P_grok(L1)=0.205 vs P_grok(L2)=0.000; criterion (>=2x or >0.5 vs <0.1) met.",
+          "metrics": {
+            "P_grok_L1": 0.205,
+            "P_grok_L2": 0.0,
+            "trials": 400,
+            "D": 10,
+            "eps": 1.01,
+            "err_L1_2sigma": 0.040370162248868906,
+            "err_L2_2sigma": 0.0,
+            "diff": 0.205,
+            "diff_over_sigma": 10.156015660092805,
+            "control_pass": true
+          },
+          "control_pass": true
         },
         {
           "id": "C4",
           "title": "Grokking probability decreases with dimension D",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "Mode: common eps=1.005. P_grok(D) at chosen eps: [0.7295, 0.176, 0.032, 0.0125] over D=[2, 5, 10, 20]. Strictly decreasing: True, drop=0.717, log-linear slope=-0.2142879654255913, R2=0.876845082447202.",
+          "metrics": {
+            "P_table": {
+              "D=2": {
+                "eps=1.005": 0.7295,
+                "eps=1.01": 0.864,
+                "eps=1.02": 0.973,
+                "eps=1.05": 0.9995,
+                "eps=1.1": 1.0,
+                "eps=1.2": 1.0
+              },
+              "D=5": {
+                "eps=1.005": 0.176,
+                "eps=1.01": 0.468,
+                "eps=1.02": 0.7965,
+                "eps=1.05": 0.992,
+                "eps=1.1": 1.0,
+                "eps=1.2": 1.0
+              },
+              "D=10": {
+                "eps=1.005": 0.032,
+                "eps=1.01": 0.1915,
+                "eps=1.02": 0.6005,
+                "eps=1.05": 0.98,
+                "eps=1.1": 1.0,
+                "eps=1.2": 1.0
+              },
+              "D=20": {
+                "eps=1.005": 0.0125,
+                "eps=1.01": 0.1345,
+                "eps=1.02": 0.6175,
+                "eps=1.05": 0.9915,
+                "eps=1.1": 1.0,
+                "eps=1.2": 1.0
+              }
+            },
+            "chosen_eps_per_D": {
+              "2": 1.005,
+              "5": 1.005,
+              "10": 1.005,
+              "20": 1.005
+            },
+            "chosen_P": [
+              0.7295,
+              0.176,
+              0.032,
+              0.0125
+            ],
+            "strictly_decreasing": true,
+            "overall_drop": 0.7170000000000001,
+            "log_linear_slope": -0.2142879654255913,
+            "log_linear_R2": 0.876845082447202,
+            "control_pass": true,
+            "selection_mode": "common eps=1.005"
+          },
+          "control_pass": true
         },
         {
           "id": "C5",
           "title": "Rule-30 CA learning exhibits grokking",
           "testable": true,
           "status": "inconclusive",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "The perceptron-map proxy trivializes Rule-30 (8-triplet lookup: zero generalization gap by construction). The paper's claim concerns the over-parameterized tensor-network regime (gpu-small, out of CPU-audit scope). Verdict: inconclusive by compute-scope limitation - reproducing it requires tensor-network training on long sequences.",
+          "metrics": {
+            "control_pass": false,
+            "control_final_train_err": 0.25,
+            "control_final_test_err": 0.25,
+            "n_unique_triplet_patterns": 8,
+            "generalization_gap_possible": false
+          },
+          "control_pass": false
         },
         {
           "id": "C6",
           "title": "Grokking time distribution bimodality",
           "testable": true,
           "status": "supported",
-          "attempts": 1
+          "attempts": 1,
+          "notes": "Closed-form verification of Sec 3.3.3 (Eqs 40-47, Fig 9 params D=5, eps=2, lambda2=0.01): Monte Carlo over Gaussian initial conditions using the paper's zeroth-order large-N grokking-time PDF — continuous fast-relaxation part (Eq 42) + Dirac peak at t_slow (Eq 47) with weight 1-p_fast (Eq 45). All bimodality tests and the qualitative D/lambda_2 dependence pass. Reviewer-provided reference implementation.",
+          "metrics": {
+            "valley_ratio": 0.0,
+            "check_valley": true,
+            "frac_fast": 0.05384,
+            "frac_slow": 0.94616,
+            "separation_ratio": 3.9842844133080497,
+            "check_separation": true,
+            "slow_rel_err": 1.3147614516659768e-16,
+            "check_slow_time": 1.0,
+            "sharpness_fast": 0.7191296179840522,
+            "sharpness_slow": 1.3147614516659766e-16,
+            "check_sharpness": true,
+            "mean_fast": 0.054617196411016505,
+            "mean_slow": 0.21110731213224215,
+            "t_slow_analytic": 0.21110731213224213,
+            "p_fast_theory": 0.054977241662413245,
+            "p_fast_measured": 0.05384,
+            "qualitative": {
+              "p_fast_by_D": {
+                "4": 0.13861491959545832,
+                "5": 0.054977241662413245,
+                "6": 0.019887707187131058
+              },
+              "t_slow_by_D": {
+                "4": 0.18265619189878632,
+                "5": 0.21110731213224213,
+                "6": 0.23903155976878207
+              },
+              "t_slow_by_lambda2": {
+                "0.0": 0.2258848239814991,
+                "0.01": 0.21110731213224213,
+                "0.05": 0.16732209183814747
+              },
+              "p_fast_decreases_with_D": true,
+              "t_slow_increases_with_D": true,
+              "t_slow_increases_with_smaller_lambda2": true
+            },
+            "control_pass": true,
+            "control_bimodal_valley_ok": true,
+            "control_unimodal_valley_rejected": true,
+            "n_trials": 50000,
+            "D": 5,
+            "eps": 2.0,
+            "lambda2": 0.01,
+            "all_bimodality_checks": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "all_qualitative_checks": [
+              true,
+              true,
+              true
+            ]
+          },
+          "control_pass": true
         }
       ],
       "summary": {
@@ -440,7 +879,29 @@
       },
       "judge": {
         "verdict": "PASS",
-        "score": "5/5"
+        "score": "5/5",
+        "rubric": {
+          "structure": {
+            "pass": true,
+            "detail": "claims.json (6 claims), audit_report.json present"
+          },
+          "evidence": {
+            "pass": true,
+            "detail": "6 audited claims; issues: none"
+          },
+          "integrity": {
+            "pass": true,
+            "detail": "0 claims skipped as untestable, all declared untestable at extraction"
+          },
+          "cost_disclosure": {
+            "pass": true,
+            "detail": "per-claim attempt counts recorded; wall time in run files + trace"
+          },
+          "trace": {
+            "pass": true,
+            "detail": "353 events, 31 LLM calls, 199 tool runs, 9 failed attempts preserved"
+          }
+        }
       },
       "trace": {
         "n_events": 354,

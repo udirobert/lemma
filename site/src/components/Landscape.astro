@@ -1,0 +1,365 @@
+---
+// Landscape — "everyone is generating, nobody is checking."
+// Puts Lemma in the wider AI-science industry: the reproducibility crisis,
+// the generator wave, and the missing verification layer.
+// Interactive: select a category to see what it produces and who checks it.
+import "../styles/global.css";
+
+const LANDSCAPE = [
+  {
+    id: "generate",
+    num: "01",
+    name: "generators",
+    tag: "papers & hypotheses, at machine speed",
+    players: "Sakana · Google co-scientist · agentic writing pipelines",
+    output: "novel papers, hypotheses, method write-ups",
+    check: "a human — later, if at all. Nothing re-runs the claim before it ships.",
+    link: { label: "Sakana AI Scientist ↗", url: "https://sakana.ai/ai-scientist/" },
+    link2: {
+      label: "Google AI co-scientist ↗",
+      url: "https://research.google/blog/accelerating-scientific-breakthroughs-with-an-ai-co-scientist/",
+    },
+  },
+  {
+    id: "retrieve",
+    num: "02",
+    name: "literature copilots",
+    tag: "answers mined from millions of papers",
+    players: "FutureHouse · Elicit · PaperQA-class agents",
+    output: "cited answers, evidence digests, reviews",
+    check: "a citation — which can be hallucinated. Nothing executes the math.",
+    link: { label: "FutureHouse ↗", url: "https://futurehouse.org/" },
+    link2: { label: "Elicit ↗", url: "https://elicit.com/" },
+  },
+  {
+    id: "benchmark",
+    num: "03",
+    name: "benchmarks & harnesses",
+    tag: "who is winning at reproducing papers",
+    players: "PaperBench · ICML Agent Reproductions · verifier harnesses",
+    output: "scores, leaderboards, pass/fail on tasks",
+    check: "a rubric — which grades the output, not the honesty of the trail behind it.",
+    link: { label: "OpenAI PaperBench ↗", url: "https://openai.com/index/paperbench/" },
+    link2: null,
+  },
+  {
+    id: "audit",
+    num: "04",
+    name: "lemma — the audit layer",
+    tag: "claims checked in code, failures kept on record",
+    players: "this pipeline · extract → audit → evidence → judge",
+    output: "per-claim verdicts + an inspectable evidence trail",
+    check: "the machine distrusts itself first: mandatory controls, verdict validators, a bake-off gate, then a judge scores the trail. You check last.",
+    link: { label: "the audit registry →", url: "/papers/" },
+    link2: null,
+    youAreHere: true,
+  },
+];
+---
+<section class="landscape" id="landscape">
+  <div class="wrap">
+    <p class="land-kicker">the wider landscape</p>
+    <h2 class="land-title">everyone is generating.<br />nobody is checking.</h2>
+
+    <div class="land-grid">
+      <div class="land-problem">
+        <p class="land-problem-lead">
+          Science runs on claims, but claims are cheap. In a 2016 Nature survey
+          of <strong>1,576 researchers</strong>, <strong>70%</strong> failed to
+          reproduce another lab's experiment — and more than
+          <strong>half failed to reproduce their own</strong>.
+        </p>
+        <p class="land-problem-body">
+          Now the generators have arrived: AI scientists that draft papers and
+          hypotheses faster than any human can read them. The bottleneck is no
+          longer <em>production</em> — it is <em>trust</em>. Who checks the
+          claims before they become literature?
+        </p>
+        <div class="land-sources">
+          <span class="land-src-label">sources</span>
+          <a href="https://doi.org/10.1038/533452a" target="_blank" rel="noopener">Nature 533, 452 (2016) ↗</a>
+          <a href="https://sakana.ai/ai-scientist/" target="_blank" rel="noopener">Sakana AI Scientist ↗</a>
+          <a href="https://openai.com/index/paperbench/" target="_blank" rel="noopener">PaperBench ↗</a>
+        </div>
+      </div>
+
+      <div class="land-compare">
+        <div class="land-cats" role="tablist" aria-label="Approaches to AI science">
+          {LANDSCAPE.map((c) => (
+            <button
+              class={`land-cat${c.youAreHere ? " is-lemma" : ""}${c.id === "generate" ? " active" : ""}`}
+              role="tab"
+              aria-selected={c.id === "generate" ? "true" : "false"}
+              id={`land-tab-${c.id}`}
+              data-landcat={c.id}
+            >
+              <span class="land-cat-num">{c.num}</span>
+              <span class="land-cat-name">{c.name}</span>
+              {c.youAreHere && <span class="land-here">you are here</span>}
+            </button>
+          ))}
+        </div>
+        <div class="land-panel" id="land-panel" aria-live="polite">
+          {LANDSCAPE.map((c) => (
+            <div class={`land-detail${c.id === "generate" ? " show" : ""}`} data-landdetail={c.id} hidden={c.id !== "generate"}>
+              <p class="land-detail-tag">{c.tag}</p>
+              <p class="land-detail-players">{c.players}</p>
+              <dl class="land-detail-rows">
+                <div class="land-row">
+                  <dt>what it produces</dt>
+                  <dd>{c.output}</dd>
+                </div>
+                <div class="land-row">
+                  <dt>who checks the checker</dt>
+                  <dd>{c.check}</dd>
+                </div>
+              </dl>
+              <div class="land-detail-links">
+                {c.link && <a href={c.link.url} target="_blank" rel="noopener">{c.link.label}</a>}
+                {c.link2 && <a href={c.link2.url} target="_blank" rel="noopener">{c.link2.label}</a>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      </div>
+
+    <p class="land-closer">
+      Lemma is not another generator. It is the audit layer the new wave
+      forgot — and it distrusts itself by design.
+    </p>
+  </div>
+</section>
+
+<style>
+  .landscape {
+    position: relative;
+    z-index: 2;
+    padding: 130px 0 40px;
+  }
+  .land-kicker {
+    font-family: var(--font-m);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  .land-title {
+    font-size: clamp(2rem, 4.6vw, 3.4rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    margin: 14px 0 46px;
+    background: linear-gradient(180deg, #ffffff 30%, #aab8d8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .land-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: 56px;
+    align-items: start;
+  }
+  .land-problem-lead {
+    font-size: 1.12rem;
+    line-height: 1.65;
+    color: var(--fg);
+  }
+  .land-problem-lead strong {
+    color: var(--gold);
+  }
+  .land-problem-body {
+    margin-top: 18px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--mut);
+  }
+  .land-sources {
+    margin-top: 26px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    align-items: center;
+    font-family: var(--font-m);
+    font-size: 0.68rem;
+  }
+  .land-src-label {
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .land-sources a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+  .land-sources a:hover {
+    text-decoration: underline;
+  }
+
+  .land-cats {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .land-cat {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--edge);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--card) 60%, transparent);
+    color: var(--mut);
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-d);
+    font-size: 0.9rem;
+    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  }
+  .land-cat:hover {
+    border-color: var(--blue);
+    transform: translateX(2px);
+  }
+  .land-cat.active {
+    border-color: var(--blue);
+    background: color-mix(in srgb, var(--blue) 12%, var(--card));
+    color: var(--fg);
+  }
+  .land-cat.is-lemma {
+    border-color: var(--teal);
+    background: color-mix(in srgb, var(--teal) 8%, var(--card));
+  }
+  .land-cat.is-lemma.active {
+    border-color: var(--teal);
+    background: color-mix(in srgb, var(--teal) 16%, var(--card));
+  }
+  .land-cat-num {
+    font-family: var(--font-m);
+    font-size: 0.66rem;
+    color: var(--dim);
+  }
+  .land-cat-name {
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .land-here {
+    margin-left: auto;
+    font-family: var(--font-m);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    border: 1px solid color-mix(in srgb, var(--teal) 50%, transparent);
+    border-radius: 99px;
+    padding: 2px 8px;
+  }
+
+  .land-panel {
+    border: 1px solid var(--edge);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--card) 55%, transparent);
+    padding: 22px 22px 18px;
+    min-height: 200px;
+  }
+  .land-detail {
+    display: none;
+  }
+  .land-detail.show {
+    display: block;
+  }
+  .land-detail-tag {
+    font-family: var(--font-m);
+    font-size: 0.74rem;
+    color: var(--teal);
+  }
+  .land-detail-players {
+    margin-top: 10px;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--fg);
+    font-weight: 600;
+  }
+  .land-detail-rows {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .land-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 14px;
+    align-items: baseline;
+  }
+  .land-row dt {
+    font-family: var(--font-m);
+    font-size: 0.64rem;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .land-row dd {
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--mut);
+    margin: 0;
+  }
+  .land-detail-links {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-family: var(--font-m);
+    font-size: 0.7rem;
+  }
+  .land-detail-links a {
+    color: var(--blue);
+    text-decoration: none;
+  }
+  .land-detail-links a:hover {
+    text-decoration: underline;
+  }
+
+  .land-closer {
+    margin-top: 64px;
+    text-align: center;
+    font-size: 1.05rem;
+    color: var(--mut);
+    font-style: italic;
+  }
+  .land-closer::before,
+  .land-closer::after {
+    content: "4";
+    color: var(--dim);
+    padding: 0 10px;
+  }
+
+  @media (max-width: 860px) {
+    .land-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+</style>
+
+<script>
+  const cats = Array.from(document.querySelectorAll<HTMLElement>("[data-landcat]"));
+  const details = Array.from(document.querySelectorAll<HTMLElement>("[data-landdetail]"));
+  cats.forEach((cat) => {
+    cat.addEventListener("click", () => {
+      const id = cat.dataset.landcat;
+      cats.forEach((c) => {
+        c.classList.toggle("active", c === cat);
+        c.setAttribute("aria-selected", c === cat ? "true" : "false");
+      });
+      details.forEach((d) => {
+        const show = d.dataset.landdetail === id;
+        d.classList.toggle("show", show);
+        if (d.hidden !== undefined) d.hidden = !show;
+      });
+    });
+  });
+</script>
