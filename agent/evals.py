@@ -83,14 +83,14 @@ def _reference_status(claim_dir: Path) -> str | None:
 
 
 @op
-def recorded_outcome(outcome: dict) -> dict:
+def recorded_outcome(outcome: dict, **row) -> dict:
     """The evaluated 'model': returns the stored audit outcome so the
     evaluation scores the audit trail of record, not a fresh run."""
     return outcome
 
 
 @op
-def verdict_matches_reference(output: dict, reference_status: str | None = None):
+def verdict_matches_reference(output: dict, reference_status: str | None = None, **row):
     """Final verdict equals the reviewer-reference verdict. Claims with no
     reference are not penalized (score True — the check simply can't run)."""
     if not reference_status:
@@ -99,7 +99,7 @@ def verdict_matches_reference(output: dict, reference_status: str | None = None)
 
 
 @op
-def self_consistent(output: dict):
+def self_consistent(output: dict, **row):
     """No verdict-vs-metrics contradictions (the auditor's own validator)."""
     from agent.auditor import _summary_problems
 
@@ -107,7 +107,7 @@ def self_consistent(output: dict):
 
 
 @op
-def control_honest(output: dict):
+def control_honest(output: dict, **row):
     """A decisive verdict (supported/falsified) only counts if the script's
     positive control ran and passed."""
     if output.get("status") not in ("supported", "falsified"):
@@ -116,7 +116,7 @@ def control_honest(output: dict):
 
 
 @op
-def evidence_complete(output: dict):
+def evidence_complete(output: dict, **row):
     """Metrics recorded, and a 'supported' verdict carries figure evidence
     (mirrors the judge's evidence rubric)."""
     if not (output.get("metrics") or {}):
@@ -125,7 +125,7 @@ def evidence_complete(output: dict):
 
 
 @op
-def decisive(output: dict):
+def decisive(output: dict, **row):
     """Verdict is supported or falsified (descriptive — 'inconclusive' is
     often the honest answer, so this measures rather than rewards)."""
     return output.get("status") in ("supported", "falsified")
@@ -143,11 +143,17 @@ SCORERS = [
 # ── runner ────────────────────────────────────────────────────────────────
 
 
+def _raw(fn):
+    """Unwrap the @op shim to the plain function (weave.Evaluation needs
+    real Ops, and local scoring needs the signature)."""
+    return getattr(fn, "__wrapped__", fn)
+
+
 def _call_scorer(fn, output: dict, row: dict):
     """Invoke a scorer with output + whichever dataset fields it declares."""
-    params = set(inspect.signature(fn).parameters) - {"output"}
+    params = set(inspect.signature(_raw(fn)).parameters) - {"output"}
     kwargs = {k: row[k] for k in params if k in row}
-    return fn(output, **kwargs)
+    return _raw(fn)(output, **kwargs)
 
 
 def run_evaluation(workdirs: list[Path], use_weave: bool = True) -> dict:
@@ -169,12 +175,14 @@ def _run_weave_eval(rows: list[dict]) -> dict:
 
     import weave
 
+    model = weave.op(_raw(recorded_outcome))
+    scorers = [weave.op(_raw(fn)) for fn in SCORERS]
     evaluation = weave.Evaluation(
         dataset=rows,
-        scorers=SCORERS,
-        eval_name="lemma-audit-integrity",
+        scorers=scorers,
+        evaluation_name="lemma-audit-integrity",
     )
-    summary = asyncio.run(evaluation.evaluate(recorded_outcome))
+    summary = asyncio.run(evaluation.evaluate(model))
     return {"rows": rows, "means": summary or {}, "weave": True}
 
 
