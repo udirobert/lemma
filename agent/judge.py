@@ -14,7 +14,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from agent.weave_ops import op
 
+
+@op
 def judge_run(
     workdir: Path, trace_path: Path | None = None, *, relative_paths: bool = False
 ) -> dict:

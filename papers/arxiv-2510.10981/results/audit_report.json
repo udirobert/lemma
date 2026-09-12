@@ -25,19 +25,44 @@
     },
     {
       "id": "C2",
-      "status": "inconclusive",
-      "attempts": 1,
+      "status": "falsified",
+      "attempts": 3,
       "summary": {
         "claim_id": "C2",
-        "status": "inconclusive",
+        "status": "falsified",
         "metrics": {
-          "r2_joint": 0.6541858630882735,
-          "r2_n_only": 0.0010486293369841304,
-          "r2_p_only": 0.12865249647240662,
-          "control_pass": false,
-          "r2_control": 0.11775441747275273
+          "r2_joint": 0.6285762687310832,
+          "r2_n_only": 0.09537734623065952,
+          "r2_p_only": 0.6180329400772211,
+          "joint_a": 0.713273287970674,
+          "joint_b": 14.48395858139195,
+          "joint_beta": 0.32151898734177214,
+          "joint_c": -72.0274837299994,
+          "bg_values": [
+            1.909620166007698,
+            1.6266746091631543,
+            1.5864427176699258,
+            1.0749929518957455,
+            1.6698792569795113,
+            1.5561045686113608,
+            1.2763619554616676,
+            1.134906320641344,
+            1.4718270644863458,
+            1.6167406594628477,
+            1.3780500098689799,
+            0.98726679838197,
+            1.5211791175567937,
+            1.601825030518865,
+            1.2101026397469168,
+            1.0523888687105654
+          ],
+          "bg_mc_stderr_max": 0.09582445194159064,
+          "control_r2": 0.9866363008881608,
+          "control_beta_recovered": 0.6177215189873418,
+          "control_beta_true": 0.5,
+          "control_pass": true
         },
-        "notes": "Joint model R2=0.6542, N-only R2=0.0010, p-only R2=0.1287. Success criterion: R2_joint > 0.8 and > 0.1 higher than others."
+        "notes": "Joint R2=0.629, N-only R2=0.095, p-only R2=0.618. Criterion requires joint>0.8 and >0.1 above both single-variable models."
       }
     },
     {

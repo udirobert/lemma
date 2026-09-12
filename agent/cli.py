@@ -67,11 +67,42 @@ def main() -> int:
         help="use Firecrawl life-science research index (needs FIRECRAWL_API_KEY)",
     )
 
+    p_eval = sub.add_parser(
+        "eval", help="score audit outcomes (Weave Evaluation when configured)"
+    )
+    p_eval.add_argument(
+        "workdirs",
+        nargs="*",
+        help="paper dirs (default: all papers/* with audit results)",
+    )
+    p_eval.add_argument(
+        "--no-weave", action="store_true", help="local scoring only, skip Weave"
+    )
+
+    p_improve = sub.add_parser(
+        "improve",
+        help="self-improvement loop: draft feedback.auto.md for non-supported "
+        "claims, re-audit them, record before/after",
+    )
+    p_improve.add_argument("workdir", help="paper dir with an existing audit")
+    p_improve.add_argument(
+        "--claims", help="comma-separated claim ids to improve (default: all)"
+    )
+    p_improve.add_argument(
+        "--judge",
+        action="store_true",
+        help="re-run the judge after the improvement round",
+    )
+
     args = parser.parse_args()
     if args.cmd == "judge":
         return _judge(args)
     if args.cmd == "search":
         return _search(args)
+    if args.cmd == "eval":
+        return _eval(args)
+    if args.cmd == "improve":
+        return _improve(args)
     return _audit(args)
 
 
@@ -127,6 +158,12 @@ def _audit(args: argparse.Namespace) -> int:
         paper["pdf_path"] = str(moved)
 
     trace = Trace(f"{run_id}-{paper['paper_id']}", workdir / "trace.jsonl")
+    from agent import weave_ops
+
+    if weave_ops.init_weave(trace):
+        print("[lemma] weave: live")
+    else:
+        print(f"[lemma] weave: off ({weave_ops.disabled_reason()})")
     trace.log(
         "pipeline",
         "start",
@@ -199,10 +236,74 @@ def _audit(args: argparse.Namespace) -> int:
     return 0
 
 
+def _eval(args: argparse.Namespace) -> int:
+    from agent import weave_ops
+    from agent.evals import render_table, run_evaluation
+
+    if args.workdirs:
+        workdirs = [Path(w).resolve() for w in args.workdirs]
+    else:
+        workdirs = sorted(
+            d
+            for d in PAPERS_DIR.iterdir()
+            if (d / "results" / "audit_report.json").is_file()
+        )
+    if not args.no_weave:
+        weave_ops.init_weave()
+    result = run_evaluation(workdirs, use_weave=not args.no_weave)
+    print(render_table(result))
+    return 0 if result["rows"] else 1
+
+
+def _improve(args: argparse.Namespace) -> int:
+    import time
+
+    from agent import weave_ops
+    from agent.meta import improve
+    from agent.traces import Trace
+
+    workdir = Path(args.workdir).resolve()
+    only = (
+        {c.strip() for c in args.claims.split(",") if c.strip()}
+        if args.claims
+        else None
+    )
+    trace = Trace(f"improve-{time.strftime('%Y%m%d-%H%M%S')}", workdir / "trace.jsonl")
+    if weave_ops.init_weave(trace):
+        print("[lemma] weave: live")
+    record = improve(workdir, trace, only=only)
+    if not record.get("targets"):
+        print(f"[lemma] {record.get('note', 'nothing to improve')}")
+        return 0
+    for cid in record["targets"]:
+        arrow = f"{record['before'].get(cid)} -> {record['after'].get(cid)}"
+        marker = " (changed)" if cid in record["changed"] else ""
+        print(f"[lemma]   {cid}: {arrow}{marker}")
+    print(
+        f"[lemma] improve round recorded; {len(record['changed'])} verdict(s) changed"
+    )
+
+    if args.judge:
+        import json
+
+        from agent.judge import judge_run, render_markdown
+
+        result = judge_run(workdir, trace.path, relative_paths=True)
+        (workdir / "judge_report.json").write_text(
+            json.dumps(result, indent=2), encoding="utf-8"
+        )
+        print(render_markdown(result))
+        return 0 if result["verdict"] != "FAIL" else 2
+    return 0
+
+
 def _judge(args: argparse.Namespace) -> int:
     import json
 
+    from agent import weave_ops
     from agent.judge import judge_run, render_markdown
+
+    weave_ops.init_weave()
 
     if args.regression:
         workdir = GROKKING_DIR

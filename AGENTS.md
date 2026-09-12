@@ -29,6 +29,9 @@ lemma audit <arxiv-id | openreview-id | paper.pdf> [--stages extract,audit,evide
   2. audit     claim → script → run → iterate       (agent/auditor.py)
   3. evidence  results → Trackio logbook            (agent/evidence.py)
   4. judge     logbook → verdict + rubric           (agent/judge.py)
+
+lemma eval [workdirs...]      score audit outcomes (Weave Evaluation when configured)
+lemma improve <workdir>       self-improvement loop: feedback.auto.md → re-audit → before/after
 ```
 
 The `lemma` wrapper runs `python -m agent.cli`. Each stage is idempotent:
@@ -47,13 +50,20 @@ re-running a stage that already has outputs under `papers/<id>/` reuses them
 | `papers.py` | Resolve arxiv / openreview / local PDF → text; Firecrawl markdown with PyMuPDF fallback |
 | `firecrawl.py` | Evidence search (web → research index → arxiv fallback) + PDF parsing |
 | `paperclip.py` | Paperclip (GXL) corpus: `lemma search` discovery + per-claim literature-context cells (X-API-Key auth) |
-| `llm.py` | Multi-provider LLM wrapper: ordered `LEMMA_ENDPOINTS` + anthropic + openai; explicit 240 s HTTP timeout, no SDK retries (we own the loop); 429 Retry-After backoff; 60s error window → fallback; `LEMMA_<NAME>_MAX_TOKENS` floor for reasoning models |
+| `llm.py` | Multi-provider LLM wrapper: ordered `LEMMA_ENDPOINTS` + anthropic + openai; explicit 240 s HTTP timeout, no SDK retries (we own the loop); 429 Retry-After backoff; 60s error window → fallback; `LEMMA_<NAME>_MAX_TOKENS` floor for reasoning models. W&B Inference plugs in as a named endpoint (`LEMMA_WANDB_*`) |
 | `traces.py` | Append-only JSONL trace logger (`llm_call`, `tool_run`, `note`) |
+| `weave_ops.py` | Optional Weave shim (CoreWeave Hacks): `init_weave()` when `WANDB_API_KEY` is set; `@op` wraps stages so extract/audit/script-runs/judge + auto-patched LLM calls land in the Weave UI. Pass-through otherwise — `LEMMA_WEAVE=off` forces it off |
+| `evals.py` | `lemma eval` — scorer suite (verdict-vs-reference, self-consistency, control honesty, evidence completeness, decisiveness) run as a Weave Evaluation or a local table (`--no-weave`) |
+| `meta.py` | `lemma improve` — self-improvement loop: reviewer-persona LLM drafts `results/<cid>/feedback.auto.md` from a claim's failure context, then re-audits. Advisory only: human `feedback.md` outranks it and `reviewer_reference.py` still wins — the loop can't edit either |
 
 ### Human-in-the-loop audit contract (`auditor.py`)
 
 - `results/<cid>/feedback.md` — authoritative reviewer corrections, loaded at
   the start of each (re-)audit and injected into the prompt above the test plan.
+- `results/<cid>/feedback.auto.md` — generated reviewer notes written by
+  `lemma improve` (agent/meta.py). Injected as a separate advisory section,
+  below human feedback; the loop never touches feedback.md or
+  reviewer_reference.py.
 - `results/<cid>/reviewer_reference.py` — hand-verified reference
   implementation (same `SUMMARY_JSON=` contract). Escalation: after a round's
   LLM attempts finish, if the outcome is anything other than `supported`, the

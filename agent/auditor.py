@@ -18,10 +18,34 @@ from pathlib import Path
 
 from agent.llm import complete, extract_json
 from agent.traces import Trace
+from agent.weave_ops import op
 
 MAX_ATTEMPTS = 3
 RUN_TIMEOUT_S = 1200  # 20 min per script; audits should be cpu-fast by design
 MAX_OUT_CHARS = 4000
+
+
+@op
+def _run_script(
+    script_path: Path, workdir: Path, timeout_s: float = RUN_TIMEOUT_S
+) -> tuple[int, str, str, float]:
+    """Execute one audit script as a subprocess. A weave op when tracing is
+    live so each run shows up as a tool span under the audit attempt."""
+    t0 = time.time()
+    try:
+        proc = subprocess.run(
+            ["python3", str(script_path)],
+            cwd=workdir,
+            capture_output=True,
+            text=True,
+            timeout=timeout_s,
+        )
+        exit_code, out, err = proc.returncode, proc.stdout, proc.stderr
+    except subprocess.TimeoutExpired as e:
+        exit_code, out = -1, ""
+        err = f"TIMEOUT after {timeout_s}s\n{(e.stderr or '')[-MAX_OUT_CHARS:]}"
+    return exit_code, out, err, time.time() - t0
+
 
 SYSTEM = """You are the audit stage of Lemma, an AI-scientist pipeline. You write \
 numerical audit scripts that independently test one claim of a research paper.
@@ -102,6 +126,7 @@ def audit_all(
     return report
 
 
+@op
 def audit_one(
     claim: dict, paper_text: str, workdir: Path, results_dir: Path, trace: Trace
 ) -> dict:
@@ -120,6 +145,17 @@ def audit_one(
     if feedback:
         trace.log("audit", "feedback_loaded", claim_id=cid, chars=len(feedback))
 
+    # Self-improvement loop (`lemma improve`): generated reviewer notes.
+    # Advisory only — human feedback.md stays authoritative where they differ.
+    auto_path = claim_dir / "feedback.auto.md"
+    auto_feedback = (
+        auto_path.read_text(encoding="utf-8").strip() if auto_path.is_file() else ""
+    )
+    if auto_feedback:
+        trace.log(
+            "audit", "auto_feedback_loaded", claim_id=cid, chars=len(auto_feedback)
+        )
+
     # continue attempt numbering if scripts from a prior round exist
     prior_scripts = sorted(claim_dir.glob("audit_attempt*.py"))
     start_attempt = len(prior_scripts)
@@ -129,7 +165,9 @@ def audit_one(
 
     for attempt in range(start_attempt + 1, start_attempt + 1 + MAX_ATTEMPTS):
         script_path = claim_dir / f"audit_attempt{attempt}.py"
-        user_prompt = _build_prompt(claim, paper_text, attempt, run_history, feedback)
+        user_prompt = _build_prompt(
+            claim, paper_text, attempt, run_history, feedback, auto_feedback
+        )
         raw = complete(trace, "audit", SYSTEM, user_prompt, max_tokens=8000)
 
         try:
@@ -147,20 +185,7 @@ def audit_one(
             chars=len(code),
         )
 
-        t0 = time.time()
-        try:
-            proc = subprocess.run(
-                ["python3", str(script_path)],
-                cwd=workdir,
-                capture_output=True,
-                text=True,
-                timeout=RUN_TIMEOUT_S,
-            )
-            exit_code, out, err = proc.returncode, proc.stdout, proc.stderr
-        except subprocess.TimeoutExpired as e:
-            exit_code, out = -1, ""
-            err = f"TIMEOUT after {RUN_TIMEOUT_S}s\n{(e.stderr or '')[-MAX_OUT_CHARS:]}"
-        duration = time.time() - t0
+        exit_code, out, err, duration = _run_script(script_path, workdir)
         trace.tool_run(
             "audit",
             f"python3 {script_path.name}",
@@ -278,20 +303,7 @@ def audit_one(
                 f"{last_summary.get('status')!r}; reviewer reference is authoritative"
             ),
         )
-        t0 = time.time()
-        try:
-            proc = subprocess.run(
-                ["python3", str(ref_path)],
-                cwd=workdir,
-                capture_output=True,
-                text=True,
-                timeout=RUN_TIMEOUT_S,
-            )
-            exit_code, out, err = proc.returncode, proc.stdout, proc.stderr
-        except subprocess.TimeoutExpired as e:
-            exit_code, out = -1, ""
-            err = f"TIMEOUT after {RUN_TIMEOUT_S}s\n{(e.stderr or '')[-MAX_OUT_CHARS:]}"
-        duration = time.time() - t0
+        exit_code, out, err, duration = _run_script(ref_path, workdir)
         trace.tool_run(
             "audit",
             f"python3 {ref_path.name}",
@@ -356,7 +368,12 @@ def audit_one(
 
 
 def _build_prompt(
-    claim: dict, paper_text: str, attempt: int, history: list[str], feedback: str = ""
+    claim: dict,
+    paper_text: str,
+    attempt: int,
+    history: list[str],
+    feedback: str = "",
+    auto_feedback: str = "",
 ) -> str:
     claim_slug = claim["id"].lower()
     parts = [
@@ -374,6 +391,15 @@ def _build_prompt(
             "HUMAN REVIEWER FEEDBACK (authoritative — follow it over the test plan "
             "where they conflict):",
             feedback,
+        ]
+    if auto_feedback:
+        parts += [
+            "",
+            "GENERATED REVIEWER NOTES (advisory — written by the self-improvement "
+            "loop after reviewing prior failures; treat as expert hints, and defer "
+            "to HUMAN REVIEWER FEEDBACK and the claim's own success criterion "
+            "where they conflict):",
+            auto_feedback,
         ]
     parts += ["", "Relevant paper text (excerpt):", paper_text[:20_000]]
     if history:

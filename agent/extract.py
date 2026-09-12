@@ -23,6 +23,7 @@ from pathlib import Path
 
 from agent.llm import complete, extract_json
 from agent.traces import Trace
+from agent.weave_ops import op
 
 SYSTEM = """You are the claim-extraction stage of Lemma, an AI-scientist pipeline \
 that audits research papers. Read the paper text and extract every checkable claim.
@@ -69,6 +70,7 @@ REQUIRED_KEYS = {
 }
 
 
+@op
 def extract(
     paper_id: str, title: str, text: str, workdir: Path, trace: Trace
 ) -> list[dict]:
