@@ -1,0 +1,13 @@
+{
+  "ts": "2026-09-12T23:22:05+0100",
+  "targets": [
+    "C6"
+  ],
+  "before": {
+    "C6": "inconclusive"
+  },
+  "after": {
+    "C6": "inconclusive"
+  },
+  "changed": []
+}

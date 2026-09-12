@@ -135,19 +135,26 @@
     {
       "id": "C6",
       "status": "inconclusive",
-      "attempts": 1,
+      "attempts": 3,
       "summary": {
         "claim_id": "C6",
         "status": "inconclusive",
         "metrics": {
-          "estimated_decay_rate": 4.744224385014646,
-          "theoretical_decay_rate": 399.99999999999994,
-          "ratio": 0.011860560962536617,
-          "control_pass": false,
-          "excess_variance_at_k_1": 0.09608233531636304,
-          "excess_variance_at_k_50": -1.700029006457271e-16
+          "C_chernoff": 0.34657359027997264,
+          "D_min": 2.0,
+          "minimax_risk": 1.0,
+          "excess_k1": 0.618536321767611,
+          "excess_k10": 0.015198461605888178,
+          "excess_k30": 1.0327477590597785e-06,
+          "frac_k_violating_C_bound": 0.0,
+          "max_ratio_excess_over_boundC": 0.21868561376603102,
+          "n_significant_increases": 0,
+          "tail_decay_rate_lambda_hat": 0.6779244557917793,
+          "control1_pass": true,
+          "control2_pass": false,
+          "control_pass": false
         },
-        "notes": "Estimated decay rate 4.74 vs theoretical 400.00. Ratio 0.01. Control passed: False."
+        "notes": "Positive control failed; estimator unreliable."
       }
     }
   ]
