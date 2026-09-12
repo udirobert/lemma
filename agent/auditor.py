@@ -86,6 +86,7 @@ def audit_all(
     workdir: Path,
     trace: Trace,
     only: set[str] | None = None,
+    jobs: int = 1,
 ) -> dict:
     results_dir = workdir / "results"
     results_dir.mkdir(exist_ok=True)
@@ -100,14 +101,47 @@ def audit_all(
     report = {"claims": list(existing.get("claims", []))}
     existing_ids = {c["id"] for c in report["claims"]}
 
-    for claim in claims:
-        if only is not None and claim["id"] not in only:
+    selected = [c for c in claims if only is None or c["id"] in only]
+    testable = [c for c in selected if c.get("testable")]
+    entries: dict[str, dict] = {}
+    for claim in selected:
+        if claim.get("testable"):
             continue
-        if not claim.get("testable"):
-            trace.log("audit", "skip untestable", claim_id=claim["id"])
-            entry = {"id": claim["id"], "status": "not_audited", "attempts": 0}
-        else:
-            entry = audit_one(claim, paper_text, workdir, results_dir, trace)
+        trace.log("audit", "skip untestable", claim_id=claim["id"])
+        entries[claim["id"]] = {
+            "id": claim["id"],
+            "status": "not_audited",
+            "attempts": 0,
+        }
+
+    # Claims are independent audits; run them concurrently when asked.
+    # Each audit_one writes only under results/<cid>/ and appends whole
+    # lines to the shared trace, so the parallelism is safe. Slow eval
+    # loops quietly remove the option of trusting results — keep them fast.
+    if jobs > 1 and len(testable) > 1:
+        from concurrent.futures import ThreadPoolExecutor
+
+        trace.log("audit", "parallel", claims=len(testable), jobs=jobs)
+        with ThreadPoolExecutor(max_workers=jobs) as pool:
+            for claim, entry in zip(
+                testable,
+                pool.map(
+                    lambda c: audit_one(c, paper_text, workdir, results_dir, trace),
+                    testable,
+                ),
+                strict=True,
+            ):
+                entries[claim["id"]] = entry
+    else:
+        for claim in testable:
+            entries[claim["id"]] = audit_one(
+                claim, paper_text, workdir, results_dir, trace
+            )
+
+    for claim in selected:
+        entry = entries.get(claim["id"])
+        if entry is None:
+            continue
         if entry["id"] in existing_ids:
             report["claims"] = [
                 entry if c["id"] == entry["id"] else c for c in report["claims"]
@@ -231,6 +265,20 @@ def audit_one(
             # broken implementation). Rejecting it is the honest move:
             # record why and iterate.
             problems = _summary_problems(summary)
+            (claim_dir / f"run_attempt{attempt}.failed.json").write_text(
+                json.dumps(
+                    {
+                        "attempt": attempt,
+                        "kind": "rejected",
+                        "exit_code": exit_code,
+                        "summary": summary,
+                        "problems": problems,
+                        "tail": tail[-MAX_OUT_CHARS:],
+                    },
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
             trace.log(
                 "audit",
                 "summary_rejected",
@@ -254,6 +302,18 @@ def audit_one(
             continue
 
         # failed attempt: record and feed back for the next iteration
+        (claim_dir / f"run_attempt{attempt}.failed.json").write_text(
+            json.dumps(
+                {
+                    "attempt": attempt,
+                    "kind": "crashed",
+                    "exit_code": exit_code,
+                    "tail": tail[-MAX_OUT_CHARS:],
+                },
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
         run_history.append(
             f"ATTEMPT {attempt} FAILED (exit={exit_code}).\nstdout+stderr tail:\n{tail}"
         )
@@ -399,7 +459,7 @@ def _build_prompt(
             "loop after reviewing prior failures; treat as expert hints, and defer "
             "to HUMAN REVIEWER FEEDBACK and the claim's own success criterion "
             "where they conflict):",
-            auto_feedback,
+            auto_feedback[:4000],
         ]
     parts += ["", "Relevant paper text (excerpt):", paper_text[:20_000]]
     if history:
@@ -423,9 +483,19 @@ def _summary_problems(summary: dict) -> list[str]:
         return problems
     metrics = summary.get("metrics") or {}
 
+    # The positive control is mandatory by contract: a decisive verdict with
+    # NO passing control is as untrustworthy as one with a failed control —
+    # and it's the cheap way to game the criterion (drop the control, keep
+    # the verdict). Reject both. (Truthiness, not `is True` — metrics may
+    # carry "True"/1 serialized via default=str on numpy scalars.)
     control_pass = metrics.get("control_pass")
-    if control_pass is not None and not control_pass:
+    if control_pass is False:
         problems.append(f"status={status} but control_pass is false")
+    elif not control_pass:
+        problems.append(
+            f"status={status} but no passing positive control recorded "
+            "(control is mandatory for a decisive verdict)"
+        )
 
     for name, val in metrics.items():
         if "control" not in name.lower():

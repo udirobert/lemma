@@ -46,6 +46,12 @@ def main() -> int:
         action="store_true",
         help="do not publish logbook even if configured",
     )
+    p_audit.add_argument(
+        "--jobs",
+        type=int,
+        default=1,
+        help="audit this many claims concurrently (claims are independent)",
+    )
 
     p_judge = sub.add_parser("judge", help="judge an existing run")
     p_judge.add_argument("workdir", nargs="?", help="paper dir to judge")
@@ -200,7 +206,9 @@ def _audit(args: argparse.Namespace) -> int:
         if getattr(args, "claims", None):
             only = {c.strip() for c in args.claims.split(",") if c.strip()}
             print(f"[lemma] re-auditing subset: {sorted(only)}")
-        report = audit_all(claims, paper["text"], workdir, trace, only=only)
+        report = audit_all(
+            claims, paper["text"], workdir, trace, only=only, jobs=args.jobs
+        )
         for c in report["claims"]:
             print(
                 f"[lemma]   {c['id']}: {c['status']} ({c.get('attempts', 0)} attempts)"

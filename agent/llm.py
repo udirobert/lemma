@@ -142,8 +142,18 @@ def complete(
     temperature: float = 0.2,
 ) -> str:
     """Single-turn completion with per-provider retries and fallback."""
+    providers = _providers()
+    # Per-stage provider override: LEMMA_<STAGE>_PROVIDER=<name> pins this
+    # stage's first choice (e.g. LEMMA_IMPROVE_PROVIDER=WANDB so the
+    # reviewer-persona draft always uses the strongest endpoint; the audit
+    # can ride a cheaper one). Fallback order is otherwise unchanged.
+    pref = os.environ.get(f"LEMMA_{stage.upper()}_PROVIDER", "").strip()
+    if pref:
+        providers = [p for p in providers if p.lower() == pref.lower()] + [
+            p for p in providers if p.lower() != pref.lower()
+        ]
     last_err: Exception | None = None
-    for provider in _providers():
+    for provider in providers:
         # skip providers that are in a recent-error window
         if time.time() - _provider_fail_at.get(provider, 0.0) < FALLBACK_ERROR_WINDOW_S:
             trace.note(stage, f"provider {provider} in error window; skipping")

@@ -54,7 +54,7 @@ re-running a stage that already has outputs under `papers/<id>/` reuses them
 | `traces.py` | Append-only JSONL trace logger (`llm_call`, `tool_run`, `note`) |
 | `weave_ops.py` | Optional Weave shim (CoreWeave Hacks): `init_weave()` when `WANDB_API_KEY` is set; `@op` wraps stages so extract/audit/script-runs/judge + auto-patched LLM calls land in the Weave UI. Pass-through otherwise — `LEMMA_WEAVE=off` forces it off |
 | `evals.py` | `lemma eval` — scorer suite (verdict-vs-reference, self-consistency, control honesty, evidence completeness, decisiveness) run as a Weave Evaluation or a local table (`--no-weave`) |
-| `meta.py` | `lemma improve` — self-improvement loop: reviewer-persona LLM drafts `results/<cid>/feedback.auto.md` from a claim's failure context, then re-audits. Advisory only: human `feedback.md` outranks it and `reviewer_reference.py` still wins — the loop can't edit either |
+| `meta.py` | `lemma improve` — self-improvement loop: reviewer-persona LLM drafts `results/<cid>/feedback.auto.md` from a claim's failure context (latest script, summary, persisted failure tails, trace events), then re-audits. Advisory only: human `feedback.md` outranks it and `reviewer_reference.py` still wins — the loop can't edit either. `improve_<ts>.json` records before/after plus `verify_gain`: any flip *to* `supported` post-feedback is flagged for eyeballing (that's the reward-hacking direction) |
 
 ### Human-in-the-loop audit contract (`auditor.py`)
 
@@ -64,6 +64,10 @@ re-running a stage that already has outputs under `papers/<id>/` reuses them
   `lemma improve` (agent/meta.py). Injected as a separate advisory section,
   below human feedback; the loop never touches feedback.md or
   reviewer_reference.py.
+- `results/<cid>/run_attempt*.failed.json` — persisted failure tails
+  (crashed/rejected attempts: exit code, problems, stdout+stderr tail).
+  run_attempt*.json only exists for accepted runs; the failed files are what
+  `_failure_context` feeds the improve loop's reviewer draft.
 - `results/<cid>/reviewer_reference.py` — hand-verified reference
   implementation (same `SUMMARY_JSON=` contract). Escalation: after a round's
   LLM attempts finish, if the outcome is anything other than `supported`, the
@@ -71,12 +75,21 @@ re-running a stage that already has outputs under `papers/<id>/` reuses them
   `reviewer_reference_executed` plus the reason. Verified examples live in
   `scripts/ref_c*.py` and `scripts/test_escalation_gate.py`.
 - `_summary_problems()` validator rejects self-contradictory verdicts (failed
-  control with a claimed verdict, NaN/None primary metrics, `n_measurable_points=0`,
-  control residuals contradicting `control_pass`). Rejected summaries become
-  `inconclusive` attempts, logged as `summary_rejected`.
+  OR MISSING control with a claimed verdict, NaN/None primary metrics,
+  `n_measurable_points=0`, control residuals contradicting `control_pass`).
+  The positive control is mandatory: `supported`/`falsified` without
+  `control_pass` truthy is rejected — dropping the control is the cheap way
+  to game a criterion. Rejected summaries become `inconclusive` attempts,
+  logged as `summary_rejected`.
 - Subset re-audits: `lemma audit <source> --stages audit --claims C2,C4,C6`
   merges into the existing `audit_report.json`; unlisted claims keep their
   prior verdicts. Attempt numbering continues across rounds.
+- Concurrency: `--jobs N` audits N claims in parallel threads (claims are
+  independent; each writes only under `results/<cid>/`).
+- Per-stage provider pin: `LEMMA_<STAGE>_PROVIDER=<name>` (EXTRACT, AUDIT,
+  IMPROVE) makes one stage prefer an endpoint without disturbing fallback
+  order — e.g. keep IMPROVE on the strongest model, ride a cheaper one for
+  AUDIT.
 
 `.env` drives provider selection: `LEMMA_ENDPOINTS` (+ per-endpoint
 `LEMMA_<NAME>_API_KEY/_BASE_URL/_MODEL`), `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`,

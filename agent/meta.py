@@ -80,6 +80,13 @@ def _failure_context(workdir: Path, claim_dir: Path, cid: str) -> str:
             "Recorded audit summary:\n```json\n"
             f"{summary_path.read_text(encoding='utf-8')[:MAX_SUMMARY_CHARS]}\n```"
         )
+    # persisted failure tails (the reviewer sees the actual stderr, not just
+    # an exit code — run_attempt*.json only exists for accepted runs)
+    for failed_path in sorted(claim_dir.glob("run_attempt*.failed.json")):
+        parts.append(
+            f"Failed attempt detail ({failed_path.name}):\n```json\n"
+            f"{failed_path.read_text(encoding='utf-8')[:MAX_EVENT_CHARS]}\n```"
+        )
     trace_path = workdir / "trace.jsonl"
     events = []
     if trace_path.is_file():
@@ -174,6 +181,15 @@ def improve(workdir: Path, trace: Trace, only: set[str] | None = None) -> dict:
         "before": {cid: before.get(cid) for cid in drafted},
         "after": {cid: after.get(cid) for cid in drafted},
         "changed": [cid for cid in drafted if after.get(cid) != before.get(cid)],
+        # Inspect-large-gains rule: a flip to 'supported' immediately after
+        # generated feedback is the reward-hacking direction (the notes could
+        # have steered the audit into the criterion). Flag for eyeballing;
+        # ->falsified moves the other way and needs no flag.
+        "verify_gain": [
+            cid
+            for cid in drafted
+            if after.get(cid) == "supported" and before.get(cid) != "supported"
+        ],
     }
     out_path = results_dir / f"improve_{time.strftime('%Y%m%d-%H%M%S')}.json"
     out_path.write_text(json.dumps(record, indent=2), encoding="utf-8")
