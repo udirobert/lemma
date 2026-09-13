@@ -178,6 +178,14 @@ records under `runs/audit-room/` and are labelled as replays, not
 independent replications. If isolation is unavailable the server reports
 recorded-only mode and refuses execution.
 
+In production the same API is hosted on Modal (`agent/room_modal.py`,
+deployed via `modal deploy agent/room_modal.py` from the repo root): each
+rerun runs in a fresh single-use container with the network blocked, CPU
+and memory capped, and the manifest verified against the bundle baked into
+the image. `netlify.toml` proxies `/api/*` to the Modal endpoint so the
+static site stays same-origin and degrades to recorded-only if the
+backend is unreachable. Rate limits: 10 jobs/IP/day, 4 concurrent.
+
 ## Secrets & hygiene
 
 - Secrets live in `.env` (gitignored) — copy from `.env.example`; never commit

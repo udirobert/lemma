@@ -536,9 +536,21 @@ The self-review loop is now a product surface, not just CLI internals:
   rejects it), so the readiness probe fails and the server reports
   recorded-only mode — correct fail-closed behavior, but it means live
   reruns don't execute here until that limit is revisited.
+- Production reruns: `agent/room_modal.py` hosts the same rerun contract
+  on Modal (`modal deploy agent/room_modal.py` from the repo root, app
+  `lemma-room`). Each rerun spawns a **single-use container** with the
+  network blocked and Modal API access restricted — the container itself
+  is the sandbox, so `RLIMIT_AS` and friends apply on Linux. The
+  manifest/digest checks are identical (frozen bundle baked into the
+  image at deploy); the API adds per-IP daily and global concurrency
+  limits. Netlify proxies `/api/*` → the Modal endpoint (see
+  `netlify.toml`), so the static site keeps same-origin calls and still
+  degrades to recorded-only if the backend is down. Replays are labelled
+  replays — still not independent replications.
 
 Tier 2 reframed: the "paste an arXiv id" hosted demo is superseded for now
 by real recorded-audit lookup on the landing (typed id → actual claim
-links into `/room/`) plus the local CLI path. A hosted execution service
-still needs real isolation before it's safe for arbitrary public input —
-the local sandbox is an allowlisted demo, not that.
+links into `/room/`) plus the local CLI path. The Modal runner executes
+only the two manifest-allowlisted, hash-pinned scripts — a hosted service
+for arbitrary public input would still need stronger isolation review
+before it's safe.

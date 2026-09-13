@@ -2,3 +2,12 @@
   base = "site"
   command = "npm install && npm run build"
   publish = "dist"
+
+# Audit Room live reruns: same-origin /api -> Modal-hosted runner
+# (agent/room_modal.py, deployed app "lemma-room"). Keeps the client on
+# one origin so no CORS or UI changes are needed.
+[[redirects]]
+  from = "/api/*"
+  to = "https://thepapajams--lemma-room-api.modal.run/api/:splat"
+  status = 200
+  force = true

@@ -211,7 +211,9 @@ function renderHeader() {
   }
   const pill = $("mode-pill");
   if (state.liveChecked && state.live?.available) {
-    pill.textContent = "RECORDED + LOCAL RUNNER";
+    pill.textContent = isLocal
+      ? "RECORDED + LOCAL RUNNER"
+      : "RECORDED + LIVE RERUN";
     pill.classList.add("live");
   } else {
     pill.textContent = "RECORDED EVIDENCE";
@@ -1064,13 +1066,8 @@ const isLocal =
   location.hostname === "localhost" || location.hostname === "127.0.0.1";
 
 async function checkLive() {
-  if (!isLocal) {
-    state.liveChecked = true;
-    state.live = { available: false, reason: "static hosting" };
-    renderHeader();
-    renderReceipt();
-    return;
-  }
+  // Same-origin /api is served by the local `lemma room` process on
+  // localhost and by the Netlify -> Modal proxy in production.
   try {
     const res = await fetch("/api/session", {
       signal: AbortSignal.timeout(10000),
@@ -1078,7 +1075,10 @@ async function checkLive() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     state.live = (await res.json()) as LiveSession;
   } catch (e) {
-    state.live = { available: false, reason: "no local runner" };
+    state.live = {
+      available: false,
+      reason: isLocal ? "no local runner" : "no live runner",
+    };
     state.liveError = e instanceof Error ? e.message : String(e);
   }
   state.liveChecked = true;
@@ -1101,14 +1101,16 @@ function rerunAllowed(attempt: Attempt | null): boolean {
 
 function renderLiveControls(host: HTMLElement, attempt: Attempt | null) {
   const box = el("div", "improvement-note");
-  if (!isLocal || !state.live?.available) {
+  if (!state.live?.available) {
     box.append(
       el(
         "p",
         "small muted",
-        `Recorded mode · live reruns require the local runner${
-          state.live?.reason ? ` (${state.live.reason})` : ""
-        }${state.liveError ? ` — ${state.liveError}` : ""}`,
+        `Recorded mode · live reruns ${
+          isLocal ? "require the local runner" : "are unavailable"
+        }${state.live?.reason ? ` (${state.live.reason})` : ""}${
+          state.liveError ? ` — ${state.liveError}` : ""
+        }`,
       ),
     );
     if (isLocal) {
@@ -1133,7 +1135,7 @@ function renderLiveControls(host: HTMLElement, attempt: Attempt | null) {
       el(
         "p",
         "small muted",
-        "This attempt is not in the local rerun manifest (exact script digest required).",
+        "This attempt is not in the live rerun manifest (exact script digest required).",
       ),
     );
   btn.addEventListener("click", () => openRerunDialog(attempt));

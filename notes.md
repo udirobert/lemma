@@ -91,3 +91,42 @@ industry, and improve interactivity, engagement and utility. Three-part response
    (24 claims, 16 supported, 4 inconclusive, 4 not_audited, 54 failures).
 
 Verified: `npm run build` 6 pages green; `npm test` 10/10; builders idempotent.
+
+## 2026-09-13 — Audit Room live reruns on Modal (production backend)
+
+**Goal:** `lemma room` only serves the rerun API on localhost and the macOS
+sandbox fails closed (RLIMIT_AS rejected), so lemmabio.netlify.app was
+recorded-only. Added a Modal-hosted runner behind a Netlify proxy.
+
+- `agent/room_jobs.py` (new, pure): manifest verification delegates to
+  `room_server.load_allowed` (identical digest checks), `build_attempt`
+  emits the roomModel.Attempt shape (uuid id, number+1, source/execution_mode
+  "live_rerun", replay_of, null criterion, tail-bounded stdout/stderr
+  artifacts, data-URI figures), `figure_data_uris`, `synthesize_events`,
+  `rate_ok` sliding-window helper.
+- `agent/room_modal.py` (new, deploy entry): app `lemma-room`; worker
+  `run_attempt` (single_use_containers, block_network, restrict_modal_access,
+  240s timeout) replays the allowlisted script under the same rlimit
+  launcher as room_sandbox minus sandbox-exec — RLIMIT_AS works on Linux.
+  Always returns {events, attempt, error}. ASGI `api` function serves
+  GET /api/session, POST /api/reruns (spawn -> FunctionCall object_id),
+  GET /api/reruns/{job_id} (get(timeout=0); modal TimeoutError -> running,
+  NotFound -> 404, OutputExpired -> failed). Token + per-IP/day counters +
+  inflight ledger in modal.Dict "lemma-room-state".
+- Image: debian_slim py3.12 + numpy/matplotlib/python-dotenv/fastapi —
+  dotenv is the only real dep of the agent.auditor import chain
+  (anthropic/openai are lazy imports in llm.py, never executed).
+- `netlify.toml`: `/api/*` -> `https://thepapajams--lemma-room-api.modal.run/api/:splat`
+  (status 200, force) so the API stays same-origin, no CORS.
+- `site/src/room.ts`: removed the isLocal short-circuit so the client
+  actually calls /api/session in prod (the proxy only helps if the client
+  asks); copy tweaks for non-local live mode.
+- Rate limits: 10 jobs/day per IP (X-Forwarded-For first hop), 4 concurrent
+  globally (inflight ledger pruned at the 240s worker timeout).
+- Verified live: session available:true; real C6 legacy-4 rerun completed in
+  3.7s -> honest inconclusive + control:failed + fig.png data URI
+  (/tmp/modal-rerun-result.json); 403/400/413/415/429/404 guards all hold;
+  5-way burst hit the 4-concurrent cap. scripts/test_room_jobs.py 13 tests,
+  all existing suites + npm build green.
+- Note: prod /api only goes live when the new netlify.toml reaches main —
+  no commit made.
