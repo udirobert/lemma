@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "mode": "recorded",
-  "captured_at": "2026-09-13T06:05:36.073199+00:00",
+  "captured_at": "2026-09-13T10:04:35.139093+00:00",
   "papers": [
     {
       "slug": "grokking-ridge",
@@ -26,6 +26,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "supported",
+          "xylo_label": "grok zero-teacher",
+          "xylo_color": "c-blue",
           "summary": {
             "claim_id": "C1",
             "status": "supported",
@@ -75,6 +77,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "supported",
+          "xylo_label": "grok realizable",
+          "xylo_color": "c-blue",
           "summary": {
             "claim_id": "C2",
             "status": "supported",
@@ -121,6 +125,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "supported",
+          "xylo_label": "phase decomposition",
+          "xylo_color": "c-blue",
           "summary": {
             "claim_id": "C3",
             "status": "supported",
@@ -166,6 +172,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "supported",
+          "xylo_label": "hyperparam sweep",
+          "xylo_color": "c-blue",
           "summary": {
             "claim_id": "C4",
             "status": "supported",
@@ -214,6 +222,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "supported",
+          "xylo_label": "ReLU grokking",
+          "xylo_color": "c-blue",
           "summary": {
             "claim_id": "C5",
             "status": "supported",
@@ -270,6 +280,8 @@
           "compute": "not recorded",
           "testable": true,
           "status": "supported",
+          "xylo_label": "falsification gate",
+          "xylo_color": "c-blue",
           "summary": {
             "claim_id": "FALS",
             "status": "supported",
@@ -332,6 +344,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "supported",
+          "xylo_label": "risk identity",
+          "xylo_color": "c-magenta",
           "summary": {
             "claim_id": "C1",
             "status": "supported",
@@ -984,6 +998,8 @@
           "compute": "gpu-small",
           "testable": true,
           "status": "falsified",
+          "xylo_label": "slope −0.83",
+          "xylo_color": "c-magenta",
           "summary": {
             "claim_id": "C2",
             "status": "falsified",
@@ -1249,6 +1265,8 @@
           "compute": "gpu-small",
           "testable": true,
           "status": "supported",
+          "xylo_label": "concentration",
+          "xylo_color": "c-magenta",
           "summary": {
             "claim_id": "C3",
             "status": "supported",
@@ -1856,6 +1874,8 @@
           "compute": "gpu-small",
           "testable": true,
           "status": "supported",
+          "xylo_label": "coupling pN",
+          "xylo_color": "c-magenta",
           "summary": {
             "claim_id": "C4",
             "status": "supported",
@@ -2148,6 +2168,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "inconclusive",
+          "xylo_label": "stability",
+          "xylo_color": "c-magenta",
           "summary": {
             "claim_id": "C5",
             "status": "inconclusive",
@@ -2352,6 +2374,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "inconclusive",
+          "xylo_label": "variance bound",
+          "xylo_color": "c-magenta",
           "summary": {
             "claim_id": "C6",
             "status": "inconclusive",
@@ -2643,6 +2667,8 @@
           "compute": "gpu-small",
           "testable": true,
           "status": "supported",
+          "xylo_label": "single-run ≈ filtering",
+          "xylo_color": "c-teal",
           "summary": {
             "claim_id": "C1",
             "status": "supported",
@@ -2810,6 +2836,8 @@
           "compute": "gpu-large",
           "testable": true,
           "status": "not_audited",
+          "xylo_label": "800M isolation",
+          "xylo_color": "c-teal",
           "summary": null,
           "checks": {
             "state": "not_evaluated",
@@ -2842,6 +2870,8 @@
           "compute": "gpu-large",
           "testable": true,
           "status": "not_audited",
+          "xylo_label": "scale 50M→5B",
+          "xylo_color": "c-teal",
           "summary": null,
           "checks": {
             "state": "not_evaluated",
@@ -2874,6 +2904,8 @@
           "compute": "gpu-large",
           "testable": true,
           "status": "not_audited",
+          "xylo_label": "subset composition",
+          "xylo_color": "c-teal",
           "summary": null,
           "checks": {
             "state": "not_evaluated",
@@ -2906,6 +2938,8 @@
           "compute": "gpu-large",
           "testable": true,
           "status": "not_audited",
+          "xylo_label": "partial-label removal",
+          "xylo_color": "c-teal",
           "summary": null,
           "checks": {
             "state": "not_evaluated",
@@ -2938,6 +2972,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "supported",
+          "xylo_label": "5× cost savings",
+          "xylo_color": "c-teal",
           "summary": {
             "claim_id": "C6",
             "status": "supported",
@@ -3058,6 +3094,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "supported",
+          "xylo_label": "ν = 1.00 (1D)",
+          "xylo_color": "c-gold",
           "summary": {
             "claim_id": "C1",
             "status": "supported",
@@ -3209,6 +3247,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "supported",
+          "xylo_label": "ν = 1.500 (D=2)",
+          "xylo_color": "c-gold",
           "summary": {
             "claim_id": "C2",
             "status": "supported",
@@ -3694,6 +3734,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "supported",
+          "xylo_label": "ν = 3.00 (D=4)",
+          "xylo_color": "c-gold",
           "summary": {
             "claim_id": "C3",
             "status": "supported",
@@ -3905,6 +3947,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "supported",
+          "xylo_label": "ν = 5.50 (D=10)",
+          "xylo_color": "c-gold",
           "summary": {
             "claim_id": "C4",
             "status": "supported",
@@ -4363,6 +4407,8 @@
           "compute": "gpu-small",
           "testable": true,
           "status": "inconclusive",
+          "xylo_label": "P_grok L1 > L2",
+          "xylo_color": "c-gold",
           "summary": {
             "claim_id": "C5",
             "status": "inconclusive",
@@ -4576,6 +4622,8 @@
           "compute": "cpu-fast",
           "testable": true,
           "status": "supported",
+          "xylo_label": "rule-30 scope",
+          "xylo_color": "c-gold",
           "summary": {
             "claim_id": "C6",
             "status": "supported",

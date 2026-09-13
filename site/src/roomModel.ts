@@ -60,6 +60,8 @@ export interface Claim {
   compute: string;
   testable: boolean;
   status: string;
+  xylo_label: string;
+  xylo_color: string;
   summary: Summary | null;
   checks: Checks;
   source: string;
@@ -108,6 +110,27 @@ export interface Bundle {
 
 export function claimKey(paperSlug: string, claimId: string): string {
   return JSON.stringify([paperSlug, claimId]);
+}
+
+export type BarState = "on" | "dim" | "fail";
+
+export function claimBarState(claim: Pick<Claim, "status">): BarState {
+  if (claim.status === "supported") return "on";
+  if (claim.status === "falsified") return "fail";
+  return "dim";
+}
+
+export const PENTATONIC = [
+  261.63, 293.66, 329.63, 392.0, 440.0, 523.25, 587.33, 659.25, 783.99, 880.0,
+  1046.5, 1174.66, 1318.51, 1567.98, 1760.0, 2093.0, 2349.32, 2637.02,
+];
+
+export function claimBarFreq(index: number): number {
+  return PENTATONIC[index % PENTATONIC.length];
+}
+
+export function claimBarHeight(index: number, count: number): number {
+  return Math.round(34 + (index / Math.max(1, count - 1)) * 66);
 }
 
 export function sourceLabel(source: string | null | undefined): string {

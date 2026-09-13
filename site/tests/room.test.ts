@@ -1,5 +1,8 @@
 import { describe, it, expect } from "vitest";
 import {
+  claimBarFreq,
+  claimBarHeight,
+  claimBarState,
   claimKey,
   criterionBadge,
   diffLines,
@@ -10,6 +13,7 @@ import {
   searchPapers,
   sourceLabel,
   controlLabel,
+  PENTATONIC,
   type Attempt,
   type Bundle,
   type Claim,
@@ -54,6 +58,8 @@ function claim(partial: Partial<Claim>): Claim {
     compute: "",
     testable: true,
     status: "supported",
+    xylo_label: "c1",
+    xylo_color: "c-blue",
     summary: { status: "supported", metrics: { m: 1 }, notes: "final" },
     checks: { state: "passed", control: "passed", problems: [] },
     source: "agent_generated",
@@ -218,6 +224,43 @@ describe("outcomeView", () => {
     const v = outcomeView(claim({ attempts: [sel] }), sel);
     expect(v.status).toBe("output_unavailable");
     expect(v.summary).toBeNull();
+  });
+});
+
+describe("claim rail (instrument) model", () => {
+  it("every bundle claim carries a xylo label and a palette color", () => {
+    const palette = new Set(["c-blue", "c-magenta", "c-teal", "c-gold", "c-violet"]);
+    for (const p of bundle.papers) {
+      for (const c of p.claims) {
+        expect(c.xylo_label.length).toBeGreaterThan(0);
+        expect(palette.has(c.xylo_color)).toBe(true);
+      }
+    }
+  });
+  it("all claims in a paper share the paper's palette color", () => {
+    for (const p of bundle.papers) {
+      expect(new Set(p.claims.map((c) => c.xylo_color)).size).toBe(1);
+    }
+  });
+  it("bar state derives from the authoritative claim status, not the xylo label", () => {
+    expect(claimBarState(claim({ status: "supported" }))).toBe("on");
+    expect(claimBarState(claim({ status: "falsified" }))).toBe("fail");
+    expect(claimBarState(claim({ status: "inconclusive" }))).toBe("dim");
+    expect(claimBarState(claim({ status: "not_audited" }))).toBe("dim");
+    const icl = findPaper(bundle, "icl-bayesian");
+    const c2 = icl?.claims.find((c) => c.id === "C2");
+    expect(c2?.status).toBe("falsified");
+    expect(c2 ? claimBarState(c2) : null).toBe("fail");
+  });
+  it("assigns pentatonic frequencies by index within the paper", () => {
+    expect(claimBarFreq(0)).toBe(PENTATONIC[0]);
+    expect(claimBarFreq(PENTATONIC.length)).toBe(PENTATONIC[0]);
+    expect(claimBarFreq(5)).toBe(PENTATONIC[5]);
+  });
+  it("interpolates bar heights across the rail range", () => {
+    expect(claimBarHeight(0, 6)).toBe(34);
+    expect(claimBarHeight(5, 6)).toBe(100);
+    expect(claimBarHeight(0, 1)).toBe(34);
   });
 });
 

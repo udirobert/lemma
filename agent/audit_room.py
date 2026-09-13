@@ -13,6 +13,7 @@ from agent.auditor import _summary_problems, control_passed
 
 SCHEMA_VERSION = 1
 SAFE_ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,127}\Z")
+XYLO_PALETTE = ["c-blue", "c-magenta", "c-teal", "c-gold", "c-violet"]
 ATTEMPT_NAME = re.compile(
     r"(?:audit_attempt|run_attempt)(\d+)(?:\.failed)?\.(?:py|json)\Z"
 )
@@ -209,7 +210,12 @@ def legacy_attempt(claim_dir: Path, number: int, cid: str) -> dict:
 
 
 def claim_record(
-    workdir: Path, claim: dict, report: dict, public_dir: Path | None
+    workdir: Path,
+    claim: dict,
+    report: dict,
+    public_dir: Path | None,
+    xylo_label: str | None = None,
+    xylo_color: str | None = None,
 ) -> dict:
     cid = claim["id"]
     if not SAFE_ID.fullmatch(cid):
@@ -254,6 +260,8 @@ def claim_record(
         "compute": claim.get("compute", "not recorded"),
         "testable": claim.get("testable", True),
         "status": (summary or {}).get("status", report.get("status", "not_audited")),
+        "xylo_label": xylo_label or cid,
+        "xylo_color": xylo_color or XYLO_PALETTE[0],
         "summary": summary,
         "checks": checks(summary, cid),
         "source": report.get("source", "unknown"),
@@ -272,7 +280,9 @@ def claim_record(
     }
 
 
-def paper_record(workdir: Path, meta: dict, public_dir: Path | None) -> dict:
+def paper_record(
+    workdir: Path, meta: dict, public_dir: Path | None, palette_index: int = 0
+) -> dict:
     raw_claims = load_json(workdir / "claims.json", [])
     report = load_json(workdir / "results" / "audit_report.json", {})
     outcomes = {c["id"]: c for c in report.get("claims", [])}
@@ -280,8 +290,21 @@ def paper_record(workdir: Path, meta: dict, public_dir: Path | None) -> dict:
     for cid, outcome in outcomes.items():
         if cid not in claims:
             claims[cid] = {"id": cid, "title": outcome.get("title", cid)}
+    xylo = {
+        entry.get("claim"): entry.get("label")
+        for entry in meta.get("xylo", [])
+        if isinstance(entry, dict)
+    }
+    color = XYLO_PALETTE[palette_index % len(XYLO_PALETTE)]
     records = [
-        claim_record(workdir, claim, outcomes.get(cid, {}), public_dir)
+        claim_record(
+            workdir,
+            claim,
+            outcomes.get(cid, {}),
+            public_dir,
+            xylo_label=xylo.get(cid),
+            xylo_color=color,
+        )
         for cid, claim in claims.items()
     ]
     rounds = []
@@ -319,18 +342,19 @@ def paper_record(workdir: Path, meta: dict, public_dir: Path | None) -> dict:
 
 
 def build_bundle(papers_dir: Path, public_dir: Path | None = None) -> dict:
+    workdirs = [
+        workdir
+        for workdir in sorted(papers_dir.iterdir())
+        if workdir.is_dir()
+        and not workdir.is_symlink()
+        and (workdir / "meta.json").is_file()
+    ]
     papers = []
-    for workdir in sorted(papers_dir.iterdir()):
-        if (
-            not workdir.is_dir()
-            or workdir.is_symlink()
-            or not (workdir / "meta.json").is_file()
-        ):
-            continue
+    for palette_index, workdir in enumerate(workdirs):
         meta = load_json(workdir / "meta.json")
         if not SAFE_ID.fullmatch(meta.get("slug", workdir.name)):
             raise ValueError("Unsafe paper slug")
-        papers.append(paper_record(workdir, meta, public_dir))
+        papers.append(paper_record(workdir, meta, public_dir, palette_index))
     return json_safe(
         {
             "schema_version": SCHEMA_VERSION,

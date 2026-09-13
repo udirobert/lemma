@@ -6,7 +6,15 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from agent.audit_room import build_bundle, checks, claim_record, json_safe, safe_url
+from agent.audit_room import (
+    XYLO_PALETTE,
+    build_bundle,
+    checks,
+    claim_record,
+    json_safe,
+    paper_record,
+    safe_url,
+)
 from agent.records import begin_attempt, finish_attempt
 from agent.room_manifest import RERUN_MANIFEST
 from agent.traces import Trace
@@ -120,6 +128,41 @@ class AuditRoomDataTests(unittest.TestCase):
         self.assertEqual({r["claim_id"] for r in RERUN_MANIFEST}, {"C6"})
         for item in RERUN_MANIFEST:
             self.assertRegex(item["script_sha256"], r"^[0-9a-f]{64}$")
+
+    def test_xylo_label_and_color_join_from_meta(self):
+        (self.paper / "claims.json").write_text(json.dumps([self.claim]))
+        record = claim_record(
+            self.paper,
+            self.claim,
+            {"summary": self.summary},
+            None,
+            xylo_label="risk identity",
+            xylo_color="c-magenta",
+        )
+        self.assertEqual(record["xylo_label"], "risk identity")
+        self.assertEqual(record["xylo_color"], "c-magenta")
+        fallback = claim_record(self.paper, self.claim, {}, None)
+        self.assertEqual(fallback["xylo_label"], "C1")
+        self.assertEqual(fallback["xylo_color"], XYLO_PALETTE[0])
+
+    def test_paper_record_maps_xylo_labels_per_claim(self):
+        meta = {
+            "slug": "example",
+            "xylo": [
+                {"claim": "C1", "label": "first bar"},
+                {"claim": "C9", "label": "not a claim"},
+            ],
+        }
+        (self.paper / "claims.json").write_text(
+            json.dumps([self.claim, {"id": "C2", "title": "Two"}])
+        )
+        (self.paper / "results" / "c2").mkdir(parents=True)
+        record = paper_record(self.paper, meta, None, palette_index=3)
+        by_id = {c["id"]: c for c in record["claims"]}
+        self.assertEqual(by_id["C1"]["xylo_label"], "first bar")
+        self.assertEqual(by_id["C2"]["xylo_label"], "C2")
+        for c in record["claims"]:
+            self.assertEqual(c["xylo_color"], XYLO_PALETTE[3])
 
     def test_unsafe_claim_id_is_rejected(self):
         with self.assertRaises(ValueError):

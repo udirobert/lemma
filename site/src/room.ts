@@ -1,6 +1,10 @@
 import rawBundle from "./data/audit-room.json";
+import { playStrike } from "./audio";
 import {
   checkStateLabel,
+  claimBarFreq,
+  claimBarHeight,
+  claimBarState,
   claimKey,
   controlLabel,
   criterionBadge,
@@ -177,6 +181,8 @@ function writeUrl(push = true) {
 }
 
 function renderHeader() {
+  root.classList.remove(...PAPER_CLASSES);
+  if (state.paper) root.classList.add(paperColorClass());
   const options = $("paper-options");
   options.textContent = "";
   for (const p of bundle.papers) {
@@ -187,6 +193,7 @@ function renderHeader() {
   }
   const title = $("paper-title");
   title.textContent = state.paper ? state.paper.title : "";
+  title.title = state.paper ? `${state.paper.title} — ${state.paper.source_label}` : "";
   const link = $("source-link") as HTMLAnchorElement;
   const url = state.paper?.source_url ?? state.paper?.links.paper ?? null;
   if (url) {
@@ -209,10 +216,63 @@ function renderHeader() {
   );
 }
 
+const PAPER_CLASSES = ["pc-blue", "pc-magenta", "pc-teal", "pc-gold", "pc-violet"];
+
+function paperColorClass(): string {
+  const c = state.paper?.claims[0]?.xylo_color ?? "c-blue";
+  return PAPER_CLASSES.includes(`p${c}`) ? `p${c}` : "pc-blue";
+}
+
 function renderClaims() {
   claimsPanel.textContent = "";
   if (!state.paper) return;
   claimsPanel.append(el("h2", "", `claims · ${state.paper.slug}`));
+
+  const claims = state.paper.claims;
+  const n = claims.length;
+  const rail = el("div", "claim-rail");
+  rail.setAttribute("role", "group");
+  rail.setAttribute(
+    "aria-label",
+    "Claim instrument — one bar per claim; strike a bar to select it",
+  );
+  claims.forEach((c, i) => {
+    const st = claimBarState(c);
+    const bar = el("button", `bar ${st} ${c.xylo_color || "c-blue"}`);
+    bar.type = "button";
+    bar.style.setProperty("--h", `${claimBarHeight(i, n)}px`);
+    bar.style.setProperty("--i", String(i));
+    bar.dataset.freq = String(claimBarFreq(i));
+    bar.dataset.label = c.xylo_label || c.id;
+    bar.dataset.state = st;
+    bar.dataset.cid = c.id;
+    bar.setAttribute(
+      "aria-label",
+      `${c.id} · ${c.xylo_label || c.id} — ${statusLabel(c.status)}`,
+    );
+    bar.setAttribute("aria-pressed", String(c === state.claim));
+    if (c === state.claim) bar.classList.add("selected");
+    bar.append(el("span", "bar-label", c.xylo_label || c.id));
+    bar.addEventListener("click", () => {
+      try {
+        playStrike(Number(bar.dataset.freq));
+      } catch {
+      }
+      selectClaim(c.id);
+    });
+    rail.append(bar);
+  });
+  claimsPanel.append(rail);
+  claimsPanel.append(
+    el(
+      "p",
+      "claim-rail-readout",
+      state.claim
+        ? `claim ${state.claim.xylo_label || state.claim.id} · ${statusLabel(state.claim.status)}`
+        : `${n} claims · strike a bar`,
+    ),
+  );
+
   const list = el("ul", "claim-list");
   list.setAttribute("role", "listbox");
   list.setAttribute("aria-label", "Claims");
@@ -235,7 +295,7 @@ function renderClaims() {
       if (target) {
         selectClaim(target.id);
         claimsPanel
-          .querySelector<HTMLButtonElement>(`[data-cid="${target.id}"]`)
+          .querySelector<HTMLButtonElement>(`.claim-list [data-cid="${target.id}"]`)
           ?.focus();
       }
     });
@@ -289,21 +349,28 @@ function metricsDisclosure(summary: Summary | null): HTMLElement | null {
   return d;
 }
 
+function figureCard(f: { name: string; url: string; sha256: string }): HTMLElement {
+  const fig = el("figure");
+  const img = el("img");
+  img.src = f.url;
+  img.alt = f.name;
+  img.loading = "lazy";
+  const cap = el("figcaption");
+  cap.append(
+    el("span", "fig-name", f.name),
+    el("span", "fig-sha", `sha ${f.sha256.slice(0, 8)}`),
+  );
+  fig.append(img, cap);
+  return fig;
+}
+
 function figuresBlock(claim: Claim, attempt: Attempt | null): HTMLElement {
   const wrap = el("div");
   const pinned = attempt?.figures ?? [];
   if (pinned.length) {
     wrap.append(el("h3", "", `figures from ${attempt?.id}`));
     const row = el("div", "room-figs");
-    for (const f of pinned) {
-      const fig = el("figure");
-      const img = el("img");
-      img.src = f.url;
-      img.alt = f.name;
-      img.loading = "lazy";
-      fig.append(img, el("figcaption", "", f.name));
-      row.append(fig);
-    }
+    for (const f of pinned) row.append(figureCard(f));
     wrap.append(row);
     return wrap;
   }
@@ -317,15 +384,7 @@ function figuresBlock(claim: Claim, attempt: Attempt | null): HTMLElement {
       ),
     );
     const row = el("div", "room-figs");
-    for (const f of claim.current_figures) {
-      const fig = el("figure");
-      const img = el("img");
-      img.src = f.url;
-      img.alt = f.name;
-      img.loading = "lazy";
-      fig.append(img, el("figcaption", "", f.name));
-      row.append(fig);
-    }
+    for (const f of claim.current_figures) row.append(figureCard(f));
     wrap.append(row);
   }
   return wrap;
@@ -338,7 +397,12 @@ function renderEvidenceTab(body: HTMLElement) {
   const view = outcomeView(claim, attempt);
 
   const head = el("div", "claim-head");
-  head.append(el("h2", "", `${claim.id} — ${claim.title}`));
+  const h2 = el("h2");
+  h2.append(
+    el("span", "claim-id", claim.id),
+    document.createTextNode(claim.title),
+  );
+  head.append(h2);
   if (attempt) head.append(badge("neutral", `attempt ${attempt.number} selected`));
   head.append(
     statusBadge(view.status === "output_unavailable" ? null : view.status),
@@ -1230,6 +1294,10 @@ function init() {
 
   readUrl();
   if (!location.search) writeUrl(false);
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    root.classList.add("room-enter");
+    setTimeout(() => root.classList.remove("room-enter"), 1500);
+  }
   renderAll();
   void checkLive();
 }

@@ -6,6 +6,7 @@
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import { playStrike } from "./audio";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -54,8 +55,6 @@ function scrollTo(hash: string) {
 }
 
 /* ---------- xylophone audio ---------- */
-let actx: AudioContext | null = null;
-let actxSuspendT: ReturnType<typeof setTimeout> | undefined;
 const readout = document.getElementById("xylo-readout");
 
 // Composed strike bounce: the helix rAF loop owns bar transforms, so the pop
@@ -66,44 +65,11 @@ const helixHits = new Map<HTMLElement, number>();
 let helixBounceUntil = 0;
 let helixWake: ((ms: number) => void) | null = null;
 
-// auto-suspend the AudioContext after 10s of silence so the browser can
-// release the audio graph; it resumes on the next strike. (Mobile Safari
-// is especially aggressive about backgrounding audio threads.)
-function scheduleActxSuspend() {
-  clearTimeout(actxSuspendT);
-  actxSuspendT = setTimeout(() => {
-    if (actx && actx.state === "running") void actx.suspend();
-  }, 10000);
-}
-addEventListener("pagehide", () => {
-  clearTimeout(actxSuspendT);
-  if (actx) void actx.close();
-  actx = null;
-});
-
 function strike(bar: HTMLElement) {
   if (bar.dataset.dragged) { delete bar.dataset.dragged; return; }
   const freq = Number(bar.dataset.freq);
   const label = bar.dataset.label ?? "";
-  actx = actx ?? new AudioContext();
-  if (actx.state === "suspended") void actx.resume();
-  scheduleActxSuspend();
-  const t = actx.currentTime;
-  for (const [mult, gain0, dur, type] of [
-    [1, 0.2, 1.5, "triangle"],
-    [2.01, 0.055, 0.7, "sine"],
-    [3.98, 0.02, 0.35, "sine"],
-  ] as const) {
-    const osc = actx.createOscillator();
-    const g = actx.createGain();
-    osc.type = type;
-    osc.frequency.value = freq * mult;
-    g.gain.setValueAtTime(gain0, t);
-    g.gain.exponentialRampToValueAtTime(0.0008, t + dur);
-    osc.connect(g).connect(actx.destination);
-    osc.start(t);
-    osc.stop(t + dur + 0.05);
-  }
+  playStrike(freq);
   const st = bar.dataset.state;
   const state =
     st === "on"
@@ -845,3 +811,29 @@ for (const a of document.querySelectorAll<HTMLAnchorElement>("a[data-scroll]")) 
     }
   });
 }
+
+const roomCta = document.querySelector<HTMLAnchorElement>(
+  'a[data-cta="enter-audit-room"]'
+);
+roomCta?.addEventListener("click", (e) => {
+  if (
+    reduced ||
+    e.button !== 0 ||
+    e.metaKey ||
+    e.ctrlKey ||
+    e.shiftKey ||
+    e.altKey
+  ) {
+    return;
+  }
+  e.preventDefault();
+  const href = roomCta.href;
+  try {
+    for (const f of [523.25, 659.25, 783.99]) playStrike(f);
+  } catch {
+  }
+  document.documentElement.classList.add("leaving");
+  setTimeout(() => {
+    window.location.href = href;
+  }, 300);
+});

@@ -1,7 +1,10 @@
 ---
 import "@fontsource-variable/montserrat";
 import "@fontsource-variable/roboto-mono";
+import "../styles/global.css";
 import "../styles/room.css";
+import BgGlass from "../components/BgGlass.astro";
+import ClipMenu from "../components/ClipMenu.astro";
 ---
 
 <!doctype html>
@@ -15,17 +18,18 @@ import "../styles/room.css";
       content="Inspect the recorded evidence behind every Lemma audit verdict — scripts, outputs, controls, failures."
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="theme-color" content="#0a0f1a" />
+    <meta name="theme-color" content="#0b1018" />
     <style>
       html,
       body {
         margin: 0;
         padding: 0;
-        background: #0a0f1a;
+        background: #0b1018;
       }
     </style>
   </head>
   <body>
+    <BgGlass />
     <div class="room-root" id="room-root">
       <header class="room-header">
         <a href="/" class="room-logo" aria-label="Lemma home">
@@ -45,14 +49,14 @@ import "../styles/room.css";
             id="paper-search"
             type="search"
             list="paper-options"
-            placeholder="Search recorded papers…"
+            placeholder="search recorded papers…"
             aria-label="Search recorded audit papers"
             autocomplete="off"
           />
           <datalist id="paper-options"></datalist>
         </div>
         <button class="room-btn" id="present-toggle" aria-pressed="false">Present</button>
-        <a href="#" id="source-link" target="_blank" rel="noopener" class="small" hidden>source paper ↗</a>
+        <a href="#" id="source-link" target="_blank" rel="noopener" class="small room-source-link" hidden>source paper ↗</a>
       </header>
       <p class="room-subhead" id="room-subhead">
         Inspect the evidence. <strong>Not just the answer.</strong>
@@ -63,9 +67,42 @@ import "../styles/room.css";
         <button data-panel="receipt" aria-selected="false">History</button>
       </nav>
       <main class="room-grid" id="room-grid">
-        <aside class="room-panel claims-panel" id="claims-panel" aria-label="Claims"></aside>
-        <section class="room-panel evidence-panel" id="evidence-panel" aria-label="Evidence"></section>
-        <aside class="room-panel receipt-panel" id="receipt-panel" aria-label="Receipt and controls"></aside>
+        <aside class="room-panel claims-panel" id="claims-panel" aria-label="Claims">
+          <div class="boot" aria-hidden="true">
+            <div class="boot-rail">
+              <i class="boot-bar" style="--h: 42px"></i>
+              <i class="boot-bar" style="--h: 58px"></i>
+              <i class="boot-bar" style="--h: 74px"></i>
+              <i class="boot-bar" style="--h: 62px"></i>
+              <i class="boot-bar" style="--h: 88px"></i>
+              <i class="boot-bar" style="--h: 100px"></i>
+            </div>
+            <div class="boot-line" style="--w: 52%"></div>
+            <div class="boot-line" style="--w: 86%"></div>
+            <div class="boot-line" style="--w: 74%"></div>
+            <div class="boot-line" style="--w: 80%"></div>
+          </div>
+        </aside>
+        <section class="room-panel evidence-panel" id="evidence-panel" aria-label="Evidence">
+          <div class="boot" aria-hidden="true">
+            <p class="boot-status">assembling the instrument · recorded bundle</p>
+            <div class="boot-line" style="--w: 34%"></div>
+            <div class="boot-line" style="--w: 64%; height: 22px"></div>
+            <div class="boot-block" style="--h: 96px"></div>
+            <div class="boot-block" style="--h: 140px"></div>
+            <div class="boot-line" style="--w: 48%"></div>
+          </div>
+        </section>
+        <aside class="room-panel receipt-panel" id="receipt-panel" aria-label="Receipt and controls">
+          <div class="boot" aria-hidden="true">
+            <div class="boot-line" style="--w: 40%"></div>
+            <div class="boot-line" style="--w: 90%"></div>
+            <div class="boot-line" style="--w: 84%"></div>
+            <div class="boot-line" style="--w: 88%"></div>
+            <div class="boot-line" style="--w: 78%"></div>
+            <div class="boot-block" style="--h: 70px"></div>
+          </div>
+        </aside>
       </main>
       <div class="room-empty" id="room-empty" hidden></div>
       <dialog class="room-dialog" id="rerun-dialog"></dialog>
@@ -92,5 +129,6 @@ import "../styles/room.css";
       </p>
     </noscript>
     <script src="../room.ts"></script>
+    <ClipMenu />
   </body>
 </html>
