@@ -304,3 +304,183 @@ export function diffLines(before: string, after: string): DiffLine[] {
 export function hasChangedRegion(lines: DiffLine[]): boolean {
   return lines.some((l) => l.kind !== "same");
 }
+
+export type AttemptNote = "lit" | "dim" | "snapped";
+
+export function attemptNote(a: Pick<Attempt, "checks">): AttemptNote {
+  if (a.checks.state === "failed") return "snapped";
+  if (a.checks.state === "passed") return "lit";
+  return "dim";
+}
+
+export function statusTally(claims: Pick<Claim, "status">[]): string {
+  const order = ["supported", "falsified", "inconclusive", "not_audited"];
+  const parts: string[] = [];
+  let counted = 0;
+  for (const s of order) {
+    const n = claims.filter((c) => c.status === s).length;
+    counted += n;
+    if (n) parts.push(`${n} ${statusLabel(s)}`);
+  }
+  const rest = claims.length - counted;
+  if (rest > 0) parts.push(`${rest} other`);
+  return parts.length ? parts.join(" · ") : "no verdicts";
+}
+
+export type GaugeOp = "<" | "<=" | ">" | ">=";
+
+export interface CriterionGauge {
+  op: GaugeOp;
+  threshold: number;
+  metricKey: string;
+  value: number;
+  pass: boolean;
+}
+
+interface ParsedCmp {
+  op: GaugeOp;
+  threshold: number;
+}
+
+const GAUGE_NUM = "-?\\d+(?:\\.\\d+)?";
+
+function gaugeTailOk(rest: string): boolean {
+  if (/^\s*(?:[-+*\/×%±~=<>:|]|\d)/.test(rest)) return false;
+  if (/^\s*[A-Za-z_$\\][\w$\\.{}[\]]*\s*\(/.test(rest)) return false;
+  return true;
+}
+
+const WORD_CMPS: [RegExp, GaugeOp][] = [
+  [/\b(?:less than|smaller than)\s+\$?\s*(-?\d+(?:\.\d+)?)/gi, "<"],
+  [/\b(?:greater than|larger than)\s+\$?\s*(-?\d+(?:\.\d+)?)/gi, ">"],
+  [
+    /\b(?:at most|no more than|not exceeding)\s+\$?\s*(-?\d+(?:\.\d+)?)/gi,
+    "<=",
+  ],
+  [/\b(?:at least|no less than|minimum of)\s+\$?\s*(-?\d+(?:\.\d+)?)/gi, ">="],
+];
+
+function gaugeCmps(criterion: string): ParsedCmp[] {
+  const found = new Map<string, ParsedCmp>();
+  const sym = new RegExp(`(<=|>=|≤|≥|<|>)\\s*\\$?\\s*(${GAUGE_NUM})`, "g");
+  let m: RegExpExecArray | null;
+  while ((m = sym.exec(criterion))) {
+    const prev = m.index > 0 ? criterion[m.index - 1] : " ";
+    if (!/[\s([{:]/.test(prev)) continue;
+    if (!gaugeTailOk(criterion.slice(m.index + m[0].length))) continue;
+    const op: GaugeOp =
+      m[1] === "<=" || m[1] === "≤"
+        ? "<="
+        : m[1] === ">=" || m[1] === "≥"
+          ? ">="
+          : (m[1] as GaugeOp);
+    found.set(`${op}|${m[2]}`, { op, threshold: Number(m[2]) });
+  }
+  for (const [re, op] of WORD_CMPS) {
+    re.lastIndex = 0;
+    while ((m = re.exec(criterion))) {
+      if (!gaugeTailOk(criterion.slice(m.index + m[0].length))) continue;
+      found.set(`${op}|${m[1]}`, { op, threshold: Number(m[1]) });
+    }
+  }
+  return [...found.values()];
+}
+
+function gaugeMetricKey(
+  criterion: string,
+  metrics: Record<string, unknown>,
+): { key: string; value: number } | null {
+  const words = (s: string) =>
+    s
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+  const critWords = ` ${words(criterion)} `;
+  const critCompact = critWords.replace(/\s+/g, "");
+  const hits: { key: string; value: number }[] = [];
+  for (const [key, raw] of Object.entries(metrics)) {
+    if (typeof raw !== "number" || !Number.isFinite(raw)) continue;
+    const kw = words(key);
+    if (!kw) continue;
+    const kc = kw.replace(/\s+/g, "");
+    if (critWords.includes(` ${kw} `) || (kc.length >= 4 && critCompact.includes(kc))) {
+      hits.push({ key, value: raw });
+    }
+  }
+  return hits.length === 1 ? hits[0] : null;
+}
+
+export function criterionGauge(
+  criterion: string,
+  metrics: Record<string, unknown>,
+): CriterionGauge | null {
+  const cmps = gaugeCmps(criterion);
+  if (cmps.length !== 1) return null;
+  const hit = gaugeMetricKey(criterion, metrics);
+  if (!hit) return null;
+  const { op, threshold } = cmps[0];
+  const v = hit.value;
+  const pass =
+    op === "<" ? v < threshold
+    : op === "<=" ? v <= threshold
+    : op === ">" ? v > threshold
+    : v >= threshold;
+  return { op, threshold, metricKey: hit.key, value: v, pass };
+}
+
+export type ScoreRow =
+  | {
+      kind: "same" | "added" | "removed";
+      text: string;
+      beforeNo: number | null;
+      afterNo: number | null;
+    }
+  | { kind: "elide"; count: number; key: string }
+  | { kind: "change"; count: number };
+
+export function diffScore(
+  before: string,
+  after: string,
+  opts: { context?: number; expanded?: ReadonlySet<string> } = {},
+): ScoreRow[] {
+  const ctx = Math.max(1, opts.context ?? 3);
+  const expanded = opts.expanded ?? new Set<string>();
+  const lines = diffLines(before, after);
+  const rows: ScoreRow[] = [];
+  let bn = 1;
+  let an = 1;
+  let i = 0;
+  while (i < lines.length) {
+    if (lines[i].kind === "same") {
+      let j = i;
+      while (j < lines.length && lines[j].kind === "same") j++;
+      const runLen = j - i;
+      const key = `u${bn}`;
+      if (runLen > ctx * 2 + 1 && !expanded.has(key)) {
+        for (let k = i; k < i + ctx; k++, bn++, an++)
+          rows.push({ kind: "same", text: lines[k].text, beforeNo: bn, afterNo: an });
+        rows.push({ kind: "elide", count: runLen - ctx * 2, key });
+        bn += runLen - ctx * 2;
+        an += runLen - ctx * 2;
+        for (let k = j - ctx; k < j; k++, bn++, an++)
+          rows.push({ kind: "same", text: lines[k].text, beforeNo: bn, afterNo: an });
+      } else {
+        for (let k = i; k < j; k++, bn++, an++)
+          rows.push({ kind: "same", text: lines[k].text, beforeNo: bn, afterNo: an });
+      }
+      i = j;
+    } else {
+      let j = i;
+      while (j < lines.length && lines[j].kind !== "same") j++;
+      rows.push({ kind: "change", count: j - i });
+      for (let k = i; k < j; k++) {
+        const l = lines[k];
+        if (l.kind === "removed")
+          rows.push({ kind: "removed", text: l.text, beforeNo: bn++, afterNo: null });
+        else rows.push({ kind: "added", text: l.text, beforeNo: null, afterNo: an++ });
+      }
+      i = j;
+    }
+  }
+  return rows;
+}

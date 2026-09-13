@@ -1,6 +1,7 @@
 import rawBundle from "./data/audit-room.json";
 import { playStrike } from "./audio";
 import {
+  attemptNote,
   checkStateLabel,
   claimBarFreq,
   claimBarHeight,
@@ -8,19 +9,21 @@ import {
   claimKey,
   controlLabel,
   criterionBadge,
+  criterionGauge,
   defaultAttempt,
-  diffLines,
+  diffScore,
   feedbackEntries,
   findPaper,
-  hasChangedRegion,
   outcomeView,
   searchPapers,
   sourceLabel,
   statusLabel,
+  statusTally,
   type Attempt,
   type Bundle,
   type Claim,
   type Checks,
+  type CriterionGauge,
   type RoomPaper,
   type Summary,
   type TextArtifact,
@@ -63,7 +66,11 @@ const state = {
   liveError: null as string | null,
   rerun: null as RerunJob | null,
   liveAttempts: new Map<string, Attempt[]>(),
+  heroFig: null as string | null,
+  expandedElisions: new Set<string>(),
 };
+
+let lastOvertureSlug: string | null = null;
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 const root = $("room-root");
@@ -225,11 +232,23 @@ function paperColorClass(): string {
 
 function renderClaims() {
   claimsPanel.textContent = "";
-  if (!state.paper) return;
+  if (!state.paper) {
+    lastOvertureSlug = null;
+    return;
+  }
   claimsPanel.append(el("h2", "", `claims · ${state.paper.slug}`));
 
   const claims = state.paper.claims;
   const n = claims.length;
+  const overture = el(
+    "p",
+    "paper-overture",
+    `${state.paper.source_label} · ${n} claim${n === 1 ? "" : "s"} · ${statusTally(claims)}`,
+  );
+  if (state.paper.slug !== lastOvertureSlug) overture.classList.add("fresh");
+  lastOvertureSlug = state.paper.slug;
+  claimsPanel.append(overture);
+
   const rail = el("div", "claim-rail");
   rail.setAttribute("role", "group");
   rail.setAttribute(
@@ -349,43 +368,137 @@ function metricsDisclosure(summary: Summary | null): HTMLElement | null {
   return d;
 }
 
-function figureCard(f: { name: string; url: string; sha256: string }): HTMLElement {
-  const fig = el("figure");
-  const img = el("img");
-  img.src = f.url;
-  img.alt = f.name;
-  img.loading = "lazy";
-  const cap = el("figcaption");
-  cap.append(
-    el("span", "fig-name", f.name),
-    el("span", "fig-sha", `sha ${f.sha256.slice(0, 8)}`),
+function gaugeEl(g: CriterionGauge): HTMLElement {
+  const wrap = el("div", "gauge");
+  const lo = Math.min(g.value, g.threshold);
+  const hi = Math.max(g.value, g.threshold);
+  const pad = (hi - lo || Math.max(Math.abs(hi), 1)) * 0.5;
+  const d0 = lo - pad;
+  const d1 = hi + pad;
+  const pos = (x: number) => `${((x - d0) / (d1 - d0)) * 100}%`;
+  const tpos = ((g.threshold - d0) / (d1 - d0)) * 100;
+  const track = el("div", "gauge-track");
+  const zone = el("div", "gauge-zone");
+  if (g.op === "<" || g.op === "<=") {
+    zone.style.left = "0%";
+    zone.style.width = `${tpos}%`;
+  } else {
+    zone.style.left = `${tpos}%`;
+    zone.style.width = `${100 - tpos}%`;
+  }
+  const tick = el("span", "gauge-tick");
+  tick.style.left = pos(g.threshold);
+  const needle = el("span", `gauge-needle ${g.pass ? "pass" : "miss"}`);
+  needle.style.left = pos(g.value);
+  track.append(zone, tick, needle);
+  wrap.append(track);
+  wrap.append(
+    el(
+      "div",
+      "gauge-cap",
+      `measured ${g.metricKey} ${fmtMetric(g.value)} · criterion ${g.op} ${fmtMetric(g.threshold)} · ${
+        g.pass ? "within criterion" : "outside criterion"
+      }`,
+    ),
   );
-  fig.append(img, cap);
-  return fig;
+  wrap.setAttribute(
+    "aria-label",
+    `Gauge: measured ${g.metricKey} is ${fmtMetric(g.value)} against criterion ${g.op} ${fmtMetric(g.threshold)} — ${
+      g.pass ? "within criterion" : "outside criterion"
+    }`,
+  );
+  wrap.setAttribute("role", "img");
+  return wrap;
 }
 
-function figuresBlock(claim: Claim, attempt: Attempt | null): HTMLElement {
-  const wrap = el("div");
+function readoutBlock(
+  claim: Claim,
+  attempt: Attempt | null,
+  view: ReturnType<typeof outcomeView>,
+): HTMLElement {
+  const box = el("div", "readout");
+  const top = el("div", "readout-top");
+  const status = view.status === "output_unavailable" ? null : view.status;
+  const wordCls = ["supported", "falsified", "inconclusive"].includes(status ?? "")
+    ? (status as string)
+    : "none";
+  top.append(
+    el("span", `readout-word ${wordCls}`, statusLabel(status)),
+    el(
+      "span",
+      "readout-scope",
+      attempt
+        ? `attempt ${attempt.number} · ${sourceLabel(attempt.source)}`
+        : `final outcome · ${sourceLabel(view.source)}`,
+    ),
+  );
+  box.append(top);
+  const meta = el("div", "readout-meta");
+  meta.append(
+    el("span", "", checkStateLabel(view.checks)),
+    el("span", "sep", "·"),
+    el("span", "", controlLabel(view.checks)),
+  );
+  box.append(meta);
+  const g = criterionGauge(
+    attempt?.criterion ?? claim.criterion,
+    view.summary?.metrics ?? {},
+  );
+  if (g) box.append(gaugeEl(g));
+  return box;
+}
+
+function heroFigure(claim: Claim, attempt: Attempt | null): HTMLElement {
+  const wrap = el("div", "fig-hero");
   const pinned = attempt?.figures ?? [];
-  if (pinned.length) {
-    wrap.append(el("h3", "", `figures from ${attempt?.id}`));
-    const row = el("div", "room-figs");
-    for (const f of pinned) row.append(figureCard(f));
-    wrap.append(row);
+  const figs = pinned.length ? pinned : claim.current_figures;
+  const prov = pinned.length
+    ? `recorded with attempt ${attempt!.number}`
+    : "current workdir figure";
+  const frame = el("figure", "fig-frame");
+  if (!figs.length) {
+    const plate = el("div", "fig-empty");
+    plate.append(el("span", "fig-empty-text", "no figure recorded"));
+    frame.append(plate);
+    const cap = el("figcaption", "fig-cap");
+    cap.append(
+      el("span", "fig-prov", "no figure artifact — nothing pinned or current"),
+    );
+    frame.append(cap);
+    wrap.append(frame);
     return wrap;
   }
-  if (claim.current_figures.length) {
-    wrap.append(
-      el("h3", "", "current figures"),
-      el(
-        "p",
-        "small muted",
-        "Current figure snapshot — not pinned to a historical attempt.",
-      ),
-    );
-    const row = el("div", "room-figs");
-    for (const f of claim.current_figures) row.append(figureCard(f));
-    wrap.append(row);
+  const sel = figs.find((f) => f.sha256 === state.heroFig) ?? figs[0];
+  const img = el("img");
+  img.src = sel.url;
+  img.alt = sel.name;
+  const cap = el("figcaption", "fig-cap");
+  cap.append(
+    el("span", "fig-name", sel.name),
+    el("span", "fig-sha", `sha ${sel.sha256.slice(0, 8)}`),
+    el("span", "fig-prov", prov),
+  );
+  frame.append(img, cap);
+  wrap.append(frame);
+  if (figs.length > 1) {
+    const thumbs = el("div", "fig-thumbs");
+    for (const f of figs) {
+      const b = el("button");
+      b.type = "button";
+      b.setAttribute("aria-pressed", String(f === sel));
+      b.setAttribute("aria-label", `Show figure ${f.name}`);
+      const ti = el("img");
+      ti.src = f.url;
+      ti.alt = "";
+      ti.loading = "lazy";
+      b.append(ti);
+      b.addEventListener("click", () => {
+        state.heroFig = f.sha256;
+        renderAll();
+      });
+      thumbs.append(b);
+    }
+    wrap.append(thumbs);
   }
   return wrap;
 }
@@ -396,6 +509,8 @@ function renderEvidenceTab(body: HTMLElement) {
   const attempt = selectedAttempt();
   const view = outcomeView(claim, attempt);
 
+  body.append(readoutBlock(claim, attempt, view));
+
   const head = el("div", "claim-head");
   const h2 = el("h2");
   h2.append(
@@ -403,13 +518,9 @@ function renderEvidenceTab(body: HTMLElement) {
     document.createTextNode(claim.title),
   );
   head.append(h2);
-  if (attempt) head.append(badge("neutral", `attempt ${attempt.number} selected`));
-  head.append(
-    statusBadge(view.status === "output_unavailable" ? null : view.status),
-    checkBadge(view.checks),
-    controlBadge(view.checks),
-  );
   body.append(head);
+
+  body.append(heroFigure(claim, attempt));
 
   if (view.summary?.notes) {
     body.append(el("div", "notes-block", view.summary.notes));
@@ -421,9 +532,6 @@ function renderEvidenceTab(body: HTMLElement) {
     for (const p of view.checks.problems) ul.append(el("li", "", p));
     body.append(ul);
   }
-  const md = metricsDisclosure(view.summary);
-  if (md) body.append(md);
-  body.append(figuresBlock(claim, attempt));
 
   const setup = el("details", "improvement-note");
   setup.append(el("summary", "", "Claim and test setup"));
@@ -445,6 +553,36 @@ function renderEvidenceTab(body: HTMLElement) {
   meta.append(t1, d1, t2, d2, t3, d3, t4, d4, t5, d5);
   setup.append(meta);
   body.append(setup);
+
+  const md = metricsDisclosure(view.summary);
+  if (md) body.append(md);
+
+  if (attempt) {
+    const rec = el("details", "improvement-note");
+    rec.append(el("summary", "", `Attempt record — attempt ${attempt.number}`));
+    const raw = el("dl", "room-kv");
+    raw.append(
+      ...kv("attempt id", attempt.id),
+      ...kv("record", attempt.record_type),
+      ...kv("execution", attempt.execution),
+      ...kv("run_id", attempt.run_id ?? "—"),
+      ...kv("exit code", attempt.exit_code === null ? "—" : String(attempt.exit_code)),
+      ...kv("wall", attempt.wall_s === null ? "—" : `${attempt.wall_s}s`),
+      ...kv("script sha256", attempt.script?.sha256 ?? "—"),
+      ...kv(
+        "pinned criterion",
+        attempt.criterion_sha256
+          ? `sha256 ${attempt.criterion_sha256.slice(0, 12)}…`
+          : "not pinned",
+      ),
+    );
+    rec.append(raw);
+    body.append(rec);
+    body.append(
+      artifactDetails("stdout", attempt.stdout),
+      artifactDetails("stderr", attempt.stderr),
+    );
+  }
 
   const fin = el("details", "improvement-note");
   fin.append(
@@ -532,10 +670,49 @@ function renderEvidenceTab(body: HTMLElement) {
   }
 }
 
+function selectAttempt(id: string) {
+  state.attemptId = id;
+  writeUrl();
+  renderAll();
+}
+
 function renderHistory(host: HTMLElement) {
   const claim = state.claim;
   if (!claim) return;
   host.append(el("h3", "", "attempt history"));
+  const liveKey = state.paper ? claimKey(state.paper.slug, claim.id) : "";
+  const liveIds = new Set(
+    (state.liveAttempts.get(liveKey) ?? []).map((x) => x.id),
+  );
+
+  const score = el("div", "attempt-score");
+  score.setAttribute("role", "group");
+  score.setAttribute(
+    "aria-label",
+    "Attempt score — one note per attempt, left to right in run order",
+  );
+  for (const a of claimAttempts(claim)) {
+    const isLive = liveIds.has(a.id);
+    const note = el("button", `score-note ${attemptNote(a)}${isLive ? " live" : ""}`);
+    note.type = "button";
+    note.setAttribute("aria-pressed", String(a.id === state.attemptId));
+    note.setAttribute(
+      "aria-label",
+      `attempt ${a.number}${isLive ? " · live rerun" : ""} · ${sourceLabel(a.source)} · ${
+        a.summary?.status
+          ? `${statusLabel(a.summary.status)} · ${checkStateLabel(a.checks)}`
+          : a.execution === "output_unavailable"
+            ? "output unavailable"
+            : "no summary"
+      }`,
+    );
+    if (isLive) note.append(el("span", "live-tag", "live"));
+    note.append(el("span", "note-glyph"), el("span", "note-label", `#${a.number}`));
+    note.addEventListener("click", () => selectAttempt(a.id));
+    score.append(note);
+  }
+  host.append(score);
+
   const strip = el("div", "history-strip");
   strip.setAttribute("role", "listbox");
   strip.setAttribute("aria-label", "Attempts");
@@ -544,11 +721,7 @@ function renderHistory(host: HTMLElement) {
     chip.type = "button";
     chip.setAttribute("role", "option");
     chip.setAttribute("aria-selected", String(a.id === state.attemptId));
-    const isLive =
-      state.paper &&
-      state.liveAttempts
-        .get(claimKey(state.paper.slug, claim.id))
-        ?.some((x) => x.id === a.id);
+    const isLive = liveIds.has(a.id);
     if (isLive) chip.classList.add("live-rerun");
     chip.append(
       el("span", "an", `attempt ${a.number}${isLive ? " · LIVE RERUN" : ""}`),
@@ -563,11 +736,7 @@ function renderHistory(host: HTMLElement) {
             : "no summary",
       ),
     );
-    chip.addEventListener("click", () => {
-      state.attemptId = a.id;
-      writeUrl();
-      renderAll();
-    });
+    chip.addEventListener("click", () => selectAttempt(a.id));
     strip.append(chip);
   }
   host.append(strip);
@@ -644,6 +813,7 @@ function renderCompareTab(body: HTMLElement) {
     }
     selEl.addEventListener("change", () => {
       state[key] = selEl.value;
+      state.expandedElisions.clear();
       writeUrl();
       renderAll();
     });
@@ -717,18 +887,57 @@ function renderCompareTab(body: HTMLElement) {
   }
 
   const diff = el("div", "diff-block");
-  const head = el("div", "diff-head", "Changed region — every line retained, not a minimal diff");
+  const head = el(
+    "div",
+    "diff-head",
+    "Recorded script diff — long unchanged runs collapse (expandable)",
+  );
   diff.append(head);
   const lines = el("div", "diff-lines");
   const aText = before?.script?.text ?? "";
   const bText = after?.script?.text ?? "";
   if (!before?.script && !after?.script) {
-    lines.append(el("div", "dl", "No recorded scripts for these attempts."));
+    lines.append(el("div", "dl msg", "No recorded scripts for these attempts."));
   } else {
-    const rows = diffLines(aText, bText);
-    if (!hasChangedRegion(rows))
-      lines.append(el("div", "dl", "Scripts are identical."));
-    else for (const r of rows) lines.append(el("div", `dl ${r.kind}`, r.text));
+    const rows = diffScore(aText, bText, { expanded: state.expandedElisions });
+    if (!rows.some((r) => r.kind === "change"))
+      lines.append(el("div", "dl msg", "Scripts are identical."));
+    else
+      for (const r of rows) {
+        if (r.kind === "change") {
+          lines.append(
+            el(
+              "div",
+              "dl change-head",
+              `${r.count} line${r.count === 1 ? "" : "s"} changed · attempt ${
+                before?.number ?? "?"
+              } → ${after?.number ?? "?"}`,
+            ),
+          );
+        } else if (r.kind === "elide") {
+          const btn = el("button", "dl elide", `· ${r.count} unchanged lines ·`);
+          btn.type = "button";
+          btn.setAttribute("aria-expanded", "false");
+          btn.addEventListener("click", () => {
+            state.expandedElisions.add(r.key);
+            renderAll();
+          });
+          lines.append(btn);
+        } else {
+          const row = el("div", `dl ${r.kind}`);
+          row.append(
+            el("span", "ln", r.beforeNo === null ? "" : String(r.beforeNo)),
+            el("span", "ln", r.afterNo === null ? "" : String(r.afterNo)),
+            el(
+              "span",
+              "sg",
+              r.kind === "added" ? "+" : r.kind === "removed" ? "−" : " ",
+            ),
+            el("span", "tx", r.text),
+          );
+          lines.append(row);
+        }
+      }
     if (before?.script?.truncated || after?.script?.truncated) {
       diff.append(
         el("p", "truncated-flag", "One or both recorded scripts are truncated in export."),
@@ -1207,6 +1416,8 @@ function selectClaim(cid: string) {
   state.beforeId = attempts[0]?.id ?? null;
   state.afterId = attempts[attempts.length - 1]?.id ?? null;
   state.mobilePanel = "evidence";
+  state.heroFig = null;
+  state.expandedElisions.clear();
   writeUrl();
   renderAll();
 }

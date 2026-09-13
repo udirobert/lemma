@@ -1,17 +1,21 @@
 import { describe, it, expect } from "vitest";
 import {
+  attemptNote,
   claimBarFreq,
   claimBarHeight,
   claimBarState,
   claimKey,
   criterionBadge,
+  criterionGauge,
   diffLines,
+  diffScore,
   feedbackEntries,
   findPaper,
   hasChangedRegion,
   outcomeView,
   searchPapers,
   sourceLabel,
+  statusTally,
   controlLabel,
   PENTATONIC,
   type Attempt,
@@ -261,6 +265,174 @@ describe("claim rail (instrument) model", () => {
     expect(claimBarHeight(0, 6)).toBe(34);
     expect(claimBarHeight(5, 6)).toBe(100);
     expect(claimBarHeight(0, 1)).toBe(34);
+  });
+});
+
+describe("criterionGauge", () => {
+  it("parses a symbolic inequality against a matching metric key", () => {
+    const g = criterionGauge("slope < -0.5", { slope: -0.8 });
+    expect(g).toEqual({
+      op: "<",
+      threshold: -0.5,
+      metricKey: "slope",
+      value: -0.8,
+      pass: true,
+    });
+    const miss = criterionGauge("slope < -0.5", { slope: -0.2 });
+    expect(miss?.pass).toBe(false);
+  });
+  it("handles >= and the unicode ≤ ≥ forms", () => {
+    expect(criterionGauge("rate >= 0.9", { rate: 0.95 })?.op).toBe(">=");
+    expect(criterionGauge("rate ≥ 0.9", { rate: 0.95 })?.pass).toBe(true);
+    expect(criterionGauge("rate ≥ 0.9", { rate: 0.8 })?.pass).toBe(false);
+    expect(criterionGauge("err ≤ 0.01", { err: 0.01 })?.op).toBe("<=");
+    expect(criterionGauge("err <= 0.01", { err: 0.02 })?.pass).toBe(false);
+  });
+  it("parses unambiguous worded comparators", () => {
+    expect(criterionGauge("correlation is less than 0.5", { correlation: 0.4 })?.op).toBe("<");
+    expect(criterionGauge("accuracy at least 0.9", { accuracy: 0.9 })?.pass).toBe(true);
+    expect(criterionGauge("loss at most 2", { loss: 3 })?.op).toBe("<=");
+  });
+  it("matches snake_case metric keys to their phrase in the criterion", () => {
+    const g = criterionGauge(
+      "with core compute ratio ≥0.95.",
+      { core_compute_ratio: 0.97, retain_compute_ratio_mean: 0.5 },
+    );
+    expect(g?.metricKey).toBe("core_compute_ratio");
+    expect(g?.threshold).toBe(0.95);
+    expect(g?.pass).toBe(true);
+  });
+  it("dedupes a repeated identical comparison", () => {
+    const g = criterionGauge("slope ≥ 0.5 and slope ≥ 0.5", { slope: 0.6 });
+    expect(g?.op).toBe(">=");
+  });
+  it("returns null when metrics are missing or non-numeric", () => {
+    expect(criterionGauge("slope < -0.5", {})).toBeNull();
+    expect(criterionGauge("slope < -0.5", { slope: "n/a" })).toBeNull();
+    expect(criterionGauge("slope < -0.5", { slope: NaN })).toBeNull();
+  });
+  it("returns null for ambiguous or absent comparisons", () => {
+    expect(criterionGauge("", { slope: -0.8 })).toBeNull();
+    expect(
+      criterionGauge("x > 0.5 and y < 3", { x: 1, y: 2 }),
+    ).toBeNull();
+    expect(
+      criterionGauge("R2 greater than 0.8 and at least 0.1 higher", {
+        r2: 0.9,
+      }),
+    ).toBeNull();
+  });
+  it("refuses thresholds that are coefficients of another term", () => {
+    expect(
+      criterionGauge("the difference is less than 0.01 * R(M)", {
+        difference: 0.005,
+      }),
+    ).toBeNull();
+    expect(criterionGauge("within 5% of baseline", { ratio: 1.01 })).toBeNull();
+  });
+  it("refuses comparisons embedded in expressions", () => {
+    expect(
+      criterionGauge(
+        "P_grok(lambda_1>0) > P_grok(lambda_1=0)",
+        { p_grok: 0.4 },
+      ),
+    ).toBeNull();
+  });
+  it("returns null when zero or several metric keys match", () => {
+    expect(criterionGauge("slope < -0.5", { other: -0.8 })).toBeNull();
+    expect(
+      criterionGauge("the gap ratio < 0.5", { gap_ratio: 0.4, ratio: 0.4 }),
+    ).toBeNull();
+  });
+});
+
+describe("attemptNote", () => {
+  it("maps check state onto note glyphs honestly", () => {
+    expect(
+      attemptNote(attempt({ checks: { state: "passed", control: "passed", problems: [] } })),
+    ).toBe("lit");
+    expect(
+      attemptNote(
+        attempt({ checks: { state: "inconclusive", control: "failed", problems: [] } }),
+      ),
+    ).toBe("dim");
+    expect(
+      attemptNote(
+        attempt({ checks: { state: "not_evaluated", control: "missing", problems: [] } }),
+      ),
+    ).toBe("dim");
+  });
+  it("failed integrity is snapped, never merely dim", () => {
+    const a = attempt({
+      summary: { status: "supported", metrics: {}, notes: "" },
+      checks: { state: "failed", control: "passed", problems: ["contradiction"] },
+    });
+    expect(attemptNote(a)).toBe("snapped");
+  });
+});
+
+describe("statusTally", () => {
+  it("summarises verdicts in a stable order", () => {
+    const c = (status: string) => claim({ status });
+    expect(
+      statusTally([
+        c("supported"),
+        c("supported"),
+        c("supported"),
+        c("falsified"),
+        c("inconclusive"),
+        c("inconclusive"),
+      ]),
+    ).toBe("3 supported · 1 falsified · 2 inconclusive");
+  });
+  it("handles empty and unknown statuses", () => {
+    expect(statusTally([])).toBe("no verdicts");
+    expect(statusTally([claim({ status: "weird" })])).toBe("1 other");
+    expect(statusTally([claim({ status: "not_audited" })])).toBe("1 not audited");
+  });
+});
+
+describe("diffScore", () => {
+  const mkScript = (n: number) =>
+    Array.from({ length: n }, (_, i) => `line ${i + 1}`).join("\n");
+
+  it("emits change headers before each changed run", () => {
+    const rows = diffScore("a\nb\nc", "a\nB\nc");
+    expect(rows[0]).toMatchObject({ kind: "same", beforeNo: 1, afterNo: 1 });
+    expect(rows[1]).toEqual({ kind: "change", count: 2 });
+    expect(rows[2]).toMatchObject({ kind: "removed", text: "b", beforeNo: 2 });
+    expect(rows[3]).toMatchObject({ kind: "added", text: "B", afterNo: 2 });
+    expect(rows[4]).toMatchObject({ kind: "same", beforeNo: 3, afterNo: 3 });
+  });
+  it("collapses long unchanged runs into an expandable elision row", () => {
+    const before = `${mkScript(10)}\nold\n${mkScript(10)}`;
+    const after = `${mkScript(10)}\nnew\n${mkScript(10)}`;
+    const rows = diffScore(before, after, { context: 3 });
+    const elides = rows.filter((r) => r.kind === "elide");
+    expect(elides.length).toBe(2);
+    expect(elides[0]).toMatchObject({ count: 4 });
+    const changes = rows.filter((r) => r.kind === "change");
+    expect(changes).toEqual([{ kind: "change", count: 2 }]);
+    const firstSame = rows[0];
+    expect(firstSame).toMatchObject({ kind: "same", beforeNo: 1, afterNo: 1 });
+    const tailSame = rows[rows.length - 1];
+    expect(tailSame).toMatchObject({ kind: "same", beforeNo: 21, afterNo: 21 });
+  });
+  it("expands an elision when its key is in the expanded set", () => {
+    const text = mkScript(20);
+    const collapsed = diffScore(text, `${text}\nextra`);
+    const elide = collapsed.find((r) => r.kind === "elide");
+    expect(elide).toBeDefined();
+    const expanded = diffScore(text, `${text}\nextra`, {
+      expanded: new Set([elide!.kind === "elide" ? elide!.key : ""]),
+    });
+    expect(expanded.some((r) => r.kind === "elide")).toBe(false);
+    expect(expanded.filter((r) => r.kind === "same").length).toBe(20);
+  });
+  it("emits no change rows for identical scripts", () => {
+    const rows = diffScore("a\nb", "a\nb");
+    expect(rows.some((r) => r.kind === "change")).toBe(false);
+    expect(rows.every((r) => r.kind === "same")).toBe(true);
   });
 });
 
