@@ -109,6 +109,13 @@ html.leaving body {
 .spectrum-axis .ax-m { color: var(--gold); }
 .spectrum-axis .ax-r { color: var(--magenta); }
 
+#bg-glass {
+  transition: opacity 0.6s ease;
+}
+html.reading #bg-glass {
+  opacity: 0.12;
+}
+
 /* ---------------- hero ---------------- */
 .hero {
   position: relative;
@@ -542,6 +549,41 @@ html.leaving body {
   font-size: 0.7rem;
   letter-spacing: 0.04em;
   color: var(--dim);
+}
+
+.story .beat > div,
+:is(.trace, .replay, .waitlist) .trace-head,
+.land-problem,
+.artifacts h2,
+.replay-cta,
+.trace-note {
+  background: color-mix(in srgb, var(--bg) 62%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-radius: 14px;
+}
+.story .beat > div {
+  padding: 16px;
+  margin: -16px -16px 0;
+}
+:is(.trace, .replay, .waitlist) .trace-head {
+  padding: 18px 22px;
+  margin: -18px -22px 0;
+}
+.land-problem {
+  padding: 18px 22px;
+  margin: -18px -22px 0;
+}
+.artifacts h2 {
+  padding: 10px 18px;
+  margin: -10px -18px 34px;
+}
+.replay-cta,
+.trace-note {
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 9px 18px;
 }
 
 /* ---------------- trace section ---------------- */
@@ -1194,6 +1236,9 @@ footer {
   .scroll-cue,
   .caret {
     animation: none;
+  }
+  #bg-glass {
+    transition: none;
   }
   .tl {
     opacity: 1;

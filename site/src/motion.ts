@@ -101,6 +101,29 @@ for (const bar of document.querySelectorAll<HTMLElement>(".bar")) {
   bar.addEventListener("click", () => strike(bar));
 }
 
+let readingActive = false;
+{
+  const zones = new Set<Element>();
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) zones.add(e.target);
+        else zones.delete(e.target);
+      }
+      const on = zones.size > 0;
+      readingActive = on;
+      document.documentElement.classList.toggle("reading", on);
+      helixWake?.(1200);
+    },
+    { rootMargin: "-20% 0px -20% 0px", threshold: 0 }
+  );
+  for (const el of document.querySelectorAll(
+    ".story, .trace, .replay, .waitlist, .artifacts, footer"
+  )) {
+    io.observe(el);
+  }
+}
+
 /* ---------- bar entrance ---------- */
 // Transform tween on the same elements the coil owns. The Phase A coil kills
 // it on first scroll (see killEntrance): two writers to el.style.transform
@@ -291,8 +314,9 @@ if (!reduced && !isMobile) {
         // colour: dim helix → bright just before the unwind → full colour landed
         const ramp = clamp01((j - 0.75) / 0.15);
         // readability zones dim the instrument inside dense content; the
-        // dim fades out as the scene parks in its stage below all content
-        const op = lerp(lerp(BASE_O, FINAL_O, ramp), 1, park) * lerp(zoneDim, 1, park);
+        // dim releases on the finale colour ramp and as the scene parks in
+        // its stage below all content
+        const op = lerp(lerp(BASE_O, FINAL_O, ramp), 1, park) * lerp(zoneDim, 1, Math.max(ramp, park));
         const sc = lerp(BASE_S, 1, ramp);
         gsap.set(scene, { opacity: op, scale: sc, y: park * parkY() });
         // landed: drop helix mode so the finale is a real xylophone again —
@@ -383,6 +407,7 @@ if (!reduced && !isMobile) {
         if (Math.abs(vel) < 0.002) vel = 0;
       }
       // ease the readability dim toward its zone target
+      zoneTarget = readingActive ? ZONE_DIM : 1;
       zoneDim += (zoneTarget - zoneDim) * Math.min(1, dt * 5);
       apply();
       // sleep when nothing needs us: the row is settled, or the fixed helix
@@ -625,26 +650,11 @@ if (!reduced && !isMobile) {
     // readability zones — dense-content sections (terminal, player, form,
     // link cards) dim the instrument while the viewport is inside them, so
     // text always wins over the backdrop. Eased per-frame, not snapped.
-    // The parked finale is exempt: the dim fades out with `park`, and the
-    // stage sits below all content anyway.
-    const ZONE_DIM = 0.55;
+    // The finale is exempt: the dim releases on the colour ramp into the
+    // park, and the stage sits below all content anyway.
+    const ZONE_DIM = 0.3;
     let zoneDim = 1;
     let zoneTarget = 1;
-    const denseActive = new Set<string>();
-    [".trace", ".replay", ".waitlist", ".artifacts"].forEach((sel) => {
-      const el = document.querySelector(sel);
-      if (!el) return;
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 55%",
-        end: "bottom 45%",
-        onToggle: (self) => {
-          if (self.isActive) denseActive.add(sel);
-          else denseActive.delete(sel);
-          zoneTarget = denseActive.size > 0 ? ZONE_DIM : 1;
-        },
-      });
-    });
   }
 }
 
