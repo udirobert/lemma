@@ -87,17 +87,29 @@ def main() -> int:
 
     p_improve = sub.add_parser(
         "improve",
-        help="self-improvement loop: draft feedback.auto.md for non-supported "
-        "claims, re-audit them, record before/after",
+        help="self-improvement loop: draft feedback.auto.md, re-audit, record "
+        "before/after (default targets: inconclusive or invalid audits)",
     )
     p_improve.add_argument("workdir", help="paper dir with an existing audit")
     p_improve.add_argument(
-        "--claims", help="comma-separated claim ids to improve (default: all)"
+        "--claims",
+        help="comma-separated claim ids to re-audit explicitly, including "
+        "valid outcomes (default: inconclusive or invalid audits only)",
     )
     p_improve.add_argument(
         "--judge",
         action="store_true",
         help="re-run the judge after the improvement round",
+    )
+
+    p_room = sub.add_parser(
+        "room", help="serve the Audit Room locally (built site + rerun API)"
+    )
+    p_room.add_argument("--port", type=int, default=8765)
+    p_room.add_argument(
+        "--weave",
+        action="store_true",
+        help="trace local reruns to Weave (explicit opt-in; off by default)",
     )
 
     args = parser.parse_args()
@@ -109,6 +121,10 @@ def main() -> int:
         return _eval(args)
     if args.cmd == "improve":
         return _improve(args)
+    if args.cmd == "room":
+        from agent.room_server import serve
+
+        return serve(REPO_ROOT, port=args.port, weave=args.weave)
     return _audit(args)
 
 

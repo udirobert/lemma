@@ -105,13 +105,9 @@ def build_entry(paper_dir: Path, meta: dict, prior: dict | None = None) -> dict:
         seen_ids.add(cid)
         title = c.get("title", c.get("claim", ""))
         if has_report and cid in report_by_id:
-            merged.append(
-                claim_entry(cid, {**report_by_id[cid], "title": title})
-            )
+            merged.append(claim_entry(cid, {**report_by_id[cid], "title": title}))
         elif cid in prior_claims:
-            merged.append(
-                claim_entry(cid, {**prior_claims[cid], "title": title})
-            )
+            merged.append(claim_entry(cid, {**prior_claims[cid], "title": title}))
         else:
             merged.append(claim_entry(cid, {"title": title}))
 

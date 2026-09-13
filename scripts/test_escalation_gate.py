@@ -1,10 +1,11 @@
-"""Smoke test: reviewer-reference escalation fires on falsified too.
+"""Smoke test: the reviewer reference runs after every generated outcome.
 
-Verifies the widened gate in agent/auditor.py:
+Verifies the symmetric reference check in agent/auditor.py:
   1. LLM attempts end 'falsified' + reviewer_reference.py present
-     -> reference executes and its verdict wins.
+     -> reference executes and its valid verdict wins.
   2. LLM attempts end 'supported' + reviewer_reference.py present
-     -> reference does NOT execute (no re-auditing a win).
+     -> reference still executes (a win is checked, not skipped) and its
+        valid verdict remains authoritative.
 Run: .venv/bin/python scripts/test_escalation_gate.py
 """
 
@@ -23,21 +24,21 @@ FAKE_SCRIPT_FALSIFIED = """
 import json
 print("SUMMARY_JSON=" + json.dumps({
   "claim_id": "CX", "status": "falsified",
-  "metrics": {"x": 1.0}, "notes": "fake falsified"}))
+  "metrics": {"x": 1.0, "control_pass": True}, "notes": "fake falsified"}))
 """
 
 FAKE_SCRIPT_SUPPORTED = """
 import json
 print("SUMMARY_JSON=" + json.dumps({
   "claim_id": "CX", "status": "supported",
-  "metrics": {"x": 1.0}, "notes": "fake supported"}))
+  "metrics": {"x": 1.0, "control_pass": True}, "notes": "fake supported"}))
 """
 
 REFERENCE_SCRIPT = """
 import json
 print("SUMMARY_JSON=" + json.dumps({
   "claim_id": "CX", "status": "supported",
-  "metrics": {"ref": 2.0}, "notes": "reviewer reference"}))
+  "metrics": {"ref": 2.0, "control_pass": True}, "notes": "reviewer reference"}))
 """
 
 CLAIM = {
@@ -57,7 +58,7 @@ def fake_complete_factory(script_src: str):
     return fake_complete
 
 
-def run_case(name: str, llm_script: str, expect_ref_fired: bool) -> bool:
+def run_case(name: str, llm_script: str) -> bool:
     tmp = Path(tempfile.mkdtemp(prefix=f"esc_{name}_"))
     try:
         workdir = tmp / "paper"
@@ -76,25 +77,19 @@ def run_case(name: str, llm_script: str, expect_ref_fired: bool) -> bool:
         ]
         fired = any(e.get("event") == "reviewer_reference_executed" for e in events)
         final = out["status"]
-        ok = fired == expect_ref_fired and final == (
-            "supported" if expect_ref_fired else llm_status(llm_script)
-        )
+        ok = fired and final == "supported" and out["source"] == "reviewer_reference"
         print(
             f"{'PASS' if ok else 'FAIL'} [{name}] ref_fired={fired} "
-            f"(expect {expect_ref_fired}) final={final}"
+            f"(expect True) final={final} source={out['source']}"
         )
         return ok
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
 
-def llm_status(script_src: str) -> str:
-    return "falsified" if "falsified" in script_src else "supported"
-
-
 def main() -> int:
-    ok1 = run_case("falsified_fires", FAKE_SCRIPT_FALSIFIED, True)
-    ok2 = run_case("supported_skips", FAKE_SCRIPT_SUPPORTED, False)
+    ok1 = run_case("falsified_fires", FAKE_SCRIPT_FALSIFIED)
+    ok2 = run_case("supported_also_checked", FAKE_SCRIPT_SUPPORTED)
     return 0 if (ok1 and ok2) else 1
 
 

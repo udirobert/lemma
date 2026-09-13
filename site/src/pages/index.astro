@@ -156,11 +156,14 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
     <h1>Lemma</h1>
     <p class="tagline">the AI scientist that <em>distrusts itself</em></p>
     <p class="hero-sub">
-      Every claim gets a verdict. Every failure is preserved. Nothing is
-      patched into a pass. This is its instrument: <strong>{totals.audited} bars, one per
-      audited claim across {totals.papers} papers.</strong> Bright bars reproduced. Dim bars are honest
-      inconclusives. Play it.
+      Before you build on a paper, inspect what survives testing. Explore the
+      experiments, challenge the controls, and see what remains uncertain.
     </p>
+    <div class="hero-ctas">
+      <a class="hero-cta" href="/room/?paper=icl-bayesian&claim=C6" data-cta="enter-audit-room">Enter the Audit Room</a>
+      <a class="hero-cta secondary" href="#waitlist" data-cta="audit-new-paper">Audit a new paper</a>
+    </div>
+    <p class="hero-note">Recorded evidence · failures included</p>
   </div>
   <div class="xylo-scene">
     <Xylophone />
@@ -293,11 +296,17 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
 <section class="waitlist" id="waitlist">
   <div class="wrap">
     <div class="trace-head">
-      <h2>Run it on your paper</h2>
+      <h2>Audit a new paper</h2>
       <p>
-        An interactive version is in the works: paste an arXiv id, watch the
-        claims come out. Leave your email and we'll let you in when the gate
-        opens — or tell us which paper you'd audit first.
+        New-paper audits run on the local CLI — this form is a request line,
+        not a hosted run. The recorded evidence is already live:
+        <a href="/room/?paper=icl-bayesian&claim=C6" class="cta-inline" data-cta="waitlist-enter-room">enter the Audit Room</a>,
+        or run it yourself:
+      </p>
+      <p><code class="cli-cmd">./lemma audit &lt;arxiv-id&gt; --jobs 2</code></p>
+      <p>
+        Leave your email to request an audit or get notified when a hosted
+        version opens — tell us which paper you'd check first.
       </p>
     </div>
     <form

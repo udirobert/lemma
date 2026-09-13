@@ -55,6 +55,20 @@ def active() -> bool:
     return _ACTIVE
 
 
+def current_call_url() -> str | None:
+    if not _ACTIVE:
+        return None
+    import weave
+
+    call = weave.get_current_call()
+    if call is None or not call.id:
+        return None
+    try:
+        return call.ui_url
+    except ValueError:
+        return None
+
+
 def disabled_reason() -> str | None:
     return _DISABLED_REASON
 

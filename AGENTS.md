@@ -55,6 +55,11 @@ re-running a stage that already has outputs under `papers/<id>/` reuses them
 | `weave_ops.py` | Optional Weave shim (CoreWeave Hacks): `init_weave()` when `WANDB_API_KEY` is set; `@op` wraps stages so extract/audit/script-runs/judge + auto-patched LLM calls land in the Weave UI. Pass-through otherwise — `LEMMA_WEAVE=off` forces it off |
 | `evals.py` | `lemma eval` — scorer suite (verdict-vs-reference, self-consistency, control honesty, evidence completeness, decisiveness) run as a Weave Evaluation or a local table (`--no-weave`) |
 | `meta.py` | `lemma improve` — self-improvement loop: reviewer-persona LLM drafts `results/<cid>/feedback.auto.md` from a claim's failure context (latest script, summary, persisted failure tails, trace events), then re-audits. Advisory only: human `feedback.md` outranks it and `reviewer_reference.py` still wins — the loop can't edit either. `improve_<ts>.json` records before/after plus `verify_gain`: any flip *to* `supported` post-feedback is flagged for eyeballing (that's the reward-hacking direction) |
+| `records.py` | Immutable per-execution attempt snapshots (`results/<cid>/attempts/<uuid>/`): input.json (claim snapshot, feedback, hashes), script, stdout/stderr, outcome.json, changed figures. `finish_attempt` refuses to overwrite; numbering advances above all existing legacy artifacts |
+| `audit_room.py` | Exporter for `/room/` — builds the typed bundle (claims, attempts, checks, figures, feedback, improvements) from paper workdirs; used by `scripts/build_audit_room.py` and the local runner |
+| `room_manifest.py` | Allowlist for local reruns: exact (paper, claim, attempt) rows + script SHA-256s, plus `RUN_LIMITS` (wall/cpu/output caps) |
+| `room_server.py` | `lemma room` — serves `site/dist` + a token-gated rerun API on 127.0.0.1; manifest/digest verified at startup, one active job, results land under `runs/audit-room/` (never touches recorded evidence) |
+| `room_sandbox.py` | macOS `sandbox-exec` profile for reruns: deny-by-default, no network, no exec outside the venv Python, reads denied under `/Users` except work/snapshot/venv, rlimits + sanitized env. `readiness_probe()` fail-closed — if isolation can't be verified the server serves recorded-only mode |
 
 ### Human-in-the-loop audit contract (`auditor.py`)
 
@@ -69,16 +74,25 @@ re-running a stage that already has outputs under `papers/<id>/` reuses them
   run_attempt*.json only exists for accepted runs; the failed files are what
   `_failure_context` feeds the improve loop's reviewer draft.
 - `results/<cid>/reviewer_reference.py` — hand-verified reference
-  implementation (same `SUMMARY_JSON=` contract). Escalation: after a round's
-  LLM attempts finish, if the outcome is anything other than `supported`, the
-  reference executes and its verdict wins. Trace records
+  implementation (same `SUMMARY_JSON=` contract). Symmetric check: after a
+  round's LLM attempts finish, the reference executes whatever the generated
+  outcome was; a valid reference verdict becomes the final outcome, while a
+  failed reference never overwrites a valid candidate. The report records
+  `candidate_summary`, `reference_summary`, `reference_checked`, and
+  `reference_disagreement` explicitly. Trace records
   `reviewer_reference_executed` plus the reason. Verified examples live in
   `scripts/ref_c*.py` and `scripts/test_escalation_gate.py`.
+- `results/<cid>/attempts/<uuid>/` — per-execution provenance snapshot
+  (`agent/records.py`): `input.json` (claim snapshot, feedback strings,
+  run_id, attempt number, source), `script.py`, `outcome.json`,
+  `stdout.txt`/`stderr.txt`, and any figures the run created or changed.
+  Snapshots are never overwritten; numbering always advances above existing
+  `audit_attempt*.py`/`run_attempt*.json` files.
 - `_summary_problems()` validator rejects self-contradictory verdicts (failed
   OR MISSING control with a claimed verdict, NaN/None primary metrics,
   `n_measurable_points=0`, control residuals contradicting `control_pass`).
-  The positive control is mandatory: `supported`/`falsified` without
-  `control_pass` truthy is rejected — dropping the control is the cheap way
+  The positive control is mandatory: `supported`/`falsified` requires an
+  explicitly passing control — dropping the control is the cheap way
   to game a criterion. Rejected summaries become `inconclusive` attempts,
   logged as `summary_rejected`.
 - Subset re-audits: `lemma audit <source> --stages audit --claims C2,C4,C6`
@@ -121,7 +135,8 @@ should require no hardcoded site edits:
 2. `python scripts/build_paper_index.py` → `papers/_index.json` (merges meta with claims, audit report, judge verdict, trace stats, figure inventory).
 3. `python scripts/build_site_data.py` → `site/src/data/papers.json` + copies figures to `site/public/papers/<slug>/figures/`.
 4. `python scripts/build_trace_data.py` → `site/public/traces/<slug>.json` for the trace player (keeps `ca.json`/`icl.json` legacy aliases).
-5. Commit the generated JSON/figures so Netlify builds need no Python.
+5. `python scripts/build_audit_room.py` → `site/src/data/audit-room.json` + hashed figure assets for the `/room/` Audit Room page (also runs automatically after `build_site_data.py`).
+6. Commit the generated JSON/figures so Netlify builds need no Python.
 
 Landing counters, xylophone bars, artifact links, `/papers/` index and
 `/papers/<slug>/` detail pages all render from `papers.json`.

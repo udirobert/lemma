@@ -49,6 +49,11 @@ def build_dataset(workdirs: list[Path]) -> list[dict]:
                     "claim_id": cid,
                     "outcome": {
                         "status": summary.get("status", c.get("status")),
+                        "source": c.get("source", "unknown"),
+                        "candidate_status": (c.get("candidate_summary") or {}).get(
+                            "status"
+                        ),
+                        "candidate_source": c.get("candidate_source", "unknown"),
                         "metrics": summary.get("metrics") or {},
                         "notes": summary.get("notes", ""),
                         "attempts": c.get("attempts", 0),
@@ -56,7 +61,13 @@ def build_dataset(workdirs: list[Path]) -> list[dict]:
                         if claim_dir.is_dir()
                         else 0,
                     },
-                    "reference_status": _reference_status(claim_dir),
+                    "reference_status": (
+                        (c.get("reference_summary") or {}).get("status")
+                        if c.get("reference_checked") is True
+                        else None
+                        if "reference_checked" in c
+                        else _reference_status(claim_dir)
+                    ),
                 }
             )
     return rows
@@ -67,7 +78,14 @@ def _reference_status(claim_dir: Path) -> str | None:
     pinned ground truth the improvement loop is scored against."""
     if not claim_dir.is_dir():
         return None
-    for run_path in sorted(claim_dir.glob("run_attempt*.json")):
+    runs = [
+        p
+        for p in claim_dir.glob("run_attempt*.json")
+        if p.stem.removeprefix("run_attempt").isdigit()
+    ]
+    for run_path in sorted(
+        runs, key=lambda p: int(p.stem.removeprefix("run_attempt")), reverse=True
+    ):
         try:
             run = json.loads(run_path.read_text(encoding="utf-8"))
         except json.JSONDecodeError:
@@ -91,11 +109,17 @@ def recorded_outcome(outcome: dict, **row) -> dict:
 
 @op
 def verdict_matches_reference(output: dict, reference_status: str | None = None, **row):
-    """Final verdict equals the reviewer-reference verdict. Claims with no
-    reference are not penalized (score True — the check simply can't run)."""
-    if not reference_status:
-        return True
-    return output.get("status") == reference_status
+    """Compare the generated candidate with a checked reference when available.
+    Missing references and unknown or circular provenance are not evaluated."""
+    independent = ("agent_generated", "human_guided")
+    if reference_status not in STATUSES:
+        return None
+    if output.get("candidate_source") in independent:
+        candidate = output.get("candidate_status")
+        return candidate == reference_status if candidate in STATUSES else None
+    if output.get("source") in independent:
+        return output.get("status") == reference_status
+    return None
 
 
 @op
@@ -110,9 +134,11 @@ def self_consistent(output: dict, **row):
 def control_honest(output: dict, **row):
     """A decisive verdict (supported/falsified) only counts if the script's
     positive control ran and passed."""
+    from agent.auditor import control_passed
+
     if output.get("status") not in ("supported", "falsified"):
-        return True
-    return (output.get("metrics") or {}).get("control_pass") is True
+        return None
+    return control_passed((output.get("metrics") or {}).get("control_pass"))
 
 
 @op
@@ -183,7 +209,9 @@ def _run_weave_eval(rows: list[dict]) -> dict:
         evaluation_name="lemma-audit-integrity",
     )
     summary = asyncio.run(evaluation.evaluate(model))
-    return {"rows": rows, "means": summary or {}, "weave": True}
+    result = _run_local_eval(rows)
+    result.update(weave=True, weave_summary=summary or {})
+    return result
 
 
 def _run_local_eval(rows: list[dict]) -> dict:
@@ -195,7 +223,8 @@ def _run_local_eval(rows: list[dict]) -> dict:
         for fn in SCORERS:
             val = _call_scorer(fn, output, row)
             scores[fn.__name__] = val
-            means[fn.__name__].append(float(bool(val)))
+            if val is not None:
+                means[fn.__name__].append(float(bool(val)))
         per_row.append(
             {
                 "paper_id": row["paper_id"],
@@ -206,7 +235,12 @@ def _run_local_eval(rows: list[dict]) -> dict:
         )
     return {
         "rows": per_row,
-        "means": {k: round(sum(v) / len(v), 3) for k, v in means.items()},
+        "means": {
+            k: round(sum(v) / len(v), 3) if v else None for k, v in means.items()
+        },
+        "coverage": {
+            k: {"evaluated": len(v), "total": len(rows)} for k, v in means.items()
+        },
         "weave": False,
     }
 
@@ -215,20 +249,27 @@ def render_table(result: dict) -> str:
     lines = ["# Audit evaluation", ""]
     for r in result["rows"]:
         if "scores" in r:
-            marks = " ".join(f"{k}={'1' if v else '0'}" for k, v in r["scores"].items())
+            marks = " ".join(
+                f"{k}={'n/a' if v is None else '1' if v else '0'}"
+                for k, v in r["scores"].items()
+            )
             lines.append(f"- {r['paper_id']} {r['claim_id']} [{r['status']}] {marks}")
         else:
             lines.append(
                 f"- {r['paper_id']} {r['claim_id']} [{r['outcome'].get('status')}]"
             )
     lines.append("")
-    if result.get("weave"):
-        lines.append(f"Weave eval summary: {result['means']}")
-    else:
-        means = result.get("means", {})
+    means = result.get("means", {})
+    coverage = result.get("coverage", {})
+    lines.append("Means (eligible rows only):")
+    for key, value in means.items():
+        count = coverage.get(key, {})
         lines.append(
-            "Means: "
-            + " ".join(f"{k}={v}" for k, v in means.items())
-            + "  (local — no Weave)"
+            f"- {key}={'n/a' if value is None else value} "
+            f"({count.get('evaluated', 0)}/{count.get('total', 0)} evaluated)"
         )
+    if result.get("weave"):
+        lines.append(f"Weave eval summary: {result.get('weave_summary', {})}")
+    else:
+        lines.append("Local — no Weave")
     return "\n".join(lines)

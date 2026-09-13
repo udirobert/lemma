@@ -151,12 +151,32 @@ pipeline regenerates everything from the paper workdirs:
 python3 scripts/build_paper_index.py    # papers/_index.json (registry)
 python3 scripts/build_site_data.py      # site/src/data/papers.json + figure copies
 python3 scripts/build_trace_data.py     # site/public/traces/<slug>.json
+python3 scripts/build_audit_room.py     # site/src/data/audit-room.json + hashed assets
 ```
 
 Landing counters, the claim xylophone, artifact links, trace-player tabs,
 the `/papers/` registry and `/papers/<slug>/` detail pages all render from
-`papers.json`. Adding a paper = write its `meta.json` + run the three
+`papers.json`. Adding a paper = write its `meta.json` + run the registry
 scripts. Generated JSON and figures are committed so Netlify needs no Python.
+
+### Audit Room (`/room/`)
+
+`/room/` is the evidence-debugger view: per claim it shows the selected
+attempt's script, stdout/stderr, parsed outcome, positive-control result,
+changed figures, feedback provenance, and before/after comparisons — all
+exported from the paper workdirs, never hand-authored. `agent/records.py`
+writes immutable per-execution snapshots under `results/<cid>/attempts/<uuid>/`
+going forward; pre-snapshot attempts render as `legacy-*` records with
+unpinned criteria.
+
+`./lemma room [--port 8765]` serves the built site locally plus a bounded
+rerun API: only attempts in `agent/room_manifest.py` whose script SHA-256
+matches the frozen bundle can be re-executed, inside a `sandbox-exec`
+profile (macOS only) with rlimits and a sanitized environment. No new LLM
+call, no writes to recorded evidence — live reruns get their own attempt
+records under `runs/audit-room/` and are labelled as replays, not
+independent replications. If isolation is unavailable the server reports
+recorded-only mode and refuses execution.
 
 ## Secrets & hygiene
 

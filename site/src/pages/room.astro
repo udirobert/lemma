@@ -1,0 +1,96 @@
+---
+import "@fontsource-variable/montserrat";
+import "@fontsource-variable/roboto-mono";
+import "../styles/room.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Audit Room — Lemma</title>
+    <meta
+      name="description"
+      content="Inspect the recorded evidence behind every Lemma audit verdict — scripts, outputs, controls, failures."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0a0f1a" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #0a0f1a;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="room-root" id="room-root">
+      <header class="room-header">
+        <a href="/" class="room-logo" aria-label="Lemma home">
+          <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          Lemma
+        </a>
+        <span class="room-title">Audit Room</span>
+        <span class="room-paper-title" id="paper-title"></span>
+        <span class="room-pill" id="mode-pill">RECORDED EVIDENCE</span>
+        <span class="present-controls">
+          <button class="room-btn" id="present-prev" aria-label="Previous attempt">←</button>
+          <button class="room-btn" id="present-next" aria-label="Next attempt">→</button>
+        </span>
+        <button class="room-btn exit-present" id="exit-present">Exit presentation</button>
+        <div class="room-paper-picker">
+          <input
+            id="paper-search"
+            type="search"
+            list="paper-options"
+            placeholder="Search recorded papers…"
+            aria-label="Search recorded audit papers"
+            autocomplete="off"
+          />
+          <datalist id="paper-options"></datalist>
+        </div>
+        <button class="room-btn" id="present-toggle" aria-pressed="false">Present</button>
+        <a href="#" id="source-link" target="_blank" rel="noopener" class="small" hidden>source paper ↗</a>
+      </header>
+      <p class="room-subhead" id="room-subhead">
+        Inspect the evidence. <strong>Not just the answer.</strong>
+      </p>
+      <nav class="room-mobile-nav" aria-label="Room sections">
+        <button data-panel="claims" aria-selected="true">Claims</button>
+        <button data-panel="evidence" aria-selected="false">Evidence</button>
+        <button data-panel="receipt" aria-selected="false">History</button>
+      </nav>
+      <main class="room-grid" id="room-grid">
+        <aside class="room-panel claims-panel" id="claims-panel" aria-label="Claims"></aside>
+        <section class="room-panel evidence-panel" id="evidence-panel" aria-label="Evidence"></section>
+        <aside class="room-panel receipt-panel" id="receipt-panel" aria-label="Receipt and controls"></aside>
+      </main>
+      <div class="room-empty" id="room-empty" hidden></div>
+      <dialog class="room-dialog" id="rerun-dialog"></dialog>
+      <footer class="room-footer">
+        <details>
+          <summary>About this build</summary>
+          <p>
+            Existing foundation: claim audits, paper registry, Trackio trails.
+            This iteration: the Audit Room, versioned attempts, the comparison
+            UI, and isolated local reruns of allowlisted recorded scripts.
+          </p>
+          <p>
+            Run the local runner for live reruns:
+            <code>npm --prefix site run build</code> then
+            <code>./lemma room</code>
+          </p>
+        </details>
+      </footer>
+    </div>
+    <noscript>
+      <p class="noscript-note">
+        The Audit Room needs JavaScript to render the recorded evidence bundle.
+        The raw data is checked into the repo — run the local CLI for live audits.
+      </p>
+    </noscript>
+    <script src="../room.ts"></script>
+  </body>
+</html>

@@ -164,6 +164,46 @@ a {
 .hero-sub strong {
   color: var(--fg);
 }
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+.hero-cta {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  padding: 13px 22px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--blue), var(--magenta));
+  color: #0b1018;
+}
+.hero-cta.secondary {
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--mut);
+}
+.hero-cta:hover {
+  filter: brightness(1.12);
+}
+.hero-note {
+  font-family: "Roboto Mono Variable", ui-monospace, monospace;
+  font-size: 0.75rem;
+  color: var(--mut);
+  margin-top: 14px;
+}
+.cli-cmd {
+  display: inline-block;
+  font-family: "Roboto Mono Variable", ui-monospace, monospace;
+  font-size: 0.85rem;
+  background: #0e1524;
+  border: 1px solid var(--mut);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--fg);
+}
 
 /* ---------------- xylophone ---------------- */
 .xylo-scene {

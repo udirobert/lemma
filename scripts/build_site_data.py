@@ -71,7 +71,9 @@ def build() -> int:
     # results/ tree). Prevents a rebuild from silently downgrading the site.
     prior_site = {}
     if SITE_DATA_DIR.joinpath("papers.json").is_file():
-        prior_site = json.loads(SITE_DATA_DIR.joinpath("papers.json").read_text(encoding="utf-8"))
+        prior_site = json.loads(
+            SITE_DATA_DIR.joinpath("papers.json").read_text(encoding="utf-8")
+        )
     prior_by_slug = {p.get("slug"): p for p in prior_site.get("papers", [])}
     papers_out = []
 
@@ -116,7 +118,10 @@ def build() -> int:
             # Figure committed in site/public but absent from this clone's
             # workdir (gitignored results/). Keep the already-published path.
             prior_site_path = prior_figs_by_name.get(name)
-            if prior_site_path and (PUBLIC_PAPERS_DIR / slug / "figures" / src.name).is_file():
+            if (
+                prior_site_path
+                and (PUBLIC_PAPERS_DIR / slug / "figures" / src.name).is_file()
+            ):
                 seen.add(name)
                 copied.append(prior_site_path)
 
@@ -204,4 +209,10 @@ def build() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(build())
+    result = build()
+    if result == 0:
+        sys.path.insert(0, str(REPO))
+        from agent.audit_room import export_bundle
+
+        print(f"wrote {export_bundle(REPO)}")
+    sys.exit(result)

@@ -8,6 +8,7 @@ logbooks via ``trackio logbook attach trace``.
 from __future__ import annotations
 
 import json
+import threading
 import time
 from pathlib import Path
 
@@ -20,6 +21,7 @@ class Trace:
         self.run_id = run_id
         self.path = path or (TRACES_DIR / f"{run_id}.jsonl")
         self._t0 = time.time()
+        self._lock = threading.Lock()
 
     def log(self, stage: str, event: str, **payload: object) -> None:
         record = {
@@ -30,7 +32,7 @@ class Trace:
             "elapsed_s": round(time.time() - self._t0, 2),
             **payload,
         }
-        with self.path.open("a", encoding="utf-8") as f:
+        with self._lock, self.path.open("a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False, default=str) + "\n")
 
     def llm_call(

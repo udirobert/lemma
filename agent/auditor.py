@@ -12,15 +12,20 @@ Output per claim in <workdir>/results/:
 from __future__ import annotations
 
 import json
+import math
+import re
 import subprocess
+import sys
 import time
 from pathlib import Path
 
+from agent import records
 from agent.llm import complete, extract_json
 from agent.traces import Trace
 from agent.weave_ops import op
 
 MAX_ATTEMPTS = 3
+STATUSES = ("supported", "falsified", "inconclusive")
 RUN_TIMEOUT_S = 1200  # 20 min per script; audits should be cpu-fast by design
 MAX_OUT_CHARS = 4000
 
@@ -34,17 +39,24 @@ def _run_script(
     t0 = time.time()
     try:
         proc = subprocess.run(
-            ["python3", str(script_path)],
-            cwd=workdir,
+            [sys.executable, str(script_path.resolve())],
+            cwd=str(workdir.resolve()),
             capture_output=True,
             text=True,
             timeout=timeout_s,
         )
         exit_code, out, err = proc.returncode, proc.stdout, proc.stderr
     except subprocess.TimeoutExpired as e:
-        exit_code, out = -1, ""
-        err = f"TIMEOUT after {timeout_s}s\n{(e.stderr or '')[-MAX_OUT_CHARS:]}"
+        exit_code = -1
+        out = _tail(e.stdout)
+        err = f"TIMEOUT after {timeout_s}s\n{_tail(e.stderr)}"
     return exit_code, out, err, time.time() - t0
+
+
+def _tail(chunk: str | bytes | None) -> str:
+    if isinstance(chunk, bytes):
+        chunk = chunk.decode("utf-8", errors="replace")
+    return (chunk or "")[-MAX_OUT_CHARS:]
 
 
 SYSTEM = """You are the audit stage of Lemma, an AI-scientist pipeline. You write \
@@ -160,11 +172,29 @@ def audit_all(
     return report
 
 
+_ATTEMPT_FILE_RE = re.compile(
+    r"(?:audit_attempt|run_attempt)(\d+)(?:\.failed)?\.(?:py|json)"
+)
+
+
+def _next_attempt_number(claim_dir: Path) -> int:
+    """One above the highest legacy attempt number on disk — scripts and run
+    records share the counter so a new attempt never overwrites history."""
+    highest = 0
+    for p in claim_dir.iterdir():
+        m = _ATTEMPT_FILE_RE.fullmatch(p.name)
+        if m:
+            highest = max(highest, int(m.group(1)))
+    return highest + 1
+
+
 @op
 def audit_one(
     claim: dict, paper_text: str, workdir: Path, results_dir: Path, trace: Trace
 ) -> dict:
     cid = claim["id"]
+    if not re.fullmatch(r"[A-Za-z][A-Za-z0-9_-]{0,63}", cid):
+        raise ValueError(f"claim id unsafe for path use: {cid!r}")
     claim_slug = cid.lower()
     claim_dir = results_dir / claim_slug
     claim_dir.mkdir(exist_ok=True)
@@ -190,14 +220,19 @@ def audit_one(
             "audit", "auto_feedback_loaded", claim_id=cid, chars=len(auto_feedback)
         )
 
-    # continue attempt numbering if scripts from a prior round exist
-    prior_scripts = sorted(claim_dir.glob("audit_attempt*.py"))
-    start_attempt = len(prior_scripts)
+    source = "human_guided" if feedback else "agent_generated"
 
     run_history: list[str] = []
+    attempt_ids: list[str] = []
+    executed = 0
     last_summary = None
+    last_attempt_id = None
+    final_source = source
 
-    for attempt in range(start_attempt + 1, start_attempt + 1 + MAX_ATTEMPTS):
+    # continue attempt numbering if scripts or run records from a prior
+    # round exist
+    next_number = _next_attempt_number(claim_dir)
+    for attempt in range(next_number, next_number + MAX_ATTEMPTS):
         script_path = claim_dir / f"audit_attempt{attempt}.py"
         user_prompt = _build_prompt(
             claim, paper_text, attempt, run_history, feedback, auto_feedback
@@ -219,10 +254,25 @@ def audit_one(
             chars=len(code),
         )
 
+        attempt_root = records.begin_attempt(
+            claim_dir,
+            claim,
+            trace,
+            attempt,
+            source,
+            code,
+            feedback,
+            auto_feedback[:4000],
+        )
+        attempt_ids.append(attempt_root.name)
+        last_attempt_id = attempt_root.name
+        executed += 1
+        before_figures = records.figure_hashes(claim_dir)
+
         exit_code, out, err, duration = _run_script(script_path, workdir)
         trace.tool_run(
             "audit",
-            f"python3 {script_path.name}",
+            f"{sys.executable} {script_path.name}",
             exit_code,
             duration,
             len(out) + len(err),
@@ -231,15 +281,37 @@ def audit_one(
         summary = _parse_summary(out)
         tail = out[-MAX_OUT_CHARS:] + "\n---STDERR---\n" + err[-MAX_OUT_CHARS:]
 
+        if summary is not None and summary.get("claim_id") != cid:
+            problems = ["summary claim_id does not match selected claim"]
+        elif summary is not None:
+            problems = _summary_problems(summary)
+        else:
+            problems = ["script produced no parseable SUMMARY_JSON"]
+        records.finish_attempt(
+            attempt_root,
+            claim_dir,
+            before_figures,
+            exit_code,
+            out,
+            err,
+            duration,
+            summary,
+            problems,
+            trace,
+        )
+
         # Accept a run that printed a valid SUMMARY_JSON even if the process
         # crashed afterwards (e.g. a serialization error on the very last line);
         # the evidence was still produced and is what matters.
-        if summary is not None and not _summary_problems(summary):
+        if summary is not None and not problems:
             run_path = claim_dir / f"run_attempt{attempt}.json"
             run_path.write_text(
                 json.dumps(
                     {
                         "attempt": attempt,
+                        "attempt_id": attempt_root.name,
+                        "source": source,
+                        "run_id": trace.run_id,
                         "exit_code": exit_code,
                         "summary": summary,
                         "wall_s": round(duration, 2),
@@ -254,6 +326,7 @@ def audit_one(
                 "claim_audited",
                 claim_id=cid,
                 attempt=attempt,
+                attempt_id=attempt_root.name,
                 status=summary.get("status"),
                 wall_s=round(duration, 2),
             )
@@ -264,11 +337,13 @@ def audit_one(
             # metrics (e.g. "falsified" while the control residual shows a
             # broken implementation). Rejecting it is the honest move:
             # record why and iterate.
-            problems = _summary_problems(summary)
             (claim_dir / f"run_attempt{attempt}.failed.json").write_text(
                 json.dumps(
                     {
                         "attempt": attempt,
+                        "attempt_id": attempt_root.name,
+                        "source": source,
+                        "run_id": trace.run_id,
                         "kind": "rejected",
                         "exit_code": exit_code,
                         "summary": summary,
@@ -284,6 +359,7 @@ def audit_one(
                 "summary_rejected",
                 claim_id=cid,
                 attempt=attempt,
+                attempt_id=attempt_root.name,
                 problems=problems,
             )
             run_history.append(
@@ -306,6 +382,9 @@ def audit_one(
             json.dumps(
                 {
                     "attempt": attempt,
+                    "attempt_id": attempt_root.name,
+                    "source": source,
+                    "run_id": trace.run_id,
                     "kind": "crashed",
                     "exit_code": exit_code,
                     "tail": tail[-MAX_OUT_CHARS:],
@@ -322,6 +401,7 @@ def audit_one(
             "attempt_failed",
             claim_id=cid,
             attempt=attempt,
+            attempt_id=attempt_root.name,
             exit_code=exit_code,
         )
         last_summary = {
@@ -338,57 +418,105 @@ def audit_one(
             "metrics": {"attempts_used": MAX_ATTEMPTS},
             "notes": "no successful run",
         }
+    candidate_summary = last_summary
 
-    # Reviewer escalation: if every generated attempt in this round failed to
-    # support the claim (inconclusive OR falsified), execute the
-    # reviewer-provided reference implementation verbatim when one exists.
-    # Rationale: a falsified verdict from a broken LLM implementation is
-    # indistinguishable from a genuine refutation by its status alone, and
-    # the validator has repeatedly caught self-contradictory verdicts here.
-    # The reference is the authoritative implementation supplied by the
-    # human reviewer; the trace records every LLM attempt AND the reference
-    # execution, so nothing is hidden. It runs under the same rules as any
-    # audit script (must print SUMMARY_JSON, must pass the validator).
+    # Reviewer reference: when the human reviewer supplied a reference
+    # implementation it runs after the generated attempts, whatever their
+    # outcome — a supported candidate is still checked against the pinned
+    # reference, and a broken implementation can't hide a real verdict.
+    # A valid reference run is authoritative and becomes the final outcome;
+    # a failed reference never overwrites a valid candidate. Both the
+    # candidate outcome and any disagreement are recorded explicitly, and
+    # the reference runs under the same rules as any audit script (must
+    # print SUMMARY_JSON, must pass the validator).
     ref_path = claim_dir / "reviewer_reference.py"
-    if last_summary.get("status") != "supported" and ref_path.is_file():
-        attempt = start_attempt + MAX_ATTEMPTS + 1
+    reference_summary = None
+    reference_checked = False
+    reference_disagreement = False
+    if ref_path.is_file():
+        attempt = _next_attempt_number(claim_dir)
+        ref_code = ref_path.read_text(encoding="utf-8")
+        attempt_root = records.begin_attempt(
+            claim_dir,
+            claim,
+            trace,
+            attempt,
+            "reviewer_reference",
+            ref_code,
+            feedback,
+            auto_feedback[:4000],
+        )
+        attempt_ids.append(attempt_root.name)
+        executed += 1
         trace.log(
             "audit",
             "reviewer_reference_executed",
             claim_id=cid,
             attempt=attempt,
+            attempt_id=attempt_root.name,
             path=str(ref_path),
             reason=(
-                "LLM-generated attempts ended "
-                f"{last_summary.get('status')!r}; reviewer reference is authoritative"
+                "reviewer reference runs after generated attempts ended "
+                f"{last_summary.get('status')!r}; a valid reference is authoritative"
             ),
         )
+        before_figures = records.figure_hashes(claim_dir)
         exit_code, out, err, duration = _run_script(ref_path, workdir)
         trace.tool_run(
             "audit",
-            f"python3 {ref_path.name}",
+            f"{sys.executable} {ref_path.name}",
             exit_code,
             duration,
             len(out) + len(err),
         )
         ref_summary = _parse_summary(out)
-        ref_ok = ref_summary is not None and not _summary_problems(ref_summary)
-        if ref_summary is not None and not ref_ok:
+        tail = out[-MAX_OUT_CHARS:] + "\n---STDERR---\n" + err[-MAX_OUT_CHARS:]
+        if ref_summary is not None and ref_summary.get("claim_id") != cid:
+            ref_problems = ["summary claim_id does not match selected claim"]
+        elif ref_summary is not None:
+            ref_problems = _summary_problems(ref_summary)
+        else:
+            ref_problems = ["script produced no parseable SUMMARY_JSON"]
+        records.finish_attempt(
+            attempt_root,
+            claim_dir,
+            before_figures,
+            exit_code,
+            out,
+            err,
+            duration,
+            ref_summary,
+            ref_problems,
+            trace,
+        )
+        reference_summary = ref_summary
+        reference_checked = ref_summary is not None and not ref_problems
+        reference_disagreement = bool(
+            candidate_summary
+            and candidate_summary.get("status") in STATUSES
+            and ref_summary
+            and ref_summary.get("status") in STATUSES
+            and ref_summary.get("status") != candidate_summary.get("status")
+        )
+        if ref_summary is not None and not reference_checked:
             trace.log(
                 "audit",
                 "summary_rejected",
                 claim_id=cid,
                 attempt=attempt,
+                attempt_id=attempt_root.name,
                 source="reviewer_reference",
-                problems=_summary_problems(ref_summary),
+                problems=ref_problems,
             )
-        if ref_ok:
+        if reference_checked:
             run_path = claim_dir / f"run_attempt{attempt}.json"
             run_path.write_text(
                 json.dumps(
                     {
                         "attempt": attempt,
+                        "attempt_id": attempt_root.name,
                         "source": "reviewer_reference",
+                        "run_id": trace.run_id,
                         "exit_code": exit_code,
                         "summary": ref_summary,
                         "wall_s": round(duration, 2),
@@ -398,14 +526,35 @@ def audit_one(
                 encoding="utf-8",
             )
             last_summary = ref_summary
+            last_attempt_id = attempt_root.name
+            final_source = "reviewer_reference"
             trace.log(
                 "audit",
                 "claim_audited",
                 claim_id=cid,
                 attempt=attempt,
+                attempt_id=attempt_root.name,
                 status=ref_summary.get("status"),
                 source="reviewer_reference",
                 wall_s=round(duration, 2),
+            )
+        else:
+            (claim_dir / f"run_attempt{attempt}.failed.json").write_text(
+                json.dumps(
+                    {
+                        "attempt": attempt,
+                        "attempt_id": attempt_root.name,
+                        "source": "reviewer_reference",
+                        "run_id": trace.run_id,
+                        "kind": "reference_failed",
+                        "exit_code": exit_code,
+                        "summary": ref_summary,
+                        "problems": ref_problems,
+                        "tail": tail[-MAX_OUT_CHARS:],
+                    },
+                    indent=2,
+                ),
+                encoding="utf-8",
             )
     # always record the final outcome so no claim silently disappears
     # from the trace (matters when every attempt crashed)
@@ -414,16 +563,23 @@ def audit_one(
         "claim_final",
         claim_id=cid,
         status=last_summary.get("status", "inconclusive"),
-        attempts=len(run_history)
-        + (0 if last_summary.get("status") == "inconclusive" else 1),
+        attempts=executed,
     )
     summary_path = claim_dir / "audit_summary.json"
     summary_path.write_text(json.dumps(last_summary, indent=2), encoding="utf-8")
     return {
         "id": cid,
         "status": last_summary.get("status", "inconclusive"),
-        "attempts": len(run_history) + (1 if last_summary else 0),
+        "attempts": executed,
         "summary": last_summary,
+        "source": final_source,
+        "attempt_id": last_attempt_id,
+        "candidate_summary": candidate_summary,
+        "candidate_source": source,
+        "reference_summary": reference_summary,
+        "reference_disagreement": reference_disagreement,
+        "reference_checked": reference_checked,
+        "attempt_ids": attempt_ids,
     }
 
 
@@ -467,6 +623,14 @@ def _build_prompt(
     return "\n".join(parts)
 
 
+def control_passed(value: object) -> bool:
+    return (
+        value is True
+        or (type(value) in (int, float) and value == 1)
+        or (isinstance(value, str) and value == "True")
+    )
+
+
 def _summary_problems(summary: dict) -> list[str]:
     """Contradictions between a verdict and its own recorded metrics.
 
@@ -478,18 +642,25 @@ def _summary_problems(summary: dict) -> list[str]:
       - NaN control metrics
     """
     problems: list[str] = []
+    if not isinstance(summary, dict):
+        return ["summary must be an object"]
     status = summary.get("status")
+    if status not in ("supported", "falsified", "inconclusive"):
+        problems.append("status must be supported, falsified, or inconclusive")
+    metrics = summary.get("metrics")
+    if not isinstance(metrics, dict) or not metrics:
+        problems.append("metrics must be a non-empty object")
+        return problems
     if status not in ("supported", "falsified"):
         return problems
-    metrics = summary.get("metrics") or {}
 
     # The positive control is mandatory by contract: a decisive verdict with
     # NO passing control is as untrustworthy as one with a failed control —
     # and it's the cheap way to game the criterion (drop the control, keep
-    # the verdict). Reject both. (Truthiness, not `is True` — metrics may
-    # carry "True"/1 serialized via default=str on numpy scalars.)
-    control_pass = metrics.get("control_pass")
-    if control_pass is False:
+    # the verdict). Reject both. Accept only explicit passing values; metrics
+    # may carry "True"/1 serialized via default=str on numpy scalars.
+    control_pass = control_passed(metrics.get("control_pass"))
+    if metrics.get("control_pass") is False:
         problems.append(f"status={status} but control_pass is false")
     elif not control_pass:
         problems.append(
@@ -500,8 +671,8 @@ def _summary_problems(summary: dict) -> list[str]:
     for name, val in metrics.items():
         if "control" not in name.lower():
             continue
-        if isinstance(val, float) and val != val:  # NaN
-            problems.append(f"control metric {name} is NaN")
+        if isinstance(val, float) and not math.isfinite(val):  # NaN
+            problems.append(f"control metric {name} is not finite")
         if (
             "diff" in name.lower()
             and isinstance(val, (int, float))
@@ -519,10 +690,10 @@ def _summary_problems(summary: dict) -> list[str]:
     for name, val in metrics.items():
         if "control" in name.lower():
             continue
-        is_nan = isinstance(val, float) and val != val
+        is_nan = isinstance(val, float) and not math.isfinite(val)
         if is_nan or val is None:
             problems.append(
-                f"status={status} but primary metric {name} is NaN/None "
+                f"status={status} but primary metric {name} is non-finite/None "
                 "(measurement never produced a usable value)"
             )
     n_meas = metrics.get("n_measurable_points")
@@ -532,15 +703,18 @@ def _summary_problems(summary: dict) -> list[str]:
 
 
 def _parse_summary(stdout: str) -> dict | None:
-    for line in stdout.splitlines():
-        if line.startswith("SUMMARY_JSON="):
-            try:
-                data = json.loads(line[len("SUMMARY_JSON=") :])
-                if isinstance(data, dict) and "status" in data:
-                    return data
-            except json.JSONDecodeError:
-                return None
-    return None
+    lines = [line for line in stdout.splitlines() if line.startswith("SUMMARY_JSON=")]
+    if len(lines) != 1:
+        return None
+    try:
+        data = json.loads(lines[0][len("SUMMARY_JSON=") :])
+    except json.JSONDecodeError:
+        return None
+    if not isinstance(data, dict) or not isinstance(data.get("claim_id"), str):
+        return None
+    if not data["claim_id"] or not isinstance(data.get("notes"), str):
+        return None
+    return data
 
 
 def _strip_fences(text: str) -> str:

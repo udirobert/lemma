@@ -94,6 +94,7 @@ function fmtMetric(v: unknown): string {
         {paper.authors && <p class="pd-authors">{paper.authors}</p>}
         <p class="pd-blurb">{paper.blurb}</p>
         <div class="pd-links">
+          <a href={`/room/?paper=${paper.slug}`}>audit room</a>
           {paper.links.paper && <a href={paper.links.paper} target="_blank" rel="noopener">paper ↗</a>}
           {paper.source_url && !paper.links.paper && <a href={paper.source_url} target="_blank" rel="noopener">source ↗</a>}
           {paper.links.logbook && <a href={paper.links.logbook} target="_blank" rel="noopener">evidence logbook ↗</a>}
