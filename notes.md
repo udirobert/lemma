@@ -130,3 +130,23 @@ recorded-only. Added a Modal-hosted runner behind a Netlify proxy.
   all existing suites + npm build green.
 - Note: prod /api only goes live when the new netlify.toml reaches main —
   no commit made.
+
+### Follow-up — shipped and verified in prod (same day)
+
+- Committed `d3f9fdb`, pushed to main; Netlify rebuild picked up the
+  `/api/*` proxy automatically.
+- Prod verified end-to-end through the proxy (no dev server, curl only):
+  - `GET lemmabio.netlify.app/api/session` → `available:true`, both
+    manifest entries, token issued.
+  - `POST /api/reruns` (icl-bayesian/C6/legacy-4) → `fc-…` queued → poll
+    → `completed`: `source=live_rerun`, `replay_of=legacy-4`, verdict
+    `inconclusive`, control `failed`, 1 figure data URI, exit 0, ~3s.
+    Same honest outcome as the recorded attempt — the replay agrees.
+  - Deployed room JS carries the `RECORDED + LIVE RERUN` pill.
+- **Modal workspace: `thepapajams`** (confirmed by owner as the intended
+  prod workspace). App name `lemma-room`; endpoint
+  `https://thepapajams--lemma-room-api.modal.run`; shared state in
+  `modal.Dict` `lemma-room-state` (session token, ip_counters, inflight
+  ledger). Redeploy: `modal deploy agent/room_modal.py` from repo root.
+- Rate-limit counters hold test jobs we spawned during verification
+  (sliding 24h window, self-heals).
