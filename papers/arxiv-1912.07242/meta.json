@@ -1,0 +1,32 @@
+{
+    "$schema_note": "Curated paper metadata. scripts/build_paper_index.py merges this with derived data (claims.json, results/audit_report.json, judge_report.json, trace stats) into papers/_index.json.",
+    "slug": "double-descent",
+    "title": "More Data Can Hurt for Linear Regression: Sample-wise Double Descent",
+    "source_label": "arXiv 1912.07242",
+    "source_url": "https://arxiv.org/abs/1912.07242",
+    "arxiv_url": "https://arxiv.org/abs/1912.07242",
+    "audited_at": "2026-10-03",
+    "blurb": "First fully agent-orchestrated audit: Omnigent lab director + specialist agents verified the double-descent peak at n=d, found the risk valley at gamma=0.90 via an agent-generated hypothesis, and routed an unverified follow-up through a human approval gate.",
+    "links": {
+        "logbook": null,
+        "dataset": null,
+        "paper": "https://arxiv.org/abs/1912.07242"
+    },
+    "role": "audit",
+    "status": "complete",
+    "trace": "trace.jsonl",
+    "xylo": [
+        {
+            "claim": "C1",
+            "label": "peak at n=d"
+        },
+        {
+            "claim": "C2",
+            "label": "risk approx"
+        },
+        {
+            "claim": "C7",
+            "label": "valley γ*=0.90"
+        }
+    ]
+}

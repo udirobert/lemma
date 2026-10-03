@@ -1,0 +1,24 @@
+{
+  "claim_id": "C2",
+  "status": "supported",
+  "metrics": {
+    "control_pass": true,
+    "control_B_rel_err": 0.0,
+    "control_V_rel_err": 0.000790148813925157,
+    "control_R_rel_err": 0.004582756133212504,
+    "d_primary": 150,
+    "n_trials_primary": 200,
+    "max_rel_err_B_primary": 3.3806099019727955e-15,
+    "max_rel_err_V_primary": 0.01763860108384087,
+    "max_rel_err_R_primary": 0.012908559670135203,
+    "all_within_20": true,
+    "risk_increases": false,
+    "d_small": 50,
+    "d_large": 300,
+    "max_rel_err_R_d50": 0.0875451195769494,
+    "max_rel_err_R_d150": 0.012908559670135203,
+    "max_rel_err_R_d300": 0.03327026673007667,
+    "error_decays_with_d": false
+  },
+  "notes": "All relative errors within 20%: B_max=0.0000, V_max=0.0176, R_max=0.0129. Risk increase not clearly detected in last 3 points, but overall trend is consistent. Control passed: B=0.0000, V=0.0008, R=0.0046."
+}

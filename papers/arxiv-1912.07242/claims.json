@@ -1,0 +1,79 @@
+[
+  {
+    "id": "C1",
+    "title": "Sample-wise non-monotonic test MSE peaks at n=d",
+    "statement": "For d=1000, sigma=0.1, ||beta||_2=1, isotropic Gaussian covariates x~N(0,I_d) and response y=<x,beta>+N(0,sigma^2), the expected test MSE of the minimum-norm ridgeless regression estimator beta_hat = X^dagger y is non-monotonic in the number of training samples n: it decreases for n<d, increases to a peak at n=d, and decreases for n>d.",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "Vary n from 1 to about 2d (e.g., n=1,...,2000) with d=1000, sigma=0.1, and a fixed beta with ||beta||_2=1. For each n, generate n training samples, compute beta_hat = X^dagger y via the Moore-Penrose pseudoinverse, and estimate the test MSE as ||beta_hat-beta||_2^2 + sigma^2 (or by averaging over a large fresh test set). Repeat for T=50 independent training sets and report the mean test MSE per n.",
+    "evidence_in_paper": "Figure 1a: 'Test MSE vs. Num. Train Samples for the min-norm ridgeless regression estimator in d=1000 dimensions... Solid line shows mean over 50 trials.'",
+    "compute": "cpu-fast",
+    "success_criterion": "The mean test MSE at n=d is a local maximum: it exceeds the mean MSE at n=d-1 and at n=d+1 (within Monte Carlo error), and the overall curve is non-monotonic with a clear peak near n=d."
+  },
+  {
+    "id": "C2",
+    "title": "Overparameterized risk approximation (Claim 1)",
+    "statement": "Let gamma=n/d<1. For the minimum-norm ridgeless regression estimator, the bias and variance are approximately B_n=(1-gamma)^2 ||beta||^2 and V_n ~ gamma(1-gamma)||beta||^2 + sigma^2 gamma/(1-gamma), so the expected excess risk is approximately E[R(beta_hat)] ~ (1-gamma)||beta||^2 + sigma^2 gamma/(1-gamma).",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Fix d=1000, ||beta||_2=1, sigma=0.1. For a grid of gamma values in (0,1) (e.g., n=floor(gamma*d)), generate many independent training sets (X,y). Compute beta_hat=X^dagger y. Estimate B_n=||beta-E[beta_hat]||^2 and V_n=E[||beta_hat-E[beta_hat]||^2] by Monte Carlo (e.g., 1000-2000 trials). Also compute the empirical average excess risk E[||beta_hat-beta||^2]. Compare each to the corresponding right-hand side of Claim 1.",
+    "evidence_in_paper": "Claim 1 and Figure 1b: 'Theoretical predictions for the bias, variance, and risk from Claims 1 and 2.'",
+    "compute": "cpu-fast",
+    "success_criterion": "For gamma away from 0 and 1 (e.g., gamma in [0.05,0.95]), the Monte-Carlo estimates of B_n, V_n, and excess risk agree with the approximate formulas within 20% relative error, and the excess-risk curve shows the predicted increase as gamma approaches 1."
+  },
+  {
+    "id": "C3",
+    "title": "Underparameterized risk approximation (Claim 2)",
+    "statement": "Let gamma=n/d>1. For the ordinary-least-squares estimator, the bias is B_n=0 and the variance is approximately V_n ~ sigma^2/(gamma-1).",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Fix d=1000, ||beta||_2=1, sigma=0.1. For gamma>1 (e.g., n=ceil(gamma*d) with gamma up to 5), generate many independent training sets. Compute the OLS estimator beta_hat=(X^T X)^{-1} X^T y. Estimate bias B_n=||beta-E[beta_hat]||^2 and variance V_n=E[||beta_hat-E[beta_hat]||^2] by Monte Carlo. Compare to 0 and sigma^2/(gamma-1).",
+    "evidence_in_paper": "Claim 2 and Figure 1b.",
+    "compute": "cpu-fast",
+    "success_criterion": "The empirical bias is numerically zero (e.g., relative to ||beta||^2 it is <0.01), and the empirical variance agrees with sigma^2/(gamma-1) within 20% relative error for gamma in [1.05,5]."
+  },
+  {
+    "id": "C4",
+    "title": "Exact finite-sample bias-variance decomposition (Lemma 1)",
+    "statement": "For n<=d and beta_hat=X^dagger y, the bias is B_n=||E_X[Proj_{X^perp}(beta)]||^2 and the variance is V_n=E_X[||Proj_X(beta)-E_X[Proj_X(beta)]||^2] + sigma^2 E_X[Tr((XX^T)^{-1})].",
+    "kind": "lemma",
+    "testable": true,
+    "test_plan": "For several n<d (e.g., d=1000, n=100,300,500,700,900), generate many independent X matrices and noise vectors eta. Compute beta_hat=X^T(XX^T)^{-1}(X beta+eta). Compute the Monte-Carlo empirical bias and variance. Independently compute the right-hand side using the same samples: the orthogonal projector onto the rowspace of X and Tr((XX^T)^{-1}).",
+    "evidence_in_paper": "Lemma 1 and Equations (3)-(4).",
+    "compute": "cpu-fast",
+    "success_criterion": "The Monte-Carlo estimates of B_n and V_n agree with the right-hand side expressions within 5% relative error (or within Monte Carlo standard error)."
+  },
+  {
+    "id": "C5",
+    "title": "Exact trace update when adding one sample (Claim 3)",
+    "statement": "Let X in R^{n x d} and x in R^d be the (n+1)th sample, and X_{n+1}=[X; x^T]. Then Tr((X_{n+1} X_{n+1}^T)^{-1}) = Tr((XX^T)^{-1}) + (1+||(X^T)^dagger x||^2)/||Proj_{X^perp}(x)||^2.",
+    "kind": "lemma",
+    "testable": true,
+    "test_plan": "For many random instances with d=1000 and n<d (e.g., n=100,300,500,700,900), generate X and a new vector x~N(0,I_d). Compute the left-hand side and the right-hand side of the identity using stable linear algebra (pseudoinverses and orthogonal projectors). Verify equality.",
+    "evidence_in_paper": "Claim 3 and Appendix A.2 proof.",
+    "compute": "cpu-fast",
+    "success_criterion": "For every tested instance, the relative difference between the left-hand side and the right-hand side is below 1e-8 (numerical precision)."
+  },
+  {
+    "id": "C6",
+    "title": "Bias is non-increasing with more samples",
+    "statement": "For n<=d, the bias B_n=||E_X[Proj_{X^perp}(beta)]||^2 is non-increasing in n; i.e., B_{n+1} <= B_n.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Fix d=1000 and ||beta||_2=1. For each n in a dense grid from 1 to d-1 (e.g., every 10 samples), generate many independent X matrices, compute Proj_{X^perp}(beta), and estimate B_n=||E[Proj_{X^perp}(beta)]||^2 by Monte Carlo. Plot B_n versus n.",
+    "evidence_in_paper": "Equation (3) and the sentence: 'From Equation 3, the bias is non-increasing with samples (B_{n+1} <= B_n), since an additional sample can only grow the rowspace.'",
+    "compute": "cpu-fast",
+    "success_criterion": "The estimated sequence B_n is non-increasing in n (allowing small Monte Carlo deviations): B_{n+1} <= B_n + 0.01||beta||^2 for all sampled n, with no systematic increasing trend."
+  },
+  {
+    "id": "C7",
+    "title": "Finite-d risk valley: the overparameterized double-descent dip at gamma*=0.90 (generated variant of C2)",
+    "statement": "For isotropic Gaussian x~N(0,I_d), y=<x,beta>+N(0,sigma^2), ||beta||_2=1, sigma=0.1, d=150, the Monte-Carlo excess risk E||beta_hat-beta||^2 of the minimum-norm ridgeless interpolator beta_hat=X^dagger y, as a function of gamma=n/d on the grid gamma in {0.75, 0.80, 0.85, 0.90, 0.95}, attains a strict minimum at gamma=0.85 or gamma=0.90 (within one grid step of the closed-form valley gamma*=0.90, where R(gamma)=(1-gamma)+sigma^2*gamma/(1-gamma) is minimized), and the closed-form risk at that gamma is within 10% relative error of the Monte-Carlo value.",
+    "kind": "generated-hypothesis",
+    "testable": true,
+    "test_plan": "Self-contained numpy script. Setup: d=150, beta=e_1 (||beta||=1), sigma=0.1, gamma grid {0.75, 0.80, 0.85, 0.90, 0.95}, n=floor(gamma*d), T=300 independent trials per gamma. Per trial: X~N(0,I_{n x d}), y=X@beta+sigma*N(0,1), beta_hat = X.T @ solve(X X.T, y) (pinv fallback), accumulate ||beta_hat-beta||^2. R_mc(gamma)=mean. Closed form R_th(gamma)=(1-gamma)+0.01*gamma/(1-gamma). Main metrics: valley_gamma=argmin_g R_mc(g); rel_err_at_valley=|R_mc(valley)-R_th(valley)|/R_th(valley); strict_min = R_mc(valley) < min(R_mc(0.75), R_mc(0.95)). POSITIVE CONTROL (mandatory): identical procedure with sigma=0.5, for which the closed-form valley is analytically at gamma*=0.75 (solving dR/dgamma=0 gives (1-gamma*)^2=sigma^2*||beta||^2); control_pass = control valley argmin is 0.75 and its rel_err <= 10%. If the control fails the measurement is void. Plot R_mc vs gamma (main + control) with the closed-form curves.",
+    "evidence_in_paper": "agent-generated variant of C2",
+    "compute": "cpu-fast",
+    "success_criterion": "valley_gamma in {0.85, 0.90}; strict_min is true; rel_err_at_valley <= 0.10; control_pass is true (sigma=0.5 run recovers the analytically known valley at gamma=0.75 with rel_err <= 0.10)."
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "d4696f611dc146cd92472e9a280b0cf5",
+  "run_id": "20261003-205632-arxiv-2510.10981",
+  "number": 1,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C7",
+    "title": "Boundary test: pN invariance of the Bayes Gap",
+    "statement": "For the small uniform-attention meta-learner used in the C2 audit, the Bayes Gap is approximately invariant to how a fixed pretraining budget is split between prompt count N and prompt length p, while decreasing monotonically with the product pN.  In other words, at matched values of pN the gap stays within a small relative band even as N and p vary.",
+    "kind": "generated-hypothesis",
+    "testable": true,
+    "test_plan": "Reuse the mean-pooling least-squares meta-learner from the C2 audit_attempt4.py setup.  Train on matched-pN pairs such as (N,p) = (100,20),(200,10),(400,5),(500,8),(1000,4),(2000,2),(1000,8) with several replicates per cell.  Estimate the Bayes Gap for each (N,p) by out-of-sample MSE minus the exact posterior-mean risk on fresh query points.  Report each Bayes Gap, fit a monotonic trend versus pN, and compute the within-pN coefficient of variation.  Also run a synthetic-data control where BG is generated from a known pN-only law.",
+    "evidence_in_paper": "agent-generated variant of C2",
+    "compute": "cpu-fast",
+    "success_criterion": "(i) Spearman correlation between Bayes Gap and pN across the full grid exceeds 0.80; (ii) the mean within-pN coefficient of variation is below 0.25; (iii) a positive synthetic control with a true pN-only law satisfies both (i) and (ii)."
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "691260e0eff1dc340c1e3bbc85f36c33407fff13c653aac9be160013b0667bf0",
+  "script_sha256": "c175a906116a280cd2b94aeec8ca7a05d5aead2ef133600ed4e20b853d587697",
+  "created_at": "2026-10-03T19:58:37.647531+00:00"
+}

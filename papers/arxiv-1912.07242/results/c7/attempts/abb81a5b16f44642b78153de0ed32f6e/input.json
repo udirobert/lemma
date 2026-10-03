@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "abb81a5b16f44642b78153de0ed32f6e",
+  "run_id": "20261003-231428-arxiv-1912.07242",
+  "number": 1,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C7",
+    "title": "Finite-d risk valley: the overparameterized double-descent dip at gamma*=0.90 (generated variant of C2)",
+    "statement": "For isotropic Gaussian x~N(0,I_d), y=<x,beta>+N(0,sigma^2), ||beta||_2=1, sigma=0.1, d=150, the Monte-Carlo excess risk E||beta_hat-beta||^2 of the minimum-norm ridgeless interpolator beta_hat=X^dagger y, as a function of gamma=n/d on the grid gamma in {0.75, 0.80, 0.85, 0.90, 0.95}, attains a strict minimum at gamma=0.85 or gamma=0.90 (within one grid step of the closed-form valley gamma*=0.90, where R(gamma)=(1-gamma)+sigma^2*gamma/(1-gamma) is minimized), and the closed-form risk at that gamma is within 10% relative error of the Monte-Carlo value.",
+    "kind": "generated-hypothesis",
+    "testable": true,
+    "test_plan": "Self-contained numpy script. Setup: d=150, beta=e_1 (||beta||=1), sigma=0.1, gamma grid {0.75, 0.80, 0.85, 0.90, 0.95}, n=floor(gamma*d), T=300 independent trials per gamma. Per trial: X~N(0,I_{n x d}), y=X@beta+sigma*N(0,1), beta_hat = X.T @ solve(X X.T, y) (pinv fallback), accumulate ||beta_hat-beta||^2. R_mc(gamma)=mean. Closed form R_th(gamma)=(1-gamma)+0.01*gamma/(1-gamma). Main metrics: valley_gamma=argmin_g R_mc(g); rel_err_at_valley=|R_mc(valley)-R_th(valley)|/R_th(valley); strict_min = R_mc(valley) < min(R_mc(0.75), R_mc(0.95)). POSITIVE CONTROL (mandatory): identical procedure with sigma=0.5, for which the closed-form valley is analytically at gamma*=0.75 (solving dR/dgamma=0 gives (1-gamma*)^2=sigma^2*||beta||^2); control_pass = control valley argmin is 0.75 and its rel_err <= 10%. If the control fails the measurement is void. Plot R_mc vs gamma (main + control) with the closed-form curves.",
+    "evidence_in_paper": "agent-generated variant of C2",
+    "compute": "cpu-fast",
+    "success_criterion": "valley_gamma in {0.85, 0.90}; strict_min is true; rel_err_at_valley <= 0.10; control_pass is true (sigma=0.5 run recovers the analytically known valley at gamma=0.75 with rel_err <= 0.10)."
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "d7a9e7cd29fc4ad926fed8b6adb22677f4c68231d8a0ceb18fba0d301ac16864",
+  "script_sha256": "51a5d69d70ac06df43a97ed2bc11a18f91b2c349f8a70507711cd1cc7da9baf5",
+  "created_at": "2026-10-03T22:15:38.528472+00:00"
+}

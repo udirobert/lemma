@@ -1,0 +1,9 @@
+{
+  "attempt": 5,
+  "attempt_id": "11a8dfdef6d440ad8823ac76cfc21369",
+  "source": "human_guided",
+  "run_id": "20261003-225831-arxiv-1912.07242",
+  "kind": "crashed",
+  "exit_code": 1,
+  "tail": "Running MC for d=150, n_trials=200...\n  gamma=0.05, n=7: B_mc=0.9011, B_th=0.9025, V_mc=0.0485, V_th=0.0480, R_mc=0.9496, R_th=0.9505\n  gamma=0.15, n=22: B_mc=0.7261, B_th=0.7225, V_mc=0.1270, V_th=0.1293, R_mc=0.8532, R_th=0.8518\n  gamma=0.25, n=37: B_mc=0.5754, B_th=0.5625, V_mc=0.1860, V_th=0.1908, R_mc=0.7614, R_th=0.7533\n  gamma=0.35, n=52: B_mc=0.4310, B_th=0.4225, V_mc=0.2296, V_th=0.2329, R_mc=0.6606, R_th=0.6554\n  gamma=0.45, n=67: B_mc=0.3069, B_th=0.3025, V_mc=0.2540, V_th=0.2557, R_mc=0.5610, R_th=0.5582\n  gamma=0.55, n=82: B_mc=0.2009, B_th=0.2025, V_mc=0.2592, V_th=0.2597, R_mc=0.4600, R_th=0.4622\n  gamma=0.65, n=97: B_mc=0.1248, B_th=0.1225, V_mc=0.2454, V_th=0.2461, R_mc=0.3703, R_th=0.3686\n  gamma=0.75, n=112: B_mc=0.0659, B_th=0.0625, V_mc=0.2170, V_th=0.2175, R_mc=0.2829, R_th=0.2800\n  gamma=0.85, n=127: B_mc=0.0244, B_th=0.0225, V_mc=0.1861, V_th=0.1842, R_mc=0.2105, R_th=0.2067\n  gamma=0.95, n=142: B_mc=0.0042, B_th=0.0025, V_mc=0.2506, V_th=0.2375, R_mc=0.2548, R_th=0.2400\nRunning MC for d=50, n_trials=200...\n\n---STDERR---\nTraceback (most recent call last):\n  File \"/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c2/audit_attempt5.py\", line 120, in <module>\n    B_mc, V_mc, R_mc = run_mc(d_test, gamma, n_trials, beta, sigma)\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c2/audit_attempt5.py\", line 57, in run_mc\n    y = X @ beta + noise\n        ~~^~~~~~\nValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 150 is different from 50)\n"
+}

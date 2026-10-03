@@ -1,0 +1,11 @@
+{
+  "exit_code": -1,
+  "wall_s": 1200.117,
+  "summary": null,
+  "problems": [
+    "script produced no parseable SUMMARY_JSON"
+  ],
+  "accepted": false,
+  "figures": [],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a10362-3974-7f43-8ab3-9716794362ba"
+}

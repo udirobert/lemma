@@ -1,0 +1,9 @@
+{
+  "attempt": 2,
+  "attempt_id": "845988c523214004b3f9ea0ac91349a5",
+  "source": "agent_generated",
+  "run_id": "20261003-205616-arxiv-2510.10981",
+  "kind": "crashed",
+  "exit_code": 1,
+  "tail": "\n---STDERR---\nTraceback (most recent call last):\n  File \"/Users/udingethe/Dev/lemma/papers/arxiv-2510.10981/results/c7/audit_attempt2.py\", line 172, in <module>\n    gap_mean, gap_std = estimate_bayes_gap(N, p, d_feat, n_reps, n_test)\n                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/udingethe/Dev/lemma/papers/arxiv-2510.10981/results/c7/audit_attempt2.py\", line 108, in estimate_bayes_gap\n    W = train_meta_learner(N, p, d_feat)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/udingethe/Dev/lemma/papers/arxiv-2510.10981/results/c7/audit_attempt2.py\", line 71, in train_meta_learner\n    x_query = X[k]\n              ~^^^\nIndexError: index 20 is out of bounds for axis 0 with size 20\n"
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "2b1c045dab2b4f55b25d10e67eff9a1e",
+  "run_id": "20261003-210848-arxiv-1912.07242",
+  "number": 1,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C1",
+    "title": "Sample-wise non-monotonic test MSE peaks at n=d",
+    "statement": "For d=1000, sigma=0.1, ||beta||_2=1, isotropic Gaussian covariates x~N(0,I_d) and response y=<x,beta>+N(0,sigma^2), the expected test MSE of the minimum-norm ridgeless regression estimator beta_hat = X^dagger y is non-monotonic in the number of training samples n: it decreases for n<d, increases to a peak at n=d, and decreases for n>d.",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "Vary n from 1 to about 2d (e.g., n=1,...,2000) with d=1000, sigma=0.1, and a fixed beta with ||beta||_2=1. For each n, generate n training samples, compute beta_hat = X^dagger y via the Moore-Penrose pseudoinverse, and estimate the test MSE as ||beta_hat-beta||_2^2 + sigma^2 (or by averaging over a large fresh test set). Repeat for T=50 independent training sets and report the mean test MSE per n.",
+    "evidence_in_paper": "Figure 1a: 'Test MSE vs. Num. Train Samples for the min-norm ridgeless regression estimator in d=1000 dimensions... Solid line shows mean over 50 trials.'",
+    "compute": "cpu-fast",
+    "success_criterion": "The mean test MSE at n=d is a local maximum: it exceeds the mean MSE at n=d-1 and at n=d+1 (within Monte Carlo error), and the overall curve is non-monotonic with a clear peak near n=d."
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "65585fe1ffd41201e0d7362516ce6ded770279af40c223d72290530f858cb83d",
+  "script_sha256": "8afe7486b3abef494c26c2fc3bf3b078d096ed4c1327359d688d73c4a5b7cc87",
+  "created_at": "2026-10-03T20:10:18.748534+00:00"
+}

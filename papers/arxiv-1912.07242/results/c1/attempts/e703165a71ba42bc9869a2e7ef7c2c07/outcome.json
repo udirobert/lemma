@@ -1,0 +1,30 @@
+{
+  "exit_code": 0,
+  "wall_s": 86.835,
+  "summary": {
+    "claim_id": "C1",
+    "status": "supported",
+    "metrics": {
+      "d": 200,
+      "sigma": 0.1,
+      "T": 20,
+      "peak_n": 200,
+      "peak_risk": 677.7523557685281,
+      "peak_within_10pct_of_d": true,
+      "non_monotonic": true,
+      "control_pass": true,
+      "control_peak_n": 50,
+      "control_d": 50
+    },
+    "notes": "Peak at n=200 (d=200), within 10% of d. Non-monotonicity confirmed. Control passed."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "ea3a5b1d1c139e5b0763cca377695ce08474fdc5bf35300c9a72deb1ca9b4d8e"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a103c6-b865-73ab-bbfe-75aef3be2bfd"
+}

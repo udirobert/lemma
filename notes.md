@@ -150,3 +150,56 @@ recorded-only. Added a Modal-hosted runner behind a Netlify proxy.
   ledger). Redeploy: `modal deploy agent/room_modal.py` from repo root.
 - Rate-limit counters hold test jobs we spawned during verification
   (sliding 24h window, self-heals).
+
+## 2026-10-03 — Omnigent headline run: arxiv 1912.07242 (sample-wise double descent)
+
+First full agent-orchestrated discovery loop on a fresh paper, for the
+Hack-Nation x Databricks Omnigent challenge. Bundle: `omnigent/lab/`
+(lemma-lab director + auditor + proposer sub-agents, pi harness).
+Sessions: `c62c9b43...` (died on provider 402 mid-run) then
+`a475c559...` (continuation; transcript exported to
+`runs/omni-session-1912.jsonl`).
+
+**What happened**
+- Extract: 6 cpu-fast claims (C1 peak-at-n=d; C2-C6 theorem-level).
+- Round 1 (Kimi-K2.7-Code/WANDB): C1 inconclusive (3x 20-min timeouts —
+  every generated MC used d=1000, ~10k lstsq solves); C2 FALSIFIED,
+  control_pass=true (bias rel_err 24.2% at d=1000/T=500). Auditor
+  sub-agent died mid-run (upstream 500); underlying lemma process
+  survived and completed — results read from disk, not the sub-agent.
+- Human-in-the-loop: wrote reviewer feedback.md for C1+C2 (d<=300
+  designs; for C2 argue error-decay with d, not one huge d).
+- Provider died mid-run: WANDB 402 insufficient_quota; ORCA key invalid;
+  KIMI 503; HF paused. Rebound bundle to RUNINFRA (qwen3-8-27b),
+  continuation session picked up from the workdir state.
+- Round 2 (feedback applied): C1 SUPPORTED — peak exactly at n=200=d at
+  d=200, T=20, control (d=50 peak at n=50) passed, ~1 attempt/~2 min.
+  C2 SUPPORTED at d=150 (B~0, V<=1.8%, R<=1.3%, control 0.5%).
+  Round 2 total: ~4.5 min vs ~65 min unguided — the feedback effect.
+- Proposer (sub-agent flaky; director wrote proposals.json from
+  evidence, provenance disclosed): P1 promoted to C7
+  (kind: generated-hypothesis) — finite-d risk valley at gamma*=0.90.
+  P2 parked pending human approval (independent MC check of E[beta_hat]
+  — repairs C2 round-2's circular bias check, which hard-coded
+  E[beta_hat]=gamma*beta).
+- C7 audit: SUPPORTED — valley at gamma=0.90, strict min, 4.1% rel err;
+  control (sigma=0.5 -> analytic gamma*=0.75) recovered at 1.7%.
+- evidence+judge: PASS 5/5 (155 trace events, 7 failed attempts
+  preserved). Regression fixture also PASS 5/5.
+
+**Wall time**: ~2h20m total incl. provider-failure recovery;
+continuation session ~24 min (22:57-23:21).
+
+**Caveats for the demo**: C2's falsified->supported flip is a round-1
+MC-noise artifact at d=1000 (T=500 too small for mean-of-beta_hat
+bias), disclosed in the director's report; C2's bias metric is circular
+(P2 filed for independent verification, gated on human approval); C1's
+peak scale is tail-dominated (location verified, magnitude diverges —
+matches the paper's own Fig 1).
+
+**Next time**: pin a budget-cap d in the auditor prompt for MC claims
+(d=1000 kept regenerating across all 3 attempts); the 25-min move-on
+budget needs a round-level cap the director can enforce; Omnigent
+0.16.0 client has a 120s subscribe-after-post race — one-shot -p mode
+crashes while the session survives; `omni session export` recovers the
+transcript.

@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "00405433c2f4422ba4ead9b7683cbfbe",
+  "run_id": "20261003-225831-arxiv-1912.07242",
+  "number": 4,
+  "source": "human_guided",
+  "claim": {
+    "id": "C2",
+    "title": "Overparameterized risk approximation (Claim 1)",
+    "statement": "Let gamma=n/d<1. For the minimum-norm ridgeless regression estimator, the bias and variance are approximately B_n=(1-gamma)^2 ||beta||^2 and V_n ~ gamma(1-gamma)||beta||^2 + sigma^2 gamma/(1-gamma), so the expected excess risk is approximately E[R(beta_hat)] ~ (1-gamma)||beta||^2 + sigma^2 gamma/(1-gamma).",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Fix d=1000, ||beta||_2=1, sigma=0.1. For a grid of gamma values in (0,1) (e.g., n=floor(gamma*d)), generate many independent training sets (X,y). Compute beta_hat=X^dagger y. Estimate B_n=||beta-E[beta_hat]||^2 and V_n=E[||beta_hat-E[beta_hat]||^2] by Monte Carlo (e.g., 1000-2000 trials). Also compute the empirical average excess risk E[||beta_hat-beta||^2]. Compare each to the corresponding right-hand side of Claim 1.",
+    "evidence_in_paper": "Claim 1 and Figure 1b: 'Theoretical predictions for the bias, variance, and risk from Claims 1 and 2.'",
+    "compute": "cpu-fast",
+    "success_criterion": "For gamma away from 0 and 1 (e.g., gamma in [0.05,0.95]), the Monte-Carlo estimates of B_n, V_n, and excess risk agree with the approximate formulas within 20% relative error, and the excess-risk curve shows the predicted increase as gamma approaches 1."
+  },
+  "feedback": "# Reviewer correction for C2 (cost control)\n\nThe claim is that the CLOSED-FORM asymptotic risk approximation tracks the\nfinite-sample risk in the overparameterized regime. Attempt 1 used d=1000,\n19 gamma values, n_trials=2000 \u2014 ~38k solves, guaranteed timeout.\n\nFor an asymptotic-approximation claim, moderate d is the correct test, not a\ncompromise: the formula is a d,n->inf limit, so you want to see the relative\nerror SHRINK as d grows, not verify it at one huge d. Suggested design:\n\n- d = 150; gammas = np.linspace(0.05, 0.95, 10); n_trials = 200.\n  (~2000 solves at d=150 \u2014 a few minutes, not 20.)\n- Optionally repeat at d = 50 and d = 300 to show the error decays with d\n  (that IS the claim's content); keep n_trials modest.\n- The theoretical values are closed-form \u2014 no cost there. Keep the positive\n  control (a gamma where the approximation is known to hold/diverge) as-is.\n\nSuccess criterion unchanged: relative error within the claim's stated bound\nacross the gamma range.",
+  "auto_feedback": "",
+  "criterion_sha256": "26861b5ac2ab48c61ac3994ed97df2ac0823b6333205b38ae82a8ddc8893b2f0",
+  "script_sha256": "e32b4b33afe3148b5cbbf83ca55fa7d19f139543a103d1bd6fe57d4bf4ebeacb",
+  "created_at": "2026-10-03T21:59:31.073093+00:00"
+}

@@ -1,0 +1,25 @@
+{
+  "attempt": 4,
+  "attempt_id": "e703165a71ba42bc9869a2e7ef7c2c07",
+  "source": "human_guided",
+  "run_id": "20261003-225831-arxiv-1912.07242",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C1",
+    "status": "supported",
+    "metrics": {
+      "d": 200,
+      "sigma": 0.1,
+      "T": 20,
+      "peak_n": 200,
+      "peak_risk": 677.7523557685281,
+      "peak_within_10pct_of_d": true,
+      "non_monotonic": true,
+      "control_pass": true,
+      "control_peak_n": 50,
+      "control_d": 50
+    },
+    "notes": "Peak at n=200 (d=200), within 10% of d. Non-monotonicity confirmed. Control passed."
+  },
+  "wall_s": 86.83
+}

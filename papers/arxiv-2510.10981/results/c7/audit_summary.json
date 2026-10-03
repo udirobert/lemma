@@ -1,0 +1,13 @@
+{
+  "claim_id": "C7",
+  "status": "falsified",
+  "metrics": {
+    "spearman_rho": 0.1229222929736104,
+    "mean_within_pN_cv": 0.575800651814978,
+    "control_spearman_rho": -0.9357754408380654,
+    "control_mean_cv": 0.011672289726174165,
+    "control_pass": true,
+    "n_grid_points": 12
+  },
+  "notes": "Claim falsified. Spearman rho=0.12, Mean CV=0.58."
+}

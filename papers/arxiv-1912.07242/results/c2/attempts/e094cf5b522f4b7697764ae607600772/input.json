@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "e094cf5b522f4b7697764ae607600772",
+  "run_id": "20261003-210848-arxiv-1912.07242",
+  "number": 3,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C2",
+    "title": "Overparameterized risk approximation (Claim 1)",
+    "statement": "Let gamma=n/d<1. For the minimum-norm ridgeless regression estimator, the bias and variance are approximately B_n=(1-gamma)^2 ||beta||^2 and V_n ~ gamma(1-gamma)||beta||^2 + sigma^2 gamma/(1-gamma), so the expected excess risk is approximately E[R(beta_hat)] ~ (1-gamma)||beta||^2 + sigma^2 gamma/(1-gamma).",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Fix d=1000, ||beta||_2=1, sigma=0.1. For a grid of gamma values in (0,1) (e.g., n=floor(gamma*d)), generate many independent training sets (X,y). Compute beta_hat=X^dagger y. Estimate B_n=||beta-E[beta_hat]||^2 and V_n=E[||beta_hat-E[beta_hat]||^2] by Monte Carlo (e.g., 1000-2000 trials). Also compute the empirical average excess risk E[||beta_hat-beta||^2]. Compare each to the corresponding right-hand side of Claim 1.",
+    "evidence_in_paper": "Claim 1 and Figure 1b: 'Theoretical predictions for the bias, variance, and risk from Claims 1 and 2.'",
+    "compute": "cpu-fast",
+    "success_criterion": "For gamma away from 0 and 1 (e.g., gamma in [0.05,0.95]), the Monte-Carlo estimates of B_n, V_n, and excess risk agree with the approximate formulas within 20% relative error, and the excess-risk curve shows the predicted increase as gamma approaches 1."
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "26861b5ac2ab48c61ac3994ed97df2ac0823b6333205b38ae82a8ddc8893b2f0",
+  "script_sha256": "b60ec001956221433e0b230aafd91033a2641b247c1d84c4ad26e44979aa866c",
+  "created_at": "2026-10-03T21:33:50.066042+00:00"
+}

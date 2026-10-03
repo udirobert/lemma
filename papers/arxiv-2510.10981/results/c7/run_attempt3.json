@@ -1,0 +1,20 @@
+{
+  "attempt": 3,
+  "attempt_id": "84c57818df184ca38fc6933f0e8918c3",
+  "source": "agent_generated",
+  "run_id": "20261003-205616-arxiv-2510.10981",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C7",
+    "status": "inconclusive",
+    "metrics": {
+      "spearman_rho": 0.1704927196623373,
+      "mean_cv": 0.3328980282010537,
+      "syn_spearman_rho": 0.3278706147352641,
+      "syn_mean_cv": 2.3903471800492824,
+      "control_pass": false
+    },
+    "notes": "Synthetic control failed. The statistic or setup may be buggy."
+  },
+  "wall_s": 6.0
+}

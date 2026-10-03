@@ -1,0 +1,80 @@
+{
+  "provenance": "Every event maps to papers/arxiv-1912.07242/trace.jsonl (engine events, real timestamps 21:08-23:21) or to the Omnigent session transcripts (session c62c9b43 / a475c559, exported to runs/omni-session-1912.jsonl). Orchestration events (dispatches, human interventions, provider failures) are annotated source:session. Curated for the demo replay; nothing fabricated.",
+  "paper": {
+    "id": "arXiv 1912.07242",
+    "title": "More Data Can Hurt for Linear Regression: Sample-wise Double Descent",
+    "url": "https://arxiv.org/abs/1912.07242",
+    "tagline": "A famous result: test error peaks at n=d. Can an agent lab verify it — and find something the paper didn't claim?"
+  },
+  "agents": [
+    { "id": "director", "label": "director", "sub": "omnigent · plans & routes" },
+    { "id": "auditor", "label": "auditor", "sub": "writes & runs audits" },
+    { "id": "proposer", "label": "proposer", "sub": "generates hypotheses" },
+    { "id": "engine", "label": "engine", "sub": "lemma · deterministic" },
+    { "id": "human", "label": "human", "sub": "reviewer & gates" },
+    { "id": "judge", "label": "judge", "sub": "scores the trail" }
+  ],
+  "chapters": [
+    { "id": "c1", "t": 0, "n": 1, "title": "the question" },
+    { "id": "c2", "t": 14, "n": 2, "title": "first contact — the wall" },
+    { "id": "c3", "t": 40, "n": 3, "title": "human in the loop" },
+    { "id": "c4", "t": 62, "n": 4, "title": "the generated hypothesis" },
+    { "id": "c5", "t": 80, "n": 5, "title": "the catch" },
+    { "id": "c6", "t": 92, "n": 6, "title": "the verdict" }
+  ],
+  "events": [
+    { "t": 1.0, "agent": "director", "kind": "note", "title": "director takes the paper", "body": "arxiv 1912.07242 · unseen by the pipeline · goal: run the full discovery loop — extract, audit, propose, audit, judge.", "chapter": "c1" },
+    { "t": 2.5, "agent": "engine", "kind": "cmd", "title": "extract", "body": "./lemma audit 1912.07242 --stages extract", "chapter": "c1" },
+    { "t": 5.0, "agent": "engine", "kind": "claims", "title": "6 testable claims extracted — all cpu-fast", "claims": [
+      { "id": "C1", "label": "test MSE peaks at n = d", "kind": "empirical" },
+      { "id": "C2", "label": "overparameterized risk approximation", "kind": "theorem" },
+      { "id": "C3", "label": "underparameterized risk approximation", "kind": "theorem" },
+      { "id": "C4", "label": "finite-sample bias–variance decomposition", "kind": "lemma" },
+      { "id": "C5", "label": "trace update adding one sample", "kind": "lemma" },
+      { "id": "C6", "label": "bias non-increasing in n", "kind": "theorem" }
+    ], "chapter": "c1" },
+    { "t": 10.0, "agent": "director", "kind": "dispatch", "title": "director triages → auditor", "body": "picks C1 (the headline result) + C2 (theorem-level, verifiable closed form). C3–C6 deferred — declared, not skipped.", "chapter": "c2" },
+    { "t": 14.0, "agent": "auditor", "kind": "attempt", "claim": "C1", "status": "running", "title": "C1 · attempt 1", "body": "Monte-Carlo double descent: d=1000, T=50 trials, full n-grid — ~100k least-squares solves.", "chapter": "c2" },
+    { "t": 19.0, "agent": "auditor", "kind": "strike", "claim": "C1", "status": "timeout", "title": "C1 · attempt 1 — timeout", "body": "20:00 wall limit. Preserved as run_attempt1.failed.json.", "chapter": "c2" },
+    { "t": 21.5, "agent": "auditor", "kind": "strike", "claim": "C1", "status": "timeout", "title": "C1 · attempt 2 — timeout", "body": "Step-10 n-grid — still ~10k solves at d=1000. 20:00.", "chapter": "c2" },
+    { "t": 24.0, "agent": "auditor", "kind": "strike", "claim": "C1", "status": "timeout", "title": "C1 · attempt 3 — timeout", "body": "Same trap: d=1000 again. 20:00. All three failures kept.", "chapter": "c2" },
+    { "t": 27.0, "agent": "engine", "kind": "verdict", "claim": "C1", "verdict": "inconclusive", "title": "C1 — inconclusive", "body": "Honest output: the test was too expensive, not the claim wrong. 3 failed attempts preserved.", "chapter": "c2" },
+    { "t": 30.0, "agent": "auditor", "kind": "strike", "claim": "C2", "status": "timeout", "title": "C2 · attempt 1 — timeout", "body": "19 gammas × 2000 trials × d=1000 ≈ 38k solves. 20:00.", "chapter": "c2" },
+    { "t": 32.5, "agent": "auditor", "kind": "strike", "claim": "C2", "status": "crash", "title": "C2 · attempt 2 — crash in 1s", "body": "NameError: beta undefined. Kept verbatim in the trail.", "chapter": "c2" },
+    { "t": 35.5, "agent": "auditor", "kind": "attempt", "claim": "C2", "status": "running", "title": "C2 · attempt 3", "body": "d=1000, 19 gammas, T=500 — finishes in 12 min.", "chapter": "c2" },
+    { "t": 38.5, "agent": "engine", "kind": "verdict", "claim": "C2", "verdict": "falsified", "title": "C2 — falsified", "body": "bias rel err 24.2% > 20% criterion · risk 1.8% ✓ var 1.6% ✓ · positive control passed (0.8%) — the measurement is trustworthy.", "chapter": "c2" },
+    { "t": 40.5, "agent": "human", "kind": "feedback", "title": "human intervention — feedback.md", "body": "Reviewer correction filed for C1 & C2: “the claims are dimension-agnostic — test at d ≤ 300. For an asymptotic formula, show error decay with d, not one huge d.”", "chapter": "c3" },
+    { "t": 44.0, "agent": "director", "kind": "incident", "title": "orchestration failure — and recovery", "body": "provider 402 kills session 1 mid-run · auditor sub-agent dead · workdir state preserved → new session on runinfra continues where it left off.", "chapter": "c3" },
+    { "t": 47.5, "agent": "auditor", "kind": "attempt", "claim": "C1", "status": "running", "title": "C1 · re-audit with feedback", "body": "d=200, T=20, dense grid around n=d — 25× cheaper per solve.", "chapter": "c3" },
+    { "t": 52.0, "agent": "engine", "kind": "verdict", "claim": "C1", "verdict": "supported", "title": "C1 — supported", "body": "peak at n=200 = d exactly · non-monotonic ✓ · control (d=50 → peak at 50) passed · 87 seconds.", "chapter": "c3" },
+    { "t": 55.5, "agent": "engine", "kind": "verdict", "claim": "C2", "verdict": "supported", "title": "C2 — supported at finite d", "body": "all rel errs ≤ 2% at d=150 · control 0.5% · the 24.2% round-1 bias error was MC noise at d=1000, not a paper flaw · 2 crashed attempts in this round preserved too (7 failures total).", "chapter": "c3" },
+    { "t": 58.5, "agent": "engine", "kind": "metric", "title": "the feedback effect", "body": "65+ min unguided → 4.5 min guided. Same engine, same machine — reviewer knowledge changed the cost.", "big": "14×", "chapter": "c3" },
+    { "t": 62.0, "agent": "director", "kind": "dispatch", "title": "director → proposer", "body": "result changed the plan: with the approximation verified, what does it predict that the paper didn't test?", "chapter": "c4" },
+    { "t": 65.0, "agent": "proposer", "kind": "proposal", "title": "P1 — the risk valley", "body": "the closed-form risk R(γ) = (1−γ) + σ²γ/(1−γ) has a minimum at γ* = 0.90 for σ=0.1. Untested by the paper. Cheap to check: 5-point grid, d=150, T=300.", "chapter": "c4" },
+    { "t": 68.0, "agent": "director", "kind": "promote", "claim": "C7", "title": "C7 promoted to a first-class claim", "body": "kind: generated-hypothesis · source: agent_generated — labeled as agent-originated in claims.json.", "chapter": "c4" },
+    { "t": 71.0, "agent": "auditor", "kind": "attempt", "claim": "C7", "status": "running", "title": "C7 · audit", "body": "MC valley location vs closed form · positive control: σ=0.5, whose valley is analytically at γ*=0.75.", "chapter": "c4" },
+    { "t": 74.5, "agent": "engine", "kind": "verdict", "claim": "C7", "verdict": "supported", "title": "C7 — supported · 14 seconds", "body": "strict min at γ=0.90 exactly as predicted · rel err 4.1% ≤ 10% · control recovered γ*=0.75 at 1.7% — new verified result, generated by the lab.", "chapter": "c4" },
+    { "t": 80.0, "agent": "engine", "kind": "caveat", "title": "the catch — circularity detected", "body": "C2's round-2 bias check hard-coded E[β̂]=γβ — it verified an identity, not a measurement. The proposer caught it; director disclosed it in the report.", "chapter": "c5" },
+    { "t": 84.5, "agent": "human", "kind": "gate", "title": "P2 parked behind human approval", "body": "independent MC check of E[β̂] filed as proposal P2 — not run: consequential next step waits for the human gate.", "chapter": "c5" },
+    { "t": 88.5, "agent": "engine", "kind": "note", "title": "every failure preserved", "body": "7 failed attempts · timeouts · a NameError · provider 402s · a dead sub-agent — all in trace.jsonl, all inspectable.", "chapter": "c5" },
+    { "t": 92.0, "agent": "engine", "kind": "cmd", "title": "evidence + judge", "body": "./lemma audit 1912.07242 --stages evidence,judge — Trackio logbook assembled (156 trace events).", "chapter": "c6" },
+    { "t": 95.5, "agent": "judge", "kind": "judge", "verdict": "PASS", "score": "5/5", "title": "judge — PASS 5/5", "body": "structure ✓ evidence ✓ integrity ✓ cost disclosure ✓ trace ✓ — 0 claims silently skipped, all costs logged.", "chapter": "c6" },
+    { "t": 99.0, "agent": "director", "kind": "summary", "title": "what the loop changed", "body": "inconclusive→supported · falsified→supported · one agent-generated hypothesis verified · one circular test caught · one follow-up gated on a human.", "chapter": "c6" },
+    { "t": 103.0, "agent": "engine", "kind": "metric", "title": "paper → verdicts → new result", "body": "≈2h13m wall including provider outages · re-audit round 4.5 min · generated-hypothesis audit 14 s · every step reconstructible.", "big": "2h13m", "chapter": "c6" }
+  ],
+  "finale": {
+    "verdicts": [
+      { "claim": "C1", "label": "peak at n = d", "verdict": "supported", "note": "d=200 · control ✓" },
+      { "claim": "C2", "label": "risk approximation", "verdict": "supported", "note": "d=150 · ≤2% err · control ✓" },
+      { "claim": "C7", "label": "valley γ* = 0.90", "verdict": "supported", "note": "agent-generated · control ✓", "generated": true },
+      { "claim": "C3–C6", "label": "deferred", "verdict": "not_audited", "note": "declared, never skipped" }
+    ],
+    "metrics": [
+      { "k": "2h13m", "v": "paper → verdicts + new result" },
+      { "k": "14×", "v": "guided re-audit vs unguided" },
+      { "k": "14s", "v": "generated-claim audit" },
+      { "k": "7", "v": "failed attempts preserved" },
+      { "k": "5/5", "v": "judge rubric — PASS" }
+    ]
+  }
+}

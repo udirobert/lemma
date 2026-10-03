@@ -1,0 +1,32 @@
+[
+  {
+    "id": "P1",
+    "title": "Boundary test: pN invariance of the Bayes Gap",
+    "variant_of": "C2",
+    "statement": "For the small uniform-attention meta-learner used in the C2 audit, the Bayes Gap is approximately invariant to how a fixed pretraining budget is split between prompt count N and prompt length p, while decreasing monotonically with the product pN.  In other words, at matched values of pN the gap stays within a small relative band even as N and p vary.",
+    "success_criterion": "(i) Spearman correlation between Bayes Gap and pN across the full grid exceeds 0.80; (ii) the mean within-pN coefficient of variation is below 0.25; (iii) a positive synthetic control with a true pN-only law satisfies both (i) and (ii).",
+    "proposed_test": "Reuse the mean-pooling least-squares meta-learner from the C2 audit_attempt4.py setup.  Train on matched-pN pairs such as (N,p) = (100,20),(200,10),(400,5),(500,8),(1000,4),(2000,2),(1000,8) with several replicates per cell.  Estimate the Bayes Gap for each (N,p) by out-of-sample MSE minus the exact posterior-mean risk on fresh query points.  Report each Bayes Gap, fit a monotonic trend versus pN, and compute the within-pN coefficient of variation.  Also run a synthetic-data control where BG is generated from a known pN-only law.",
+    "expected_cost": "cpu-fast",
+    "why_interesting": "The original C2 power-law claim was falsified (joint R²=0.63, barely above the p-only model), but Theorem 3.2 still predicts p and N enter primarily through pN at leading order.  This weaker test distinguishes 'no N coupling at all' from the theoretically expected leading-order pN coupling, and it directly addresses whether the falsification of the strong claim refutes the theorem's qualitative message."
+  },
+  {
+    "id": "P2",
+    "title": "1D input-shift Wasserstein envelope for Bayes Gap",
+    "variant_of": "C5",
+    "statement": "In a 1D linear regression setting with source inputs N(0,1) and target inputs N(mu,1), the absolute change in Bayes Gap of an OLS-trained model is bounded above by a finite constant times the input 1-Wasserstein distance W1=|mu|, while the Posterior Variance (noise variance) changes by less than 10% across shifts.",
+    "success_criterion": "For mu in {0.0,0.25,0.5,...,3.0}: (i) the robust linear upper envelope Delta_BG <= U*W1 + epsilon has positive finite U and every observed point satisfies Delta_BG <= 2*U*W1; (ii) Pearson correlation between W1 and Delta_BG exceeds 0.80; (iii) coefficient of variation of the Posterior Variance across shifts is below 0.10.",
+    "proposed_test": "Generate source training data y = x + eps with eps ~ N(0,sigma²).  Train OLS on the source.  Evaluate on target inputs N(mu,1) for each shift value; estimate BG(mu)=MSE_model(mu) - sigma² by averaging over 200 seeds per mu.  Compute Delta_BG(mu)=BG(mu)-BG(0), W1=|mu|, fit a robust linear upper envelope, and check the bound.  PV is estimated by the empirical variance of residuals under the true data-generating model.",
+    "expected_cost": "cpu-fast",
+    "why_interesting": "C5 was inconclusive because the audit scripts failed after four attempts, partly because prompt-level Wasserstein estimation is numerically unstable.  This variant removes the prompt-level coupling difficulty by using an analytically tractable 1D shift, yet it still tests the theorem's core qualitative prediction: only the Bayes Gap grows with shift magnitude, while Posterior Variance remains intrinsic."
+  },
+  {
+    "id": "P3",
+    "title": "Trained uniform-attention model tracks the oracle curve",
+    "variant_of": "C3",
+    "statement": "For a CPU-trainable two-task linear regression mixture, a mean-pooling meta-learner trained on the mixture approaches the Bayes-oracle error as the number of in-context examples k grows, and this approach collapses when the two task families are statistically indistinguishable.",
+    "success_criterion": "For task slope separations Delta in {1.0,2.0}: the trained model's excess MSE over the oracle-family Bayes predictor at k=10 is <= 20% of its excess at k=1.  For Delta=0 (indistinguishable families), the k=10 excess remains >= 60% of the k=1 excess.  A positive control using the exact Bayes-mixture predictor must show the same qualitative pattern.",
+    "proposed_test": "Use the same Gaussian two-task mixture as the C3 audit.  Meta-train a small mean-pooling linear predictor (as in C2 audit_attempt4.py) on N=500 prompts of length p=10 for each Delta.  Evaluate on fresh test prompts at k=1,...,10; report MSE minus the oracle Bayes predictor restricted to the true task family.  Repeat the computation for Delta=0,1.0,2.0 and include an exact Bayes-mixture control arm.",
+    "expected_cost": "cpu-fast",
+    "why_interesting": "C3 validated the Bayes-mixture posterior-concentration mechanism in closed form but explicitly excluded the Transformer training experiment from CPU scope.  This variant closes the loop by testing the central empirical claim in Figure 2/right: a trained model, not just the Bayes predictor, identifies the true task family after a few in-context examples."
+  }
+]

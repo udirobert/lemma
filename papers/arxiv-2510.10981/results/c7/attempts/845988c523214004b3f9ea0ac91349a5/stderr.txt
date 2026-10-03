@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-2510.10981/results/c7/audit_attempt2.py", line 172, in <module>
+    gap_mean, gap_std = estimate_bayes_gap(N, p, d_feat, n_reps, n_test)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-2510.10981/results/c7/audit_attempt2.py", line 108, in estimate_bayes_gap
+    W = train_meta_learner(N, p, d_feat)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-2510.10981/results/c7/audit_attempt2.py", line 71, in train_meta_learner
+    x_query = X[k]
+              ~^^^
+IndexError: index 20 is out of bounds for axis 0 with size 20

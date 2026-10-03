@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c2/audit_attempt2.py", line 68, in <module>
+    y = X @ beta + np.random.randn(n) * sigma
+            ^^^^
+NameError: name 'beta' is not defined

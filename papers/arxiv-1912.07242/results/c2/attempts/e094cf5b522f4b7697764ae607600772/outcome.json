@@ -1,0 +1,34 @@
+{
+  "exit_code": 0,
+  "wall_s": 727.119,
+  "summary": {
+    "claim_id": "C2",
+    "status": "falsified",
+    "metrics": {
+      "bias_max_rel_err": 0.2419714686284799,
+      "var_max_rel_err": 0.015774006981840002,
+      "risk_max_rel_err": 0.018130230540657634,
+      "bias_pass": false,
+      "var_pass": true,
+      "risk_pass": true,
+      "risk_increasing_near_1": false,
+      "control_pass": true,
+      "control_bias_err": 0.00806229964778482,
+      "control_risk_err": 0.0021533046420503113,
+      "n_trials": 500,
+      "d": 1000,
+      "sigma": 0.1,
+      "beta_norm": 1.0
+    },
+    "notes": "Some metrics exceed 20% relative error. Bias pass: False, Var pass: True, Risk pass: True, Risk increasing: False. Max errors: bias=0.242, var=0.016, risk=0.018."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "8b643e9856fef4bcf66f931ebdf0e25b42e8a4377a983eae84dc99db9a7b8257"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a1039b-b9b4-7a2d-b1b9-1a7c603f1a69"
+}

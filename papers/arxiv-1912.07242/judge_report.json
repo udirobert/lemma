@@ -1,0 +1,28 @@
+{
+  "verdict": "PASS",
+  "rubric": {
+    "structure": {
+      "pass": true,
+      "detail": "claims.json (7 claims), audit_report.json present"
+    },
+    "evidence": {
+      "pass": true,
+      "detail": "3 audited claims; issues: none"
+    },
+    "integrity": {
+      "pass": true,
+      "detail": "0 claims skipped as untestable, all declared untestable at extraction"
+    },
+    "cost_disclosure": {
+      "pass": true,
+      "detail": "per-claim attempt counts recorded; wall time in run files + trace"
+    },
+    "trace": {
+      "pass": true,
+      "detail": "155 events, 12 LLM calls, 47 tool runs, 7 failed attempts preserved"
+    }
+  },
+  "score": "5/5",
+  "workdir": "papers/arxiv-1912.07242",
+  "trace": "papers/arxiv-1912.07242/trace.jsonl"
+}

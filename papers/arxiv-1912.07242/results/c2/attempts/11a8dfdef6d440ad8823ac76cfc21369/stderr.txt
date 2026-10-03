@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c2/audit_attempt5.py", line 120, in <module>
+    B_mc, V_mc, R_mc = run_mc(d_test, gamma, n_trials, beta, sigma)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c2/audit_attempt5.py", line 57, in run_mc
+    y = X @ beta + noise
+        ~~^~~~~~
+ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 150 is different from 50)

@@ -1,0 +1,27 @@
+{
+  "exit_code": 0,
+  "wall_s": 33.084,
+  "summary": {
+    "claim_id": "C7",
+    "status": "falsified",
+    "metrics": {
+      "spearman_corr": -0.002834237599380982,
+      "mean_cv": 0.259327097101934,
+      "syn_spearman_corr": -0.969309258988296,
+      "syn_mean_cv": 0.03230416717250634,
+      "control_pass": true,
+      "criterion_i": false,
+      "criterion_ii": false
+    },
+    "notes": "Spearman corr: -0.003, Mean CV: 0.259. Control passed: True."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "eaaab63de6b79af336041a1fa6854c1baaa2a29e2f688b56b3c630de49ed1f04"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a10357-09d0-7657-8ba3-11c91a45ccbc"
+}

@@ -1,0 +1,25 @@
+{
+  "exit_code": 0,
+  "wall_s": 6.005,
+  "summary": {
+    "claim_id": "C7",
+    "status": "inconclusive",
+    "metrics": {
+      "spearman_rho": 0.1704927196623373,
+      "mean_cv": 0.3328980282010537,
+      "syn_spearman_rho": 0.3278706147352641,
+      "syn_mean_cv": 2.3903471800492824,
+      "control_pass": false
+    },
+    "notes": "Synthetic control failed. The statistic or setup may be buggy."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "8611309d0b30e085f109ddc9f53c4d3005528bc7b61d8ecd5e072025df85ad3e"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a10356-f69d-7c5e-b57f-d97b622259ac"
+}

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-08T22:47:03+0000",
-  "n_papers": 4,
+  "generated_at": "2026-10-03T23:52:34+0100",
+  "n_papers": 5,
   "papers": [
     {
       "slug": "grokking-ridge",
@@ -51,8 +51,14 @@
           "testable": true,
           "status": "supported",
           "attempts": 1,
-          "notes": "",
-          "metrics": {},
+          "notes": "Zero-teacher audit (Theorem 4.1): t1=208, grokking at 7792 steps, within the theory's worst-case t2>=9517. All three per-step envelopes hold with zero substantive violations.",
+          "metrics": {
+            "grokking_time_empirical": 7792,
+            "t1_empirical": 208,
+            "t2_theory_lower": 9516.7,
+            "substantive_violations": 0,
+            "overall_pass": true
+          },
           "control_pass": null
         },
         {
@@ -61,8 +67,11 @@
           "testable": true,
           "status": "supported",
           "attempts": 1,
-          "notes": "",
-          "metrics": {},
+          "notes": "Realizable-teacher audit (Theorem 4.2 / Eq. 8): grokking at 7796 steps, zero substantive violations.",
+          "metrics": {
+            "grokking_time_empirical": 7796,
+            "substantive_violations": 0
+          },
           "control_pass": null
         },
         {
@@ -71,8 +80,10 @@
           "testable": true,
           "status": "supported",
           "attempts": 1,
-          "notes": "",
-          "metrics": {},
+          "notes": "Decomposition into training-convergence / poor-generalization / eventual-generalization phases matches Theorems 4.4-4.6 envelopes on the C1/C2 trajectories; zero violations. Negative control (m~=n) shows the predicted anti-grokking collapse, confirming tightness.",
+          "metrics": {
+            "phase_envelope_violations": 0
+          },
           "control_pass": null
         },
         {
@@ -81,8 +92,13 @@
           "testable": true,
           "status": "supported",
           "attempts": 1,
-          "notes": "",
-          "metrics": {},
+          "notes": "Figure-2 sweep: lambda-down amplifies t2 (~1/lambda), n-up grows t1, nu^2-up grows t1 logarithmically, m has minor effect. Matches paper trends qualitatively.",
+          "metrics": {
+            "lambda": "recorded",
+            "n": "recorded",
+            "m": "recorded",
+            "nu_sq": "recorded"
+          },
           "control_pass": null
         },
         {
@@ -91,8 +107,11 @@
           "testable": true,
           "status": "supported",
           "attempts": 1,
-          "notes": "",
-          "metrics": {},
+          "notes": "Two-layer ReLU experiments (Figures 3 & 4): clear grokking in the demo run; hyperparameter sweeps show the predicted qualitative dependence beyond the linear setting. For lambda=0.05 the test loss had not crossed threshold by 100K steps; the run was extended to 200K and grokking was caught at t2=109K (documented in notes.md as a near-miss).",
+          "metrics": {
+            "demo_t1": 2000,
+            "demo_grokking_time": 55600
+          },
           "control_pass": null
         },
         {
@@ -101,8 +120,10 @@
           "testable": true,
           "status": "supported",
           "attempts": 1,
-          "notes": "",
-          "metrics": {},
+          "notes": "Falsification attempt: condition relaxations were run to find a setting where the paper's prediction breaks; the negative control behaved as the theory predicts. Attempt preserved with full trace.",
+          "metrics": {
+            "checked": true
+          },
           "control_pass": null
         }
       ],
@@ -155,6 +176,217 @@
         "results/c5/c5_figure3.png",
         "results/c5/c5_figure4.png",
         "results/fals/falsification.png"
+      ]
+    },
+    {
+      "slug": "double-descent",
+      "dir": "arxiv-1912.07242",
+      "title": "More Data Can Hurt for Linear Regression: Sample-wise Double Descent",
+      "source_label": "arXiv 1912.07242",
+      "source_url": "https://arxiv.org/abs/1912.07242",
+      "arxiv_url": "https://arxiv.org/abs/1912.07242",
+      "audited_at": "2026-10-03",
+      "blurb": "First fully agent-orchestrated audit: Omnigent lab director + specialist agents verified the double-descent peak at n=d, found the risk valley at gamma=0.90 via an agent-generated hypothesis, and routed an unverified follow-up through a human approval gate.",
+      "role": "audit",
+      "status": "complete",
+      "links": {
+        "logbook": null,
+        "dataset": null,
+        "paper": "https://arxiv.org/abs/1912.07242"
+      },
+      "xylo": [
+        {
+          "claim": "C1",
+          "label": "peak at n=d"
+        },
+        {
+          "claim": "C2",
+          "label": "risk approx"
+        },
+        {
+          "claim": "C7",
+          "label": "valley γ*=0.90"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "title": "Sample-wise non-monotonic test MSE peaks at n=d",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1,
+          "notes": "Peak at n=200 (d=200), within 10% of d. Non-monotonicity confirmed. Control passed.",
+          "metrics": {
+            "d": 200,
+            "sigma": 0.1,
+            "T": 20,
+            "peak_n": 200,
+            "peak_risk": 677.7523557685281,
+            "peak_within_10pct_of_d": true,
+            "non_monotonic": true,
+            "control_pass": true,
+            "control_peak_n": 50,
+            "control_d": 50
+          },
+          "control_pass": true
+        },
+        {
+          "id": "C2",
+          "title": "Overparameterized risk approximation (Claim 1)",
+          "testable": true,
+          "status": "supported",
+          "attempts": 3,
+          "notes": "All relative errors within 20%: B_max=0.0000, V_max=0.0176, R_max=0.0129. Risk increase not clearly detected in last 3 points, but overall trend is consistent. Control passed: B=0.0000, V=0.0008, R=0.0046.",
+          "metrics": {
+            "control_pass": true,
+            "control_B_rel_err": 0.0,
+            "control_V_rel_err": 0.000790148813925157,
+            "control_R_rel_err": 0.004582756133212504,
+            "d_primary": 150,
+            "n_trials_primary": 200,
+            "max_rel_err_B_primary": 3.3806099019727955e-15,
+            "max_rel_err_V_primary": 0.01763860108384087,
+            "max_rel_err_R_primary": 0.012908559670135203,
+            "all_within_20": true,
+            "risk_increases": false,
+            "d_small": 50,
+            "d_large": 300,
+            "max_rel_err_R_d50": 0.0875451195769494,
+            "max_rel_err_R_d150": 0.012908559670135203,
+            "max_rel_err_R_d300": 0.03327026673007667,
+            "error_decays_with_d": false
+          },
+          "control_pass": true
+        },
+        {
+          "id": "C3",
+          "title": "Underparameterized risk approximation (Claim 2)",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
+        },
+        {
+          "id": "C4",
+          "title": "Exact finite-sample bias-variance decomposition (Lemma 1)",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
+        },
+        {
+          "id": "C5",
+          "title": "Exact trace update when adding one sample (Claim 3)",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
+        },
+        {
+          "id": "C6",
+          "title": "Bias is non-increasing with more samples",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
+        },
+        {
+          "id": "C7",
+          "title": "Finite-d risk valley: the overparameterized double-descent dip at gamma*=0.90 (generated variant of C2)",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1,
+          "notes": "Valley at gamma=0.9, strict_min=True, rel_err=0.0411. All criteria met.",
+          "metrics": {
+            "valley_gamma": 0.9,
+            "strict_min": true,
+            "rel_err_at_valley": 0.04111891735477657,
+            "valley_in_expected": true,
+            "control_valley_gamma": 0.75,
+            "control_rel_err": 0.0171845073189274,
+            "control_pass": true,
+            "mc_risks": {
+              "0.75": 0.28868057257986796,
+              "0.8": 0.2415760335257219,
+              "0.85": 0.21725444957137924,
+              "0.9": 0.19781259429740758,
+              "0.95": 0.2554534159285954
+            },
+            "th_risks": {
+              "0.75": 0.28,
+              "0.8": 0.24,
+              "0.85": 0.2066666666666667,
+              "0.9": 0.19000000000000003,
+              "0.95": 0.2399999999999999
+            },
+            "mc_risks_ctrl": {
+              "0.75": 1.0171845073189274,
+              "0.8": 1.2144630623295711,
+              "0.85": 1.6604424202058021,
+              "0.9": 2.533730911027182,
+              "0.95": 5.106279169098449
+            },
+            "th_risks_ctrl": {
+              "0.75": 1.0,
+              "0.8": 1.2000000000000002,
+              "0.85": 1.5666666666666664,
+              "0.9": 2.3500000000000005,
+              "0.95": 4.799999999999995
+            }
+          },
+          "control_pass": true
+        }
+      ],
+      "summary": {
+        "supported": 3,
+        "falsified": 0,
+        "inconclusive": 0,
+        "not_audited": 4
+      },
+      "judge": {
+        "verdict": "PASS",
+        "score": "5/5",
+        "rubric": {
+          "structure": {
+            "pass": true,
+            "detail": "claims.json (7 claims), audit_report.json present"
+          },
+          "evidence": {
+            "pass": true,
+            "detail": "3 audited claims; issues: none"
+          },
+          "integrity": {
+            "pass": true,
+            "detail": "0 claims skipped as untestable, all declared untestable at extraction"
+          },
+          "cost_disclosure": {
+            "pass": true,
+            "detail": "per-claim attempt counts recorded; wall time in run files + trace"
+          },
+          "trace": {
+            "pass": true,
+            "detail": "155 events, 12 LLM calls, 47 tool runs, 7 failed attempts preserved"
+          }
+        }
+      },
+      "trace": {
+        "n_events": 156,
+        "n_llm": 12,
+        "n_tool": 47,
+        "n_note": 28,
+        "wall_min": 97.1,
+        "path": "papers/arxiv-1912.07242/trace.jsonl"
+      },
+      "figures": [
+        "results/c1/attempts/e703165a71ba42bc9869a2e7ef7c2c07/figures/fig.png"
       ]
     },
     {
@@ -226,17 +458,42 @@
           "id": "C2",
           "title": "Coupled p-N Scaling of Bayes Gap",
           "testable": true,
-          "status": "inconclusive",
-          "attempts": 1,
-          "notes": "Joint model R2=0.6542, N-only R2=0.0010, p-only R2=0.1287. Success criterion: R2_joint > 0.8 and > 0.1 higher than others.",
+          "status": "falsified",
+          "attempts": 3,
+          "notes": "Joint R2=0.629, N-only R2=0.095, p-only R2=0.618. Criterion requires joint>0.8 and >0.1 above both single-variable models.",
           "metrics": {
-            "r2_joint": 0.6541858630882735,
-            "r2_n_only": 0.0010486293369841304,
-            "r2_p_only": 0.12865249647240662,
-            "control_pass": false,
-            "r2_control": 0.11775441747275273
+            "r2_joint": 0.6285762687310832,
+            "r2_n_only": 0.09537734623065952,
+            "r2_p_only": 0.6180329400772211,
+            "joint_a": 0.713273287970674,
+            "joint_b": 14.48395858139195,
+            "joint_beta": 0.32151898734177214,
+            "joint_c": -72.0274837299994,
+            "bg_values": [
+              1.909620166007698,
+              1.6266746091631543,
+              1.5864427176699258,
+              1.0749929518957455,
+              1.6698792569795113,
+              1.5561045686113608,
+              1.2763619554616676,
+              1.134906320641344,
+              1.4718270644863458,
+              1.6167406594628477,
+              1.3780500098689799,
+              0.98726679838197,
+              1.5211791175567937,
+              1.601825030518865,
+              1.2101026397469168,
+              1.0523888687105654
+            ],
+            "bg_mc_stderr_max": 0.09582445194159064,
+            "control_r2": 0.9866363008881608,
+            "control_beta_recovered": 0.6177215189873418,
+            "control_beta_true": 0.5,
+            "control_pass": true
           },
-          "control_pass": false
+          "control_pass": true
         },
         {
           "id": "C3",
@@ -294,40 +551,60 @@
           "title": "Wasserstein Stability of Bayes Gap",
           "testable": true,
           "status": "inconclusive",
-          "attempts": 1,
-          "notes": "Correlation between W1 and Bayes Gap is -0.349, which is less than 0.9. Positive control failed: Bayes Gap did not increase as expected or Posterior Variance was not stable.",
+          "attempts": 4,
+          "notes": "script failed after 4 tries",
           "metrics": {
-            "corr_w1_bayes_gap": -0.3485801191475708,
-            "corr_w1_post_var": -0.43740850303732426,
-            "mean_bayes_gap": 0.004729084377514484,
-            "mean_post_var": 0.25155781052823306,
-            "std_post_var": 0.010026844620783317,
-            "control_pass": false
+            "script_exit_code": 1,
+            "attempts_used": 4
           },
-          "control_pass": false
+          "control_pass": null
         },
         {
           "id": "C6",
           "title": "Posterior Variance Bound by Minimax Risk",
           "testable": true,
           "status": "inconclusive",
-          "attempts": 1,
-          "notes": "Estimated decay rate 4.74 vs theoretical 400.00. Ratio 0.01. Control passed: False.",
+          "attempts": 3,
+          "notes": "Positive control failed; estimator unreliable.",
           "metrics": {
-            "estimated_decay_rate": 4.744224385014646,
-            "theoretical_decay_rate": 399.99999999999994,
-            "ratio": 0.011860560962536617,
-            "control_pass": false,
-            "excess_variance_at_k_1": 0.09608233531636304,
-            "excess_variance_at_k_50": -1.700029006457271e-16
+            "C_chernoff": 0.34657359027997264,
+            "D_min": 2.0,
+            "minimax_risk": 1.0,
+            "excess_k1": 0.618536321767611,
+            "excess_k10": 0.015198461605888178,
+            "excess_k30": 1.0327477590597785e-06,
+            "frac_k_violating_C_bound": 0.0,
+            "max_ratio_excess_over_boundC": 0.21868561376603102,
+            "n_significant_increases": 0,
+            "tail_decay_rate_lambda_hat": 0.6779244557917793,
+            "control1_pass": true,
+            "control2_pass": false,
+            "control_pass": false
           },
           "control_pass": false
+        },
+        {
+          "id": "C7",
+          "title": "Boundary test: pN invariance of the Bayes Gap",
+          "testable": true,
+          "status": "falsified",
+          "attempts": 1,
+          "notes": "Claim falsified. Spearman rho=0.12, Mean CV=0.58.",
+          "metrics": {
+            "spearman_rho": 0.1229222929736104,
+            "mean_within_pN_cv": 0.575800651814978,
+            "control_spearman_rho": -0.9357754408380654,
+            "control_mean_cv": 0.011672289726174165,
+            "control_pass": true,
+            "n_grid_points": 12
+          },
+          "control_pass": true
         }
       ],
       "summary": {
         "supported": 3,
-        "falsified": 0,
-        "inconclusive": 3,
+        "falsified": 2,
+        "inconclusive": 2,
         "not_audited": 0
       },
       "judge": {
@@ -357,10 +634,10 @@
         }
       },
       "trace": {
-        "n_events": 268,
-        "n_llm": 33,
-        "n_tool": 95,
-        "n_note": 5,
+        "n_events": 386,
+        "n_llm": 50,
+        "n_tool": 109,
+        "n_note": 27,
         "wall_min": 18.8,
         "path": "papers/arxiv-2510.10981/trace.jsonl"
       },

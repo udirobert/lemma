@@ -1,0 +1,21 @@
+Running positive control with d=50...
+  n=20, risk=0.6068
+  n=30, risk=0.4390
+  n=40, risk=0.2438
+  n=50, risk=16.5199
+  n=60, risk=0.0710
+  n=70, risk=0.0378
+  n=80, risk=0.0267
+Control peak at n=50 (expected ~50)
+
+Running main experiment with d=200, T=20, n from 100 to 500...
+  n=100, MC risk=0.5182, Theory risk=0.5100
+  n=150, MC risk=0.2906, Theory risk=0.2800
+  n=200, MC risk=677.7524, Theory risk=inf
+  n=250, MC risk=0.0490, Theory risk=0.0400
+  n=300, MC risk=0.0293, Theory risk=0.0200
+  n=350, MC risk=0.0237, Theory risk=0.0133
+  n=400, MC risk=0.0202, Theory risk=0.0100
+  n=450, MC risk=0.0180, Theory risk=0.0080
+  n=500, MC risk=0.0167, Theory risk=0.0067
+SUMMARY_JSON={"claim_id": "C1", "status": "supported", "metrics": {"d": 200, "sigma": 0.1, "T": 20, "peak_n": 200, "peak_risk": 677.7523557685281, "peak_within_10pct_of_d": true, "non_monotonic": true, "control_pass": true, "control_peak_n": 50, "control_d": 50}, "notes": "Peak at n=200 (d=200), within 10% of d. Non-monotonicity confirmed. Control passed."}

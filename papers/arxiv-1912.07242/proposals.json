@@ -1,0 +1,22 @@
+[
+  {
+    "id": "P1",
+    "title": "Finite-d risk valley: the overparameterized double-descent dip at gamma* = 0.90",
+    "statement": "For isotropic Gaussian x~N(0,I_d), y=<x,beta>+N(0,sigma^2), ||beta||_2=1, sigma=0.1, d=150, the Monte-Carlo excess risk E||beta_hat-beta||^2 of the minimum-norm ridgeless interpolator beta_hat=X^dagger y, as a function of gamma=n/d on the grid gamma in {0.75, 0.80, 0.85, 0.90, 0.95}, attains a strict minimum at gamma=0.85 or gamma=0.90 (within one grid step of the closed-form valley gamma*=0.90, where R(gamma)=(1-gamma)+sigma^2*gamma/(1-gamma) is minimized), and the closed-form risk at that gamma is within 10% relative error of the Monte-Carlo value.",
+    "rationale": "C2's round-2 audit (d=150, gamma grid 0.05..0.95 step 0.1) verified the closed-form bias/variance/risk within ~2% over the whole grid, but its grid could only marginally capture the predicted rise of the excess risk as gamma approaches 1: the theoretical risk R(gamma)=(1-gamma)+0.01*gamma/(1-gamma) has its global minimum at gamma*=0.90 (R_min=0.19) and only rises for gamma>0.90, beyond the script's 3-point 'risk_increases' window. Also, the round-2 bias comparison was circular (the script hard-coded E[beta_hat]=gamma*beta, which is exact under isotropy, so the bias 'MC estimate' equals the formula to machine precision, 3.4e-15). The genuinely untested boundary content of Claim 1 is therefore the valley location and the near-valley risk agreement. This variant is cheap to falsify: if the finite-d MC valley lands at the grid boundary (0.75 or 0.95) or the near-valley relative error exceeds 10%, the asymptotic approximation's predictive content in the near-critical regime is falsified at d=150.",
+    "proposed_test": "Self-contained numpy script. Setup: d=150, beta=e_1 (||beta||=1), sigma=0.1, gamma grid {0.75, 0.80, 0.85, 0.90, 0.95}, n=floor(gamma*d), T=300 independent trials per gamma. Per trial: X~N(0,I_{n x d}), y=X@beta+sigma*N(0,1), beta_hat = X.T @ solve(X X.T, y) (pinv fallback), accumulate ||beta_hat-beta||^2. R_mc(gamma)=mean. Closed form R_th(gamma)=(1-gamma)+0.01*gamma/(1-gamma). Main metrics: valley_gamma=argmin_g R_mc(g); rel_err_at_valley=|R_mc(valley)-R_th(valley)|/R_th(valley); strict_min = R_mc(valley) < min(R_mc(0.75), R_mc(0.95)). POSITIVE CONTROL (mandatory): identical procedure with sigma=0.5, for which the closed-form valley is analytically at gamma*=0.75 (solving dR/dgamma=0 gives (1-gamma*)^2=sigma^2*||beta||^2); control_pass = control valley argmin is 0.75 and its rel_err <= 10%. If the control fails, the measurement is void. Plot R_mc vs gamma (main + control) with the closed-form curves.",
+    "success_criterion": "valley_gamma in {0.85, 0.90}; strict_min is true; rel_err_at_valley <= 0.10; control_pass is true (sigma=0.5 run recovers the analytically known valley at gamma=0.75 with rel_err <= 0.10).",
+    "compute": "cpu-fast",
+    "recommended": true
+  },
+  {
+    "id": "P2",
+    "title": "Finite-d bias exactness: E[beta_hat] = gamma*beta at finite d (repairs C2's circular bias check)",
+    "statement": "For d=150, sigma=0.1, ||beta||_2=1, isotropic Gaussian features, the Monte-Carlo estimate of E[beta_hat] over T=200 trials is parallel to beta within 5% (|<E[beta_hat], beta_perp>|/||beta|| < 0.05) and its coefficient along beta is within 2% relative error of gamma, for every gamma in {0.1, 0.3, 0.5, 0.7, 0.9} with n=floor(gamma*d).",
+    "rationale": "In C2 round 2 the bias metric (max_rel_err_B=3.4e-15) was computed from a hard-coded E[beta_hat]=gamma*beta, i.e. the bias formula was compared against itself. This variant re-derives E[beta_hat] from raw Monte-Carlo means, so the claim's bias formula B_n=(1-gamma)^2||beta||^2 is verified independently (it is in fact exact at any finite d under isotropy; the 'approximation' is in variance/risk only).",
+    "proposed_test": "Self-contained numpy script: d=150, beta=e_1, sigma=0.1, gamma in {0.1,0.3,0.5,0.7,0.9}, T=200 trials each; per trial X~N(0,I), y=X@beta+sigma*noise, beta_hat=X.T@solve(XX.T,y); accumulate sum_beta_hat. E_hat=sum/T. coefs = <E_hat, beta> (should equal gamma); ortho = sqrt(||E_hat||^2 - coefs^2) (should be ~0). Control: at gamma=0.5 the coefficient must be 0.5 within 2% (a case where the projection-averaging argument is simplest); if the control fails the measurement is void.",
+    "success_criterion": "For all 5 gamma values: |coef - gamma|/gamma <= 0.02 and ortho <= 0.05; control at gamma=0.5 passes.",
+    "compute": "cpu-fast",
+    "recommended": false
+  }
+]

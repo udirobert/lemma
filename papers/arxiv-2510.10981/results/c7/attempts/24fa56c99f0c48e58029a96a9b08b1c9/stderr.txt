@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-2510.10981/results/c7/audit_attempt1.py", line 296, in <module>
+    (200, 20), (400, 10), (1000, 4), # pN=4000
+     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-2510.10981/results/c7/audit_attempt1.py", line 120, in estimate_pv
+    y_query = X @ w + b + np.random.randn() * sigma_eps # Not used for training, but for risk calc
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: operands could not be broadcast together with shapes (3,2) (3,3)

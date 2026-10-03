@@ -1,0 +1,22 @@
+{
+  "attempt": 1,
+  "attempt_id": "d4696f611dc146cd92472e9a280b0cf5",
+  "source": "agent_generated",
+  "run_id": "20261003-205632-arxiv-2510.10981",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C7",
+    "status": "falsified",
+    "metrics": {
+      "spearman_corr": -0.002834237599380982,
+      "mean_cv": 0.259327097101934,
+      "syn_spearman_corr": -0.969309258988296,
+      "syn_mean_cv": 0.03230416717250634,
+      "control_pass": true,
+      "criterion_i": false,
+      "criterion_ii": false
+    },
+    "notes": "Spearman corr: -0.003, Mean CV: 0.259. Control passed: True."
+  },
+  "wall_s": 33.08
+}

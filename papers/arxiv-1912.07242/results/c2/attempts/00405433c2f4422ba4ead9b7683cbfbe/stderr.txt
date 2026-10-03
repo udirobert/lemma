@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c2/audit_attempt4.py", line 112, in <module>
+    rel_err_B_primary = relative_error(B_mc_primary, B_th_primary)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c2/audit_attempt4.py", line 63, in relative_error
+    if np.isnan(mc_val) or np.isnan(th_val):
+       ^^^^^^^^^^^^^^^^
+ValueError: The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()
