@@ -16,6 +16,13 @@ first hand-driven reproduction already **passed an independent auto-judge end
 to end** — see [Prior art](#prior-art--validation) below — and this build is
 the agent that generalizes that workflow to any paper.
 
+> **[Hack-Nation × Databricks Omnigent — 7th Global AI Hackathon]**
+> **[▶ Watch the discovery replay](https://lemmabio.netlify.app/demo/)** — one
+> paper, six claims, three agents, one human: extract → falsification →
+> reviewer feedback → agent-generated hypothesis → verified result → judge
+> PASS 5/5. Omnigent orchestrates specialist agents over the deterministic
+> engine (`omnigent/lab/`). Full write-up: [SUBMISSION.md](SUBMISSION.md).
+
 ## Quick start
 
 ```bash
