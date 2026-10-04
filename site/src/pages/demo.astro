@@ -153,15 +153,16 @@ import ClipMenu from "../components/ClipMenu.astro";
         min-height: 0;
       }
       .d-rail {
-        border-right: 1px solid var(--edge); padding: 18px 14px;
-        display: flex; flex-direction: column; gap: 10px; min-height: 0;
+        border-right: 1px solid var(--edge); padding: 16px 12px;
+        display: flex; flex-direction: column; gap: 8px; min-height: 0;
+        overflow-y: auto; scrollbar-width: thin;
       }
       .d-right { border-right: none; border-left: 1px solid var(--edge); justify-content: space-between; }
 
       /* agents */
       .d-agent {
         display: flex; flex-direction: column; gap: 2px;
-        padding: 10px 12px; border: 1px solid var(--edge); border-radius: 10px;
+        padding: 8px 10px; border: 1px solid var(--edge); border-radius: 10px; flex-shrink: 0;
         background: var(--card); transition: border-color .3s, box-shadow .3s, opacity .3s;
         opacity: .55;
       }

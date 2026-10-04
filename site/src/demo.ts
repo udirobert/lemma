@@ -90,7 +90,7 @@ function buildRails() {
 
   $("d-loop").innerHTML = `<div class="d-loop-head">discovery loop</div>` +
     PHASES.map((p, i) =>
-      `<div class="ph" data-ph="${p}"><span class="ph-n">${i + 1}</span>${p}</div>`).join("");
+      `<div class="ph" data-ph="${p}"><span class="ph-n">${i + 1}·</span>${p}</div>`).join("");
 }
 
 function buildTicks() {
