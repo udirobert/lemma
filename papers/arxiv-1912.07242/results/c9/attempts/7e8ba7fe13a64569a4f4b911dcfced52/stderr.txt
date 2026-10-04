@@ -1,0 +1,4 @@
+/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c9/audit_attempt3.py:394: SyntaxWarning: invalid escape sequence '\g'
+  ax.loglog(d_arr_main, e_arr_main, 'o-', label=f'Main (Overparam, $\gamma=0.5$, $\alpha={alpha_main:.2f}$)')
+/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c9/audit_attempt3.py:409: SyntaxWarning: invalid escape sequence '\g'
+  ax.loglog(d_arr_ctrl, e_arr_ctrl, 's-', label=f'Control (Underparam, $\gamma=2$, $\alpha={alpha_ctrl:.2f}$)')

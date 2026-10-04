@@ -1,0 +1,31 @@
+{
+  "claim_id": "C9",
+  "status": "inconclusive",
+  "metrics": {
+    "n_trials": 16000,
+    "wall_s": 510.92,
+    "alpha": 0.3048,
+    "se_alpha": 0.467,
+    "R2": 0.2987,
+    "control_pass": "False",
+    "alpha_ctrl": 1.2248,
+    "R2_ctrl": 0.9775,
+    "main_se_ok": false,
+    "d80_R_mc": 0.51053,
+    "d80_se_r": 0.000623,
+    "d80_e": 0.00104,
+    "d80_se_e": 0.001221,
+    "d80_coef": 0.499805,
+    "d150_R_mc": 0.510254,
+    "d150_se_r": 0.000454,
+    "d150_e": 0.000499,
+    "d150_se_e": 0.000891,
+    "d150_coef": 0.4999,
+    "d300_R_mc": 0.509652,
+    "d300_se_r": 0.000325,
+    "d300_e": 0.000683,
+    "d300_se_e": 0.000638,
+    "d300_coef": 0.500354
+  },
+  "notes": "T=16000, d_list=[80, 150, 300]. alpha=0.3048, R2=0.2987, control_pass=False. Retried with T=16000 due to se_e violation."
+}

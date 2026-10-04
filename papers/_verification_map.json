@@ -183,8 +183,8 @@
     {
      "id": "C9",
      "kind": "generated-hypothesis",
-     "status": "not_audited",
-     "failed_attempts": 1,
+     "status": "inconclusive",
+     "failed_attempts": 4,
      "agent_generated": true,
      "title": "Finite-d correction of the C2 overparam risk approximation: power-law decay d^-alpha at fixed gamma=0.5 (generated varia"
     }
@@ -310,8 +310,8 @@
   }
  ],
  "tally": {
-  "inconclusive": 4,
-  "not_audited": 12,
+  "inconclusive": 5,
+  "not_audited": 11,
   "supported": 12,
   "falsified": 6
  },

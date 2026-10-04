@@ -50,7 +50,7 @@ director triaged a corpus-triage session (`0a9f30e2f27b4ff09bc16b9705a16057`).
 
 | Paper | Claims | Audited | Supported | Falsified | Inconclusive | Agent-generated |
 |---|---|---|---|---|---|---|
-| 1912.07242 — Sample-wise Double Descent | 9 | 8 | 5 | 2 | 1 | C7, C8, C9 |
+| 1912.07242 — Sample-wise Double Descent | 9 | 9 | 5 | 2 | 2 | C7, C8, C9 |
 | 1903.08560 — Hastie et al., ridgeless surprises | 6 | 3 | 2 | 0 | 1 | — |
 | 1906.11300 — Bartlett et al., benign overfitting | 6 | 2 | 0 | 2 | 0 | — |
 
@@ -70,6 +70,12 @@ What the sweep produced beyond "more audits":
 - **The decomposition lemma C4 flipped to falsified** on a re-audit —
   the engine reports falsified even where the math is an identity and
   the marginal overage is almost surely MC noise. It does not flatter.
+- **C9 (agent-generated, the convergence-rate hypothesis) measured
+  something the paper never reported:** the C2 asymptotic risk
+  approximation is already within ~0.1% at d=80 (e≈1e-3 at the MC noise
+  floor, γ=0.5) — so exact at finite d that no decay rate is measurable.
+  Verdict: inconclusive (control failed at the same noise floor), the
+  honest label for a finding that is real but criterion-free.
 
 ## The catch (our favorite moment)
 

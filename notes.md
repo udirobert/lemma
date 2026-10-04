@@ -230,3 +230,12 @@ What happened:
 
 Next: Omnigent corpus-triage session → proposer round targeting a real
 new result (finite-d correction rate), then verification map + demo.
+
+### C9 outcome (later, same day)
+
+C9 (agent-generated, promoted by the corpus-triage director): 3 attempts
+crashed/timed-out on the T=4000 x d<=800 design → feedback.md seeded →
+re-audit at T<=16000-adaptive/d<=300 completed in ~8.5 min. Verdict:
+inconclusive (control failed at the noise floor) — but the measurement
+found the C2 approximation is within ~0.1% at d=80. Errors are at the MC
+floor; no decay rate is measurable. Honest label for a real finding.

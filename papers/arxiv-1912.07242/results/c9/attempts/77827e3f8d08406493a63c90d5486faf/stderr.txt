@@ -1,0 +1,5 @@
+TIMEOUT after 1200s
+/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c9/audit_attempt2.py:335: SyntaxWarning: invalid escape sequence '\g'
+  ax.loglog(d_arr, e_main_arr, 'o-', label='Main (Overparam, $\gamma=0.5$)')
+/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c9/audit_attempt2.py:336: SyntaxWarning: invalid escape sequence '\g'
+  ax.loglog(d_arr, e_ctrl_arr, 's-', label='Control (Underparam, $\gamma=2$)')

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c9/audit_attempt4.py", line 209, in <module>
+    main()
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c9/audit_attempt4.py", line 94, in main
+    main_res, R_th = run_main(d_list, T, seed=42)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c9/audit_attempt4.py", line 45, in run_main
+    y = X @ beta + sigma * rng.standard_normal(n)
+        ~~^~~~~~
+ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1000 is different from 80)

@@ -1,0 +1,9 @@
+{
+  "attempt": 3,
+  "attempt_id": "7e8ba7fe13a64569a4f4b911dcfced52",
+  "source": "agent_generated",
+  "run_id": "20261004-031348-arxiv-1912.07242",
+  "kind": "crashed",
+  "exit_code": -15,
+  "tail": "\n---STDERR---\n/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c9/audit_attempt3.py:394: SyntaxWarning: invalid escape sequence '\\g'\n  ax.loglog(d_arr_main, e_arr_main, 'o-', label=f'Main (Overparam, $\\gamma=0.5$, $\\alpha={alpha_main:.2f}$)')\n/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c9/audit_attempt3.py:409: SyntaxWarning: invalid escape sequence '\\g'\n  ax.loglog(d_arr_ctrl, e_arr_ctrl, 's-', label=f'Control (Underparam, $\\gamma=2$, $\\alpha={alpha_ctrl:.2f}$)')\n"
+}

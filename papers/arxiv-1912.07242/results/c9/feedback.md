@@ -1,0 +1,1 @@
+Cost postmortem: T=4000 x d in {100,200,400,800} blew the 20-min bound (attempt 2 timed out at ~30min). A power-law slope needs only 3 well-separated d values — use d in {80,150,300} with T<=800, or vectorize trials over a fixed-X batch. d=800 with 4000 min-norm solves is the whole budget.
