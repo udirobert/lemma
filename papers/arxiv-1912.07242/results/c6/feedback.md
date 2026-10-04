@@ -1,0 +1,1 @@
+Round-1 postmortem: attempts crashed on matmul shape mismatches, not timeouts. Monotonicity needs only a small grid: d<=60, n stepping 5..d-5, T<=150 trials, plain per-trial lstsq/pinv — no fancy indexing. A clean monotone plot at small d beats a broken high-d batch.

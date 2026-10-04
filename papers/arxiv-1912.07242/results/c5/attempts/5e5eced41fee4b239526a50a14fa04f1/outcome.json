@@ -1,0 +1,41 @@
+{
+  "exit_code": 0,
+  "wall_s": 12.416,
+  "summary": {
+    "claim_id": "C5",
+    "status": "supported",
+    "metrics": {
+      "control_pass": true,
+      "control_lhs": 2.0,
+      "control_rhs": 2.0,
+      "max_rel_diff": 3.764035697291635e-16,
+      "num_instances": 25,
+      "per_n_max_diff": {
+        "100": 2.4639207039593177e-16,
+        "300": 0.0,
+        "500": 2.2107114775606674e-16,
+        "700": 1.8975631046935054e-16,
+        "900": 3.764035697291635e-16
+      },
+      "d": 1000,
+      "n_values": [
+        100,
+        300,
+        500,
+        700,
+        900
+      ],
+      "n_trials_per_n": 5
+    },
+    "notes": "All 25 instances satisfy rel diff < 1e-8. Max rel diff = 3.76e-16. Control passed."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "64870a836a09a4634762d54723010765d0fbccb555fc0bd0d4d45f8366b67ecd"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a1047b-aa35-7dfc-a990-a17a5a75164e"
+}

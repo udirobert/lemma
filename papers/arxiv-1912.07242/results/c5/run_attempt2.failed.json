@@ -1,0 +1,9 @@
+{
+  "attempt": 2,
+  "attempt_id": "82d8233cc87643b0b82c99575d32705a",
+  "source": "agent_generated",
+  "run_id": "20261004-021610-arxiv-1912.07242",
+  "kind": "crashed",
+  "exit_code": 1,
+  "tail": "\n---STDERR---\nTraceback (most recent call last):\n  File \"/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c5/audit_attempt2.py\", line 189, in <module>\n    main()\n  File \"/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c5/audit_attempt2.py\", line 126, in main\n    control_pass, ctrl_lhs, ctrl_rhs = positive_control()\n                                       ^^^^^^^^^^^^^^^^^^\n  File \"/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c5/audit_attempt2.py\", line 117, in positive_control\n    rhs = compute_rhs(X, x)\n          ^^^^^^^^^^^^^^^^^\n  File \"/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c5/audit_attempt2.py\", line 25, in compute_rhs\n    Xt_dag_x = X.T @ np.linalg.inv(A) @ x\n               ~~~~~~~~~~~~~~~~~~~~~~~^~~\nValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 2 is different from 1)\n"
+}

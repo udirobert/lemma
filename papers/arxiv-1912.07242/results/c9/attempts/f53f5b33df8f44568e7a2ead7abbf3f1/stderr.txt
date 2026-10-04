@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c9/audit_attempt1.py", line 145, in <module>
+    main_results = run_experiment(d_values, T, gamma, sigma, beta, underparam=False)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c9/audit_attempt1.py", line 54, in run_experiment
+    y = X @ beta + sigma * np.random.randn(n)
+        ~~^~~~~~
+ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 1000 is different from 100)

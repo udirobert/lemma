@@ -1,0 +1,7 @@
+Results:
+Benign (a=1, b=2): Excess Risk = 0.6657 (Noise Var = 1.0)
+Non-benign (a=1, b=0.5): Excess Risk = 0.3217 (Noise Var = 1.0)
+Non-benign (a=0.5, b=2): Excess Risk = 0.3574 (Noise Var = 1.0)
+Control Case (a=0, b=0): Excess Risk = 0.1141
+Control Pass: True
+SUMMARY_JSON={"claim_id": "C1", "status": "falsified", "metrics": {"case1_risk": 0.6656693581044841, "case2_risk": 0.3217211689870534, "case3_risk": 0.3574064851930445, "control_risk": 0.11409538364051919, "control_pass": true, "threshold": 0.5}, "notes": "Conditions not met. Cond1 (Benign low): False, Cond2 (Non-benign high): False, Cond3 (Non-benign high): False."}

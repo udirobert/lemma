@@ -1,0 +1,1 @@
+Round-1 postmortem: all 3 attempts crashed on numpy broadcasting/matmul shape bugs in the batched projection code — not cost failures. Keep it SIMPLE: d<=60, explicit loops over trials, no batching tricks. Verify the identity on single draws first (B_n for one X), then average. Vectorize only after the scalar path works.

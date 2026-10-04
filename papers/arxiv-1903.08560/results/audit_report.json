@@ -1,0 +1,304 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "status": "inconclusive",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C1",
+        "status": "inconclusive",
+        "metrics": {
+          "control_pass": "False",
+          "control_rel_error": 0.4952966471975878,
+          "all_pass": false,
+          "max_rel_error": 0.9956403426686683,
+          "n": 200,
+          "T": 300,
+          "details": {
+            "gamma_0.1": {
+              "emp": 1.111628528538508,
+              "theo": 11.111111111111109,
+              "err": 0.8999534324315343
+            },
+            "gamma_0.5": {
+              "emp": 2.0090834237202033,
+              "theo": 4.0,
+              "err": 0.49772914406994917
+            },
+            "gamma_0.9": {
+              "emp": 10.586098193523855,
+              "theo": 11.111111111111112,
+              "err": 0.047251162582853216
+            },
+            "gamma_1.1": {
+              "emp": 11.826619754546464,
+              "theo": 10.090909090909083,
+              "err": 0.172007363063164
+            },
+            "gamma_2.0": {
+              "emp": 2.505223829835358,
+              "theo": 1.5,
+              "err": 0.6701492198902388
+            },
+            "gamma_5.0": {
+              "emp": 2.045209502772495,
+              "theo": 1.05,
+              "err": 0.9478185740690428
+            },
+            "gamma_10.0": {
+              "emp": 2.0178141242538756,
+              "theo": 1.011111111111111,
+              "err": 0.9956403426686683
+            }
+          }
+        },
+        "notes": "Positive control failed. The risk calculation or simulation setup may be flawed."
+      },
+      "source": "human_guided",
+      "attempt_id": "77360f01e7c54f5cb90cf05cb04660e7",
+      "candidate_summary": {
+        "claim_id": "C1",
+        "status": "inconclusive",
+        "metrics": {
+          "control_pass": "False",
+          "control_rel_error": 0.4952966471975878,
+          "all_pass": false,
+          "max_rel_error": 0.9956403426686683,
+          "n": 200,
+          "T": 300,
+          "details": {
+            "gamma_0.1": {
+              "emp": 1.111628528538508,
+              "theo": 11.111111111111109,
+              "err": 0.8999534324315343
+            },
+            "gamma_0.5": {
+              "emp": 2.0090834237202033,
+              "theo": 4.0,
+              "err": 0.49772914406994917
+            },
+            "gamma_0.9": {
+              "emp": 10.586098193523855,
+              "theo": 11.111111111111112,
+              "err": 0.047251162582853216
+            },
+            "gamma_1.1": {
+              "emp": 11.826619754546464,
+              "theo": 10.090909090909083,
+              "err": 0.172007363063164
+            },
+            "gamma_2.0": {
+              "emp": 2.505223829835358,
+              "theo": 1.5,
+              "err": 0.6701492198902388
+            },
+            "gamma_5.0": {
+              "emp": 2.045209502772495,
+              "theo": 1.05,
+              "err": 0.9478185740690428
+            },
+            "gamma_10.0": {
+              "emp": 2.0178141242538756,
+              "theo": 1.011111111111111,
+              "err": 0.9956403426686683
+            }
+          }
+        },
+        "notes": "Positive control failed. The risk calculation or simulation setup may be flawed."
+      },
+      "candidate_source": "human_guided",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "77360f01e7c54f5cb90cf05cb04660e7"
+      ]
+    },
+    {
+      "id": "C5",
+      "status": "supported",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C5",
+        "status": "supported",
+        "metrics": {
+          "control_pass": "True",
+          "n": 100,
+          "num_trials": 200,
+          "snr_values": [
+            1.0,
+            5.0
+          ],
+          "gamma_values": [
+            0.5,
+            1.5,
+            3.0
+          ],
+          "lambda_grid": [
+            0.0001,
+            0.001,
+            0.01,
+            0.1,
+            1.0
+          ],
+          "all_pass": true,
+          "well_specified_snr_1.0_gamma_0.5_avg_mn": 2.029724129625196,
+          "well_specified_snr_1.0_gamma_0.5_avg_ridge": 1.9548416051193669,
+          "well_specified_snr_1.0_gamma_0.5_frac_better": 1.0,
+          "well_specified_snr_1.0_gamma_1.5_avg_mn": 3.417924462841886,
+          "well_specified_snr_1.0_gamma_1.5_avg_ridge": 3.186868495843784,
+          "well_specified_snr_1.0_gamma_1.5_frac_better": 1.0,
+          "well_specified_snr_1.0_gamma_3.0_avg_mn": 2.1823961519560355,
+          "well_specified_snr_1.0_gamma_3.0_avg_ridge": 2.174955073320729,
+          "well_specified_snr_1.0_gamma_3.0_frac_better": 1.0,
+          "well_specified_snr_5.0_gamma_0.5_avg_mn": 2.0344469771850067,
+          "well_specified_snr_5.0_gamma_0.5_avg_ridge": 1.957271787433286,
+          "well_specified_snr_5.0_gamma_0.5_frac_better": 0.995,
+          "well_specified_snr_5.0_gamma_1.5_avg_mn": 4.755143993620851,
+          "well_specified_snr_5.0_gamma_1.5_avg_ridge": 4.53172704906728,
+          "well_specified_snr_5.0_gamma_1.5_frac_better": 1.0,
+          "well_specified_snr_5.0_gamma_3.0_avg_mn": 4.8540925344987675,
+          "well_specified_snr_5.0_gamma_3.0_avg_ridge": 4.84638475866884,
+          "well_specified_snr_5.0_gamma_3.0_frac_better": 1.0,
+          "misspecified_snr_1.0_gamma_0.5_avg_mn": 3.0380362920861086,
+          "misspecified_snr_1.0_gamma_0.5_avg_ridge": 2.9181028247087624,
+          "misspecified_snr_1.0_gamma_0.5_frac_better": 1.0,
+          "misspecified_snr_1.0_gamma_1.5_avg_mn": 4.736096851958165,
+          "misspecified_snr_1.0_gamma_1.5_avg_ridge": 4.402808856077477,
+          "misspecified_snr_1.0_gamma_1.5_frac_better": 1.0,
+          "misspecified_snr_1.0_gamma_3.0_avg_mn": 2.5695063362246424,
+          "misspecified_snr_1.0_gamma_3.0_avg_ridge": 2.5585182265398436,
+          "misspecified_snr_1.0_gamma_3.0_frac_better": 1.0,
+          "misspecified_snr_5.0_gamma_0.5_avg_mn": 7.08115176274691,
+          "misspecified_snr_5.0_gamma_0.5_avg_ridge": 6.805783999495884,
+          "misspecified_snr_5.0_gamma_0.5_frac_better": 1.0,
+          "misspecified_snr_5.0_gamma_1.5_avg_mn": 11.57147609142933,
+          "misspecified_snr_5.0_gamma_1.5_avg_ridge": 10.768443507818704,
+          "misspecified_snr_5.0_gamma_1.5_frac_better": 1.0,
+          "misspecified_snr_5.0_gamma_3.0_avg_mn": 6.931937973967535,
+          "misspecified_snr_5.0_gamma_3.0_avg_ridge": 6.905132221302093,
+          "misspecified_snr_5.0_gamma_3.0_frac_better": 1.0
+        },
+        "notes": "Optimally-tuned ridge regression achieved lower average risk than min-norm LS for all tested gamma and SNR values in both well-specified and misspecified isotropic settings."
+      },
+      "source": "human_guided",
+      "attempt_id": "f0f87828be5d44b1b5d8f12242d848f5",
+      "candidate_summary": {
+        "claim_id": "C5",
+        "status": "supported",
+        "metrics": {
+          "control_pass": "True",
+          "n": 100,
+          "num_trials": 200,
+          "snr_values": [
+            1.0,
+            5.0
+          ],
+          "gamma_values": [
+            0.5,
+            1.5,
+            3.0
+          ],
+          "lambda_grid": [
+            0.0001,
+            0.001,
+            0.01,
+            0.1,
+            1.0
+          ],
+          "all_pass": true,
+          "well_specified_snr_1.0_gamma_0.5_avg_mn": 2.029724129625196,
+          "well_specified_snr_1.0_gamma_0.5_avg_ridge": 1.9548416051193669,
+          "well_specified_snr_1.0_gamma_0.5_frac_better": 1.0,
+          "well_specified_snr_1.0_gamma_1.5_avg_mn": 3.417924462841886,
+          "well_specified_snr_1.0_gamma_1.5_avg_ridge": 3.186868495843784,
+          "well_specified_snr_1.0_gamma_1.5_frac_better": 1.0,
+          "well_specified_snr_1.0_gamma_3.0_avg_mn": 2.1823961519560355,
+          "well_specified_snr_1.0_gamma_3.0_avg_ridge": 2.174955073320729,
+          "well_specified_snr_1.0_gamma_3.0_frac_better": 1.0,
+          "well_specified_snr_5.0_gamma_0.5_avg_mn": 2.0344469771850067,
+          "well_specified_snr_5.0_gamma_0.5_avg_ridge": 1.957271787433286,
+          "well_specified_snr_5.0_gamma_0.5_frac_better": 0.995,
+          "well_specified_snr_5.0_gamma_1.5_avg_mn": 4.755143993620851,
+          "well_specified_snr_5.0_gamma_1.5_avg_ridge": 4.53172704906728,
+          "well_specified_snr_5.0_gamma_1.5_frac_better": 1.0,
+          "well_specified_snr_5.0_gamma_3.0_avg_mn": 4.8540925344987675,
+          "well_specified_snr_5.0_gamma_3.0_avg_ridge": 4.84638475866884,
+          "well_specified_snr_5.0_gamma_3.0_frac_better": 1.0,
+          "misspecified_snr_1.0_gamma_0.5_avg_mn": 3.0380362920861086,
+          "misspecified_snr_1.0_gamma_0.5_avg_ridge": 2.9181028247087624,
+          "misspecified_snr_1.0_gamma_0.5_frac_better": 1.0,
+          "misspecified_snr_1.0_gamma_1.5_avg_mn": 4.736096851958165,
+          "misspecified_snr_1.0_gamma_1.5_avg_ridge": 4.402808856077477,
+          "misspecified_snr_1.0_gamma_1.5_frac_better": 1.0,
+          "misspecified_snr_1.0_gamma_3.0_avg_mn": 2.5695063362246424,
+          "misspecified_snr_1.0_gamma_3.0_avg_ridge": 2.5585182265398436,
+          "misspecified_snr_1.0_gamma_3.0_frac_better": 1.0,
+          "misspecified_snr_5.0_gamma_0.5_avg_mn": 7.08115176274691,
+          "misspecified_snr_5.0_gamma_0.5_avg_ridge": 6.805783999495884,
+          "misspecified_snr_5.0_gamma_0.5_frac_better": 1.0,
+          "misspecified_snr_5.0_gamma_1.5_avg_mn": 11.57147609142933,
+          "misspecified_snr_5.0_gamma_1.5_avg_ridge": 10.768443507818704,
+          "misspecified_snr_5.0_gamma_1.5_frac_better": 1.0,
+          "misspecified_snr_5.0_gamma_3.0_avg_mn": 6.931937973967535,
+          "misspecified_snr_5.0_gamma_3.0_avg_ridge": 6.905132221302093,
+          "misspecified_snr_5.0_gamma_3.0_frac_better": 1.0
+        },
+        "notes": "Optimally-tuned ridge regression achieved lower average risk than min-norm LS for all tested gamma and SNR values in both well-specified and misspecified isotropic settings."
+      },
+      "candidate_source": "human_guided",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "f0f87828be5d44b1b5d8f12242d848f5"
+      ]
+    },
+    {
+      "id": "C6",
+      "status": "supported",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C6",
+        "status": "supported",
+        "metrics": {
+          "risk_0.9": 8.286753302884721,
+          "risk_0.95": 25.221186185559453,
+          "risk_0.99": 147.22458341906795,
+          "risk_0.999": 2396.0423278013,
+          "ratio_0999_to_09": 289.14126440414344,
+          "criterion_1_pass": true,
+          "monotonic_pass": true,
+          "control_pass": true,
+          "control_risk_0.5": 3.514615741585671
+        },
+        "notes": "Risk at gamma=0.999 is 2396.0423, at gamma=0.9 is 8.2868. Ratio: 289.14. Monotonic: True. Control passed: True."
+      },
+      "source": "human_guided",
+      "attempt_id": "2410392f31134d3288b8c94846246d70",
+      "candidate_summary": {
+        "claim_id": "C6",
+        "status": "supported",
+        "metrics": {
+          "risk_0.9": 8.286753302884721,
+          "risk_0.95": 25.221186185559453,
+          "risk_0.99": 147.22458341906795,
+          "risk_0.999": 2396.0423278013,
+          "ratio_0999_to_09": 289.14126440414344,
+          "criterion_1_pass": true,
+          "monotonic_pass": true,
+          "control_pass": true,
+          "control_risk_0.5": 3.514615741585671
+        },
+        "notes": "Risk at gamma=0.999 is 2396.0423, at gamma=0.9 is 8.2868. Ratio: 289.14. Monotonic: True. Control passed: True."
+      },
+      "candidate_source": "human_guided",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "2410392f31134d3288b8c94846246d70"
+      ]
+    }
+  ]
+}

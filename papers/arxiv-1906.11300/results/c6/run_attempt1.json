@@ -1,0 +1,20 @@
+{
+  "attempt": 1,
+  "attempt_id": "ac26e186a144453b8557c63d0730d8a1",
+  "source": "human_guided",
+  "run_id": "20261004-021740-arxiv-1906.11300",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C6",
+    "status": "falsified",
+    "metrics": {
+      "total_checks": 36,
+      "violations": 4,
+      "control_pass": "True",
+      "identity_error": 0.0,
+      "ctrl_ineq_pass": "True"
+    },
+    "notes": "4 violations found out of 36 checks."
+  },
+  "wall_s": 9.58
+}

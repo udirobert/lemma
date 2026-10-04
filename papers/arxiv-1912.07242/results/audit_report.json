@@ -1,214 +1,553 @@
 {
-  "claims": [
-    {
-      "id": "C1",
-      "status": "supported",
-      "attempts": 1,
-      "summary": {
-        "claim_id": "C1",
-        "status": "supported",
-        "metrics": {
-          "d": 200,
-          "sigma": 0.1,
-          "T": 20,
-          "peak_n": 200,
-          "peak_risk": 677.7523557685281,
-          "peak_within_10pct_of_d": true,
-          "non_monotonic": true,
-          "control_pass": true,
-          "control_peak_n": 50,
-          "control_d": 50
-        },
-        "notes": "Peak at n=200 (d=200), within 10% of d. Non-monotonicity confirmed. Control passed."
-      },
-      "source": "human_guided",
-      "attempt_id": "e703165a71ba42bc9869a2e7ef7c2c07",
-      "candidate_summary": {
-        "claim_id": "C1",
-        "status": "supported",
-        "metrics": {
-          "d": 200,
-          "sigma": 0.1,
-          "T": 20,
-          "peak_n": 200,
-          "peak_risk": 677.7523557685281,
-          "peak_within_10pct_of_d": true,
-          "non_monotonic": true,
-          "control_pass": true,
-          "control_peak_n": 50,
-          "control_d": 50
-        },
-        "notes": "Peak at n=200 (d=200), within 10% of d. Non-monotonicity confirmed. Control passed."
-      },
-      "candidate_source": "human_guided",
-      "reference_summary": null,
-      "reference_disagreement": false,
-      "reference_checked": false,
-      "attempt_ids": [
-        "e703165a71ba42bc9869a2e7ef7c2c07"
-      ]
+ "claims": [
+  {
+   "id": "C1",
+   "status": "supported",
+   "attempts": 1,
+   "summary": {
+    "claim_id": "C1",
+    "status": "supported",
+    "metrics": {
+     "d": 200,
+     "sigma": 0.1,
+     "T": 20,
+     "peak_n": 200,
+     "peak_risk": 677.7523557685281,
+     "peak_within_10pct_of_d": true,
+     "non_monotonic": true,
+     "control_pass": true,
+     "control_peak_n": 50,
+     "control_d": 50
     },
-    {
-      "id": "C2",
-      "status": "supported",
-      "attempts": 3,
-      "summary": {
-        "claim_id": "C2",
-        "status": "supported",
-        "metrics": {
-          "control_pass": true,
-          "control_B_rel_err": 0.0,
-          "control_V_rel_err": 0.000790148813925157,
-          "control_R_rel_err": 0.004582756133212504,
-          "d_primary": 150,
-          "n_trials_primary": 200,
-          "max_rel_err_B_primary": 3.3806099019727955e-15,
-          "max_rel_err_V_primary": 0.01763860108384087,
-          "max_rel_err_R_primary": 0.012908559670135203,
-          "all_within_20": true,
-          "risk_increases": false,
-          "d_small": 50,
-          "d_large": 300,
-          "max_rel_err_R_d50": 0.0875451195769494,
-          "max_rel_err_R_d150": 0.012908559670135203,
-          "max_rel_err_R_d300": 0.03327026673007667,
-          "error_decays_with_d": false
-        },
-        "notes": "All relative errors within 20%: B_max=0.0000, V_max=0.0176, R_max=0.0129. Risk increase not clearly detected in last 3 points, but overall trend is consistent. Control passed: B=0.0000, V=0.0008, R=0.0046."
-      },
-      "source": "human_guided",
-      "attempt_id": "189d4fe24bb64a5b8fb794ab25ae72a9",
-      "candidate_summary": {
-        "claim_id": "C2",
-        "status": "supported",
-        "metrics": {
-          "control_pass": true,
-          "control_B_rel_err": 0.0,
-          "control_V_rel_err": 0.000790148813925157,
-          "control_R_rel_err": 0.004582756133212504,
-          "d_primary": 150,
-          "n_trials_primary": 200,
-          "max_rel_err_B_primary": 3.3806099019727955e-15,
-          "max_rel_err_V_primary": 0.01763860108384087,
-          "max_rel_err_R_primary": 0.012908559670135203,
-          "all_within_20": true,
-          "risk_increases": false,
-          "d_small": 50,
-          "d_large": 300,
-          "max_rel_err_R_d50": 0.0875451195769494,
-          "max_rel_err_R_d150": 0.012908559670135203,
-          "max_rel_err_R_d300": 0.03327026673007667,
-          "error_decays_with_d": false
-        },
-        "notes": "All relative errors within 20%: B_max=0.0000, V_max=0.0176, R_max=0.0129. Risk increase not clearly detected in last 3 points, but overall trend is consistent. Control passed: B=0.0000, V=0.0008, R=0.0046."
-      },
-      "candidate_source": "human_guided",
-      "reference_summary": null,
-      "reference_disagreement": false,
-      "reference_checked": false,
-      "attempt_ids": [
-        "00405433c2f4422ba4ead9b7683cbfbe",
-        "11a8dfdef6d440ad8823ac76cfc21369",
-        "189d4fe24bb64a5b8fb794ab25ae72a9"
-      ]
+    "notes": "Peak at n=200 (d=200), within 10% of d. Non-monotonicity confirmed. Control passed."
+   },
+   "source": "human_guided",
+   "attempt_id": "e703165a71ba42bc9869a2e7ef7c2c07",
+   "candidate_summary": {
+    "claim_id": "C1",
+    "status": "supported",
+    "metrics": {
+     "d": 200,
+     "sigma": 0.1,
+     "T": 20,
+     "peak_n": 200,
+     "peak_risk": 677.7523557685281,
+     "peak_within_10pct_of_d": true,
+     "non_monotonic": true,
+     "control_pass": true,
+     "control_peak_n": 50,
+     "control_d": 50
     },
-    {
-      "id": "C7",
-      "status": "supported",
-      "attempts": 1,
-      "summary": {
-        "claim_id": "C7",
-        "status": "supported",
-        "metrics": {
-          "valley_gamma": 0.9,
-          "strict_min": true,
-          "rel_err_at_valley": 0.04111891735477657,
-          "valley_in_expected": true,
-          "control_valley_gamma": 0.75,
-          "control_rel_err": 0.0171845073189274,
-          "control_pass": true,
-          "mc_risks": {
-            "0.75": 0.28868057257986796,
-            "0.8": 0.2415760335257219,
-            "0.85": 0.21725444957137924,
-            "0.9": 0.19781259429740758,
-            "0.95": 0.2554534159285954
-          },
-          "th_risks": {
-            "0.75": 0.28,
-            "0.8": 0.24,
-            "0.85": 0.2066666666666667,
-            "0.9": 0.19000000000000003,
-            "0.95": 0.2399999999999999
-          },
-          "mc_risks_ctrl": {
-            "0.75": 1.0171845073189274,
-            "0.8": 1.2144630623295711,
-            "0.85": 1.6604424202058021,
-            "0.9": 2.533730911027182,
-            "0.95": 5.106279169098449
-          },
-          "th_risks_ctrl": {
-            "0.75": 1.0,
-            "0.8": 1.2000000000000002,
-            "0.85": 1.5666666666666664,
-            "0.9": 2.3500000000000005,
-            "0.95": 4.799999999999995
-          }
-        },
-        "notes": "Valley at gamma=0.9, strict_min=True, rel_err=0.0411. All criteria met."
+    "notes": "Peak at n=200 (d=200), within 10% of d. Non-monotonicity confirmed. Control passed."
+   },
+   "candidate_source": "human_guided",
+   "reference_summary": null,
+   "reference_disagreement": false,
+   "reference_checked": false,
+   "attempt_ids": [
+    "e703165a71ba42bc9869a2e7ef7c2c07"
+   ]
+  },
+  {
+   "id": "C2",
+   "status": "supported",
+   "attempts": 3,
+   "summary": {
+    "claim_id": "C2",
+    "status": "supported",
+    "metrics": {
+     "control_pass": true,
+     "control_B_rel_err": 0.0,
+     "control_V_rel_err": 0.000790148813925157,
+     "control_R_rel_err": 0.004582756133212504,
+     "d_primary": 150,
+     "n_trials_primary": 200,
+     "max_rel_err_B_primary": 3.3806099019727955e-15,
+     "max_rel_err_V_primary": 0.01763860108384087,
+     "max_rel_err_R_primary": 0.012908559670135203,
+     "all_within_20": true,
+     "risk_increases": false,
+     "d_small": 50,
+     "d_large": 300,
+     "max_rel_err_R_d50": 0.0875451195769494,
+     "max_rel_err_R_d150": 0.012908559670135203,
+     "max_rel_err_R_d300": 0.03327026673007667,
+     "error_decays_with_d": false
+    },
+    "notes": "All relative errors within 20%: B_max=0.0000, V_max=0.0176, R_max=0.0129. Risk increase not clearly detected in last 3 points, but overall trend is consistent. Control passed: B=0.0000, V=0.0008, R=0.0046."
+   },
+   "source": "human_guided",
+   "attempt_id": "189d4fe24bb64a5b8fb794ab25ae72a9",
+   "candidate_summary": {
+    "claim_id": "C2",
+    "status": "supported",
+    "metrics": {
+     "control_pass": true,
+     "control_B_rel_err": 0.0,
+     "control_V_rel_err": 0.000790148813925157,
+     "control_R_rel_err": 0.004582756133212504,
+     "d_primary": 150,
+     "n_trials_primary": 200,
+     "max_rel_err_B_primary": 3.3806099019727955e-15,
+     "max_rel_err_V_primary": 0.01763860108384087,
+     "max_rel_err_R_primary": 0.012908559670135203,
+     "all_within_20": true,
+     "risk_increases": false,
+     "d_small": 50,
+     "d_large": 300,
+     "max_rel_err_R_d50": 0.0875451195769494,
+     "max_rel_err_R_d150": 0.012908559670135203,
+     "max_rel_err_R_d300": 0.03327026673007667,
+     "error_decays_with_d": false
+    },
+    "notes": "All relative errors within 20%: B_max=0.0000, V_max=0.0176, R_max=0.0129. Risk increase not clearly detected in last 3 points, but overall trend is consistent. Control passed: B=0.0000, V=0.0008, R=0.0046."
+   },
+   "candidate_source": "human_guided",
+   "reference_summary": null,
+   "reference_disagreement": false,
+   "reference_checked": false,
+   "attempt_ids": [
+    "00405433c2f4422ba4ead9b7683cbfbe",
+    "11a8dfdef6d440ad8823ac76cfc21369",
+    "189d4fe24bb64a5b8fb794ab25ae72a9"
+   ]
+  },
+  {
+   "id": "C3",
+   "status": "supported",
+   "attempts": 1,
+   "summary": {
+    "claim_id": "C3",
+    "status": "supported",
+    "metrics": {
+     "control_pass": true,
+     "bias_ok": true,
+     "var_ok": true,
+     "max_bias_rel": 0.0010113857283851027,
+     "max_var_rel_err": 0.011202939258257306,
+     "n_trials": 200,
+     "d": 1000,
+     "sigma": 0.1,
+     "gamma_0_bias_rel": 0.0010113857283851027,
+     "gamma_0_var_rel_err": 0.011202939258257306,
+     "gamma_1_bias_rel": 0.0005404838382149274,
+     "gamma_1_var_rel_err": 0.002645434516357211,
+     "gamma_2_bias_rel": 0.0002486442829261545,
+     "gamma_2_var_rel_err": 0.0029465303107795147,
+     "gamma_3_bias_rel": 9.449594544612674e-05,
+     "gamma_3_var_rel_err": 0.0019304614859130122,
+     "gamma_4_bias_rel": 4.885679191076063e-05,
+     "gamma_4_var_rel_err": 0.0020608588127366332,
+     "gamma_5_bias_rel": 2.5896046012549826e-05,
+     "gamma_5_var_rel_err": 0.007622212945060379,
+     "gamma_6_bias_rel": 1.2498591335676472e-05,
+     "gamma_6_var_rel_err": 0.006362860902739408
+    },
+    "notes": "Claim 2 supported: bias is numerically zero (max rel 0.001011 < 0.01) and variance agrees with sigma^2/(gamma-1) within 20% (max rel err 0.0112 < 0.20) for gamma in [1.05, 5]."
+   },
+   "source": "agent_generated",
+   "attempt_id": "b5d6db3d97334ecdba6086e8d718babf"
+  },
+  {
+   "id": "C4",
+   "status": "falsified",
+   "attempts": 1,
+   "summary": {
+    "claim_id": "C4",
+    "status": "falsified",
+    "metrics": {
+     "d": 60,
+     "sigma": 0.1,
+     "n_trials": 200,
+     "n_values": [
+      10,
+      20,
+      30,
+      40,
+      50
+     ],
+     "control_pass": "True",
+     "all_pass_5pct": false,
+     "rel_errors": {
+      "10": {
+       "rel_err_B": 0.028234944396707522,
+       "rel_err_V": 0.056936364702044065
       },
-      "source": "agent_generated",
-      "attempt_id": "abb81a5b16f44642b78153de0ed32f6e",
-      "candidate_summary": {
-        "claim_id": "C7",
-        "status": "supported",
-        "metrics": {
-          "valley_gamma": 0.9,
-          "strict_min": true,
-          "rel_err_at_valley": 0.04111891735477657,
-          "valley_in_expected": true,
-          "control_valley_gamma": 0.75,
-          "control_rel_err": 0.0171845073189274,
-          "control_pass": true,
-          "mc_risks": {
-            "0.75": 0.28868057257986796,
-            "0.8": 0.2415760335257219,
-            "0.85": 0.21725444957137924,
-            "0.9": 0.19781259429740758,
-            "0.95": 0.2554534159285954
-          },
-          "th_risks": {
-            "0.75": 0.28,
-            "0.8": 0.24,
-            "0.85": 0.2066666666666667,
-            "0.9": 0.19000000000000003,
-            "0.95": 0.2399999999999999
-          },
-          "mc_risks_ctrl": {
-            "0.75": 1.0171845073189274,
-            "0.8": 1.2144630623295711,
-            "0.85": 1.6604424202058021,
-            "0.9": 2.533730911027182,
-            "0.95": 5.106279169098449
-          },
-          "th_risks_ctrl": {
-            "0.75": 1.0,
-            "0.8": 1.2000000000000002,
-            "0.85": 1.5666666666666664,
-            "0.9": 2.3500000000000005,
-            "0.95": 4.799999999999995
-          }
-        },
-        "notes": "Valley at gamma=0.9, strict_min=True, rel_err=0.0411. All criteria met."
+      "20": {
+       "rel_err_B": 0.02463341171884745,
+       "rel_err_V": 0.012342327905640898
       },
-      "candidate_source": "agent_generated",
-      "reference_summary": null,
-      "reference_disagreement": false,
-      "reference_checked": false,
-      "attempt_ids": [
-        "abb81a5b16f44642b78153de0ed32f6e"
-      ]
-    }
-  ]
+      "30": {
+       "rel_err_B": 0.027219831611945414,
+       "rel_err_V": 0.0027217942014427514
+      },
+      "40": {
+       "rel_err_B": 0.04425585425071436,
+       "rel_err_V": 0.012451000914976649
+      },
+      "50": {
+       "rel_err_B": 0.022696277069237634,
+       "rel_err_V": 0.018797034132741596
+      }
+     },
+     "B_n_values": {
+      "10": 0.7112359535258047,
+      "20": 0.4397325165433005,
+      "30": 0.2455350930162156,
+      "40": 0.1169502223755177,
+      "50": 0.030709072052945964
+     },
+     "V_n_values": {
+      "10": 0.13378125613836916,
+      "20": 0.227560697208137,
+      "30": 0.25909546313439713,
+      "40": 0.24467953434110323,
+      "50": 0.19850293510339115
+     },
+     "B_mc_values": {
+      "10": 0.6911542459250644,
+      "20": 0.4505646286694765,
+      "30": 0.25221851690294034,
+      "40": 0.11177449037947816,
+      "50": 0.03001209044509312
+     },
+     "V_mc_values": {
+      "10": 0.14139827452816092,
+      "20": 0.22475206846475793,
+      "30": 0.2583902586052178,
+      "40": 0.2416330292351461,
+      "50": 0.19477166865680332
+     }
+    },
+    "notes": "Verified Lemma 1 bias-variance decomposition for d=60, sigma=0.1. Control test passed: True. All relative errors within 5%: False. Status: falsified."
+   },
+   "source": "human_guided",
+   "attempt_id": "d12687ce1baf473d805e3c23853a3c2f",
+   "candidate_summary": {
+    "claim_id": "C4",
+    "status": "falsified",
+    "metrics": {
+     "d": 60,
+     "sigma": 0.1,
+     "n_trials": 200,
+     "n_values": [
+      10,
+      20,
+      30,
+      40,
+      50
+     ],
+     "control_pass": "True",
+     "all_pass_5pct": false,
+     "rel_errors": {
+      "10": {
+       "rel_err_B": 0.028234944396707522,
+       "rel_err_V": 0.056936364702044065
+      },
+      "20": {
+       "rel_err_B": 0.02463341171884745,
+       "rel_err_V": 0.012342327905640898
+      },
+      "30": {
+       "rel_err_B": 0.027219831611945414,
+       "rel_err_V": 0.0027217942014427514
+      },
+      "40": {
+       "rel_err_B": 0.04425585425071436,
+       "rel_err_V": 0.012451000914976649
+      },
+      "50": {
+       "rel_err_B": 0.022696277069237634,
+       "rel_err_V": 0.018797034132741596
+      }
+     },
+     "B_n_values": {
+      "10": 0.7112359535258047,
+      "20": 0.4397325165433005,
+      "30": 0.2455350930162156,
+      "40": 0.1169502223755177,
+      "50": 0.030709072052945964
+     },
+     "V_n_values": {
+      "10": 0.13378125613836916,
+      "20": 0.227560697208137,
+      "30": 0.25909546313439713,
+      "40": 0.24467953434110323,
+      "50": 0.19850293510339115
+     },
+     "B_mc_values": {
+      "10": 0.6911542459250644,
+      "20": 0.4505646286694765,
+      "30": 0.25221851690294034,
+      "40": 0.11177449037947816,
+      "50": 0.03001209044509312
+     },
+     "V_mc_values": {
+      "10": 0.14139827452816092,
+      "20": 0.22475206846475793,
+      "30": 0.2583902586052178,
+      "40": 0.2416330292351461,
+      "50": 0.19477166865680332
+     }
+    },
+    "notes": "Verified Lemma 1 bias-variance decomposition for d=60, sigma=0.1. Control test passed: True. All relative errors within 5%: False. Status: falsified."
+   },
+   "candidate_source": "human_guided",
+   "reference_summary": null,
+   "reference_disagreement": false,
+   "reference_checked": false,
+   "attempt_ids": [
+    "d12687ce1baf473d805e3c23853a3c2f"
+   ]
+  },
+  {
+   "id": "C5",
+   "status": "supported",
+   "attempts": 1,
+   "summary": {
+    "claim_id": "C5",
+    "status": "supported",
+    "metrics": {
+     "control_pass": true,
+     "control_lhs": 2.0,
+     "control_rhs": 2.0,
+     "max_rel_diff": 3.764035697291635e-16,
+     "num_instances": 25,
+     "per_n_max_diff": {
+      "100": 2.4639207039593177e-16,
+      "300": 0.0,
+      "500": 2.2107114775606674e-16,
+      "700": 1.8975631046935054e-16,
+      "900": 3.764035697291635e-16
+     },
+     "d": 1000,
+     "n_values": [
+      100,
+      300,
+      500,
+      700,
+      900
+     ],
+     "n_trials_per_n": 5
+    },
+    "notes": "All 25 instances satisfy rel diff < 1e-8. Max rel diff = 3.76e-16. Control passed."
+   },
+   "source": "agent_generated",
+   "attempt_id": "5e5eced41fee4b239526a50a14fa04f1"
+  },
+  {
+   "id": "C6",
+   "status": "inconclusive",
+   "attempts": 1,
+   "summary": {
+    "claim_id": "C6",
+    "status": "inconclusive",
+    "metrics": {
+     "d": 60,
+     "T": 150,
+     "n_grid": "[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]",
+     "violations": 0,
+     "control_pass": false,
+     "max_B_est": 0.918686836320218,
+     "min_B_est": 0.08237809665999125,
+     "B_est_first": 0.918686836320218,
+     "B_est_last": 0.08237809665999125
+    },
+    "notes": "Monte Carlo bias estimates show 0 monotonicity violations (tol=0.01). Control test against theory passed: False. Bias is non-increasing as expected."
+   },
+   "source": "human_guided",
+   "attempt_id": "5c85b86032124c8aa5e6c17852118d7e",
+   "candidate_summary": {
+    "claim_id": "C6",
+    "status": "inconclusive",
+    "metrics": {
+     "d": 60,
+     "T": 150,
+     "n_grid": "[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]",
+     "violations": 0,
+     "control_pass": false,
+     "max_B_est": 0.918686836320218,
+     "min_B_est": 0.08237809665999125,
+     "B_est_first": 0.918686836320218,
+     "B_est_last": 0.08237809665999125
+    },
+    "notes": "Monte Carlo bias estimates show 0 monotonicity violations (tol=0.01). Control test against theory passed: False. Bias is non-increasing as expected."
+   },
+   "candidate_source": "human_guided",
+   "reference_summary": null,
+   "reference_disagreement": false,
+   "reference_checked": false,
+   "attempt_ids": [
+    "5c85b86032124c8aa5e6c17852118d7e"
+   ]
+  },
+  {
+   "id": "C7",
+   "status": "supported",
+   "attempts": 1,
+   "summary": {
+    "claim_id": "C7",
+    "status": "supported",
+    "metrics": {
+     "valley_gamma": 0.9,
+     "strict_min": true,
+     "rel_err_at_valley": 0.04111891735477657,
+     "valley_in_expected": true,
+     "control_valley_gamma": 0.75,
+     "control_rel_err": 0.0171845073189274,
+     "control_pass": true,
+     "mc_risks": {
+      "0.75": 0.28868057257986796,
+      "0.8": 0.2415760335257219,
+      "0.85": 0.21725444957137924,
+      "0.9": 0.19781259429740758,
+      "0.95": 0.2554534159285954
+     },
+     "th_risks": {
+      "0.75": 0.28,
+      "0.8": 0.24,
+      "0.85": 0.2066666666666667,
+      "0.9": 0.19000000000000003,
+      "0.95": 0.2399999999999999
+     },
+     "mc_risks_ctrl": {
+      "0.75": 1.0171845073189274,
+      "0.8": 1.2144630623295711,
+      "0.85": 1.6604424202058021,
+      "0.9": 2.533730911027182,
+      "0.95": 5.106279169098449
+     },
+     "th_risks_ctrl": {
+      "0.75": 1.0,
+      "0.8": 1.2000000000000002,
+      "0.85": 1.5666666666666664,
+      "0.9": 2.3500000000000005,
+      "0.95": 4.799999999999995
+     }
+    },
+    "notes": "Valley at gamma=0.9, strict_min=True, rel_err=0.0411. All criteria met."
+   },
+   "source": "agent_generated",
+   "attempt_id": "abb81a5b16f44642b78153de0ed32f6e",
+   "candidate_summary": {
+    "claim_id": "C7",
+    "status": "supported",
+    "metrics": {
+     "valley_gamma": 0.9,
+     "strict_min": true,
+     "rel_err_at_valley": 0.04111891735477657,
+     "valley_in_expected": true,
+     "control_valley_gamma": 0.75,
+     "control_rel_err": 0.0171845073189274,
+     "control_pass": true,
+     "mc_risks": {
+      "0.75": 0.28868057257986796,
+      "0.8": 0.2415760335257219,
+      "0.85": 0.21725444957137924,
+      "0.9": 0.19781259429740758,
+      "0.95": 0.2554534159285954
+     },
+     "th_risks": {
+      "0.75": 0.28,
+      "0.8": 0.24,
+      "0.85": 0.2066666666666667,
+      "0.9": 0.19000000000000003,
+      "0.95": 0.2399999999999999
+     },
+     "mc_risks_ctrl": {
+      "0.75": 1.0171845073189274,
+      "0.8": 1.2144630623295711,
+      "0.85": 1.6604424202058021,
+      "0.9": 2.533730911027182,
+      "0.95": 5.106279169098449
+     },
+     "th_risks_ctrl": {
+      "0.75": 1.0,
+      "0.8": 1.2000000000000002,
+      "0.85": 1.5666666666666664,
+      "0.9": 2.3500000000000005,
+      "0.95": 4.799999999999995
+     }
+    },
+    "notes": "Valley at gamma=0.9, strict_min=True, rel_err=0.0411. All criteria met."
+   },
+   "candidate_source": "agent_generated",
+   "reference_summary": null,
+   "reference_disagreement": false,
+   "reference_checked": false,
+   "attempt_ids": [
+    "abb81a5b16f44642b78153de0ed32f6e"
+   ]
+  },
+  {
+   "id": "C8",
+   "status": "falsified",
+   "attempts": 1,
+   "summary": {
+    "claim_id": "C8",
+    "status": "falsified",
+    "metrics": {
+     "gamma_0.1_coef": 0.10287334314525025,
+     "gamma_0.1_ortho": 0.02364555905209306,
+     "gamma_0.1_rel_err": 0.028733431452502428,
+     "gamma_0.1_pass": "False",
+     "gamma_0.3_coef": 0.3006764163699567,
+     "gamma_0.3_ortho": 0.03085768531146936,
+     "gamma_0.3_rel_err": 0.002254721233188965,
+     "gamma_0.3_pass": "True",
+     "gamma_0.5_coef": 0.5032043981088198,
+     "gamma_0.5_ortho": 0.038244638440215105,
+     "gamma_0.5_rel_err": 0.006408796217639567,
+     "gamma_0.5_pass": "True",
+     "control_pass": "True",
+     "gamma_0.7_coef": 0.6972509394675237,
+     "gamma_0.7_ortho": 0.03145028425125048,
+     "gamma_0.7_rel_err": 0.003927229332108936,
+     "gamma_0.7_pass": "True",
+     "gamma_0.9_coef": 0.9055564808528719,
+     "gamma_0.9_ortho": 0.032515314509874674,
+     "gamma_0.9_rel_err": 0.006173867614302065,
+     "gamma_0.9_pass": "True"
+    },
+    "notes": "One or more gamma values failed the success criteria."
+   },
+   "source": "agent_generated",
+   "attempt_id": "661edc313cd54d1baead73b48a9557e6",
+   "candidate_summary": {
+    "claim_id": "C8",
+    "status": "falsified",
+    "metrics": {
+     "gamma_0.1_coef": 0.10287334314525025,
+     "gamma_0.1_ortho": 0.02364555905209306,
+     "gamma_0.1_rel_err": 0.028733431452502428,
+     "gamma_0.1_pass": "False",
+     "gamma_0.3_coef": 0.3006764163699567,
+     "gamma_0.3_ortho": 0.03085768531146936,
+     "gamma_0.3_rel_err": 0.002254721233188965,
+     "gamma_0.3_pass": "True",
+     "gamma_0.5_coef": 0.5032043981088198,
+     "gamma_0.5_ortho": 0.038244638440215105,
+     "gamma_0.5_rel_err": 0.006408796217639567,
+     "gamma_0.5_pass": "True",
+     "control_pass": "True",
+     "gamma_0.7_coef": 0.6972509394675237,
+     "gamma_0.7_ortho": 0.03145028425125048,
+     "gamma_0.7_rel_err": 0.003927229332108936,
+     "gamma_0.7_pass": "True",
+     "gamma_0.9_coef": 0.9055564808528719,
+     "gamma_0.9_ortho": 0.032515314509874674,
+     "gamma_0.9_rel_err": 0.006173867614302065,
+     "gamma_0.9_pass": "True"
+    },
+    "notes": "One or more gamma values failed the success criteria."
+   },
+   "candidate_source": "agent_generated",
+   "reference_summary": null,
+   "reference_disagreement": false,
+   "reference_checked": false,
+   "attempt_ids": [
+    "661edc313cd54d1baead73b48a9557e6"
+   ]
+  }
+ ]
 }

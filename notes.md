@@ -203,3 +203,30 @@ budget needs a round-level cap the director can enforce; Omnigent
 0.16.0 client has a 120s subscribe-after-post race — one-shot -p mode
 crashes while the session survives; `omni session export` recovers the
 transcript.
+
+## 2026-10-04 — corpus sweep: from auditing a paper to auditing a literature
+
+Tried: expanded the discovery loop from the flagship paper to a corpus —
+Hastie et al. (1903.08560), Bartlett et al. (1906.11300), d'Ascoli et al.
+triple descent (2005.13924). Extract via `lemma audit <id> --stages extract`
+in parallel; flagship deepened in parallel (C3–C6 + P2 promoted to C8).
+
+Why: breakthrough-potential was the weak rubric axis; a "verification map"
+of the literature's claims is a result only this infrastructure produces.
+
+What happened:
+- Hastie: 6 testable claims, all cpu-fast. Bartlett: 6 claims (bounds +
+  effective-rank identities). Triple-descent: PDF fetch truncated twice
+  (ContentTooShortError) → 0 claims; dropped from corpus.
+- Bartlett C1 falsified (control passed) at n=300 — the benign-overfitting
+  iff-claim may be a small-n artifact (log-slow decay needs bigger n) —
+  flagged for honest caveat, same class as flagship C2 round-1.
+- Bartlett C6 falsified with control: the generated script independently
+  re-derived the paper's true identity r_k² = r_k(Σ²)·R_k, then found 4/36
+  boundary violations of the extracted chain — a nuanced finding.
+- Institutional-memory test: corpus claims got feedback.md pre-seeded with
+  the d≤300 cost lesson BEFORE their first attempt; flagship c3/c4/c6 got
+  it mid-run for re-audit rounds.
+
+Next: Omnigent corpus-triage session → proposer round targeting a real
+new result (finite-d correction rate), then verification map + demo.

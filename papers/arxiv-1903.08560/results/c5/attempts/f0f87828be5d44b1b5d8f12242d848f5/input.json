@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "f0f87828be5d44b1b5d8f12242d848f5",
+  "run_id": "20261004-021740-arxiv-1903.08560",
+  "number": 1,
+  "source": "human_guided",
+  "claim": {
+    "id": "C5",
+    "title": "Ridge Dominates Min-Norm",
+    "statement": "In the isotropic well-specified and misspecified settings, optimally-tuned ridge regression (minimizing risk over \u03bb) achieves a lower prediction risk than min-norm least squares (\u03bb=0) for all values of \u03b3 and SNR.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate isotropic model (well-specified) and misspecified model. For \u03b3 in [0.5, 1.5, 3.0], compute risk for min-norm (\u03bb=0) and for ridge regression with \u03bb optimized via grid search over [1e-4, 1e-3, 1e-2, 0.1, 1.0]. Pass if min_\u03bb Risk(\u03bb) < Risk(\u03bb=0) for all \u03b3 and both model types.",
+    "evidence_in_paper": "Section 1.1, Point 3, Section 6",
+    "compute": "cpu-fast",
+    "success_criterion": "The minimum risk over the ridge penalty grid is strictly less than the min-norm risk for all tested \u03b3 values."
+  },
+  "feedback": "Transferred from the arxiv-1912.07242 audit round: Monte-Carlo audits at d=1000 timed out 3x within the 20-min bound; d<=300 (T<=300 trials, focused grids around critical points) gave statistically clean verdicts in minutes. Design for that envelope. Asymptotic closed-forms converge quickly in d \u2014 a large-d run is wasted budget, not better evidence.",
+  "auto_feedback": "",
+  "criterion_sha256": "eaf3713e6659ddf3adc0a56a2da6d4ac2078e36a834f2946228e93fb01414d94",
+  "script_sha256": "d10855fa11b21c8b704de75cba183cb44b053e0e909fc7cd5bba65a9883a609e",
+  "created_at": "2026-10-04T01:18:28.248647+00:00"
+}

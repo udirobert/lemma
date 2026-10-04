@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "5b2da5a5fcfd4d07be06b119c0640e82",
+  "run_id": "20261004-021740-arxiv-1906.11300",
+  "number": 1,
+  "source": "human_guided",
+  "claim": {
+    "id": "C1",
+    "title": "Benign Overfitting Condition for Power-Law Eigenvalues",
+    "statement": "For a covariance operator with eigenvalues \\(\\mu_k(\\Sigma) = k^{-\\alpha} \\ln^{-\\beta}(k+1)\\), the minimum norm interpolating estimator has vanishing excess risk (benign overfitting) if and only if \\(\\alpha = 1\\) and \\(\\beta > 1\\).",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate linear regression with Gaussian data \\(x \\sim N(0, \\Sigma)\\) and noisy labels \\(y = x^T \\theta^* + \\epsilon\\). Set \\(\\theta^* = 0\\) to isolate the noise term. Test three cases: (1) \\(\\alpha=1, \\beta=2\\) (Benign), (2) \\(\\alpha=1, \\beta=0.5\\) (Non-benign), (3) \\(\\alpha=0.5, \\beta=2\\) (Non-benign). For each case, vary sample size \\(n \\in [100, 1000, 5000]\\). Compute the excess risk \\(R(\\hat{\\theta})\\) using a held-out test set. Verify that in Case 1, the excess risk decreases towards 0 as \\(n\\) increases, while in Cases 2 and 3, the excess risk remains bounded away from 0 (or increases).",
+    "evidence_in_paper": "Theorem 6, Part 1",
+    "compute": "cpu-fast",
+    "success_criterion": "For \\(\\alpha=1, \\beta=2\\), the excess risk at \\(n=5000\\) must be significantly lower than at \\(n=100\\) (e.g., < 50% of initial risk). For \\(\\alpha=1, \\beta=0.5\\) and \\(\\alpha=0.5, \\beta=2\\), the excess risk at \\(n=5000\\) must not decrease significantly (e.g., > 80% of initial risk or remains constant)."
+  },
+  "feedback": "Prefer a concrete finite-dimensional spectrum for eigenvalue claims (e.g. mu_k = k^-1.5 or explicit geometric decay) at modest n (200-500): the claims are deterministic linear-algebra relations, so a cheap exact computation beats a Monte-Carlo approximation.",
+  "auto_feedback": "",
+  "criterion_sha256": "68dea79c11a628cbaacf0456ccbf3d15db9acfa048d9ebfaf009fb11601aeed8",
+  "script_sha256": "3edd06e0acea339abe29d08a4a2b688f575406159f6eff5a6e99f49f8067ba4a",
+  "created_at": "2026-10-04T01:18:35.020493+00:00"
+}

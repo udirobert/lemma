@@ -1,0 +1,36 @@
+{
+  "attempt": 1,
+  "attempt_id": "661edc313cd54d1baead73b48a9557e6",
+  "source": "agent_generated",
+  "run_id": "20261004-030338-arxiv-1912.07242",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C8",
+    "status": "falsified",
+    "metrics": {
+      "gamma_0.1_coef": 0.10287334314525025,
+      "gamma_0.1_ortho": 0.02364555905209306,
+      "gamma_0.1_rel_err": 0.028733431452502428,
+      "gamma_0.1_pass": "False",
+      "gamma_0.3_coef": 0.3006764163699567,
+      "gamma_0.3_ortho": 0.03085768531146936,
+      "gamma_0.3_rel_err": 0.002254721233188965,
+      "gamma_0.3_pass": "True",
+      "gamma_0.5_coef": 0.5032043981088198,
+      "gamma_0.5_ortho": 0.038244638440215105,
+      "gamma_0.5_rel_err": 0.006408796217639567,
+      "gamma_0.5_pass": "True",
+      "control_pass": "True",
+      "gamma_0.7_coef": 0.6972509394675237,
+      "gamma_0.7_ortho": 0.03145028425125048,
+      "gamma_0.7_rel_err": 0.003927229332108936,
+      "gamma_0.7_pass": "True",
+      "gamma_0.9_coef": 0.9055564808528719,
+      "gamma_0.9_ortho": 0.032515314509874674,
+      "gamma_0.9_rel_err": 0.006173867614302065,
+      "gamma_0.9_pass": "True"
+    },
+    "notes": "One or more gamma values failed the success criteria."
+  },
+  "wall_s": 2.1
+}

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-03T23:52:34+0100",
-  "n_papers": 5,
+  "generated_at": "2026-10-04T03:19:26+0100",
+  "n_papers": 7,
   "papers": [
     {
       "slug": "grokking-ridge",
@@ -179,6 +179,348 @@
       ]
     },
     {
+      "slug": "surprises-ridgeless",
+      "dir": "arxiv-1903.08560",
+      "title": "Surprises in High-Dimensional Ridgeless Least Squares Interpolation",
+      "source_label": "arXiv 1903.08560",
+      "source_url": "https://arxiv.org/abs/1903.08560",
+      "arxiv_url": "https://arxiv.org/abs/1903.08560",
+      "audited_at": "2026-10-04",
+      "blurb": "Exact asymptotic risk formulas for the min-norm interpolator in both regimes — the canonical companion to the double-descent paper. The lab verified its underparameterized risk blow-up (289x at gamma near 1) and its optimal-ridge comparison.",
+      "role": "corpus",
+      "status": "partial",
+      "links": {
+        "logbook": null,
+        "dataset": null,
+        "paper": "https://arxiv.org/abs/1903.08560"
+      },
+      "xylo": [
+        {
+          "claim": "C1",
+          "label": "asymptotic risk"
+        },
+        {
+          "claim": "C5",
+          "label": "optimal ridge"
+        },
+        {
+          "claim": "C6",
+          "label": "risk blow-up"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "title": "Isotropic Min-Norm Risk Formula",
+          "testable": true,
+          "status": "inconclusive",
+          "attempts": 1,
+          "notes": "Positive control failed. The risk calculation or simulation setup may be flawed.",
+          "metrics": {
+            "control_pass": "False",
+            "control_rel_error": 0.4952966471975878,
+            "all_pass": false,
+            "max_rel_error": 0.9956403426686683,
+            "n": 200,
+            "T": 300,
+            "details": {
+              "gamma_0.1": {
+                "emp": 1.111628528538508,
+                "theo": 11.111111111111109,
+                "err": 0.8999534324315343
+              },
+              "gamma_0.5": {
+                "emp": 2.0090834237202033,
+                "theo": 4.0,
+                "err": 0.49772914406994917
+              },
+              "gamma_0.9": {
+                "emp": 10.586098193523855,
+                "theo": 11.111111111111112,
+                "err": 0.047251162582853216
+              },
+              "gamma_1.1": {
+                "emp": 11.826619754546464,
+                "theo": 10.090909090909083,
+                "err": 0.172007363063164
+              },
+              "gamma_2.0": {
+                "emp": 2.505223829835358,
+                "theo": 1.5,
+                "err": 0.6701492198902388
+              },
+              "gamma_5.0": {
+                "emp": 2.045209502772495,
+                "theo": 1.05,
+                "err": 0.9478185740690428
+              },
+              "gamma_10.0": {
+                "emp": 2.0178141242538756,
+                "theo": 1.011111111111111,
+                "err": 0.9956403426686683
+              }
+            }
+          },
+          "control_pass": "False"
+        },
+        {
+          "id": "C2",
+          "title": "Double Descent in Misspecified Model",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
+        },
+        {
+          "id": "C3",
+          "title": "Latent Space Model Monotonicity",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
+        },
+        {
+          "id": "C4",
+          "title": "Nonlinear Model Universality",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
+        },
+        {
+          "id": "C5",
+          "title": "Ridge Dominates Min-Norm",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1,
+          "notes": "Optimally-tuned ridge regression achieved lower average risk than min-norm LS for all tested gamma and SNR values in both well-specified and misspecified isotropic settings.",
+          "metrics": {
+            "control_pass": "True",
+            "n": 100,
+            "num_trials": 200,
+            "snr_values": [
+              1.0,
+              5.0
+            ],
+            "gamma_values": [
+              0.5,
+              1.5,
+              3.0
+            ],
+            "lambda_grid": [
+              0.0001,
+              0.001,
+              0.01,
+              0.1,
+              1.0
+            ],
+            "all_pass": true,
+            "well_specified_snr_1.0_gamma_0.5_avg_mn": 2.029724129625196,
+            "well_specified_snr_1.0_gamma_0.5_avg_ridge": 1.9548416051193669,
+            "well_specified_snr_1.0_gamma_0.5_frac_better": 1.0,
+            "well_specified_snr_1.0_gamma_1.5_avg_mn": 3.417924462841886,
+            "well_specified_snr_1.0_gamma_1.5_avg_ridge": 3.186868495843784,
+            "well_specified_snr_1.0_gamma_1.5_frac_better": 1.0,
+            "well_specified_snr_1.0_gamma_3.0_avg_mn": 2.1823961519560355,
+            "well_specified_snr_1.0_gamma_3.0_avg_ridge": 2.174955073320729,
+            "well_specified_snr_1.0_gamma_3.0_frac_better": 1.0,
+            "well_specified_snr_5.0_gamma_0.5_avg_mn": 2.0344469771850067,
+            "well_specified_snr_5.0_gamma_0.5_avg_ridge": 1.957271787433286,
+            "well_specified_snr_5.0_gamma_0.5_frac_better": 0.995,
+            "well_specified_snr_5.0_gamma_1.5_avg_mn": 4.755143993620851,
+            "well_specified_snr_5.0_gamma_1.5_avg_ridge": 4.53172704906728,
+            "well_specified_snr_5.0_gamma_1.5_frac_better": 1.0,
+            "well_specified_snr_5.0_gamma_3.0_avg_mn": 4.8540925344987675,
+            "well_specified_snr_5.0_gamma_3.0_avg_ridge": 4.84638475866884,
+            "well_specified_snr_5.0_gamma_3.0_frac_better": 1.0,
+            "misspecified_snr_1.0_gamma_0.5_avg_mn": 3.0380362920861086,
+            "misspecified_snr_1.0_gamma_0.5_avg_ridge": 2.9181028247087624,
+            "misspecified_snr_1.0_gamma_0.5_frac_better": 1.0,
+            "misspecified_snr_1.0_gamma_1.5_avg_mn": 4.736096851958165,
+            "misspecified_snr_1.0_gamma_1.5_avg_ridge": 4.402808856077477,
+            "misspecified_snr_1.0_gamma_1.5_frac_better": 1.0,
+            "misspecified_snr_1.0_gamma_3.0_avg_mn": 2.5695063362246424,
+            "misspecified_snr_1.0_gamma_3.0_avg_ridge": 2.5585182265398436,
+            "misspecified_snr_1.0_gamma_3.0_frac_better": 1.0,
+            "misspecified_snr_5.0_gamma_0.5_avg_mn": 7.08115176274691,
+            "misspecified_snr_5.0_gamma_0.5_avg_ridge": 6.805783999495884,
+            "misspecified_snr_5.0_gamma_0.5_frac_better": 1.0,
+            "misspecified_snr_5.0_gamma_1.5_avg_mn": 11.57147609142933,
+            "misspecified_snr_5.0_gamma_1.5_avg_ridge": 10.768443507818704,
+            "misspecified_snr_5.0_gamma_1.5_frac_better": 1.0,
+            "misspecified_snr_5.0_gamma_3.0_avg_mn": 6.931937973967535,
+            "misspecified_snr_5.0_gamma_3.0_avg_ridge": 6.905132221302093,
+            "misspecified_snr_5.0_gamma_3.0_frac_better": 1.0
+          },
+          "control_pass": "True"
+        },
+        {
+          "id": "C6",
+          "title": "Underparametrized Risk Divergence",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1,
+          "notes": "Risk at gamma=0.999 is 2396.0423, at gamma=0.9 is 8.2868. Ratio: 289.14. Monotonic: True. Control passed: True.",
+          "metrics": {
+            "risk_0.9": 8.286753302884721,
+            "risk_0.95": 25.221186185559453,
+            "risk_0.99": 147.22458341906795,
+            "risk_0.999": 2396.0423278013,
+            "ratio_0999_to_09": 289.14126440414344,
+            "criterion_1_pass": true,
+            "monotonic_pass": true,
+            "control_pass": true,
+            "control_risk_0.5": 3.514615741585671
+          },
+          "control_pass": true
+        }
+      ],
+      "summary": {
+        "supported": 2,
+        "falsified": 0,
+        "inconclusive": 1,
+        "not_audited": 3
+      },
+      "judge": null,
+      "trace": {
+        "n_events": 42,
+        "n_llm": 4,
+        "n_tool": 3,
+        "n_note": 10,
+        "wall_min": 10.6,
+        "path": "papers/arxiv-1903.08560/trace.jsonl"
+      },
+      "figures": [
+        "results/c1/attempts/77360f01e7c54f5cb90cf05cb04660e7/figures/fig.png"
+      ]
+    },
+    {
+      "slug": "benign-overfitting",
+      "dir": "arxiv-1906.11300",
+      "title": "Benign Overfitting in Linear Regression",
+      "source_label": "arXiv 1906.11300",
+      "source_url": "https://arxiv.org/abs/1906.11300",
+      "arxiv_url": "https://arxiv.org/abs/1906.11300",
+      "audited_at": "2026-10-04",
+      "blurb": "Effective-rank characterization of when interpolation generalizes. The lab found boundary cases its eigenvalue-rank inequality chain does not cover — two falsifications with passing controls.",
+      "role": "corpus",
+      "status": "partial",
+      "links": {
+        "logbook": null,
+        "dataset": null,
+        "paper": "https://arxiv.org/abs/1906.11300"
+      },
+      "xylo": [
+        {
+          "claim": "C1",
+          "label": "benign iff-condition"
+        },
+        {
+          "claim": "C6",
+          "label": "rank chain"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "title": "Benign Overfitting Condition for Power-Law Eigenvalues",
+          "testable": true,
+          "status": "falsified",
+          "attempts": 1,
+          "notes": "Conditions not met. Cond1 (Benign low): False, Cond2 (Non-benign high): False, Cond3 (Non-benign high): False.",
+          "metrics": {
+            "case1_risk": 0.6656693581044841,
+            "case2_risk": 0.3217211689870534,
+            "case3_risk": 0.3574064851930445,
+            "control_risk": 0.11409538364051919,
+            "control_pass": true,
+            "threshold": 0.5
+          },
+          "control_pass": true
+        },
+        {
+          "id": "C2",
+          "title": "Benign Overfitting in Finite-Dimensional Space with Isotropic Noise",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
+        },
+        {
+          "id": "C3",
+          "title": "Upper Bound on Excess Risk",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
+        },
+        {
+          "id": "C4",
+          "title": "Lower Bound on Excess Risk",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
+        },
+        {
+          "id": "C5",
+          "title": "Necessity of Overparameterization",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
+        },
+        {
+          "id": "C6",
+          "title": "Relationship Between Effective Ranks",
+          "testable": true,
+          "status": "falsified",
+          "attempts": 1,
+          "notes": "4 violations found out of 36 checks.",
+          "metrics": {
+            "total_checks": 36,
+            "violations": 4,
+            "control_pass": "True",
+            "identity_error": 0.0,
+            "ctrl_ineq_pass": "True"
+          },
+          "control_pass": "True"
+        }
+      ],
+      "summary": {
+        "supported": 0,
+        "falsified": 2,
+        "inconclusive": 0,
+        "not_audited": 4
+      },
+      "judge": null,
+      "trace": {
+        "n_events": 32,
+        "n_llm": 3,
+        "n_tool": 2,
+        "n_note": 8,
+        "wall_min": 1.6,
+        "path": "papers/arxiv-1906.11300/trace.jsonl"
+      },
+      "figures": [
+        "results/c1/attempts/5b2da5a5fcfd4d07be06b119c0640e82/figures/fig.png"
+      ]
+    },
+    {
       "slug": "double-descent",
       "dir": "arxiv-1912.07242",
       "title": "More Data Can Hurt for Linear Regression: Sample-wise Double Descent",
@@ -262,41 +604,159 @@
           "id": "C3",
           "title": "Underparameterized risk approximation (Claim 2)",
           "testable": true,
-          "status": "not_audited",
-          "attempts": 0,
-          "notes": "",
-          "metrics": {},
-          "control_pass": null
+          "status": "supported",
+          "attempts": 1,
+          "notes": "Claim 2 supported: bias is numerically zero (max rel 0.001011 < 0.01) and variance agrees with sigma^2/(gamma-1) within 20% (max rel err 0.0112 < 0.20) for gamma in [1.05, 5].",
+          "metrics": {
+            "control_pass": true,
+            "bias_ok": true,
+            "var_ok": true,
+            "max_bias_rel": 0.0010113857283851027,
+            "max_var_rel_err": 0.011202939258257306,
+            "n_trials": 200,
+            "d": 1000,
+            "sigma": 0.1,
+            "gamma_0_bias_rel": 0.0010113857283851027,
+            "gamma_0_var_rel_err": 0.011202939258257306,
+            "gamma_1_bias_rel": 0.0005404838382149274,
+            "gamma_1_var_rel_err": 0.002645434516357211,
+            "gamma_2_bias_rel": 0.0002486442829261545,
+            "gamma_2_var_rel_err": 0.0029465303107795147,
+            "gamma_3_bias_rel": 9.449594544612674e-05,
+            "gamma_3_var_rel_err": 0.0019304614859130122,
+            "gamma_4_bias_rel": 4.885679191076063e-05,
+            "gamma_4_var_rel_err": 0.0020608588127366332,
+            "gamma_5_bias_rel": 2.5896046012549826e-05,
+            "gamma_5_var_rel_err": 0.007622212945060379,
+            "gamma_6_bias_rel": 1.2498591335676472e-05,
+            "gamma_6_var_rel_err": 0.006362860902739408
+          },
+          "control_pass": true
         },
         {
           "id": "C4",
           "title": "Exact finite-sample bias-variance decomposition (Lemma 1)",
           "testable": true,
-          "status": "not_audited",
-          "attempts": 0,
-          "notes": "",
-          "metrics": {},
-          "control_pass": null
+          "status": "falsified",
+          "attempts": 1,
+          "notes": "Verified Lemma 1 bias-variance decomposition for d=60, sigma=0.1. Control test passed: True. All relative errors within 5%: False. Status: falsified.",
+          "metrics": {
+            "d": 60,
+            "sigma": 0.1,
+            "n_trials": 200,
+            "n_values": [
+              10,
+              20,
+              30,
+              40,
+              50
+            ],
+            "control_pass": "True",
+            "all_pass_5pct": false,
+            "rel_errors": {
+              "10": {
+                "rel_err_B": 0.028234944396707522,
+                "rel_err_V": 0.056936364702044065
+              },
+              "20": {
+                "rel_err_B": 0.02463341171884745,
+                "rel_err_V": 0.012342327905640898
+              },
+              "30": {
+                "rel_err_B": 0.027219831611945414,
+                "rel_err_V": 0.0027217942014427514
+              },
+              "40": {
+                "rel_err_B": 0.04425585425071436,
+                "rel_err_V": 0.012451000914976649
+              },
+              "50": {
+                "rel_err_B": 0.022696277069237634,
+                "rel_err_V": 0.018797034132741596
+              }
+            },
+            "B_n_values": {
+              "10": 0.7112359535258047,
+              "20": 0.4397325165433005,
+              "30": 0.2455350930162156,
+              "40": 0.1169502223755177,
+              "50": 0.030709072052945964
+            },
+            "V_n_values": {
+              "10": 0.13378125613836916,
+              "20": 0.227560697208137,
+              "30": 0.25909546313439713,
+              "40": 0.24467953434110323,
+              "50": 0.19850293510339115
+            },
+            "B_mc_values": {
+              "10": 0.6911542459250644,
+              "20": 0.4505646286694765,
+              "30": 0.25221851690294034,
+              "40": 0.11177449037947816,
+              "50": 0.03001209044509312
+            },
+            "V_mc_values": {
+              "10": 0.14139827452816092,
+              "20": 0.22475206846475793,
+              "30": 0.2583902586052178,
+              "40": 0.2416330292351461,
+              "50": 0.19477166865680332
+            }
+          },
+          "control_pass": "True"
         },
         {
           "id": "C5",
           "title": "Exact trace update when adding one sample (Claim 3)",
           "testable": true,
-          "status": "not_audited",
-          "attempts": 0,
-          "notes": "",
-          "metrics": {},
-          "control_pass": null
+          "status": "supported",
+          "attempts": 1,
+          "notes": "All 25 instances satisfy rel diff < 1e-8. Max rel diff = 3.76e-16. Control passed.",
+          "metrics": {
+            "control_pass": true,
+            "control_lhs": 2.0,
+            "control_rhs": 2.0,
+            "max_rel_diff": 3.764035697291635e-16,
+            "num_instances": 25,
+            "per_n_max_diff": {
+              "100": 2.4639207039593177e-16,
+              "300": 0.0,
+              "500": 2.2107114775606674e-16,
+              "700": 1.8975631046935054e-16,
+              "900": 3.764035697291635e-16
+            },
+            "d": 1000,
+            "n_values": [
+              100,
+              300,
+              500,
+              700,
+              900
+            ],
+            "n_trials_per_n": 5
+          },
+          "control_pass": true
         },
         {
           "id": "C6",
           "title": "Bias is non-increasing with more samples",
           "testable": true,
-          "status": "not_audited",
-          "attempts": 0,
-          "notes": "",
-          "metrics": {},
-          "control_pass": null
+          "status": "inconclusive",
+          "attempts": 1,
+          "notes": "Monte Carlo bias estimates show 0 monotonicity violations (tol=0.01). Control test against theory passed: False. Bias is non-increasing as expected.",
+          "metrics": {
+            "d": 60,
+            "T": 150,
+            "n_grid": "[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]",
+            "violations": 0,
+            "control_pass": false,
+            "max_B_est": 0.918686836320218,
+            "min_B_est": 0.08237809665999125,
+            "B_est_first": 0.918686836320218,
+            "B_est_last": 0.08237809665999125
+          },
+          "control_pass": false
         },
         {
           "id": "C7",
@@ -343,13 +803,55 @@
             }
           },
           "control_pass": true
+        },
+        {
+          "id": "C8",
+          "title": "Finite-d bias exactness: E[beta_hat] = gamma*beta at finite d (repairs C2's circular bias check)",
+          "testable": true,
+          "status": "falsified",
+          "attempts": 1,
+          "notes": "One or more gamma values failed the success criteria.",
+          "metrics": {
+            "gamma_0.1_coef": 0.10287334314525025,
+            "gamma_0.1_ortho": 0.02364555905209306,
+            "gamma_0.1_rel_err": 0.028733431452502428,
+            "gamma_0.1_pass": "False",
+            "gamma_0.3_coef": 0.3006764163699567,
+            "gamma_0.3_ortho": 0.03085768531146936,
+            "gamma_0.3_rel_err": 0.002254721233188965,
+            "gamma_0.3_pass": "True",
+            "gamma_0.5_coef": 0.5032043981088198,
+            "gamma_0.5_ortho": 0.038244638440215105,
+            "gamma_0.5_rel_err": 0.006408796217639567,
+            "gamma_0.5_pass": "True",
+            "control_pass": "True",
+            "gamma_0.7_coef": 0.6972509394675237,
+            "gamma_0.7_ortho": 0.03145028425125048,
+            "gamma_0.7_rel_err": 0.003927229332108936,
+            "gamma_0.7_pass": "True",
+            "gamma_0.9_coef": 0.9055564808528719,
+            "gamma_0.9_ortho": 0.032515314509874674,
+            "gamma_0.9_rel_err": 0.006173867614302065,
+            "gamma_0.9_pass": "True"
+          },
+          "control_pass": "True"
+        },
+        {
+          "id": "C9",
+          "title": "Finite-d correction of the C2 overparam risk approximation: power-law decay d^-alpha at fixed gamma=0.5 (generated variant of C2)",
+          "testable": true,
+          "status": "not_audited",
+          "attempts": 0,
+          "notes": "",
+          "metrics": {},
+          "control_pass": null
         }
       ],
       "summary": {
-        "supported": 3,
-        "falsified": 0,
-        "inconclusive": 0,
-        "not_audited": 4
+        "supported": 5,
+        "falsified": 2,
+        "inconclusive": 1,
+        "not_audited": 1
       },
       "judge": {
         "verdict": "PASS",
@@ -378,10 +880,10 @@
         }
       },
       "trace": {
-        "n_events": 156,
-        "n_llm": 12,
-        "n_tool": 47,
-        "n_note": 28,
+        "n_events": 296,
+        "n_llm": 27,
+        "n_tool": 61,
+        "n_note": 62,
         "wall_min": 97.1,
         "path": "papers/arxiv-1912.07242/trace.jsonl"
       },

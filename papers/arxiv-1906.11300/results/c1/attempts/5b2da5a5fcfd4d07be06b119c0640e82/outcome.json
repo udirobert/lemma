@@ -1,0 +1,26 @@
+{
+  "exit_code": 0,
+  "wall_s": 45.252,
+  "summary": {
+    "claim_id": "C1",
+    "status": "falsified",
+    "metrics": {
+      "case1_risk": 0.6656693581044841,
+      "case2_risk": 0.3217211689870534,
+      "case3_risk": 0.3574064851930445,
+      "control_risk": 0.11409538364051919,
+      "control_pass": true,
+      "threshold": 0.5
+    },
+    "notes": "Conditions not met. Cond1 (Benign low): False, Cond2 (Non-benign high): False, Cond3 (Non-benign high): False."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "37dbb3fce63221720bd53fa9d4fe09ce7db6b36878b2a353a184696f148d82ba"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a1047d-0c59-701c-90a8-06aed0d1a39e"
+}

@@ -1,0 +1,2 @@
+/Users/udingethe/Dev/lemma/papers/arxiv-1906.11300/results/c6/audit_attempt1.py:33: SyntaxWarning: invalid escape sequence '\S'
+  Let's look at the text: "r_k(\Sigma^2) = r_k(\Sigma) R_k(\Sigma)"? No, that's dimensionally wrong if r is a ratio.

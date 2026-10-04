@@ -1,0 +1,29 @@
+{
+  "exit_code": 0,
+  "wall_s": 606.163,
+  "summary": {
+    "claim_id": "C6",
+    "status": "supported",
+    "metrics": {
+      "risk_0.9": 8.286753302884721,
+      "risk_0.95": 25.221186185559453,
+      "risk_0.99": 147.22458341906795,
+      "risk_0.999": 2396.0423278013,
+      "ratio_0999_to_09": 289.14126440414344,
+      "criterion_1_pass": true,
+      "monotonic_pass": true,
+      "control_pass": true,
+      "control_risk_0.5": 3.514615741585671
+    },
+    "notes": "Risk at gamma=0.999 is 2396.0423, at gamma=0.9 is 8.2868. Ratio: 289.14. Monotonic: True. Control passed: True."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "4b1544060eabb67a2ca2f54e968de2b5e59daa1ac9cc6266ecf7b265a0c18a68"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a1047d-0d9d-701a-b301-ae0c4a4b1c3c"
+}

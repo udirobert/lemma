@@ -1,0 +1,18 @@
+{
+  "slug": "surprises-ridgeless",
+  "title": "Surprises in High-Dimensional Ridgeless Least Squares Interpolation",
+  "source_label": "arXiv 1903.08560",
+  "source_url": "https://arxiv.org/abs/1903.08560",
+  "arxiv_url": "https://arxiv.org/abs/1903.08560",
+  "audited_at": "2026-10-04",
+  "blurb": "Exact asymptotic risk formulas for the min-norm interpolator in both regimes — the canonical companion to the double-descent paper. The lab verified its underparameterized risk blow-up (289x at gamma near 1) and its optimal-ridge comparison.",
+  "links": {"logbook": null, "dataset": null, "paper": "https://arxiv.org/abs/1903.08560"},
+  "role": "corpus",
+  "status": "partial",
+  "trace": "trace.jsonl",
+  "xylo": [
+    {"claim": "C1", "label": "asymptotic risk"},
+    {"claim": "C5", "label": "optimal ridge"},
+    {"claim": "C6", "label": "risk blow-up"}
+  ]
+}

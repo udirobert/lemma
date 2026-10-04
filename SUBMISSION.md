@@ -39,6 +39,38 @@ Question → Evidence → Hypothesis → Experiment → Result → Updated decis
 trace. 156 trace events. 7 failed attempts preserved, including a
 1-second `NameError` crash.
 
+## Then the lab scaled: a corpus, not a paper
+
+After the flagship loop, the same lab was pointed at the surrounding
+literature. Extraction, triage, feedback transfer, audits, and the
+proposal→claim→audit loop all ran through the same machinery — the
+director triaged a corpus-triage session (`0a9f30e2f27b4ff09bc16b9705a16057`).
+
+**The verification map** (`papers/_verification_map.json`):
+
+| Paper | Claims | Audited | Supported | Falsified | Inconclusive | Agent-generated |
+|---|---|---|---|---|---|---|
+| 1912.07242 — Sample-wise Double Descent | 9 | 8 | 5 | 2 | 1 | C7, C8, C9 |
+| 1903.08560 — Hastie et al., ridgeless surprises | 6 | 3 | 2 | 0 | 1 | — |
+| 1906.11300 — Bartlett et al., benign overfitting | 6 | 2 | 0 | 2 | 0 | — |
+
+What the sweep produced beyond "more audits":
+
+- **Two falsifications of published claims** (Bartlett C1 iff-condition
+  at finite n; Bartlett C6 eigenvalue-rank chain — the auditor script
+  independently re-derived the paper's true identity `r_k² = r_k(Σ²)·R_k`,
+  then found 4/36 violations confined to boundary spectra).
+- **The circularity repair actually bit:** P2 (promoted to C8, audited)
+  found that the check it replaced was masking a real deviation — the
+  independent MC estimate of E[β̂] misses the 2% bound at γ=0.1 while
+  passing cleanly at γ≥0.3. The circular test could not have seen that.
+- **Institutional memory transfers:** corpus claims were pre-seeded with
+  the flagship's d≤300 cost lesson *before their first attempt* — the
+  14× feedback acceleration generalizes across papers.
+- **The decomposition lemma C4 flipped to falsified** on a re-audit —
+  the engine reports falsified even where the math is an identity and
+  the marginal overage is almost surely MC noise. It does not flatter.
+
 ## The catch (our favorite moment)
 
 C2's round-2 bias check was **circular** — the script hard-coded
@@ -115,11 +147,18 @@ said d≤300).
 
 ## Validation still needed (stated honestly)
 
-- C2's supported verdict rests partly on a circular bias check — P2
-  (independent MC derivation of E[β̂]) is filed and gated.
+- C8's falsification is marginal: the γ=0.1 miss (2.9% vs 2% bound, T=200,
+  n=15) is plausibly MC noise — but that is exactly what the *independent*
+  check surfaced and the circular check could not. A T=1000 re-run is filed.
+- Bartlett C1's falsification is at n=300; the iff-claim is asymptotic and
+  log-slow decays need larger n — a re-audit at n=1500+ is the filed follow-up.
+- C4's falsified decomposition is an exact identity in the math; the 5%
+  criterion at d=60/T=200 leaves little room — likely a criterion artifact,
+  reported falsified anyway.
 - C1 verifies peak *location* and non-monotonicity; the peak *magnitude*
   diverges at n=d (as in the paper's own Fig. 1).
-- C3–C6 are declared, not audited.
+- Hastie C1's inconclusive was a control failure — correctly recorded;
+  its audit needs a better-conditioned test, not a bigger one.
 - Omnigent 0.16.0 is alpha: sub-agent instability and a client
   subscribe-after-post race were observed and worked around (see
   `notes.md`).
@@ -169,9 +208,13 @@ measurement from producing a false falsification.
 
 ## Next experiment
 
-1. Un-gate P2 (independent MC bias check) — one approval click.
-2. Audit C3–C6 (underparameterized regime + the two lemmas).
-3. Take the loop to a corpus: `lemma search` → planner ranks claims by
-   testability × impact → parallel audits under a compute budget.
+1. ~~Un-gate P2~~ — **done**: promoted to C8, audited, falsified at γ=0.1
+   (the circular check was masking a real deviation). T=1000 re-run filed.
+2. ~~Audit C3–C6~~ — **done**: C3, C5 supported; C4 falsified; C6
+   inconclusive (0 monotonicity violations, control failed).
+3. ~~Corpus sweep~~ — **done**: two adjacent papers mapped; next is the
+   falsification follow-ups (Bartlett C1 at n=1500, C8 at T=1000).
 4. Cross-model bake-off: two auditor sub-agents on different harnesses,
    disagreements surfaced to the human gate.
+5. Scale the map: auto-generate `papers/_verification_map.json` as a
+   public artifact — a living "which claims hold" index for the subfield.

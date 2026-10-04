@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "82d8233cc87643b0b82c99575d32705a",
+  "run_id": "20261004-021610-arxiv-1912.07242",
+  "number": 2,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C5",
+    "title": "Exact trace update when adding one sample (Claim 3)",
+    "statement": "Let X in R^{n x d} and x in R^d be the (n+1)th sample, and X_{n+1}=[X; x^T]. Then Tr((X_{n+1} X_{n+1}^T)^{-1}) = Tr((XX^T)^{-1}) + (1+||(X^T)^dagger x||^2)/||Proj_{X^perp}(x)||^2.",
+    "kind": "lemma",
+    "testable": true,
+    "test_plan": "For many random instances with d=1000 and n<d (e.g., n=100,300,500,700,900), generate X and a new vector x~N(0,I_d). Compute the left-hand side and the right-hand side of the identity using stable linear algebra (pseudoinverses and orthogonal projectors). Verify equality.",
+    "evidence_in_paper": "Claim 3 and Appendix A.2 proof.",
+    "compute": "cpu-fast",
+    "success_criterion": "For every tested instance, the relative difference between the left-hand side and the right-hand side is below 1e-8 (numerical precision)."
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "8b4c8b09c933a1cfa22d0017a35685c9b3a96c1c10e94d01d74990a5f1f7532e",
+  "script_sha256": "16598dfcb54327a3dfd0d7a1fe74f2f9077ea07f8c2f181312d550e13b02d7a0",
+  "created_at": "2026-10-04T01:17:10.836688+00:00"
+}

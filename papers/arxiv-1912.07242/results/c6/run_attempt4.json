@@ -1,0 +1,24 @@
+{
+  "attempt": 4,
+  "attempt_id": "5c85b86032124c8aa5e6c17852118d7e",
+  "source": "human_guided",
+  "run_id": "20261004-030415-arxiv-1912.07242",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C6",
+    "status": "inconclusive",
+    "metrics": {
+      "d": 60,
+      "T": 150,
+      "n_grid": "[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]",
+      "violations": 0,
+      "control_pass": false,
+      "max_B_est": 0.918686836320218,
+      "min_B_est": 0.08237809665999125,
+      "B_est_first": 0.918686836320218,
+      "B_est_last": 0.08237809665999125
+    },
+    "notes": "Monte Carlo bias estimates show 0 monotonicity violations (tol=0.01). Control test against theory passed: False. Bias is non-increasing as expected."
+  },
+  "wall_s": 2.09
+}

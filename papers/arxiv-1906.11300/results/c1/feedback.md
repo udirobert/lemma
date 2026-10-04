@@ -1,0 +1,1 @@
+Prefer a concrete finite-dimensional spectrum for eigenvalue claims (e.g. mu_k = k^-1.5 or explicit geometric decay) at modest n (200-500): the claims are deterministic linear-algebra relations, so a cheap exact computation beats a Monte-Carlo approximation.

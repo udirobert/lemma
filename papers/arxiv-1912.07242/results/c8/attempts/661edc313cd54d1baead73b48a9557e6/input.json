@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "attempt_id": "661edc313cd54d1baead73b48a9557e6",
+  "run_id": "20261004-030338-arxiv-1912.07242",
+  "number": 1,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C8",
+    "title": "Finite-d bias exactness: E[beta_hat] = gamma*beta at finite d (repairs C2's circular bias check)",
+    "statement": "For d=150, sigma=0.1, ||beta||_2=1, isotropic Gaussian features, the Monte-Carlo estimate of E[beta_hat] over T=200 trials is parallel to beta within 5% (|<E[beta_hat], beta_perp>|/||beta|| < 0.05) and its coefficient along beta is within 2% relative error of gamma, for every gamma in {0.1, 0.3, 0.5, 0.7, 0.9} with n=floor(gamma*d).",
+    "kind": "generated-hypothesis",
+    "testable": true,
+    "test_plan": "Self-contained numpy script: d=150, beta=e_1, sigma=0.1, gamma in {0.1,0.3,0.5,0.7,0.9}, T=200 trials each; per trial X~N(0,I), y=X@beta+sigma*noise, beta_hat=X.T@solve(XX.T,y); accumulate sum_beta_hat. E_hat=sum/T. coefs = <E_hat, beta> (should equal gamma); ortho = sqrt(||E_hat||^2 - coefs^2) (should be ~0). Control: at gamma=0.5 the coefficient must be 0.5 within 2% (a case where the projection-averaging argument is simplest); if the control fails the measurement is void.",
+    "success_criterion": "For all 5 gamma values: |coef - gamma|/gamma <= 0.02 and ortho <= 0.05; control at gamma=0.5 passes.",
+    "source": "agent_generated",
+    "rationale": "In C2 round 2 the bias metric (max_rel_err_B=3.4e-15) was computed from a hard-coded E[beta_hat]=gamma*beta, i.e. the bias formula was compared against itself. This variant re-derives E[beta_hat] from raw Monte-Carlo means, so the claim's bias formula B_n=(1-gamma)^2||beta||^2 is verified independently (it is in fact exact at any finite d under isotropy; the 'approximation' is in variance/risk only).",
+    "evidence_in_paper": "agent-generated variant of C2 (repairs its circular bias check)"
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "e169defe589300cad8daa494c5fdcbf04354010c8791749f62354639fc9f3c8d",
+  "script_sha256": "ba3ac89af49f65e07d08643707596c70941f0c680230ca307e422b0e3cbdb5be",
+  "created_at": "2026-10-04T02:04:15.191325+00:00"
+}

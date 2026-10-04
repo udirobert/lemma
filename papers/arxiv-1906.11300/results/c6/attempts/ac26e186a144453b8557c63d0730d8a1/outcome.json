@@ -1,0 +1,25 @@
+{
+  "exit_code": 0,
+  "wall_s": 9.578,
+  "summary": {
+    "claim_id": "C6",
+    "status": "falsified",
+    "metrics": {
+      "total_checks": 36,
+      "violations": 4,
+      "control_pass": "True",
+      "identity_error": 0.0,
+      "ctrl_ineq_pass": "True"
+    },
+    "notes": "4 violations found out of 36 checks."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "f2924751b6363490329d7da38bef0f59085f4f5550cd302591cb206f13c98683"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a1047d-0c88-7554-bd24-6f8e2942da56"
+}

@@ -1,0 +1,9 @@
+Violation: n=200, decay=power_law, k=0
+  r_k(Sigma^2)=0.20204446550334562, r_k(Sigma)=1.471130548173412, R_k(Sigma)=10.711627682437888, r_k(Sigma)^2=2.164225089769004
+Violation: n=200, decay=power_law, k=1
+  r_k(Sigma^2)=0.6163557240267646, r_k(Sigma)=3.16098554649641, R_k(Sigma)=16.211141124610247, r_k(Sigma)^2=9.991829625159209
+Violation: n=500, decay=power_law, k=0
+  r_k(Sigma^2)=0.2020549071555943, r_k(Sigma)=1.5229773285843804, R_k(Sigma)=11.479354676577557, r_k(Sigma)^2=2.3194599433820158
+Violation: n=500, decay=power_law, k=1
+  r_k(Sigma^2)=0.6164392572447543, r_k(Sigma)=3.307630386541551, R_k(Sigma)=17.74776451271527, r_k(Sigma)^2=10.94041877397301
+SUMMARY_JSON={"claim_id": "C6", "status": "falsified", "metrics": {"total_checks": 36, "violations": 4, "control_pass": "True", "identity_error": 0.0, "ctrl_ineq_pass": "True"}, "notes": "4 violations found out of 36 checks."}

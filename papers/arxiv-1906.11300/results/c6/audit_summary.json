@@ -1,0 +1,12 @@
+{
+  "claim_id": "C6",
+  "status": "falsified",
+  "metrics": {
+    "total_checks": 36,
+    "violations": 4,
+    "control_pass": "True",
+    "identity_error": 0.0,
+    "ctrl_ineq_pass": "True"
+  },
+  "notes": "4 violations found out of 36 checks."
+}

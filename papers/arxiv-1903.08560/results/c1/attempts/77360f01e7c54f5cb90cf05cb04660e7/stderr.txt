@@ -1,0 +1,2 @@
+/Users/udingethe/Dev/lemma/papers/arxiv-1903.08560/results/c1/audit_attempt1.py:30: RuntimeWarning: divide by zero encountered in scalar divide
+  return r2 * (1 - 1/gamma) + sigma2 / (gamma - 1)

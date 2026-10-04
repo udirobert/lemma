@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "b5d6db3d97334ecdba6086e8d718babf",
+  "run_id": "20261004-021610-arxiv-1912.07242",
+  "number": 1,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C3",
+    "title": "Underparameterized risk approximation (Claim 2)",
+    "statement": "Let gamma=n/d>1. For the ordinary-least-squares estimator, the bias is B_n=0 and the variance is approximately V_n ~ sigma^2/(gamma-1).",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Fix d=1000, ||beta||_2=1, sigma=0.1. For gamma>1 (e.g., n=ceil(gamma*d) with gamma up to 5), generate many independent training sets. Compute the OLS estimator beta_hat=(X^T X)^{-1} X^T y. Estimate bias B_n=||beta-E[beta_hat]||^2 and variance V_n=E[||beta_hat-E[beta_hat]||^2] by Monte Carlo. Compare to 0 and sigma^2/(gamma-1).",
+    "evidence_in_paper": "Claim 2 and Figure 1b.",
+    "compute": "cpu-fast",
+    "success_criterion": "The empirical bias is numerically zero (e.g., relative to ||beta||^2 it is <0.01), and the empirical variance agrees with sigma^2/(gamma-1) within 20% relative error for gamma in [1.05,5]."
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "8018e496006ea2ddb61d1cb1444d3d98dda940956b7bae9debc556299d76cb27",
+  "script_sha256": "0564a9b4686c626cb3fb7926e0cd67859e981307e7d5524430f4f7c1ac07efb5",
+  "created_at": "2026-10-04T01:16:45.930468+00:00"
+}

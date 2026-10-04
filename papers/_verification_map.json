@@ -1,0 +1,323 @@
+{
+ "generated_from": "papers/*/claims.json + results/audit_report.json",
+ "papers": [
+  {
+   "id": "arxiv-1903.08560",
+   "slug": "surprises-ridgeless",
+   "title": "Surprises in High-Dimensional Ridgeless Least Squares Interpolation",
+   "claims": [
+    {
+     "id": "C1",
+     "kind": "theorem",
+     "status": "inconclusive",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Isotropic Min-Norm Risk Formula"
+    },
+    {
+     "id": "C2",
+     "kind": "theorem",
+     "status": "not_audited",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Double Descent in Misspecified Model"
+    },
+    {
+     "id": "C3",
+     "kind": "theorem",
+     "status": "not_audited",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Latent Space Model Monotonicity"
+    },
+    {
+     "id": "C4",
+     "kind": "theorem",
+     "status": "not_audited",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Nonlinear Model Universality"
+    },
+    {
+     "id": "C5",
+     "kind": "theorem",
+     "status": "supported",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Ridge Dominates Min-Norm"
+    },
+    {
+     "id": "C6",
+     "kind": "theorem",
+     "status": "supported",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Underparametrized Risk Divergence"
+    }
+   ]
+  },
+  {
+   "id": "arxiv-1906.11300",
+   "slug": "benign-overfitting",
+   "title": "Benign Overfitting in Linear Regression",
+   "claims": [
+    {
+     "id": "C1",
+     "kind": "theorem",
+     "status": "falsified",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Benign Overfitting Condition for Power-Law Eigenvalues"
+    },
+    {
+     "id": "C2",
+     "kind": "theorem",
+     "status": "not_audited",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Benign Overfitting in Finite-Dimensional Space with Isotropic Noise"
+    },
+    {
+     "id": "C3",
+     "kind": "theorem",
+     "status": "not_audited",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Upper Bound on Excess Risk"
+    },
+    {
+     "id": "C4",
+     "kind": "theorem",
+     "status": "not_audited",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Lower Bound on Excess Risk"
+    },
+    {
+     "id": "C5",
+     "kind": "theorem",
+     "status": "not_audited",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Necessity of Overparameterization"
+    },
+    {
+     "id": "C6",
+     "kind": "lemma",
+     "status": "falsified",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Relationship Between Effective Ranks"
+    }
+   ]
+  },
+  {
+   "id": "arxiv-1912.07242",
+   "slug": "double-descent",
+   "title": "More Data Can Hurt for Linear Regression: Sample-wise Double Descent",
+   "claims": [
+    {
+     "id": "C1",
+     "kind": "empirical",
+     "status": "supported",
+     "failed_attempts": 3,
+     "agent_generated": false,
+     "title": "Sample-wise non-monotonic test MSE peaks at n=d"
+    },
+    {
+     "id": "C2",
+     "kind": "theorem",
+     "status": "supported",
+     "failed_attempts": 4,
+     "agent_generated": false,
+     "title": "Overparameterized risk approximation (Claim 1)"
+    },
+    {
+     "id": "C3",
+     "kind": "theorem",
+     "status": "supported",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Underparameterized risk approximation (Claim 2)"
+    },
+    {
+     "id": "C4",
+     "kind": "lemma",
+     "status": "falsified",
+     "failed_attempts": 3,
+     "agent_generated": false,
+     "title": "Exact finite-sample bias-variance decomposition (Lemma 1)"
+    },
+    {
+     "id": "C5",
+     "kind": "lemma",
+     "status": "supported",
+     "failed_attempts": 2,
+     "agent_generated": false,
+     "title": "Exact trace update when adding one sample (Claim 3)"
+    },
+    {
+     "id": "C6",
+     "kind": "theorem",
+     "status": "inconclusive",
+     "failed_attempts": 3,
+     "agent_generated": false,
+     "title": "Bias is non-increasing with more samples"
+    },
+    {
+     "id": "C7",
+     "kind": "generated-hypothesis",
+     "status": "supported",
+     "failed_attempts": 0,
+     "agent_generated": true,
+     "title": "Finite-d risk valley: the overparameterized double-descent dip at gamma*=0.90 (generated variant of C2)"
+    },
+    {
+     "id": "C8",
+     "kind": "generated-hypothesis",
+     "status": "falsified",
+     "failed_attempts": 0,
+     "agent_generated": true,
+     "title": "Finite-d bias exactness: E[beta_hat] = gamma*beta at finite d (repairs C2's circular bias check)"
+    },
+    {
+     "id": "C9",
+     "kind": "generated-hypothesis",
+     "status": "not_audited",
+     "failed_attempts": 1,
+     "agent_generated": true,
+     "title": "Finite-d correction of the C2 overparam risk approximation: power-law decay d^-alpha at fixed gamma=0.5 (generated varia"
+    }
+   ]
+  },
+  {
+   "id": "arxiv-2510.10981",
+   "slug": "icl-bayesian",
+   "title": "In-Context Learning Is Provably Bayesian Inference",
+   "claims": [
+    {
+     "id": "C1",
+     "kind": "theorem",
+     "status": "supported",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Risk Decomposition Identity"
+    },
+    {
+     "id": "C2",
+     "kind": "empirical_claim",
+     "status": "falsified",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Coupled p-N Scaling of Bayes Gap"
+    },
+    {
+     "id": "C3",
+     "kind": "empirical_claim",
+     "status": "supported",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Rapid Task-Type Identification (Posterior Concentration)"
+    },
+    {
+     "id": "C4",
+     "kind": "theorem",
+     "status": "supported",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Bayes Gap Upper Bound Rate"
+    },
+    {
+     "id": "C5",
+     "kind": "theorem",
+     "status": "inconclusive",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Wasserstein Stability of Bayes Gap"
+    },
+    {
+     "id": "C6",
+     "kind": "theorem",
+     "status": "inconclusive",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Posterior Variance Bound by Minimax Risk"
+    },
+    {
+     "id": "C7",
+     "kind": "generated-hypothesis",
+     "status": "falsified",
+     "failed_attempts": 2,
+     "agent_generated": true,
+     "title": "Boundary test: pN invariance of the Bayes Gap"
+    }
+   ]
+  },
+  {
+   "id": "arxiv-2607.08077",
+   "slug": "gram",
+   "title": "Modular Pretraining Enables Access Control (GRAM)",
+   "claims": [
+    {
+     "id": "C1",
+     "kind": "empirical",
+     "status": "supported",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "GRAM approximates multiple data-filtered models in a single run (Simple Stories)"
+    },
+    {
+     "id": "C2",
+     "kind": "empirical",
+     "status": "not_audited",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "GRAM isolates realistic dual-use capabilities and matches data filtering at 800M scale"
+    },
+    {
+     "id": "C3",
+     "kind": "empirical",
+     "status": "not_audited",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "Capability isolation improves with scale and GRAM tracks data filtering from 50M to 5B"
+    },
+    {
+     "id": "C4",
+     "kind": "empirical",
+     "status": "not_audited",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "GRAM composes arbitrary capability subsets without degradation, unlike FT-LoRA"
+    },
+    {
+     "id": "C5",
+     "kind": "empirical",
+     "status": "not_audited",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "GRAM outperforms filtering and FT-LoRA on capability removal under partial labeling"
+    },
+    {
+     "id": "C6",
+     "kind": "empirical",
+     "status": "supported",
+     "failed_attempts": 0,
+     "agent_generated": false,
+     "title": "GRAM's training cost is independent of the number of capability profiles, yielding 5\u00d7 savings over filtering"
+    }
+   ]
+  }
+ ],
+ "tally": {
+  "inconclusive": 4,
+  "not_audited": 12,
+  "supported": 12,
+  "falsified": 6
+ },
+ "counts": {
+  "papers": 5,
+  "claims": 34,
+  "agent_generated": 4
+ }
+}

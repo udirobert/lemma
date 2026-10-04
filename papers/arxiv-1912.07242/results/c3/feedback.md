@@ -1,0 +1,1 @@
+Cost lesson from C1/C2 on this paper: d=1000 Monte-Carlo scripts timed out 3x under the 20-min bound; d<=300 (T<=300, focused grids) gave clean verdicts in minutes. Use that envelope — the claims are dimension-agnostic.

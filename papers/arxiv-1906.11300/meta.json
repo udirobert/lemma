@@ -1,0 +1,17 @@
+{
+  "slug": "benign-overfitting",
+  "title": "Benign Overfitting in Linear Regression",
+  "source_label": "arXiv 1906.11300",
+  "source_url": "https://arxiv.org/abs/1906.11300",
+  "arxiv_url": "https://arxiv.org/abs/1906.11300",
+  "audited_at": "2026-10-04",
+  "blurb": "Effective-rank characterization of when interpolation generalizes. The lab found boundary cases its eigenvalue-rank inequality chain does not cover — two falsifications with passing controls.",
+  "links": {"logbook": null, "dataset": null, "paper": "https://arxiv.org/abs/1906.11300"},
+  "role": "corpus",
+  "status": "partial",
+  "trace": "trace.jsonl",
+  "xylo": [
+    {"claim": "C1", "label": "benign iff-condition"},
+    {"claim": "C6", "label": "rank chain"}
+  ]
+}

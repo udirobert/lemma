@@ -1,0 +1,82 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "status": "falsified",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C1",
+        "status": "falsified",
+        "metrics": {
+          "case1_risk": 0.6656693581044841,
+          "case2_risk": 0.3217211689870534,
+          "case3_risk": 0.3574064851930445,
+          "control_risk": 0.11409538364051919,
+          "control_pass": true,
+          "threshold": 0.5
+        },
+        "notes": "Conditions not met. Cond1 (Benign low): False, Cond2 (Non-benign high): False, Cond3 (Non-benign high): False."
+      },
+      "source": "human_guided",
+      "attempt_id": "5b2da5a5fcfd4d07be06b119c0640e82",
+      "candidate_summary": {
+        "claim_id": "C1",
+        "status": "falsified",
+        "metrics": {
+          "case1_risk": 0.6656693581044841,
+          "case2_risk": 0.3217211689870534,
+          "case3_risk": 0.3574064851930445,
+          "control_risk": 0.11409538364051919,
+          "control_pass": true,
+          "threshold": 0.5
+        },
+        "notes": "Conditions not met. Cond1 (Benign low): False, Cond2 (Non-benign high): False, Cond3 (Non-benign high): False."
+      },
+      "candidate_source": "human_guided",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "5b2da5a5fcfd4d07be06b119c0640e82"
+      ]
+    },
+    {
+      "id": "C6",
+      "status": "falsified",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C6",
+        "status": "falsified",
+        "metrics": {
+          "total_checks": 36,
+          "violations": 4,
+          "control_pass": "True",
+          "identity_error": 0.0,
+          "ctrl_ineq_pass": "True"
+        },
+        "notes": "4 violations found out of 36 checks."
+      },
+      "source": "human_guided",
+      "attempt_id": "ac26e186a144453b8557c63d0730d8a1",
+      "candidate_summary": {
+        "claim_id": "C6",
+        "status": "falsified",
+        "metrics": {
+          "total_checks": 36,
+          "violations": 4,
+          "control_pass": "True",
+          "identity_error": 0.0,
+          "ctrl_ineq_pass": "True"
+        },
+        "notes": "4 violations found out of 36 checks."
+      },
+      "candidate_source": "human_guided",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "ac26e186a144453b8557c63d0730d8a1"
+      ]
+    }
+  ]
+}

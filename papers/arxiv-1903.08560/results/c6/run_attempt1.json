@@ -1,0 +1,24 @@
+{
+  "attempt": 1,
+  "attempt_id": "2410392f31134d3288b8c94846246d70",
+  "source": "human_guided",
+  "run_id": "20261004-021740-arxiv-1903.08560",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C6",
+    "status": "supported",
+    "metrics": {
+      "risk_0.9": 8.286753302884721,
+      "risk_0.95": 25.221186185559453,
+      "risk_0.99": 147.22458341906795,
+      "risk_0.999": 2396.0423278013,
+      "ratio_0999_to_09": 289.14126440414344,
+      "criterion_1_pass": true,
+      "monotonic_pass": true,
+      "control_pass": true,
+      "control_risk_0.5": 3.514615741585671
+    },
+    "notes": "Risk at gamma=0.999 is 2396.0423, at gamma=0.9 is 8.2868. Ratio: 289.14. Monotonic: True. Control passed: True."
+  },
+  "wall_s": 606.16
+}

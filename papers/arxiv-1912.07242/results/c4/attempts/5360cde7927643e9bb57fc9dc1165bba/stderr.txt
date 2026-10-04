@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c4/audit_attempt3.py", line 379, in <module>
+    audit_c4()
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c4/audit_attempt3.py", line 89, in audit_c4
+    proj_beta = np.einsum('bij,bj->bi', X_batch, z)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/udingethe/Dev/lemma/.venv/lib/python3.12/site-packages/numpy/_core/einsumfunc.py", line 1608, in einsum
+    return c_einsum(*operands, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: operands could not be broadcast together with remapped shapes [original->remapped]: (50,100,1000)->(50,100,1000) (50,100)->(50,newaxis,100)

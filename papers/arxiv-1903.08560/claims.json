@@ -1,0 +1,68 @@
+[
+  {
+    "id": "C1",
+    "title": "Isotropic Min-Norm Risk Formula",
+    "statement": "For the isotropic linear model (Sigma = I) with i.i.d. features, the asymptotic prediction risk of the min-norm least squares estimator is R(\u03b3) = \u03c3\u00b2/(\u03b3(1-\u03b3)) for \u03b3 < 1 and R(\u03b3) = r\u00b2(1 - 1/\u03b3) + \u03c3\u00b2/(\u03b3 - 1) for \u03b3 > 1, where r\u00b2 = ||\u03b2||\u00b2 and \u03b3 = p/n.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate n=1000, p=\u03b3n for \u03b3 in [0.1, 0.5, 0.9, 1.1, 2.0, 5.0, 10.0]. Generate X ~ N(0, I_p), y = X\u03b2 + \u03b5 with \u03b2 fixed norm r=1, \u03b5 ~ N(0, 1). Compute min-norm solution \u03b2_hat = X^T(X X^T)^{-1}y. Estimate risk on 10,000 test points. Compare empirical risk to theoretical formula. Pass if relative error < 5% for all \u03b3.",
+    "evidence_in_paper": "Theorem 1, Equation (8)",
+    "compute": "cpu-fast",
+    "success_criterion": "Empirical risk matches theoretical formula within 5% relative error for all tested \u03b3 values."
+  },
+  {
+    "id": "C2",
+    "title": "Double Descent in Misspecified Model",
+    "statement": "In the misspecified isotropic model with polynomial approximation bias 1-\u03ba(\u03b3) = (1+\u03b3)^{-a}, the min-norm least squares risk can attain its global minimum in the overparametrized regime (\u03b3 > 1) when SNR > 1 and a is sufficiently small (specifically a \u2264 1 + 1/SNR is a sufficient condition).",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate the misspecified model: y = x^T \u03b2 + w^T \u03b8 + \u03b5. Let x, w be independent N(0, I). Set ||\u03b2||\u00b2 + ||\u03b8||\u00b2 = r\u00b2=5, ||\u03b2||\u00b2/r\u00b2 = \u03ba(\u03b3) = 1 - (1+\u03b3)^{-a}. Test a=0.5, 1.0, 2.0, 5.0 with SNR=5. Compute min-norm risk for \u03b3 in [0.1, ..., 10.0]. Verify that for a=0.5, the global minimum of the risk curve occurs at \u03b3 > 1. Pass if argmin(R(\u03b3)) > 1 for a=0.5.",
+    "evidence_in_paper": "Theorem 4, Section 5.3, Point 4, Figure 4",
+    "compute": "cpu-fast",
+    "success_criterion": "For a=0.5 and SNR=5, the \u03b3 value minimizing the empirical risk is strictly greater than 1."
+  },
+  {
+    "id": "C3",
+    "title": "Latent Space Model Monotonicity",
+    "statement": "In the latent space model where features are generated as x = Zw^T + U with Z ~ N(0, I_d), W fixed, and \u03b2 aligned with the top eigenvectors of \u03a3, the min-norm least squares risk is monotonically decreasing in the overparametrized regime (\u03b3 > 1) and approaches its global minimum as \u03b3 \u2192 \u221e.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate latent space model: d=20, n=200. Generate Z ~ N(0, I_d), W ~ N(0, I_{p,d})/sqrt(d). X = ZW^T + U, U ~ N(0, I). y = Z\u03b8 + \u03be. Compute min-norm risk for \u03b3 in [1.1, 1.5, 2.0, 5.0, 10.0]. Check if risk(\u03b3=1.1) > risk(\u03b3=1.5) > risk(\u03b3=2.0) > risk(\u03b3=5.0) > risk(\u03b3=10.0). Pass if the sequence is strictly decreasing.",
+    "evidence_in_paper": "Section 5.4, Figure 5, Corollary 4",
+    "compute": "cpu-fast",
+    "success_criterion": "The empirical risk values form a strictly decreasing sequence as \u03b3 increases from 1.1 to 10.0."
+  },
+  {
+    "id": "C4",
+    "title": "Nonlinear Model Universality",
+    "statement": "For a nonlinear random features model x = \u03c6(Wz) with purely nonlinear activation \u03c6(t) = a(|t|-b), the asymptotic prediction risk of min-norm regression matches the risk of the corresponding linear Gaussian model with the same covariance structure, regardless of the dimension d of the latent space z.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate nonlinear model: n=200, d=100. Z ~ N(0, I_d), W ~ N(0, I_{p,d})/sqrt(d). X = \u03c6(ZW^T) with \u03c6(t)=|t|-0.5. y = X\u03b2 + \u03b5. Compute min-norm risk for \u03b3 in [0.5, 1.5, 3.0]. Compare to linear model risk with \u03a3 matched to Cov(X). Pass if the difference in risk between nonlinear and linear models is < 0.1 for all \u03b3.",
+    "evidence_in_paper": "Theorem 8, Figure 1, Section 8",
+    "compute": "cpu-fast",
+    "success_criterion": "The absolute difference between the empirical risk of the nonlinear model and the theoretical risk of the matched linear model is less than 0.1 for all tested \u03b3."
+  },
+  {
+    "id": "C5",
+    "title": "Ridge Dominates Min-Norm",
+    "statement": "In the isotropic well-specified and misspecified settings, optimally-tuned ridge regression (minimizing risk over \u03bb) achieves a lower prediction risk than min-norm least squares (\u03bb=0) for all values of \u03b3 and SNR.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate isotropic model (well-specified) and misspecified model. For \u03b3 in [0.5, 1.5, 3.0], compute risk for min-norm (\u03bb=0) and for ridge regression with \u03bb optimized via grid search over [1e-4, 1e-3, 1e-2, 0.1, 1.0]. Pass if min_\u03bb Risk(\u03bb) < Risk(\u03bb=0) for all \u03b3 and both model types.",
+    "evidence_in_paper": "Section 1.1, Point 3, Section 6",
+    "compute": "cpu-fast",
+    "success_criterion": "The minimum risk over the ridge penalty grid is strictly less than the min-norm risk for all tested \u03b3 values."
+  },
+  {
+    "id": "C6",
+    "title": "Underparametrized Risk Divergence",
+    "statement": "In the underparametrized regime (\u03b3 < 1), the prediction risk of the min-norm least squares estimator diverges to infinity as \u03b3 approaches 1 from below.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate isotropic model with n=1000. Compute min-norm risk for \u03b3 in [0.9, 0.95, 0.99, 0.999]. Verify that the risk increases as \u03b3 increases towards 1. Pass if Risk(0.999) > Risk(0.99) > Risk(0.95) > Risk(0.9) and Risk(0.999) > 10 * Risk(0.9).",
+    "evidence_in_paper": "Proposition 2, Section 1.1, Preliminary Remark",
+    "compute": "cpu-fast",
+    "success_criterion": "The risk at \u03b3=0.999 is greater than 10 times the risk at \u03b3=0.9, and the risk is monotonically increasing with \u03b3 in the range [0.9, 0.999]."
+  }
+]

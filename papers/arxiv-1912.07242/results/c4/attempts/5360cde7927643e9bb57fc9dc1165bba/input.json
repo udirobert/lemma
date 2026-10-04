@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "5360cde7927643e9bb57fc9dc1165bba",
+  "run_id": "20261004-021610-arxiv-1912.07242",
+  "number": 3,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C4",
+    "title": "Exact finite-sample bias-variance decomposition (Lemma 1)",
+    "statement": "For n<=d and beta_hat=X^dagger y, the bias is B_n=||E_X[Proj_{X^perp}(beta)]||^2 and the variance is V_n=E_X[||Proj_X(beta)-E_X[Proj_X(beta)]||^2] + sigma^2 E_X[Tr((XX^T)^{-1})].",
+    "kind": "lemma",
+    "testable": true,
+    "test_plan": "For several n<d (e.g., d=1000, n=100,300,500,700,900), generate many independent X matrices and noise vectors eta. Compute beta_hat=X^T(XX^T)^{-1}(X beta+eta). Compute the Monte-Carlo empirical bias and variance. Independently compute the right-hand side using the same samples: the orthogonal projector onto the rowspace of X and Tr((XX^T)^{-1}).",
+    "evidence_in_paper": "Lemma 1 and Equations (3)-(4).",
+    "compute": "cpu-fast",
+    "success_criterion": "The Monte-Carlo estimates of B_n and V_n agree with the right-hand side expressions within 5% relative error (or within Monte Carlo standard error)."
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "3ed38504792877e4dc8d2243fa1022f3d2db2f878699c890b6e358519d172a1f",
+  "script_sha256": "39822d0d8c3a5c9a5948c2bf8d4434fdf14b17086cf581c4020b831a2cdd91fb",
+  "created_at": "2026-10-04T01:59:52.826916+00:00"
+}

@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c6/audit_attempt3.py", line 59, in <module>
+    v = np.linalg.solve(A, u)
+        ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/udingethe/Dev/lemma/.venv/lib/python3.12/site-packages/numpy/linalg/_linalg.py", line 449, in solve
+    _assert_stacked_square(a)
+  File "/Users/udingethe/Dev/lemma/.venv/lib/python3.12/site-packages/numpy/linalg/_linalg.py", line 258, in _assert_stacked_square
+    raise LinAlgError('Last 2 dimensions of the array must be square')
+numpy.linalg.LinAlgError: Last 2 dimensions of the array must be square
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-1912.07242/results/c6/audit_attempt3.py", line 62, in <module>
+    v = np.linalg.pinv(A) @ u
+        ~~~~~~~~~~~~~~~~~~^~~
+ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)->(n?,m?) (size 200 is different from 1)

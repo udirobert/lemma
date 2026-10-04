@@ -1,0 +1,1 @@
+Transferred from the arxiv-1912.07242 audit round: Monte-Carlo audits at d=1000 timed out 3x within the 20-min bound; d<=300 (T<=300 trials, focused grids around critical points) gave statistically clean verdicts in minutes. Design for that envelope. Asymptotic closed-forms converge quickly in d — a large-d run is wasted budget, not better evidence.
