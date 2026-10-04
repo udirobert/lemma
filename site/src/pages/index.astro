@@ -82,19 +82,20 @@ const ARTIFACTS = [
 ];
 
 const TRACE: Array<{ tag: string; cls: string; text: string }> = [
-  { tag: "note", cls: "info", text: "lemma v0.1 · ICML 2026 agent reproductions challenge — judge PASS, end to end" },
-  { tag: "note", cls: "warn", text: "repo dormant… 3 weeks, 0 commits, 1 grokking paper on disk" },
-  { tag: "run", cls: "cmd", text: "lemma audit jmlr-22-1228 --stages extract,audit,evidence,judge" },
+  { tag: "director", cls: "cmd", text: "triage · arxiv 1912.07242 — sample-wise double descent" },
   { tag: "extract", cls: "ok", text: "6 claims → C1…C6 · success criteria taken from the claims themselves" },
-  { tag: "audit", cls: "fail", text: "round 1 · Qwen3.8-27B · 0 supported / 0 falsified / 6 inconclusive" },
-  { tag: "audit", cls: "fail", text: "bake-off gate · ν ≈ 6000 vs expected 1.0 — capability boundary detected, not papered over" },
-  { tag: "run", cls: "cmd", text: "lemma audit --endpoint kimi:k3 · bake-off first" },
-  { tag: "audit", cls: "ok", text: "bake-off gate · ν = 0.9911 — PASS · model swap authorized" },
-  { tag: "audit", cls: "ok", text: "round 3 · C1 supported · ν = 0.9983 vs 1.0 · closed-form cross-check OK" },
-  { tag: "audit", cls: "ok", text: "rounds 4–5 · C3, C4, C5, C6 supported via reviewer-reference escalation" },
-  { tag: "judge", cls: "ok", text: "evidence trail PASS 5/5 · 353 trace events · all failures preserved" },
-  { tag: "run", cls: "cmd", text: "lemma audit arxiv-2510.10981" },
-  { tag: "judge", cls: "ok", text: "evidence trail PASS 5/5 · 267 events · 3 supported, 3 honestly inconclusive" },
+  { tag: "audit", cls: "fail", text: "C2 · timeout ×3, crash ×1 — every failed attempt kept on the record" },
+  { tag: "audit", cls: "warn", text: "C2 · falsified — positive control passed, so the verdict is trusted" },
+  { tag: "human", cls: "cmd", text: "feedback.md · the claims are dimension-agnostic — bound d ≤ 300" },
+  { tag: "audit", cls: "ok", text: "re-audit · C1 + C2 supported in 4.5 min — 14× faster than round one" },
+  { tag: "propose", cls: "ok", text: "proposer agent · the risk valley at γ* = 0.90 — promoted to claim C7" },
+  { tag: "audit", cls: "ok", text: "C7 · agent-generated · supported in 14 s · control green" },
+  { tag: "audit", cls: "warn", text: "C8 · independent E[β̂] = γβ check falsified at γ = 0.1 — invisible to the circular test" },
+  { tag: "audit", cls: "fail", text: "C9 · error at the noise floor, control failed → inconclusive, recorded as such" },
+  { tag: "corpus", cls: "cmd", text: "sweep · hastie et al. 1903.08560 · bartlett et al. 1906.11300" },
+  { tag: "audit", cls: "warn", text: "bartlett C1 + C6 · falsified — published claims failing controlled tests" },
+  { tag: "map", cls: "ok", text: "verification map · 21 claims · 3 papers · 7 supported / 4 falsified / 3 inconclusive" },
+  { tag: "judge", cls: "ok", text: "evidence trail PASS 5/5 · every failure preserved" },
   { tag: "note", cls: "info", text: "inconclusive is a result — a patched false-positive is not" },
 ];
 ---
@@ -156,8 +157,9 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
     <h1>Lemma</h1>
     <p class="tagline">the AI scientist that <em>distrusts itself</em></p>
     <p class="hero-sub">
-      Before you build on a paper, inspect what survives testing. Explore the
-      experiments, challenge the controls, and see what remains uncertain.
+      Machines are beginning to do science faster than anyone can check it.
+      Lemma is the missing layer — a lab that turns claims into inspectable
+      verdicts, keeps every failure, and distrusts itself first.
     </p>
     <div class="hero-ctas">
       <a class="hero-cta" href="/room/?paper=icl-bayesian&claim=C6" data-cta="enter-audit-room">Enter the Audit Room</a>
@@ -177,11 +179,12 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
     <article class="beat c-blue">
       <span class="beat-n">01</span>
       <div>
-        <h3>the first life</h3>
+        <h3>the mission</h3>
         <p>
-          Lemma was born for the ICML 2026 Agent Reproductions challenge:
-          one grokking paper, audited end to end, <strong>judge PASS</strong>.
-          Then it slept — a dormant repo with one good result on disk.
+          Science is about to be written at machine speed — and nobody can
+          verify that fast. Lemma's job is the missing layer: make checking a
+          claim as cheap as making one, so every result in the literature can
+          carry a verdict you can inspect, with the evidence attached.
         </p>
       </div>
     </article>
@@ -189,29 +192,30 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
     <article class="beat c-magenta">
       <span class="beat-n">02</span>
       <div>
-        <h3>the night it failed</h3>
+        <h3>the approach</h3>
         <p>
-          Reawakened on a JMLR paper about cellular automata, its first models
-          returned every claim inconclusive. Not wrong — just not smart enough.
-          We gave them a physics test anyway. Expected critical exponent 1.0:
+          Not a reviewer — an instrument. The lab extracts testable claims,
+          writes and runs its own controlled numerical experiments, and
+          snapshots every attempt immutably. A failed control reads
+          <strong>inconclusive, never falsified</strong> — and an independent
+          judge scores the trail itself.
         </p>
-        <div class="big-stat">ν ≈ <span data-count="6000">0</span></div>
       </div>
     </article>
 
     <article class="beat c-teal">
       <span class="beat-n">03</span>
       <div>
-        <h3>the turn</h3>
+        <h3>what it found</h3>
         <p>
-          Most agents would have written a confident paragraph and moved on.
-          Lemma's validator auto-rejects any verdict that contradicts its own
-          metrics — so the fix was gated: no model swap until the replacement
-          passed the same physics test. It scored
-          <strong>0.99</strong>. Next round: <strong>0.9983</strong>. The
-          claims started falling.
+          Pointed at the high-dimensional regression literature, the lab
+          audited <strong>21 claims across three papers</strong> — and two
+          published claims failed their own controlled tests. Between them,
+          new science: an agent-generated hypothesis verified in seconds, and
+          a measurement no paper reported — the asymptotic risk approximation
+          is already within ~0.1% at d&nbsp;=&nbsp;80.
         </p>
-        <div class="big-stat"><span data-count="0.9983" data-decimals="4">0</span></div>
+        <div class="big-stat"><span data-count="21">0</span> claims · <span data-count="3">0</span> papers</div>
       </div>
     </article>
 
@@ -234,6 +238,20 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
           <div class="receipt"><b><span data-count={totals.attempts}>0</span></b><span>audit attempts</span></div>
         </div>
         <p class="receipts-note">the cost of honesty — every number was spent to find out, not to prove.</p>
+      </div>
+    </article>
+
+    <article class="beat c-blue">
+      <span class="beat-n">05</span>
+      <div>
+        <h3>the vision</h3>
+        <p>
+          One literature is a start — not the destination. The goal is a
+          verification map of science itself: every claim tracking its
+          evidence, every failure preserved, every uncertainty stated in the
+          open. Discovery accelerates the moment trust becomes cheap. That is
+          the lab we are building.
+        </p>
       </div>
     </article>
   </div>
@@ -373,7 +391,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
     <div class="artifact-group">
       <a class="link-row papers-index-link" href="/demo/">
         <span class="k">discovery replay →</span>
-        <span>one paper, six claims, three agents, one human — the loop in 110 s</span>
+        <span>question → verdict, agent handoffs, one human gate — the loop in 110 s</span>
       </a>
       <a class="link-row papers-index-link" href="/papers/">
         <span class="k">all papers →</span>
