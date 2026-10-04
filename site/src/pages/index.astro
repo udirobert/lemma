@@ -7,6 +7,7 @@ import TracePlayer from "../components/TracePlayer.astro";
 import BgGlass from "../components/BgGlass.astro";
 import ClipMenu from "../components/ClipMenu.astro";
 import Landscape from "../components/Landscape.astro";
+import SpecimenField from "../components/SpecimenField.astro";
 import PipelineExplorer from "../components/PipelineExplorer.astro";
 import papersData from "../data/papers.json";
 
@@ -148,10 +149,11 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
   </head>
   <body>
     <BgGlass />
+    <SpecimenField />
     <div class="spectrum-fixed" aria-hidden="true"></div>
 
 <!-- ================= HERO ================= -->
-<header class="hero" id="top">
+<header class="hero" id="top" data-specimen="cloud">
   <div class="hero-copy">
     <p class="kicker">evidence over assertion</p>
     <h1>Lemma</h1>
@@ -176,7 +178,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
 <!-- ================= STORY ================= -->
 <section class="story" id="story">
   <div class="wrap">
-    <article class="beat c-blue">
+    <article class="beat c-blue" data-specimen="helix">
       <span class="beat-n">01</span>
       <div>
         <h3>the mission</h3>
@@ -189,7 +191,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
       </div>
     </article>
 
-    <article class="beat c-magenta">
+    <article class="beat c-magenta" data-specimen="petri">
       <span class="beat-n">02</span>
       <div>
         <h3>the approach</h3>
@@ -203,7 +205,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
       </div>
     </article>
 
-    <article class="beat c-teal">
+    <article class="beat c-teal" data-specimen="curve">
       <span class="beat-n">03</span>
       <div>
         <h3>what it found</h3>
@@ -219,7 +221,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
       </div>
     </article>
 
-    <article class="beat c-gold">
+    <article class="beat c-gold" data-specimen="grid">
       <span class="beat-n">04</span>
       <div>
         <h3>the receipts</h3>
@@ -241,7 +243,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
       </div>
     </article>
 
-    <article class="beat c-blue">
+    <article class="beat c-blue" data-specimen="network">
       <span class="beat-n">05</span>
       <div>
         <h3>the vision</h3>
@@ -264,7 +266,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
 <PipelineExplorer />
 
 <!-- ================= TRACE ================= -->
-<section class="trace" id="trace">
+<section class="trace" id="trace" data-specimen="wave">
   <div class="wrap trace-pin">
     <div class="trace-head">
       <h2>The trail is the product</h2>
@@ -292,7 +294,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
 </section>
 
 <!-- ================= REPLAY ================= -->
-<section class="replay" id="replay">
+<section class="replay" id="replay" data-specimen="curve">
   <div class="wrap">
     <div class="trace-head">
       <h2>Replay an audit, line by line</h2>
@@ -311,7 +313,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
 </section>
 
 <!-- ================= WAITLIST ================= -->
-<section class="waitlist" id="waitlist">
+<section class="waitlist" id="waitlist" data-specimen="colony">
   <div class="wrap">
     <div class="trace-head">
       <h2>Audit a new paper</h2>
@@ -374,7 +376,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
 </section>
 
 <!-- ================= ARTIFACTS ================= -->
-<section class="artifacts" id="artifacts">
+<section class="artifacts" id="artifacts" data-specimen="grid">
   <div class="wrap">
     <h2>Everything is public</h2>
     {ARTIFACTS.map((g) => (
@@ -401,7 +403,7 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
   </div>
 </section>
 
-<footer>
+<footer data-specimen="cloud">
   <p>lemma · the trace is the demo</p>
 </footer>
 
