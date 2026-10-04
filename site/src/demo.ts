@@ -235,7 +235,7 @@ function card(inner: string, cls = "") {
 }
 
 function kick(ev: DemoEvent, extra = "") {
-  return `<div class="card-kick"><span class="who">${AGENT_SHORT[ev.agent] || ev.agent}</span>${extra}<span>${KIND_VERB[ev.kind] || ev.kind}</span></div>`;
+  return `<div class="card-kick"><span class="who">${AGENT_SHORT[ev.agent] || ev.agent}</span>${extra}<span class="verb">· ${KIND_VERB[ev.kind] || ev.kind}</span></div>`;
 }
 
 function fire(ev: DemoEvent) {

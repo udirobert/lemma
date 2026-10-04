@@ -149,7 +149,7 @@ import ClipMenu from "../components/ClipMenu.astro";
       .d-head-link:hover { color: var(--fg); }
 
       .d-grid {
-        flex: 1; display: grid; grid-template-columns: 190px 1fr 220px;
+        flex: 1; display: grid; grid-template-columns: 200px 1fr 220px;
         min-height: 0;
       }
       .d-rail {
@@ -176,7 +176,7 @@ import ClipMenu from "../components/ClipMenu.astro";
       .d-agent[data-agent="human"].active { border-color: var(--gold); box-shadow: 0 0 22px color-mix(in srgb, var(--gold) 20%, transparent); }
       .d-agent[data-agent="human"].active .a-name::before { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
       @keyframes a-pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
-      .d-agent .a-last { font-family: var(--font-m); font-size: .58rem; color: var(--mut); margin-top: 4px; min-height: .9em; }
+      .d-agent .a-last { font-family: var(--font-m); font-size: .58rem; color: var(--mut); margin-top: 4px; min-height: .9em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
 
       /* stage */
       .d-center { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
@@ -314,7 +314,7 @@ import ClipMenu from "../components/ClipMenu.astro";
       .d-loop .ph.now { color: var(--fg); border-color: var(--blue); }
       .d-loop .ph.done { color: var(--mut); border-color: var(--teal); }
       .d-loop .ph.done::after { content: " ✓"; color: var(--teal); }
-      .d-loop .ph .ph-n { color: var(--dim); margin-right: 6px; }
+      .d-loop .ph .ph-n { color: var(--dim); margin-right: 8px; }
       .d-loop-head { font-family: var(--font-m); font-size: .58rem; letter-spacing: .2em; color: var(--dim); text-transform: uppercase; margin-bottom: 8px; }
 
       /* counters */
