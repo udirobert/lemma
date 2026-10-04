@@ -38,49 +38,23 @@ const totals = papersData.totals as {
   attempts: number;
 };
 
-// Artifact links generated from the paper registry — no manual editing needed
+// The open ledger — one row per paper carrying its verdict strip, judge
+// badge, and artifact links. The flagship corpus cluster leads; the
+// regression fixture trails. Generated from the registry — no manual edits
 // when a new paper lands (meta.json → _index.json → papers.json).
-const ARTIFACTS = [
-  {
-    group: "audited papers",
-    items: papers.map((p) => ({
-      k: `${p.source_label || p.slug}`,
-      d: `${p.summary.supported} supported / ${p.summary.inconclusive} inconclusive · judge ${p.judge ? `${p.judge.verdict} ${p.judge.score}` : "pending"}`,
-      u: `/papers/${p.slug}`,
-      internal: true,
-    })),
-  },
-  {
-    group: "evidence logbooks",
-    items: papers
-      .filter((p) => p.links.logbook)
-      .map((p) => ({
-        k: `logbook · ${p.slug}`,
-        d: "Trackio logbook — the inspectable evidence trail",
-        u: p.links.logbook as string,
-      })),
-  },
-  {
-    group: "raw evidence",
-    items: papers
-      .filter((p) => p.links.dataset)
-      .map((p) => ({
-        k: `dataset · ${p.slug}`,
-        d: "every run output + failed attempt included",
-        u: p.links.dataset as string,
-      })),
-  },
-  {
-    group: "code",
-    items: [
-      {
-        k: "repository",
-        d: "pipeline, traces, feedback, reviewer references",
-        u: "https://github.com/udirobert/lemma",
-      },
-    ],
-  },
-];
+const ROLE_ORDER: Record<string, number> = { audit: 1, corpus: 0, fixture: 2 };
+const LEDGER = [...papers].sort((a, b) => {
+  const fa = a.slug === "double-descent" ? -1 : 0;
+  const fb = b.slug === "double-descent" ? -1 : 0;
+  return fa - fb || (ROLE_ORDER[a.role] ?? 1) - (ROLE_ORDER[b.role] ?? 1);
+});
+const strip = (s: { supported: number; falsified: number; inconclusive: number; not_audited: number }) =>
+  [
+    ...Array(s.supported).fill("sup"),
+    ...Array(s.falsified).fill("fal"),
+    ...Array(s.inconclusive).fill("inc"),
+    ...Array(s.not_audited).fill("na"),
+  ];
 
 const TRACE: Array<{ tag: string; cls: string; text: string }> = [
   { tag: "director", cls: "cmd", text: "triage · arxiv 1912.07242 — sample-wise double descent" },
@@ -375,31 +349,64 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
   </div>
 </section>
 
-<!-- ================= ARTIFACTS ================= -->
+<!-- ================= LEDGER ================= -->
 <section class="artifacts" id="artifacts" data-specimen="grid">
   <div class="wrap">
-    <h2>Everything is public</h2>
-    {ARTIFACTS.map((g) => (
-      <div class="artifact-group">
-        <span class="artifact-label">{g.group}</span>
-        {g.items.map((a: { k: string; d: string; u: string; internal?: boolean }) => (
-          <a class="link-row" href={a.u} target={a.internal ? undefined : "_blank"} rel={a.internal ? undefined : "noopener"}>
-            <span class="k">{a.k}</span>
-            <span>{a.d}</span>
-          </a>
-        ))}
-      </div>
-    ))}
-    <div class="artifact-group">
-      <a class="link-row papers-index-link" href="/demo/">
+    <div class="ledger-head">
+      <h2>Everything is public</h2>
+      <p class="ledger-sub">the verification ledger — every paper, every claim, every failure on record</p>
+    </div>
+    <div class="ledger-actions">
+      <a class="link-row" href="/demo/">
         <span class="k">discovery replay →</span>
         <span>question → verdict, agent handoffs, one human gate — the loop in 110 s</span>
       </a>
-      <a class="link-row papers-index-link" href="/papers/">
-        <span class="k">all papers →</span>
-        <span>the full audit registry: claims, verdicts, figures, traces</span>
+      <a class="link-row" href="/papers/">
+        <span class="k">the full registry →</span>
+        <span>claims, verdicts, figures, traces — per paper</span>
+      </a>
+      <a class="link-row" href="https://github.com/udirobert/lemma" target="_blank" rel="noopener">
+        <span class="k">repository ↗</span>
+        <span>pipeline, traces, feedback, reviewer references</span>
       </a>
     </div>
+    <div class="ledger">
+      {LEDGER.map((p) => (
+        <div class="ledger-row">
+          <div class="ledger-main">
+            <a class="ledger-title" href={`/papers/${p.slug}`}>{p.title}</a>
+            {p.links.paper && (
+              <a class="ledger-src" href={p.links.paper} target="_blank" rel="noopener">{p.source_label} ↗</a>
+            )}
+          </div>
+          <div class="ledger-verdicts">
+            <span class="claim-strip" aria-hidden="true">
+              {strip(p.summary).map((s) => <i class={`cs-${s}`} />)}
+            </span>
+            <span class="ledger-counts">
+              {p.summary.supported > 0 && `${p.summary.supported} supported`}
+              {p.summary.falsified > 0 && ` · ${p.summary.falsified} falsified`}
+              {p.summary.inconclusive > 0 && ` · ${p.summary.inconclusive} inconclusive`}
+              {p.summary.not_audited > 0 && ` · ${p.summary.not_audited} untested`}
+            </span>
+          </div>
+          <div class="ledger-artifacts">
+            {p.judge
+              ? <span class={`judge-badge ${p.judge.verdict === "PASS" ? "pass" : "warn"}`}>judge {p.judge.verdict} {p.judge.score}</span>
+              : <span class="judge-badge dim">judge pending</span>}
+            {p.links.logbook && <a href={p.links.logbook} target="_blank" rel="noopener">logbook ↗</a>}
+            {p.links.dataset && <a href={p.links.dataset} target="_blank" rel="noopener">dataset ↗</a>}
+          </div>
+        </div>
+      ))}
+    </div>
+    <p class="ledger-legend">
+      <i class="cs-sup" /> supported
+      <i class="cs-fal" /> falsified
+      <i class="cs-inc" /> inconclusive
+      <i class="cs-na" /> not yet tested
+      <span class="ledger-legend-note">— inconclusive is a result, not a failure to report one</span>
+    </p>
   </div>
 </section>
 

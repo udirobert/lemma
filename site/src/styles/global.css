@@ -1067,6 +1067,167 @@ html.pd-motion .figure-cell img.is-loaded {
   font-size: 0.92rem;
 }
 
+/* ---------------- verification ledger ---------------- */
+.ledger-head {
+  margin-bottom: 26px;
+}
+.ledger-sub {
+  margin-top: 8px;
+  font-family: var(--font-m);
+  font-size: 0.78rem;
+  color: var(--dim);
+}
+.ledger-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 34px;
+}
+.ledger-actions .link-row {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 0;
+}
+.ledger-actions .link-row:hover {
+  transform: translateY(-3px);
+}
+.ledger-actions .link-row span:last-child {
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.ledger {
+  border-top: 1px solid var(--edge);
+}
+.ledger-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 16px 6px;
+  border-bottom: 1px solid color-mix(in srgb, var(--edge) 55%, transparent);
+}
+.ledger-main {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  min-width: 0;
+}
+.ledger-title {
+  color: var(--fg);
+  font-family: var(--font-d);
+  font-weight: 700;
+  font-size: 0.94rem;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ledger-title:hover {
+  color: var(--teal);
+}
+.ledger-src {
+  flex-shrink: 0;
+  font-family: var(--font-m);
+  font-size: 0.64rem;
+  color: var(--dim);
+  text-decoration: none;
+}
+.ledger-src:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+.ledger-verdicts {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.claim-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.claim-strip i,
+.ledger-legend i {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+.cs-sup { background: var(--teal); }
+.cs-fal { background: var(--magenta); }
+.cs-inc { background: var(--blue); opacity: 0.45; }
+.cs-na  { background: transparent; border: 1px solid var(--dim); }
+.ledger-counts {
+  font-family: var(--font-m);
+  font-size: 0.66rem;
+  color: var(--mut);
+}
+.ledger-artifacts {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-m);
+  font-size: 0.66rem;
+}
+.ledger-artifacts a {
+  color: var(--dim);
+  text-decoration: none;
+}
+.ledger-artifacts a:hover {
+  color: var(--blue);
+  text-decoration: underline;
+}
+.judge-badge {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 9px;
+  border-radius: 99px;
+  white-space: nowrap;
+}
+.judge-badge.pass {
+  color: var(--teal);
+  border: 1px solid color-mix(in srgb, var(--teal) 55%, transparent);
+}
+.judge-badge.warn {
+  color: var(--gold);
+  border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+}
+.judge-badge.dim {
+  color: var(--dim);
+  border: 1px solid var(--edge);
+}
+.ledger-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  margin-top: 18px;
+  font-family: var(--font-m);
+  font-size: 0.64rem;
+  color: var(--dim);
+}
+.ledger-legend i {
+  margin-right: -4px;
+}
+.ledger-legend-note {
+  color: var(--mut);
+  font-style: italic;
+}
+
+@media (max-width: 860px) {
+  .ledger-actions {
+    grid-template-columns: 1fr;
+  }
+  .ledger-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+}
+
 footer {
   position: relative;
   z-index: 2; /* above the parked finale row so the text stays readable */
