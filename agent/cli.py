@@ -3,6 +3,7 @@
 Usage:
   python -m agent.cli audit <source>            # full pipeline
   python -m agent.cli audit <source> --stages extract,judge
+  python -m agent.cli extract-server [--port 8787]  # free HTTP claim extract
   python -m agent.cli judge <workdir>           # judge an existing run
   python -m agent.cli judge --regression        # judge the grokking fixture
 
@@ -112,6 +113,13 @@ def main() -> int:
         help="trace local reruns to Weave (explicit opt-in; off by default)",
     )
 
+    p_extract_srv = sub.add_parser(
+        "extract-server",
+        help="serve free claim-extract HTTP API (ChatGPT discovery wedge)",
+    )
+    p_extract_srv.add_argument("--host", default="127.0.0.1")
+    p_extract_srv.add_argument("--port", type=int, default=8787)
+
     args = parser.parse_args()
     if args.cmd == "judge":
         return _judge(args)
@@ -125,6 +133,10 @@ def main() -> int:
         from agent.room_server import serve
 
         return serve(REPO_ROOT, port=args.port, weave=args.weave)
+    if args.cmd == "extract-server":
+        from agent.extract_http import serve as serve_extract
+
+        return serve_extract(host=args.host, port=args.port)
     return _audit(args)
 
 

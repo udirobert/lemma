@@ -37,7 +37,10 @@ pip install pre-commit detect-secrets ruff && pre-commit install
 # 3. Audit a paper end to end
 ./lemma audit <arxiv-id|openreview-id|paper.pdf>
 
-# 4. Run any stage in isolation (handy for demos)
+# 4. Free ChatGPT wedge — claim extract HTTP API
+./lemma extract-server --port 8787
+
+# 5. Run any stage in isolation (handy for demos)
 ./lemma audit <source> --stages extract,judge
 ./lemma search "interpretability grokking topology" --limit 6
 ```
@@ -68,6 +71,27 @@ lemma audit <arxiv-id | openreview-id | paper.pdf>
 
 Traces (append-only JSONL) live in `agent/traces/<run-id>.jsonl` and inside
 each paper's workdir for the judge to verify.
+
+## ChatGPT plugin — "audit this paper"
+
+Thin MCP/HTTP wrapper for [chatgpt.com/plugins](https://chatgpt.com/plugins). Description in user words ("can I trust this paper"). **Free** `extract_claims` first (Stage-1 claim extract from an arXiv / OpenReview id or URL — discovery + mid-conversation recommendation). Full audit second via an **existing account**, product queue, or informational plans page — **not** in-plugin checkout (OpenAI allows plugin commerce for physical goods only).
+
+| Tool | Price | Endpoint |
+| --- | --- | --- |
+| `extract_claims` | Free | `POST /extract` on extract-server |
+| Service discovery | — | `GET /tools` |
+| Thin MCP stub | — | `POST /mcp` (`tools/list`, `tools/call`) |
+
+```bash
+./lemma extract-server --port 8787
+
+# Demo path (no LLM / PDF)
+curl -X POST http://127.0.0.1:8787/extract \
+  -H 'content-type: application/json' \
+  -d '{"demo":true,"source":"2510.10981"}'
+```
+
+Playbook: [docs/CHATGPT_PLUGIN_PLAYBOOK.md](docs/CHATGPT_PLUGIN_PLAYBOOK.md) · Connect: [docs/CONNECT.md](docs/CONNECT.md) · Eval: [docs/EVAL.md](docs/EVAL.md) · Starters: [docs/STARTER_PROMPTS.md](docs/STARTER_PROMPTS.md)
 
 ## Submission results (Aug 16, 2026)
 

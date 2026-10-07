@@ -11,9 +11,37 @@ OPENREVIEW_RE = re.compile(r"^[A-Za-z0-9]{8,12}$")
 MAX_TEXT_CHARS = 60_000  # keep prompts tractable
 
 
+def normalize_source(source: str) -> str:
+    """Accept bare ids or common paper URLs; return a resolve()-able token."""
+    s = source.strip()
+    m = re.search(
+        r"arxiv\.org/(?:abs|pdf|html)/(\d{4}\.\d{4,5})(?:v\d+)?",
+        s,
+        re.IGNORECASE,
+    )
+    if m:
+        return m.group(1)
+    m = re.search(
+        r"export\.arxiv\.org/(?:abs|pdf)/(\d{4}\.\d{4,5})(?:v\d+)?",
+        s,
+        re.IGNORECASE,
+    )
+    if m:
+        return m.group(1)
+    m = re.search(
+        r"openreview\.net/(?:forum|pdf)\?id=([A-Za-z0-9]{8,12})",
+        s,
+        re.IGNORECASE,
+    )
+    if m:
+        return m.group(1)
+    return s
+
+
 def resolve(source: str, workdir: Path) -> dict:
     """Return {paper_id, title_hint, source_kind, text, pdf_path}."""
     workdir.mkdir(parents=True, exist_ok=True)
+    source = normalize_source(source)
 
     if Path(source).is_file():
         return _from_pdf(Path(source), workdir)
@@ -27,7 +55,7 @@ def resolve(source: str, workdir: Path) -> dict:
 
     raise ValueError(
         f"Cannot resolve paper source {source!r}; expected arxiv id "
-        "(e.g. 2601.19791), openreview id, or a local PDF path."
+        "(e.g. 2601.19791), arxiv/openreview URL, or a local PDF path."
     )
 
 
