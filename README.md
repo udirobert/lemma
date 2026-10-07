@@ -91,7 +91,7 @@ curl -X POST http://127.0.0.1:8787/extract \
   -d '{"demo":true,"source":"2510.10981"}'
 ```
 
-Playbook: [docs/CHATGPT_PLUGIN_PLAYBOOK.md](docs/CHATGPT_PLUGIN_PLAYBOOK.md) · Connect: [docs/CONNECT.md](docs/CONNECT.md) · Eval: [docs/EVAL.md](docs/EVAL.md) · Starters: [docs/STARTER_PROMPTS.md](docs/STARTER_PROMPTS.md)
+Playbook: [docs/CHATGPT_PLUGIN_PLAYBOOK.md](docs/CHATGPT_PLUGIN_PLAYBOOK.md) · Connect: [docs/CONNECT.md](docs/CONNECT.md) · Eval: [docs/EVAL.md](docs/EVAL.md) · Starters: [docs/STARTER_PROMPTS.md](docs/STARTER_PROMPTS.md) · Scoreboard: usage-only funnel in [docs/CHATGPT_PLUGIN_PLAYBOOK.md](docs/CHATGPT_PLUGIN_PLAYBOOK.md#usage-only-scoreboard-plugin-lane) (usage-first; don’t chase ARPU yet)
 
 ## Submission results (Aug 16, 2026)
 

@@ -54,3 +54,15 @@ Allowed patterns for our free → paid ladders:
 - https://developers.openai.com/plugins/plugin-guidelines
 - https://learn.chatgpt.com/docs/plugins
 - DevDay 2026 Plugin Extensions / mid-conversation discovery writeups (e.g. intent routing / "plugin SEO")
+
+## Usage-only scoreboard (Plugin Lane)
+
+Watch weekly. **Usage-first; don't chase ARPU yet** — no paid conversion, checkout, or monetisation metrics on this board. Free MCP/HTTP wedge: `extract_claims` (Stage-1 claim extract via extract-server `/extract` + thin `POST /mcp` stub); full audit stays off-platform if mentioned at all and is out of scope here. Instrument when you have analytics (extract-server / MCP stub request logs, stable client ids); do not invent dashboards until those exist.
+
+| # | Metric | What “good” looks like |
+| --- | --- | --- |
+| 1 | Plugin connects | Successful connect + `tools/list` against the live extract-server MCP stub (`POST /mcp`) |
+| 2 | Free tool calls / week | Calls to live free tool: `extract_claims` (HTTP `/extract` or MCP `tools/call`) |
+| 3 | Return users | ≥2 sessions in 7 days (same ChatGPT user / stable client id if logged) |
+
+Related: [CONNECT](./CONNECT.md) · free extract vs full audit (not in-plugin).
