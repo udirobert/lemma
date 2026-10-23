@@ -1,0 +1,57 @@
+{
+  "ts": "2026-10-22T16:49:46+0100",
+  "round_id": "9196c8cd3b954ed8816783703ca5b72b",
+  "targets": [
+    "C1",
+    "C2",
+    "C4",
+    "C5"
+  ],
+  "before": {
+    "C1": "falsified",
+    "C2": "falsified",
+    "C4": "inconclusive",
+    "C5": "inconclusive"
+  },
+  "after": {
+    "C1": "supported",
+    "C2": "falsified",
+    "C4": "inconclusive",
+    "C5": "inconclusive"
+  },
+  "before_attempt_ids": {
+    "C1": [
+      "03003094f1824cd59f2dde4e1b4ee2c3",
+      "77f2ab061494444daa912d19f00818ba"
+    ],
+    "C2": [
+      "88d222d3f26c4311adea158e8a032eb9"
+    ],
+    "C4": [
+      "946e7bd751de4b72a6db5537b868f4da"
+    ],
+    "C5": [
+      "3bb715f38a614c0fbc0eed885adafc61"
+    ]
+  },
+  "after_attempt_ids": {
+    "C1": [
+      "df0ba9c58c4340ccb072bc0a1737f9c1"
+    ],
+    "C2": [
+      "0b156257c23543e18ef1212503829362"
+    ],
+    "C4": [
+      "f2deb0cf2afd47f7aabca88cc8f17bc3"
+    ],
+    "C5": [
+      "5f199c03b96646259a83db61caf95725"
+    ]
+  },
+  "changed": [
+    "C1"
+  ],
+  "verify_gain": [
+    "C1"
+  ]
+}

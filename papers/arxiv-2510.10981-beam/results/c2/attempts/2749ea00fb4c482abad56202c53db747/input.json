@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "2749ea00fb4c482abad56202c53db747",
+  "run_id": "20261022-162538-arxiv-2510.10981",
+  "number": 1,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C2",
+    "title": "Coupled p-N Scaling of Bayes Gap",
+    "statement": "The Bayes Gap RBG(M_hat_theta) for a uniform-attention Transformer decreases as a function of the product pN (pretraining prompt length times number of prompts), specifically following a power-law trend BG(p, N) \u2248 a + b(pN)^-beta + c/N, which fits the data significantly better than models depending on N or p alone.",
+    "kind": "empirical_claim",
+    "testable": true,
+    "test_plan": "Train a small uniform-attention Transformer (or a simplified mean-pooling network as per Definition 2.2) on synthetic regression tasks. Sweep N in {100, 500, 1000, 2000} and p in {5, 10, 15, 20}. Compute the Bayes Gap for each (N, p) pair. Fit three models to the pooled data: (1) Joint: a + b(pN)^-beta + c/N, (2) N-only: a + bN^-beta, (3) p-only: a + cp^-gamma. Compare the R-squared values.",
+    "evidence_in_paper": "Table 1, Figure 2 (left and middle panels), Section 4 Findings (1)",
+    "compute": "gpu-small",
+    "success_criterion": "The R-squared of the joint model (pN) is greater than 0.8 and significantly higher (by at least 0.1) than the R-squared of both the N-only and p-only models."
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "4174f4f098f215ca85129f5280fdf94e81a9e1757df1190dcd49955b27d0287e",
+  "script_sha256": "3e4d7d0f2cf0e8df4e1c510dcfac779bab4c16a30e19de9d8078e2b635454606",
+  "created_at": "2026-10-22T15:26:10.290542+00:00"
+}

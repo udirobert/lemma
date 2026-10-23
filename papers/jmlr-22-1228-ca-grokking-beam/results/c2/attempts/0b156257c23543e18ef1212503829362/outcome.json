@@ -1,0 +1,40 @@
+{
+  "exit_code": 0,
+  "wall_s": 2.235,
+  "summary": {
+    "claim_id": "C2",
+    "status": "falsified",
+    "metrics": {
+      "control_pass": true,
+      "control_nu": 2.6999999999999984,
+      "D2_t_eps": 1.0478149221778432,
+      "D2_nu": 2.0036927061154604,
+      "D2_nu_pred": 1.5,
+      "D2_nu_abs_err": 0.5036927061154604,
+      "D2_n_points": 104,
+      "D2_E_final": 0.0,
+      "D5_t_eps": 0.9962001028480537,
+      "D5_nu": 3.8582668790920756,
+      "D5_nu_pred": 3.0,
+      "D5_nu_abs_err": 0.8582668790920756,
+      "D5_n_points": 99,
+      "D5_E_final": 0.0,
+      "D10_t_eps": 0.9716733645137531,
+      "D10_nu": 6.7815824164285,
+      "D10_nu_pred": 5.5,
+      "D10_nu_abs_err": 1.2815824164285,
+      "D10_n_points": 97,
+      "D10_E_final": 0.0
+    },
+    "notes": "D-dimensional uniform ball model with nontrivial shift; population-trained perceptron dynamics; test error from spherical-cap volume; log-log exponent fit."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "354ef54fb1ebbddf75f4f483b2195b53fa73cce340b0b292dd6c004678912cc2"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a1644b-ed84-713f-a44f-af0d86868ab2"
+}

@@ -1,0 +1,31 @@
+{
+  "exit_code": 0,
+  "wall_s": 16.008,
+  "summary": {
+    "claim_id": "C5",
+    "status": "inconclusive",
+    "metrics": {
+      "control_pass": false,
+      "control_min_test_error": 0.526,
+      "main_phase_found": false,
+      "main_min_train_error": 0.5033333333333333,
+      "main_max_test_error": 0.5075,
+      "main_min_test_error": 0.5075,
+      "main_final_train_error": 0.5033333333333333,
+      "main_final_test_error": 0.5075,
+      "main_epochs": 600,
+      "M": 100,
+      "chi_main": 6
+    },
+    "notes": "Control failed; MPS training/evaluation statistic is unreliable."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "a806027d1dc86bfa1ca6954a5ec50a4a4d85a1c7cf6eb3c4eaacd36c9d8ec7c8"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a16436-8a75-7327-8cf3-3d81e23c1373"
+}

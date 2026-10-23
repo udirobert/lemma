@@ -1,0 +1,430 @@
+{
+ "episodes": [
+  {
+   "file": "ca-grokking_c1_ANTHROPIC_r1.json",
+   "provider": "ANTHROPIC",
+   "provider_name": "Claude Opus 5.5",
+   "model": "claude-opus-5-5",
+   "task": "ca-grokking_c1",
+   "task_name": "CA C1 \u2014 1D critical exponent (nu = 1.0)",
+   "full_context": false,
+   "best_reward": 0.0,
+   "best_attempt": null,
+   "n_attempts": 3,
+   "statuses": [
+    "supported",
+    "supported",
+    "crash"
+   ],
+   "recovered": false
+  },
+  {
+   "file": "ca-grokking_c1_ANTHROPIC_r2.json",
+   "provider": "ANTHROPIC",
+   "provider_name": "Claude Opus 5.5",
+   "model": "claude-opus-5-5",
+   "task": "ca-grokking_c1",
+   "task_name": "CA C1 \u2014 1D critical exponent (nu = 1.0)",
+   "full_context": false,
+   "best_reward": 0.0,
+   "best_attempt": null,
+   "n_attempts": 3,
+   "statuses": [
+    "supported",
+    "inconclusive",
+    "crash"
+   ],
+   "recovered": false
+  },
+  {
+   "file": "ca-grokking_c1_BEAMHF_r1.json",
+   "provider": "BEAMHF",
+   "provider_name": "Beam 1.0 501B",
+   "model": "reflection/Beam-1.0-501B-A23B",
+   "task": "ca-grokking_c1",
+   "task_name": "CA C1 \u2014 1D critical exponent (nu = 1.0)",
+   "full_context": false,
+   "best_reward": 1.0,
+   "best_attempt": 1,
+   "n_attempts": 1,
+   "statuses": [
+    "supported"
+   ],
+   "recovered": true
+  },
+  {
+   "file": "ca-grokking_c1_BEAMHF_r2.json",
+   "provider": "BEAMHF",
+   "provider_name": "Beam 1.0 501B",
+   "model": "reflection/Beam-1.0-501B-A23B",
+   "task": "ca-grokking_c1",
+   "task_name": "CA C1 \u2014 1D critical exponent (nu = 1.0)",
+   "full_context": false,
+   "best_reward": 1.0,
+   "best_attempt": 3,
+   "n_attempts": 3,
+   "statuses": [
+    "supported",
+    "supported",
+    "supported"
+   ],
+   "recovered": true
+  },
+  {
+   "file": "ca-grokking_c1_KIMI_r1.json",
+   "provider": "KIMIHF",
+   "provider_name": "Kimi K3",
+   "model": "moonshotai/Kimi-K3",
+   "task": "ca-grokking_c1",
+   "task_name": "CA C1 \u2014 1D critical exponent (nu = 1.0)",
+   "full_context": false,
+   "best_reward": 1.0,
+   "best_attempt": 2,
+   "n_attempts": 2,
+   "statuses": [
+    "falsified",
+    "supported"
+   ],
+   "recovered": true
+  },
+  {
+   "file": "ca-grokking_c1_RUNINFRA_r1.json",
+   "provider": "RUNINFRA",
+   "provider_name": "27B-class (RunInfra)",
+   "model": "qwen3-8-27b",
+   "task": "ca-grokking_c1",
+   "task_name": "CA C1 \u2014 1D critical exponent (nu = 1.0)",
+   "full_context": false,
+   "best_reward": 1.0,
+   "best_attempt": 3,
+   "n_attempts": 3,
+   "statuses": [
+    "falsified",
+    "falsified",
+    "supported"
+   ],
+   "recovered": true
+  },
+  {
+   "file": "ca-grokking_c1_RUNINFRA_r2.json",
+   "provider": "RUNINFRA",
+   "provider_name": "27B-class (RunInfra)",
+   "model": "qwen3-8-27b",
+   "task": "ca-grokking_c1",
+   "task_name": "CA C1 \u2014 1D critical exponent (nu = 1.0)",
+   "full_context": false,
+   "best_reward": 0.0,
+   "best_attempt": null,
+   "n_attempts": 3,
+   "statuses": [
+    "crash",
+    "supported",
+    "supported"
+   ],
+   "recovered": false
+  },
+  {
+   "file": "ca-grokking_c2_ANTHROPIC_excerpt_r1.json",
+   "provider": "ANTHROPIC",
+   "provider_name": "Claude Opus 5.5",
+   "model": "claude-opus-5-5",
+   "task": "ca-grokking_c2",
+   "task_name": "CA C2 \u2014 D-ball exponent series (nu = (D+1)/2)",
+   "full_context": false,
+   "best_reward": 1.0,
+   "best_attempt": 3,
+   "n_attempts": 3,
+   "statuses": [
+    "falsified",
+    "supported",
+    "supported"
+   ],
+   "recovered": true
+  },
+  {
+   "file": "ca-grokking_c2_ANTHROPIC_excerpt_r2.json",
+   "provider": "ANTHROPIC",
+   "provider_name": "Claude Opus 5.5",
+   "model": "claude-opus-5-5",
+   "task": "ca-grokking_c2",
+   "task_name": "CA C2 \u2014 D-ball exponent series (nu = (D+1)/2)",
+   "full_context": false,
+   "best_reward": 0.0,
+   "best_attempt": null,
+   "n_attempts": 3,
+   "statuses": [
+    "crash",
+    "inconclusive",
+    "supported"
+   ],
+   "recovered": false
+  },
+  {
+   "file": "ca-grokking_c2_ANTHROPIC_full_r1.json",
+   "provider": "ANTHROPIC",
+   "provider_name": "Claude Opus 5.5",
+   "model": "claude-opus-5-5",
+   "task": "ca-grokking_c2",
+   "task_name": "CA C2 \u2014 D-ball exponent series (nu = (D+1)/2)",
+   "full_context": true,
+   "best_reward": 0.5,
+   "best_attempt": null,
+   "n_attempts": 3,
+   "statuses": [
+    "falsified",
+    "supported",
+    "inconclusive"
+   ],
+   "recovered": false
+  },
+  {
+   "file": "ca-grokking_c2_ANTHROPIC_full_r2.json",
+   "provider": "ANTHROPIC",
+   "provider_name": "Claude Opus 5.5",
+   "model": "claude-opus-5-5",
+   "task": "ca-grokking_c2",
+   "task_name": "CA C2 \u2014 D-ball exponent series (nu = (D+1)/2)",
+   "full_context": true,
+   "best_reward": 0.0,
+   "best_attempt": null,
+   "n_attempts": 3,
+   "statuses": [
+    "supported",
+    "supported",
+    "crash"
+   ],
+   "recovered": false
+  },
+  {
+   "file": "ca-grokking_c2_BEAMHF_excerpt.json",
+   "provider": "BEAMHF",
+   "provider_name": "Beam 1.0 501B",
+   "model": "reflection/Beam-1.0-501B-A23B",
+   "task": "ca-grokking_c2",
+   "task_name": "CA C2 \u2014 D-ball exponent series (nu = (D+1)/2)",
+   "full_context": false,
+   "best_reward": 0.0,
+   "best_attempt": null,
+   "n_attempts": 3,
+   "statuses": [
+    "crash",
+    "supported",
+    "supported"
+   ],
+   "recovered": false
+  },
+  {
+   "file": "ca-grokking_c2_BEAMHF_full.json",
+   "provider": "BEAMHF",
+   "provider_name": "Beam 1.0 501B",
+   "model": "reflection/Beam-1.0-501B-A23B",
+   "task": "ca-grokking_c2",
+   "task_name": "CA C2 \u2014 D-ball exponent series (nu = (D+1)/2)",
+   "full_context": true,
+   "best_reward": 1.0,
+   "best_attempt": 3,
+   "n_attempts": 3,
+   "statuses": [
+    "falsified",
+    "supported",
+    "supported"
+   ],
+   "recovered": true
+  },
+  {
+   "file": "icl-bayes_c1_ANTHROPIC_r1.json",
+   "provider": "ANTHROPIC",
+   "provider_name": "Claude Opus 5.5",
+   "model": "claude-opus-5-5",
+   "task": "icl-bayes_c1",
+   "task_name": "ICL C1 \u2014 Bayesian risk identity (rel_diff = 0)",
+   "full_context": false,
+   "best_reward": 0.0,
+   "best_attempt": null,
+   "n_attempts": 3,
+   "statuses": [
+    "supported",
+    "inconclusive",
+    "inconclusive"
+   ],
+   "recovered": false
+  },
+  {
+   "file": "icl-bayes_c1_ANTHROPIC_r2.json",
+   "provider": "ANTHROPIC",
+   "provider_name": "Claude Opus 5.5",
+   "model": "claude-opus-5-5",
+   "task": "icl-bayes_c1",
+   "task_name": "ICL C1 \u2014 Bayesian risk identity (rel_diff = 0)",
+   "full_context": false,
+   "best_reward": 0.0,
+   "best_attempt": null,
+   "n_attempts": 3,
+   "statuses": [
+    "inconclusive",
+    "inconclusive",
+    "inconclusive"
+   ],
+   "recovered": false
+  },
+  {
+   "file": "icl-bayes_c1_BEAMHF_r1.json",
+   "provider": "BEAMHF",
+   "provider_name": "Beam 1.0 501B",
+   "model": "reflection/Beam-1.0-501B-A23B",
+   "task": "icl-bayes_c1",
+   "task_name": "ICL C1 \u2014 Bayesian risk identity (rel_diff = 0)",
+   "full_context": false,
+   "best_reward": 1.0,
+   "best_attempt": 1,
+   "n_attempts": 1,
+   "statuses": [
+    "supported"
+   ],
+   "recovered": true
+  },
+  {
+   "file": "icl-bayes_c1_BEAMHF_r2.json",
+   "provider": "BEAMHF",
+   "provider_name": "Beam 1.0 501B",
+   "model": "reflection/Beam-1.0-501B-A23B",
+   "task": "icl-bayes_c1",
+   "task_name": "ICL C1 \u2014 Bayesian risk identity (rel_diff = 0)",
+   "full_context": false,
+   "best_reward": 1.0,
+   "best_attempt": 2,
+   "n_attempts": 2,
+   "statuses": [
+    "inconclusive",
+    "supported"
+   ],
+   "recovered": true
+  },
+  {
+   "file": "icl-bayes_c1_KIMI_r1.json",
+   "provider": "KIMIHF",
+   "provider_name": "Kimi K3",
+   "model": "moonshotai/Kimi-K3",
+   "task": "icl-bayes_c1",
+   "task_name": "ICL C1 \u2014 Bayesian risk identity (rel_diff = 0)",
+   "full_context": false,
+   "best_reward": 1.0,
+   "best_attempt": 2,
+   "n_attempts": 2,
+   "statuses": [
+    "falsified",
+    "supported"
+   ],
+   "recovered": true
+  },
+  {
+   "file": "icl-bayes_c1_RUNINFRA_r1.json",
+   "provider": "RUNINFRA",
+   "provider_name": "27B-class (RunInfra)",
+   "model": "qwen3-8-27b",
+   "task": "icl-bayes_c1",
+   "task_name": "ICL C1 \u2014 Bayesian risk identity (rel_diff = 0)",
+   "full_context": false,
+   "best_reward": 1.0,
+   "best_attempt": 3,
+   "n_attempts": 3,
+   "statuses": [
+    "crash",
+    "falsified",
+    "supported"
+   ],
+   "recovered": true
+  },
+  {
+   "file": "icl-bayes_c1_RUNINFRA_r2.json",
+   "provider": "RUNINFRA",
+   "provider_name": "27B-class (RunInfra)",
+   "model": "qwen3-8-27b",
+   "task": "icl-bayes_c1",
+   "task_name": "ICL C1 \u2014 Bayesian risk identity (rel_diff = 0)",
+   "full_context": false,
+   "best_reward": 1.0,
+   "best_attempt": 2,
+   "n_attempts": 2,
+   "statuses": [
+    "falsified",
+    "supported"
+   ],
+   "recovered": true
+  }
+ ],
+ "aggregate": [
+  {
+   "provider": "ANTHROPIC",
+   "provider_name": "Claude Opus 5.5",
+   "ok": 0,
+   "n": 4
+  },
+  {
+   "provider": "BEAMHF",
+   "provider_name": "Beam 1.0 501B",
+   "ok": 4,
+   "n": 4
+  },
+  {
+   "provider": "KIMIHF",
+   "provider_name": "Kimi K3",
+   "ok": 2,
+   "n": 2
+  },
+  {
+   "provider": "RUNINFRA",
+   "provider_name": "27B-class (RunInfra)",
+   "ok": 3,
+   "n": 4
+  }
+ ],
+ "bakeoff": [
+  {
+   "model": "runinfra_qwen27b",
+   "nu": 6779,
+   "ran": true,
+   "note": "round-2 bake-off 2026-08-16"
+  },
+  {
+   "model": "deepseek_v4_pro",
+   "nu": 6072,
+   "ran": true,
+   "note": "round-2 bake-off 2026-08-16"
+  },
+  {
+   "model": "orca_qwen27b",
+   "nu": null,
+   "ran": false,
+   "note": "flash crashed / pro timed out, 2026-08-16"
+  },
+  {
+   "model": "kimi_k3",
+   "nu": 0.9911,
+   "ran": true,
+   "note": "gate pass 2026-08-16, 92s"
+  },
+  {
+   "model": "beam_1_0_501b",
+   "nu": 0.9973824130090858,
+   "ran": true,
+   "gen_s": 29.5,
+   "note": "single generation after the 6000-budget trap"
+  }
+ ],
+ "improve": {
+  "clean_nu": 1.475906555921819,
+  "improved_nu": 1.0043584785373454,
+  "target": 1.0,
+  "tol": 0.05
+ },
+ "n_episodes": 20,
+ "links": {
+  "dataset": "https://huggingface.co/datasets/Papajams/beam-audit-bench",
+  "space_ca": "https://huggingface.co/spaces/Papajams/beam-audit-ca-grokking",
+  "space_icl": "https://huggingface.co/spaces/Papajams/beam-audit-icl-bayesian",
+  "room": "https://lemmabio.netlify.app/room/",
+  "github": "https://github.com/udirobert/lemma",
+  "discussion": "https://huggingface.co/reflection/Beam-1.0-501B-A23B/discussions/5"
+ }
+}

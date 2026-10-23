@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "77f2ab061494444daa912d19f00818ba",
+  "run_id": "20261022-162337-jmlr-22-1228-ca-grokking",
+  "number": 2,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C1",
+    "title": "Critical exponent in 1D exponential model",
+    "statement": "In the 1D exponential model, the test error $E(t)$ near the grokking transition time $t_\\epsilon$ scales as $E(t) \\propto (t_\\epsilon - t)^1$, indicating a critical exponent of 1.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate the 1D exponential model described in Section 3.2. Sample $N$ positive and $N$ negative samples from $P^+(x) = e^{-(x-\\epsilon)}\\Theta(x-\\epsilon)$ and $P^-(x) = e^{-(\\epsilon-x)}\\Theta(\\epsilon-x)$ with a shift to induce grokking (as in Fig 3). Train a perceptron $f(x)=\\text{sgn}(x-b)$ using gradient descent on the loss $R = \\frac{1}{2N}\\sum \\frac{1}{2}(\\hat{y}_i - y_i)^2 + \\frac{\\lambda_2}{2}b^2 + \\lambda_1|w|$. Record the test error $E(t)$ for $t < t_\\epsilon$. Fit the log-log plot of $E(t)$ vs $(t_\\epsilon - t)$ to a power law $E(t) = A(t_\\epsilon - t)^\\nu$. Pass if the fitted exponent $\\nu$ is within 0.05 of 1.0.",
+    "evidence_in_paper": "Section 3.2.1, Eq. 9 and 10: 'Grokking in the considered 1D exponential model is a second-order phase transition with the test-error critical exponent equal to one.'",
+    "compute": "cpu-fast",
+    "success_criterion": "The fitted critical exponent $\\nu$ from the log-log slope of test error vs time-to-transition is $1.0 \\pm 0.05$."
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "19c09719812c470ccb4d1298ed72b431845fab6002f9377fcddd32d5ffe1ead4",
+  "script_sha256": "aa024e1b21e24ea0f83b1eb2749e04b64e8b6f8c56413d93c72bce603a288b5d",
+  "created_at": "2026-10-22T15:25:09.678787+00:00"
+}

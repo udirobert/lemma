@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "946e7bd751de4b72a6db5537b868f4da",
+  "run_id": "20261022-162337-jmlr-22-1228-ca-grokking",
+  "number": 1,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C4",
+    "title": "Grokking probability decreases with dimension D",
+    "statement": "In the D-dimensional uniform ball model without L1 regularisation ($\\lambda_1 = 0$), the grokking probability decreases exponentially as the dimension $D$ of the latent space increases.",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "For fixed $N=10, \\epsilon=1.01, \\lambda_2=0.1, \\lambda_1=0$, run the simulation for $D \\in \\{5, 10, 20, 50\\}$. Estimate the grokking probability by running 1000 trials for each $D$. Pass if the grokking probability monotonically decreases as $D$ increases, and the log of the probability is approximately linear with $D$ (indicating exponential decay).",
+    "evidence_in_paper": "Section 3.3.2: 'We also observe that the grokking probability exponentially decreases with the dimensionality of the latent-space data distribution D.' Fig 8 shows this trend.",
+    "compute": "cpu-fast",
+    "success_criterion": "The estimated grokking probability $P(D)$ is monotonically decreasing with $D$, and $\\ln(P(D))$ shows a negative linear trend with $D$."
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "0b945840068d79fedc746a781f8c944dd684fb66f576be4eea6db987ab50b911",
+  "script_sha256": "c17c09de1e637296cab913084b997902f04adc74789c95c3288933c379a97792",
+  "created_at": "2026-10-22T15:24:55.846874+00:00"
+}

@@ -1,0 +1,28 @@
+{
+  "$schema_note": "Curated paper metadata. scripts/build_paper_index.py merges this with derived data (claims.json, results/audit_report.json, judge_report.json, trace stats) into papers/_index.json.",
+  "slug": "beam-icl-bayesian",
+  "title": "ICL Is Provably Bayesian Inference, audited by Beam 1.0 501B (clean conditions)",
+  "source_label": "arXiv 2510.10981",
+  "source_url": "https://arxiv.org/abs/2510.10981",
+  "arxiv_url": "https://arxiv.org/abs/2510.10981",
+  "audited_at": "2026-10-22",
+  "blurb": "The headline flip: two claims that stayed inconclusive through 7 recorded rounds of 27B-class models (Bayes-Gap/context coupling C2, distribution-shift stability C5) came back supported under Beam on clean conditions, and the risk identity C1 was recovered in one attempt (rel_diff 0.0008). C3/C4 honestly falsified on Beam's own implementations; C6/C7 inconclusive with failing controls flagged.",
+  "links": {
+    "logbook": "https://huggingface.co/spaces/Papajams/beam-audit-icl-bayesian",
+    "dataset": "https://huggingface.co/datasets/Papajams/beam-audit-bench",
+    "paper": "https://arxiv.org/abs/2510.10981",
+    "model": "https://huggingface.co/reflection/Beam-1.0-501B-A23B"
+  },
+  "role": "beam",
+  "status": "complete",
+  "trace": "trace.jsonl",
+  "xylo": [
+    {"claim": "C1", "label": "risk identity"},
+    {"claim": "C2", "label": "gap vs context (flipped)"},
+    {"claim": "C3", "label": "concentration"},
+    {"claim": "C4", "label": "coupling bound"},
+    {"claim": "C5", "label": "shift stability (flipped)"},
+    {"claim": "C6", "label": "variance bound"},
+    {"claim": "C7", "label": "small-model gap"}
+  ]
+}

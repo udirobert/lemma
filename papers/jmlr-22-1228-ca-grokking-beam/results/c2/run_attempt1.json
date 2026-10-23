@@ -1,0 +1,32 @@
+{
+  "attempt": 1,
+  "attempt_id": "88d222d3f26c4311adea158e8a032eb9",
+  "source": "agent_generated",
+  "run_id": "20261022-162337-jmlr-22-1228-ca-grokking",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C2",
+    "status": "falsified",
+    "metrics": {
+      "control_pass": true,
+      "max_abs_err": 5.424742501084005,
+      "D2_nu": 0.07525749891599527,
+      "D2_target": 1.5,
+      "D2_abs_err": 1.4247425010840047,
+      "D2_t_eps": 0.01,
+      "D2_n_fit_points": 1,
+      "D5_nu": 0.07525749891599527,
+      "D5_target": 3.0,
+      "D5_abs_err": 2.9247425010840047,
+      "D5_t_eps": 0.01,
+      "D5_n_fit_points": 1,
+      "D10_nu": 0.07525749891599527,
+      "D10_target": 5.5,
+      "D10_abs_err": 5.424742501084005,
+      "D10_t_eps": 0.01,
+      "D10_n_fit_points": 1
+    },
+    "notes": "Least-squares perceptron gradient flow on shifted uniform-ball data; exact spherical-cap test error; power-law fit near transition."
+  },
+  "wall_s": 4.22
+}

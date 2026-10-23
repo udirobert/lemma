@@ -1,0 +1,26 @@
+{
+  "attempt": 1,
+  "attempt_id": "3bb715f38a614c0fbc0eed885adafc61",
+  "source": "agent_generated",
+  "run_id": "20261022-162337-jmlr-22-1228-ca-grokking",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C5",
+    "status": "inconclusive",
+    "metrics": {
+      "control_pass": false,
+      "control_min_test_error": 0.526,
+      "main_phase_found": false,
+      "main_min_train_error": 0.5033333333333333,
+      "main_max_test_error": 0.5075,
+      "main_min_test_error": 0.5075,
+      "main_final_train_error": 0.5033333333333333,
+      "main_final_test_error": 0.5075,
+      "main_epochs": 600,
+      "M": 100,
+      "chi_main": 6
+    },
+    "notes": "Control failed; MPS training/evaluation statistic is unreliable."
+  },
+  "wall_s": 16.01
+}

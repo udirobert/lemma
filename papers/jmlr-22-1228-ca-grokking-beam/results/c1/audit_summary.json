@@ -1,0 +1,20 @@
+{
+  "claim_id": "C1",
+  "status": "supported",
+  "metrics": {
+    "nu": 1.0043584785373454,
+    "t_eps": 1.026502508359731,
+    "n_fit_points": 4822,
+    "delta_min": 0.001005972458192561,
+    "delta_max": 0.09998134431423789,
+    "w_at_crossing": 0.11480363973149751,
+    "dzdt_at_crossing": -0.07401819865748743,
+    "mu": 2.0,
+    "lambda1": 0.5,
+    "lambda2": 0.0,
+    "epsilon": 1.0,
+    "control_slope": 0.9999999999999998,
+    "control_pass": true
+  },
+  "notes": "Shifted training distribution (mu=2*epsilon) with local fit over 1e-3 <= t_eps-t <= 0.1."
+}

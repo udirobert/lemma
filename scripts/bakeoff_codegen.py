@@ -79,9 +79,14 @@ def run_model(name: str) -> dict:
                 k: (v.format(uuid=uuid.uuid4()) if "{uuid}" in v else v)
                 for k, v in cfg["extra_headers"].items()
             }
+        # Same floor contract as agent/llm.py: reasoning models (Beam, Kimi)
+        # spend part of max_tokens on thinking, so an endpoint's declared
+        # LEMMA_<NAME>_MAX_TOKENS floor applies here too — 6000 tokens of
+        # pure reasoning leaves an empty answer (Beam bake-off, 2026-10-22).
+        budget = max(6000, cfg.get("min_max_tokens") or 0)
         resp = client.chat.completions.create(
             model=cfg["model"],
-            max_tokens=6000,
+            max_tokens=budget,
             temperature=0.1,
             messages=[
                 {"role": "system", "content": SYSTEM},

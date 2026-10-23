@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "df0ba9c58c4340ccb072bc0a1737f9c1",
+  "run_id": "improve-20261022-164542",
+  "number": 3,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C1",
+    "title": "Critical exponent in 1D exponential model",
+    "statement": "In the 1D exponential model, the test error $E(t)$ near the grokking transition time $t_\\epsilon$ scales as $E(t) \\propto (t_\\epsilon - t)^1$, indicating a critical exponent of 1.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate the 1D exponential model described in Section 3.2. Sample $N$ positive and $N$ negative samples from $P^+(x) = e^{-(x-\\epsilon)}\\Theta(x-\\epsilon)$ and $P^-(x) = e^{-(\\epsilon-x)}\\Theta(\\epsilon-x)$ with a shift to induce grokking (as in Fig 3). Train a perceptron $f(x)=\\text{sgn}(x-b)$ using gradient descent on the loss $R = \\frac{1}{2N}\\sum \\frac{1}{2}(\\hat{y}_i - y_i)^2 + \\frac{\\lambda_2}{2}b^2 + \\lambda_1|w|$. Record the test error $E(t)$ for $t < t_\\epsilon$. Fit the log-log plot of $E(t)$ vs $(t_\\epsilon - t)$ to a power law $E(t) = A(t_\\epsilon - t)^\\nu$. Pass if the fitted exponent $\\nu$ is within 0.05 of 1.0.",
+    "evidence_in_paper": "Section 3.2.1, Eq. 9 and 10: 'Grokking in the considered 1D exponential model is a second-order phase transition with the test-error critical exponent equal to one.'",
+    "compute": "cpu-fast",
+    "success_criterion": "The fitted critical exponent $\\nu$ from the log-log slope of test error vs time-to-transition is $1.0 \\pm 0.05$."
+  },
+  "feedback": "",
+  "auto_feedback": "# Reviewer notes for next audit attempt\n\n## Root cause\n\nThe latest script used an **unshifted** training distribution (`\u03bc = \u03b5`), so the training optimum and test optimum coincide (`z* = 0`). In that case `z(t)` approaches `0` asymptotically rather than crossing it at a finite time with nonzero speed. The script then set `t_\u03b5 = 10.0` and fit the **entire** pre-horizon trajectory, producing `\u03bd \u2248 1.48` instead of the local critical exponent near the transition.\n\n## Corrected setup\n\nUse a **shifted** training distribution so the training optimum threshold differs from the test optimum `\u03b5`:\n\n- Training center: `\u03bc = \u03b5 + s`, with `s \u2260 0`. A natural choice is `s = \u03b5`, so `\u03bc = 2\u03b5` (for `\u03b5 = 1`, `\u03bc = 2`).\n- Then:\n  - `a = \u03bc\u00b2 + 2`\n  - `dw/dt = -a w - \u03bc b + 1 - \u03bb\u2081 sign(w)`\n  - `db/dt = -\u03bc w - (1 + \u03bb\u2082) b`\n- Keep `\u03bb\u2081 = 0.5`, `\u03bb\u2082 = 0.0` so the training optimum threshold is `\u03bc`, not `\u03bc/(1+\u03bb\u2082)`.\n- Keep `z = b + \u03b5 w`; test error is zero when `z = 0`.\n- Detect `t_\u03b5` as the first finite crossing `z: positive \u2192 nonpositive`, with linear interpolation.\n\nThis makes `z(t)` cross zero at finite time with nonzero derivative, so locally `E(t) \u221d (t_\u03b5 - t)^1`.\n\n## Corrected fitting procedure\n\nDo **not** fit all pre-transition points. Fit only the **asymptotic region near `t_\u03b5`**, for example:\n\n```python\ndelta = t_eps - ts[mask]\nnear = (delta <= 0.1) & (delta >= 1e-3)\n```\n\nThen fit `log E` vs `log delta` on `near`. Exclude points too close to the crossing to avoid floating-point noise. The fitted slope should be close to `1.0`.\n\n## Positive control\n\nKeep the existing exact linear control:\n\n```python\nEc = A * (t_eps_c - tc)**1.0\n```\n\nand require its fitted slope to be within `0.05` of `1.0`.\n\n## Metrics to print\n\nInclude at least:\n\n- `nu`\n- `t_eps`\n- `n_fit_points`\n- `delta_min`, `delta_max`\n- `w_at_crossing`\n- `dzdt_at_crossing` (finite-difference estimate)\n- `mu`, `lambda1`, `lambda2`, `epsilon`\n- `control_slope`, `control_pass`\n\n## Expected outcome\n\nWith the shifted distribution and local fit, `\u03bd` should be within `0.05` of `1.0`. If it is not, report `falsified` with the actual fitted exponent and diagnostics; do not broaden the fit window or alter the success criterion.",
+  "criterion_sha256": "19c09719812c470ccb4d1298ed72b431845fab6002f9377fcddd32d5ffe1ead4",
+  "script_sha256": "3301838b8887cdd5c4a1dda5bed56aedffa29f1cf2daa1e5f0fa4d13d3188435",
+  "created_at": "2026-10-22T15:47:37.885661+00:00"
+}

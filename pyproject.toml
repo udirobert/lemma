@@ -29,6 +29,8 @@ ignore = [
 "scripts/make_submission_deck.py" = ["RUF001"]
 "scripts/google_auth_flow.py" = ["RUF001"]
 "scripts/gen_deck_art.py" = ["RUF001"]
+# figure labels use ν / ≈ / – deliberately (presentation text)
+"scripts/make_beam_figures.py" = ["RUF001"]
 
 [tool.ruff.format]
 quote-style = "double"

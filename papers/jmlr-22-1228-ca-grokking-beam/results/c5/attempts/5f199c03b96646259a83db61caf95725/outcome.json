@@ -1,0 +1,38 @@
+{
+  "exit_code": 0,
+  "wall_s": 31.694,
+  "summary": {
+    "claim_id": "C5",
+    "status": "inconclusive",
+    "metrics": {
+      "control_pass": false,
+      "main_pass": false,
+      "main_first_phase_epoch": null,
+      "main_num_phase_checkpoints": 0,
+      "main_transition_epoch": null,
+      "main_min_train_error": 0.49333333333333335,
+      "main_max_test_error_during_phase": NaN,
+      "main_min_test_error": 0.505,
+      "main_final_train_error": 0.49333333333333335,
+      "main_final_test_error": 0.505,
+      "control_first_phase_epoch": null,
+      "control_num_phase_checkpoints": 0,
+      "control_transition_epoch": null,
+      "control_min_train_error": 0.535,
+      "control_max_test_error_during_phase": NaN,
+      "control_min_test_error": 0.534,
+      "control_final_train_error": 0.535,
+      "control_final_test_error": 0.534
+    },
+    "notes": "Uniform MPS tensor-network student trained with full-batch GD and L2 weight decay. Control is parity learning; main is Rule-30 local-rule learning."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "f4431a77b7c15d1dcedb3daf6d1f64b55cf52b0c006b32dd74392367ac55a924"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a1644c-fca8-7fa6-87ca-eb07dfbff7a1"
+}

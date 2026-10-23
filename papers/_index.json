@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-04T04:04:10+0100",
-  "n_papers": 7,
+  "generated_at": "2026-10-22T16:54:55+0100",
+  "n_papers": 9,
   "papers": [
     {
       "slug": "grokking-ridge",
@@ -1176,6 +1176,374 @@
       ]
     },
     {
+      "slug": "beam-icl-bayesian",
+      "dir": "arxiv-2510.10981-beam",
+      "title": "ICL Is Provably Bayesian Inference, audited by Beam 1.0 501B (clean conditions)",
+      "source_label": "arXiv 2510.10981",
+      "source_url": "https://arxiv.org/abs/2510.10981",
+      "arxiv_url": "https://arxiv.org/abs/2510.10981",
+      "audited_at": "2026-10-22",
+      "blurb": "The headline flip: two claims that stayed inconclusive through 7 recorded rounds of 27B-class models (Bayes-Gap/context coupling C2, distribution-shift stability C5) came back supported under Beam on clean conditions, and the risk identity C1 was recovered in one attempt (rel_diff 0.0008). C3/C4 honestly falsified on Beam's own implementations; C6/C7 inconclusive with failing controls flagged.",
+      "role": "beam",
+      "status": "complete",
+      "links": {
+        "logbook": "https://huggingface.co/spaces/Papajams/beam-audit-icl-bayesian",
+        "dataset": "https://huggingface.co/datasets/Papajams/beam-audit-bench",
+        "paper": "https://arxiv.org/abs/2510.10981",
+        "model": "https://huggingface.co/reflection/Beam-1.0-501B-A23B"
+      },
+      "xylo": [
+        {
+          "claim": "C1",
+          "label": "risk identity"
+        },
+        {
+          "claim": "C2",
+          "label": "gap vs context (flipped)"
+        },
+        {
+          "claim": "C3",
+          "label": "concentration"
+        },
+        {
+          "claim": "C4",
+          "label": "coupling bound"
+        },
+        {
+          "claim": "C5",
+          "label": "shift stability (flipped)"
+        },
+        {
+          "claim": "C6",
+          "label": "variance bound"
+        },
+        {
+          "claim": "C7",
+          "label": "small-model gap"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "title": "Risk Decomposition Identity",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1,
+          "notes": "Empirical squared-loss decomposition over a linear-vs-quadratic task mixture; Bayes predictor is the analytic posterior mean. Positive control uses M equal to the Bayes predictor.",
+          "metrics": {
+            "R": 0.7877733872952989,
+            "RBG": 0.31149370838468343,
+            "RPV": 0.47693688626658015,
+            "RBG_plus_RPV": 0.7884305946512635,
+            "abs_diff": 0.0006572073559646396,
+            "rel_diff": 0.0008342594032289692,
+            "threshold": 0.007877733872952989,
+            "control_abs_diff": 0.0,
+            "control_pass": true,
+            "n_prompts": 15000,
+            "context_lengths": 5,
+            "n_evaluations": 75000
+          },
+          "control_pass": true
+        },
+        {
+          "id": "C2",
+          "title": "Coupled p-N Scaling of Bayes Gap",
+          "testable": true,
+          "status": "supported",
+          "attempts": 2,
+          "notes": "Simplified mean-pooling linear model trained by least squares on synthetic linear-regression prompts; Bayes Gap computed against exact ridge Bayes predictor. Positive control is the exact Bayes predictor with zero gap.",
+          "metrics": {
+            "r2_joint": 0.9820647954299805,
+            "r2_N_only": 0.3728385606633434,
+            "r2_p_only": 0.21698094959552672,
+            "r2_joint_minus_N": 0.6092262347666371,
+            "r2_joint_minus_p": 0.7650838458344538,
+            "control_pass": true,
+            "control_gap": 0.0,
+            "min_BG": 3.626432276633535e-05,
+            "max_BG": 0.00313685889011629,
+            "joint_params": [
+              7.645775592589728e-05,
+              4.517778118409092,
+              1.1401628108785087,
+              -0.06861856760903372
+            ],
+            "N_params": [
+              2.8699269219444383e-05,
+              0.13785988340743113,
+              1.0306904312228231
+            ],
+            "p_params": [
+              -0.0009448780078003193,
+              0.004156342276219026,
+              0.47436928457849503
+            ]
+          },
+          "control_pass": true
+        },
+        {
+          "id": "C3",
+          "title": "Rapid Task-Type Identification (Posterior Concentration)",
+          "testable": true,
+          "status": "falsified",
+          "attempts": 1,
+          "notes": "Audited the Bayes-optimal/sufficiently-pretrained limit: mixture posterior mean versus oracle posterior mean for linear vs quadratic regression tasks. Gap is task-type uncertainty; noise variance cancels in the gap.",
+          "metrics": {
+            "n_replicates": 8000,
+            "k_values": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20
+            ],
+            "mse_mixture": [
+              2.5311410954421505,
+              1.6936353116256344,
+              1.1693228807612412,
+              0.8619791066168755,
+              0.670610393044109,
+              0.5486605115407468,
+              0.45518837884508256,
+              0.41046086908474333,
+              0.3767041347340292,
+              0.3604620520063995,
+              0.343372521263249,
+              0.33116602509784904,
+              0.321013608887388,
+              0.3136771368390933,
+              0.3070020354271825,
+              0.30127974027207827,
+              0.2963323523550766,
+              0.2932789655347235,
+              0.29051123790681954,
+              0.28736427162221295
+            ],
+            "mse_oracle": [
+              2.4333277030647844,
+              1.5578986752554531,
+              1.0559226207068089,
+              0.7727070152598794,
+              0.5993163836523692,
+              0.5036466134483785,
+              0.4278580682784381,
+              0.38505014237140506,
+              0.35670685384365935,
+              0.3407073245194264,
+              0.32653872282311014,
+              0.3185605084779919,
+              0.31047095880424597,
+              0.3056025674776818,
+              0.2992097561018196,
+              0.2955828360151025,
+              0.29225221261066925,
+              0.2892894778680418,
+              0.2869137304581785,
+              0.28441924120737533
+            ],
+            "gap_mixture_minus_oracle": [
+              0.09781339237736608,
+              0.1357366363701813,
+              0.11340026005443238,
+              0.0892720913569961,
+              0.0712940093917398,
+              0.04501389809236833,
+              0.027330310566644478,
+              0.025410726713338272,
+              0.01999728089036984,
+              0.0197547274869731,
+              0.01683379844013888,
+              0.012605516619857149,
+              0.010542650083142036,
+              0.008074569361411543,
+              0.007792279325362916,
+              0.005696904256975777,
+              0.004080139744407352,
+              0.003989487666681668,
+              0.0035975074486410685,
+              0.002945030414837624
+            ],
+            "initial_gap_k1": 0.09781339237736608,
+            "gap_k5": 0.0712940093917398,
+            "relative_gap_k5": 0.7288777912607922,
+            "monotonic_gap": false,
+            "main_pass": false,
+            "control_pass": true,
+            "control_max_abs_gap": 0.0
+          },
+          "control_pass": true
+        },
+        {
+          "id": "C4",
+          "title": "Bayes Gap Upper Bound Rate",
+          "testable": true,
+          "status": "falsified",
+          "attempts": 1,
+          "notes": "Synthetic mixture of two Gaussian linear-regression task types; uniform-attention Transformer trained by ERM; Bayes Gap estimated against exact posterior-mean predictor.",
+          "metrics": {
+            "m_values": [
+              4,
+              8,
+              12
+            ],
+            "gap_m": [
+              0.2868191254480657,
+              0.37242749085475435,
+              0.4375744210432442
+            ],
+            "slope_loggap_logm": 0.38365542512882556,
+            "monotonic_m": false,
+            "pn_values": [
+              240,
+              360,
+              720
+            ],
+            "gap_pn": [
+              0.34783293227963713,
+              0.29761611685926964,
+              0.43556143995900903
+            ],
+            "slope_loggap_logpn": 0.24184299136046658,
+            "monotonic_pn": false,
+            "control_pass": true,
+            "oracle_gap": 0.0
+          },
+          "control_pass": true
+        },
+        {
+          "id": "C5",
+          "title": "Wasserstein Stability of Bayes Gap",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1,
+          "notes": "Monte Carlo Bayesian linear regression; model fixed at 0; W1 estimated empirically between input distributions.",
+          "metrics": {
+            "corr_wasserstein_bayes_gap": 0.9616661943004613,
+            "corr_wasserstein_posterior_variance": -0.5268940532559684,
+            "mean_abs_change_bayes_gap": 3.1441992896509015,
+            "mean_abs_change_posterior_variance": 0.009629331180550725,
+            "ratio_pv_bg": 0.0030625702423642495,
+            "control_pass": true,
+            "control_corr_bg": 0.9998748230411402,
+            "control_corr_pv": 0.11293284711502614,
+            "bg_source": 0.7756171732590129,
+            "pv_source": 0.218540914605361
+          },
+          "control_pass": true
+        },
+        {
+          "id": "C6",
+          "title": "Posterior Variance Bound by Minimax Risk",
+          "testable": true,
+          "status": "inconclusive",
+          "attempts": 1,
+          "notes": "Two-task scalar linear mixture; RPV by posterior over task/sign hypotheses; minimax risk via chi-square expectation; excess fitted to exponential.",
+          "metrics": {
+            "r2_excess_fit": null,
+            "lambda_fit": null,
+            "d_min": 1.8514547973068678,
+            "d_min_over_2": 0.9257273986534339,
+            "monotone_decrease": false,
+            "excess_k1": 0.1486344441755787,
+            "excess_k_last": -0.08383594095103328,
+            "control_r2": null,
+            "control_lambda": null,
+            "control_pass": false
+          },
+          "control_pass": false
+        },
+        {
+          "id": "C7",
+          "title": "Boundary test: pN invariance of the Bayes Gap",
+          "testable": true,
+          "status": "inconclusive",
+          "attempts": 1,
+          "notes": "Constant-mean meta-learning task; meta-learner is least squares on all pN prefix examples using mean-pooled context. Bayes Gap = out-of-sample MSE minus exact posterior variance.",
+          "metrics": {
+            "spearman_cells": 0.11572751247156894,
+            "spearman_replicates": 0.0755970598438577,
+            "mean_within_pn_cv": 0.5533155785357945,
+            "control_spearman": -0.9258200997725515,
+            "control_cv": 0.007360149827201829,
+            "control_pass": false,
+            "real_pass": false,
+            "cell_bg_means": {
+              "N100_p20": 0.0008772057230283342,
+              "N200_p10": 0.0021689090623655243,
+              "N400_p5": 0.004090045031149048,
+              "N500_p8": 0.0027560389815750315,
+              "N1000_p4": 0.003587362140919049,
+              "N2000_p2": 0.0014029362843210335,
+              "N1000_p8": 0.002342699212316973
+            }
+          },
+          "control_pass": false
+        }
+      ],
+      "summary": {
+        "supported": 3,
+        "falsified": 2,
+        "inconclusive": 2,
+        "not_audited": 0
+      },
+      "judge": {
+        "verdict": "PASS",
+        "score": "5/5",
+        "rubric": {
+          "structure": {
+            "pass": true,
+            "detail": "claims.json (7 claims), audit_report.json present"
+          },
+          "evidence": {
+            "pass": true,
+            "detail": "7 audited claims; issues: none"
+          },
+          "integrity": {
+            "pass": true,
+            "detail": "0 claims skipped as untestable, all declared untestable at extraction"
+          },
+          "cost_disclosure": {
+            "pass": true,
+            "detail": "per-claim attempt counts recorded; wall time in run files + trace"
+          },
+          "trace": {
+            "pass": true,
+            "detail": "60 events, 8 LLM calls, 8 tool runs, 1 failed attempts preserved"
+          }
+        }
+      },
+      "trace": {
+        "n_events": 121,
+        "n_llm": 8,
+        "n_tool": 58,
+        "n_note": 3,
+        "wall_min": 1.5,
+        "path": "papers/arxiv-2510.10981-beam/trace.jsonl"
+      },
+      "figures": [
+        "results/c1/attempts/38912823fe064964a95af6f3403d0236/figures/fig.png",
+        "results/c3/attempts/29102f80ec4147b898615f26c7edef3f/figures/gap.png",
+        "results/c4/attempts/b696e218dd724a29905990a15dd3d60d/figures/fig_m.png",
+        "results/c4/attempts/b696e218dd724a29905990a15dd3d60d/figures/fig_pn.png"
+      ]
+    },
+    {
       "slug": "gram",
       "dir": "arxiv-2607.08077",
       "title": "Modular Pretraining Enables Access Control (GRAM)",
@@ -1713,6 +2081,277 @@
         "results/c5/control.png",
         "results/c5/grokking_curves.png",
         "results/c6/grokking_time_hist.png"
+      ]
+    },
+    {
+      "slug": "beam-ca-grokking",
+      "dir": "jmlr-22-1228-ca-grokking-beam",
+      "title": "CA Grokking audited by Beam 1.0 501B (clean conditions)",
+      "source_label": "JMLR 22-1228 / arXiv 2210.15435",
+      "source_url": "https://www.jmlr.org/papers/v22/22-1228.html",
+      "arxiv_url": "https://arxiv.org/abs/2210.15435",
+      "audited_at": "2026-10-22",
+      "blurb": "Same paper, no human feedback, no reviewer references: Reflection Beam 1.0 501B as Lemma's auditor. 2/6 supported (L1 vs L2 grokking probability, bimodal grokking times), C1/C2 honestly falsified on Beam's own implementations (wrong exponents, passing controls), C4/C5 inconclusive. Part of the Build-with-Beam entry and the Beam Audit Bench.",
+      "role": "beam",
+      "status": "complete",
+      "links": {
+        "logbook": "https://huggingface.co/spaces/Papajams/beam-audit-ca-grokking",
+        "dataset": "https://huggingface.co/datasets/Papajams/beam-audit-bench",
+        "paper": "https://www.jmlr.org/papers/v22/22-1228.html",
+        "model": "https://huggingface.co/reflection/Beam-1.0-501B-A23B"
+      },
+      "xylo": [
+        {
+          "claim": "C1",
+          "label": "exponent nu=1 (missed)"
+        },
+        {
+          "claim": "C2",
+          "label": "(D+1)/2 (missed)"
+        },
+        {
+          "claim": "C3",
+          "label": "L1 beats L2"
+        },
+        {
+          "claim": "C4",
+          "label": "P(D) decreasing"
+        },
+        {
+          "claim": "C5",
+          "label": "Rule-30 (gpu-small)"
+        },
+        {
+          "claim": "C6",
+          "label": "bimodal grok times"
+        }
+      ],
+      "claims": [
+        {
+          "id": "C1",
+          "title": "Critical exponent in 1D exponential model",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1,
+          "notes": "Shifted training distribution (mu=2*epsilon) with local fit over 1e-3 <= t_eps-t <= 0.1.",
+          "metrics": {
+            "nu": 1.0043584785373454,
+            "t_eps": 1.026502508359731,
+            "n_fit_points": 4822,
+            "delta_min": 0.001005972458192561,
+            "delta_max": 0.09998134431423789,
+            "w_at_crossing": 0.11480363973149751,
+            "dzdt_at_crossing": -0.07401819865748743,
+            "mu": 2.0,
+            "lambda1": 0.5,
+            "lambda2": 0.0,
+            "epsilon": 1.0,
+            "control_slope": 0.9999999999999998,
+            "control_pass": true
+          },
+          "control_pass": true
+        },
+        {
+          "id": "C2",
+          "title": "Critical exponent in D-dimensional uniform ball model",
+          "testable": true,
+          "status": "falsified",
+          "attempts": 1,
+          "notes": "D-dimensional uniform ball model with nontrivial shift; population-trained perceptron dynamics; test error from spherical-cap volume; log-log exponent fit.",
+          "metrics": {
+            "control_pass": true,
+            "control_nu": 2.6999999999999984,
+            "D2_t_eps": 1.0478149221778432,
+            "D2_nu": 2.0036927061154604,
+            "D2_nu_pred": 1.5,
+            "D2_nu_abs_err": 0.5036927061154604,
+            "D2_n_points": 104,
+            "D2_E_final": 0.0,
+            "D5_t_eps": 0.9962001028480537,
+            "D5_nu": 3.8582668790920756,
+            "D5_nu_pred": 3.0,
+            "D5_nu_abs_err": 0.8582668790920756,
+            "D5_n_points": 99,
+            "D5_E_final": 0.0,
+            "D10_t_eps": 0.9716733645137531,
+            "D10_nu": 6.7815824164285,
+            "D10_nu_pred": 5.5,
+            "D10_nu_abs_err": 1.2815824164285,
+            "D10_n_points": 97,
+            "D10_E_final": 0.0
+          },
+          "control_pass": true
+        },
+        {
+          "id": "C3",
+          "title": "Grokking probability increases with L1 regularisation",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1,
+          "notes": "Empirical grokking probability with L1 exceeds that with L2 for the tested parameters.",
+          "metrics": {
+            "p_grok_l1": 0.13666666666666666,
+            "p_grok_l2": 0.0,
+            "n_trials": 300,
+            "D": 10,
+            "N": 20,
+            "epsilon": 1.01,
+            "lambda2": 0.1,
+            "ratio_l1_over_l2": 136666666666.66666,
+            "control_p_grok_l1": 0.15,
+            "control_p_grok_l2": 0.0,
+            "control_pass": true
+          },
+          "control_pass": true
+        },
+        {
+          "id": "C4",
+          "title": "Grokking probability decreases with dimension D",
+          "testable": true,
+          "status": "inconclusive",
+          "attempts": 1,
+          "notes": "Ridge-regression fixed point for lambda1=0; uniform balls centered at +/-epsilon with radius 1; grokking iff w1>0 and epsilon*w1 - ||w|| >= |b|.",
+          "metrics": {
+            "claim_id": "C4",
+            "trials_per_D": 100000,
+            "D_values": [
+              5,
+              10,
+              20,
+              50
+            ],
+            "count_D5": 145,
+            "count_D10": 2,
+            "count_D20": 0,
+            "count_D50": 0,
+            "P_D5": 0.00145,
+            "P_D10": 2e-05,
+            "P_D20": 0.0,
+            "P_D50": 0.0,
+            "expected_successes_D5": 145.0,
+            "expected_successes_D10": 2.0,
+            "expected_successes_D20": 0.0,
+            "expected_successes_D50": 0.0,
+            "CI95_D5": [
+              0.0012325393507730022,
+              0.0017057623637835467
+            ],
+            "CI95_D10": [
+              5.484738516524055e-06,
+              7.292683754201227e-05
+            ],
+            "CI95_D20": [
+              0.0,
+              3.841311258303963e-05
+            ],
+            "CI95_D50": [
+              0.0,
+              3.841311258303963e-05
+            ],
+            "monotonic_decrease": false,
+            "nonzero_dimensions": 2,
+            "min_count": 0,
+            "log_slope": null,
+            "log_intercept": null,
+            "log_r2": null,
+            "control_pass": true,
+            "control_r2": 1.0,
+            "control_slope": -0.09999999999999999
+          },
+          "control_pass": true
+        },
+        {
+          "id": "C5",
+          "title": "Rule-30 CA learning exhibits grokking",
+          "testable": true,
+          "status": "inconclusive",
+          "attempts": 1,
+          "notes": "Uniform MPS tensor-network student trained with full-batch GD and L2 weight decay. Control is parity learning; main is Rule-30 local-rule learning.",
+          "metrics": {
+            "control_pass": false,
+            "main_pass": false,
+            "main_first_phase_epoch": null,
+            "main_num_phase_checkpoints": 0,
+            "main_transition_epoch": null,
+            "main_min_train_error": 0.49333333333333335,
+            "main_max_test_error_during_phase": null,
+            "main_min_test_error": 0.505,
+            "main_final_train_error": 0.49333333333333335,
+            "main_final_test_error": 0.505,
+            "control_first_phase_epoch": null,
+            "control_num_phase_checkpoints": 0,
+            "control_transition_epoch": null,
+            "control_min_train_error": 0.535,
+            "control_max_test_error_during_phase": null,
+            "control_min_test_error": 0.534,
+            "control_final_train_error": 0.535,
+            "control_final_test_error": 0.534
+          },
+          "control_pass": false
+        },
+        {
+          "id": "C6",
+          "title": "Grokking time distribution bimodality",
+          "testable": true,
+          "status": "supported",
+          "attempts": 1,
+          "notes": "Simulated D-dimensional ball model reduction; fast basin gives continuous small t_G, slow basin gives Dirac-like peak at analytic slow time. Positive control is a synthetic mixture with known bimodality.",
+          "metrics": {
+            "n_trials": 10000,
+            "n_grokked": 10000,
+            "frac_slow_cluster": 0.6649,
+            "fast_mean": 0.4090565032251427,
+            "fast_std": 0.1802464340059135,
+            "slow_time_analytic": 1.7047911243886724,
+            "lambda_slow": 0.018928571428571427,
+            "control_pass": true,
+            "bimodal_detected": true
+          },
+          "control_pass": true
+        }
+      ],
+      "summary": {
+        "supported": 3,
+        "falsified": 1,
+        "inconclusive": 2,
+        "not_audited": 0
+      },
+      "judge": {
+        "verdict": "PASS",
+        "score": "5/5",
+        "rubric": {
+          "structure": {
+            "pass": true,
+            "detail": "claims.json (6 claims), audit_report.json present"
+          },
+          "evidence": {
+            "pass": true,
+            "detail": "6 audited claims; issues: none"
+          },
+          "integrity": {
+            "pass": true,
+            "detail": "0 claims skipped as untestable, all declared untestable at extraction"
+          },
+          "cost_disclosure": {
+            "pass": true,
+            "detail": "per-claim attempt counts recorded; wall time in run files + trace"
+          },
+          "trace": {
+            "pass": true,
+            "detail": "228 events, 15 LLM calls, 125 tool runs, 1 failed attempts preserved"
+          }
+        }
+      },
+      "trace": {
+        "n_events": 228,
+        "n_llm": 15,
+        "n_tool": 125,
+        "n_note": 8,
+        "wall_min": 1.9,
+        "path": "papers/jmlr-22-1228-ca-grokking-beam/trace.jsonl"
+      },
+      "figures": [
+        "results/c1/attempts/77f2ab061494444daa912d19f00818ba/figures/fig.png"
       ]
     }
   ]

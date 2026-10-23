@@ -227,10 +227,12 @@ def _complete_one(
         if "anthropic" not in _clients:
             _clients["anthropic"] = anthropic.Anthropic(timeout=HTTP_TIMEOUT_S)
         model = model_name("anthropic")
+        # anthropic SDK >= 1.11 removed `temperature` from messages.create()
+        # (sampling knobs replaced by output_config.effort) — the temperature
+        # argument is accepted by our API surface but ignored on this path.
         resp = _clients["anthropic"].messages.create(
             model=model,
             max_tokens=max_tokens,
-            temperature=temperature,
             system=system,
             messages=[{"role": "user", "content": user}],
         )
@@ -298,10 +300,17 @@ def _complete_one(
             for k, v in cfg["extra_headers"].items()
         }
     resp = client.chat.completions.create(**kwargs)
-    text = resp.choices[0].message.content or ""
+    choice = resp.choices[0]
+    text = choice.message.content or ""
     if not text.strip():
+        # Reasoning models (Beam, Kimi, ...) spend part of max_tokens on
+        # thinking. If the budget is exhausted the content comes back empty
+        # with finish_reason="length" — score that as an error, never as a
+        # blank answer, and say so loudly in the trace.
+        finish = getattr(choice, "finish_reason", None)
         raise RuntimeError(
-            "empty content (reasoning budget likely exhausted max_tokens)"
+            f"empty content (finish_reason={finish!r}; reasoning budget "
+            "likely exhausted max_tokens — raise LEMMA_<NAME>_MAX_TOKENS)"
         )
     return text, model
 

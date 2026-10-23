@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "88d222d3f26c4311adea158e8a032eb9",
+  "run_id": "20261022-162337-jmlr-22-1228-ca-grokking",
+  "number": 1,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C2",
+    "title": "Critical exponent in D-dimensional uniform ball model",
+    "statement": "In the D-dimensional uniform ball model, the test error $E_D(t)$ near the grokking transition scales as $E_D(t) \\propto (t_\\epsilon - t)^{\\frac{D+1}{2}}$, where $D$ is the dimension of the latent space.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate the D-dimensional uniform ball model from Section 3.3. Sample $N$ positive and $N$ negative samples from uniform distributions in unit balls shifted by $\\pm \\epsilon$ along the first axis. Apply a shift to the samples to create a non-typical dataset that exhibits grokking (as described in Section 3.3.1). Train a perceptron $f(\\tilde{x}) = \\text{sgn}(\\tilde{x} \\cdot w)$ using gradient descent. Record test error $E(t)$ for $t < t_\\epsilon$. Fit the log-log plot of $E(t)$ vs $(t_\\epsilon - t)$ to a power law. Pass if the fitted exponent $\\nu$ is within 0.1 of $(D+1)/2$ for $D \\in \\{2, 5, 10\\}$.",
+    "evidence_in_paper": "Section 3.3.1, Eq. 23: 'The critical exponent is hence determined only by the dimensionality of the feature distribution... $E_D(t) \\approx ... (t - t_\\epsilon)^{\\frac{D+1}{2}}$'.",
+    "compute": "cpu-fast",
+    "success_criterion": "The fitted critical exponent $\\nu$ matches the theoretical prediction $(D+1)/2$ within a tolerance of 0.1 for tested dimensions $D$."
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "b75b72c273b65fbe01162e808ad5541f5f67c83f1ab99e9c9cbc467bab5b9b22",
+  "script_sha256": "bbdeff631919c90fd5c0bad685e77338333bfb0d1ca6566bb2c0fc13e0122619",
+  "created_at": "2026-10-22T15:24:14.196806+00:00"
+}

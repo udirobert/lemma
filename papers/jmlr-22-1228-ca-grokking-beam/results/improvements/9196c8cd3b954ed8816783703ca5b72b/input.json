@@ -1,0 +1,372 @@
+{
+  "round_id": "9196c8cd3b954ed8816783703ca5b72b",
+  "before_report": {
+    "claims": [
+      {
+        "id": "C1",
+        "status": "falsified",
+        "attempts": 2,
+        "summary": {
+          "claim_id": "C1",
+          "status": "falsified",
+          "metrics": {
+            "nu": 1.475906555921819,
+            "t_eps": 10.0,
+            "control_slope": 1.0000000000000002,
+            "control_pass": true,
+            "n_fit_points": 9999,
+            "lambda1": 0.5,
+            "lambda2": 0.0,
+            "epsilon": 1.0
+          },
+          "notes": "Fitted exponent differs from 1.0 by more than 0.05."
+        },
+        "source": "agent_generated",
+        "attempt_id": "77f2ab061494444daa912d19f00818ba",
+        "candidate_summary": {
+          "claim_id": "C1",
+          "status": "falsified",
+          "metrics": {
+            "nu": 1.475906555921819,
+            "t_eps": 10.0,
+            "control_slope": 1.0000000000000002,
+            "control_pass": true,
+            "n_fit_points": 9999,
+            "lambda1": 0.5,
+            "lambda2": 0.0,
+            "epsilon": 1.0
+          },
+          "notes": "Fitted exponent differs from 1.0 by more than 0.05."
+        },
+        "candidate_source": "agent_generated",
+        "reference_summary": null,
+        "reference_disagreement": false,
+        "reference_checked": false,
+        "attempt_ids": [
+          "03003094f1824cd59f2dde4e1b4ee2c3",
+          "77f2ab061494444daa912d19f00818ba"
+        ]
+      },
+      {
+        "id": "C2",
+        "status": "falsified",
+        "attempts": 1,
+        "summary": {
+          "claim_id": "C2",
+          "status": "falsified",
+          "metrics": {
+            "control_pass": true,
+            "max_abs_err": 5.424742501084005,
+            "D2_nu": 0.07525749891599527,
+            "D2_target": 1.5,
+            "D2_abs_err": 1.4247425010840047,
+            "D2_t_eps": 0.01,
+            "D2_n_fit_points": 1,
+            "D5_nu": 0.07525749891599527,
+            "D5_target": 3.0,
+            "D5_abs_err": 2.9247425010840047,
+            "D5_t_eps": 0.01,
+            "D5_n_fit_points": 1,
+            "D10_nu": 0.07525749891599527,
+            "D10_target": 5.5,
+            "D10_abs_err": 5.424742501084005,
+            "D10_t_eps": 0.01,
+            "D10_n_fit_points": 1
+          },
+          "notes": "Least-squares perceptron gradient flow on shifted uniform-ball data; exact spherical-cap test error; power-law fit near transition."
+        },
+        "source": "agent_generated",
+        "attempt_id": "88d222d3f26c4311adea158e8a032eb9",
+        "candidate_summary": {
+          "claim_id": "C2",
+          "status": "falsified",
+          "metrics": {
+            "control_pass": true,
+            "max_abs_err": 5.424742501084005,
+            "D2_nu": 0.07525749891599527,
+            "D2_target": 1.5,
+            "D2_abs_err": 1.4247425010840047,
+            "D2_t_eps": 0.01,
+            "D2_n_fit_points": 1,
+            "D5_nu": 0.07525749891599527,
+            "D5_target": 3.0,
+            "D5_abs_err": 2.9247425010840047,
+            "D5_t_eps": 0.01,
+            "D5_n_fit_points": 1,
+            "D10_nu": 0.07525749891599527,
+            "D10_target": 5.5,
+            "D10_abs_err": 5.424742501084005,
+            "D10_t_eps": 0.01,
+            "D10_n_fit_points": 1
+          },
+          "notes": "Least-squares perceptron gradient flow on shifted uniform-ball data; exact spherical-cap test error; power-law fit near transition."
+        },
+        "candidate_source": "agent_generated",
+        "reference_summary": null,
+        "reference_disagreement": false,
+        "reference_checked": false,
+        "attempt_ids": [
+          "88d222d3f26c4311adea158e8a032eb9"
+        ]
+      },
+      {
+        "id": "C3",
+        "status": "supported",
+        "attempts": 1,
+        "summary": {
+          "claim_id": "C3",
+          "status": "supported",
+          "metrics": {
+            "p_grok_l1": 0.13666666666666666,
+            "p_grok_l2": 0.0,
+            "n_trials": 300,
+            "D": 10,
+            "N": 20,
+            "epsilon": 1.01,
+            "lambda2": 0.1,
+            "ratio_l1_over_l2": 136666666666.66666,
+            "control_p_grok_l1": 0.15,
+            "control_p_grok_l2": 0.0,
+            "control_pass": true
+          },
+          "notes": "Empirical grokking probability with L1 exceeds that with L2 for the tested parameters."
+        },
+        "source": "agent_generated",
+        "attempt_id": "ecdb34600efb41ecb3ca7bb3a8db73dc",
+        "candidate_summary": {
+          "claim_id": "C3",
+          "status": "supported",
+          "metrics": {
+            "p_grok_l1": 0.13666666666666666,
+            "p_grok_l2": 0.0,
+            "n_trials": 300,
+            "D": 10,
+            "N": 20,
+            "epsilon": 1.01,
+            "lambda2": 0.1,
+            "ratio_l1_over_l2": 136666666666.66666,
+            "control_p_grok_l1": 0.15,
+            "control_p_grok_l2": 0.0,
+            "control_pass": true
+          },
+          "notes": "Empirical grokking probability with L1 exceeds that with L2 for the tested parameters."
+        },
+        "candidate_source": "agent_generated",
+        "reference_summary": null,
+        "reference_disagreement": false,
+        "reference_checked": false,
+        "attempt_ids": [
+          "ecdb34600efb41ecb3ca7bb3a8db73dc"
+        ]
+      },
+      {
+        "id": "C4",
+        "status": "inconclusive",
+        "attempts": 1,
+        "summary": {
+          "claim_id": "C4",
+          "status": "inconclusive",
+          "metrics": {
+            "P_D5": 0.003,
+            "P_D10": 0.0,
+            "P_D20": 0.001,
+            "P_D50": 0.0,
+            "monotonic_decrease": false,
+            "log_slope": -0.07324081924454065,
+            "log_r2": 1.0,
+            "trials_per_D": 1000,
+            "control_pass": true,
+            "control_r2": 1.0
+          },
+          "notes": "Full D-dimensional ridge-regression minimizer test-zero condition; control is exact exponential decay."
+        },
+        "source": "agent_generated",
+        "attempt_id": "946e7bd751de4b72a6db5537b868f4da",
+        "candidate_summary": {
+          "claim_id": "C4",
+          "status": "inconclusive",
+          "metrics": {
+            "P_D5": 0.003,
+            "P_D10": 0.0,
+            "P_D20": 0.001,
+            "P_D50": 0.0,
+            "monotonic_decrease": false,
+            "log_slope": -0.07324081924454065,
+            "log_r2": 1.0,
+            "trials_per_D": 1000,
+            "control_pass": true,
+            "control_r2": 1.0
+          },
+          "notes": "Full D-dimensional ridge-regression minimizer test-zero condition; control is exact exponential decay."
+        },
+        "candidate_source": "agent_generated",
+        "reference_summary": null,
+        "reference_disagreement": false,
+        "reference_checked": false,
+        "attempt_ids": [
+          "946e7bd751de4b72a6db5537b868f4da"
+        ]
+      },
+      {
+        "id": "C5",
+        "status": "inconclusive",
+        "attempts": 1,
+        "summary": {
+          "claim_id": "C5",
+          "status": "inconclusive",
+          "metrics": {
+            "control_pass": false,
+            "control_min_test_error": 0.526,
+            "main_phase_found": false,
+            "main_min_train_error": 0.5033333333333333,
+            "main_max_test_error": 0.5075,
+            "main_min_test_error": 0.5075,
+            "main_final_train_error": 0.5033333333333333,
+            "main_final_test_error": 0.5075,
+            "main_epochs": 600,
+            "M": 100,
+            "chi_main": 6
+          },
+          "notes": "Control failed; MPS training/evaluation statistic is unreliable."
+        },
+        "source": "agent_generated",
+        "attempt_id": "3bb715f38a614c0fbc0eed885adafc61",
+        "candidate_summary": {
+          "claim_id": "C5",
+          "status": "inconclusive",
+          "metrics": {
+            "control_pass": false,
+            "control_min_test_error": 0.526,
+            "main_phase_found": false,
+            "main_min_train_error": 0.5033333333333333,
+            "main_max_test_error": 0.5075,
+            "main_min_test_error": 0.5075,
+            "main_final_train_error": 0.5033333333333333,
+            "main_final_test_error": 0.5075,
+            "main_epochs": 600,
+            "M": 100,
+            "chi_main": 6
+          },
+          "notes": "Control failed; MPS training/evaluation statistic is unreliable."
+        },
+        "candidate_source": "agent_generated",
+        "reference_summary": null,
+        "reference_disagreement": false,
+        "reference_checked": false,
+        "attempt_ids": [
+          "3bb715f38a614c0fbc0eed885adafc61"
+        ]
+      },
+      {
+        "id": "C6",
+        "status": "supported",
+        "attempts": 1,
+        "summary": {
+          "claim_id": "C6",
+          "status": "supported",
+          "metrics": {
+            "n_trials": 10000,
+            "n_grokked": 10000,
+            "frac_slow_cluster": 0.6649,
+            "fast_mean": 0.4090565032251427,
+            "fast_std": 0.1802464340059135,
+            "slow_time_analytic": 1.7047911243886724,
+            "lambda_slow": 0.018928571428571427,
+            "control_pass": true,
+            "bimodal_detected": true
+          },
+          "notes": "Simulated D-dimensional ball model reduction; fast basin gives continuous small t_G, slow basin gives Dirac-like peak at analytic slow time. Positive control is a synthetic mixture with known bimodality."
+        },
+        "source": "agent_generated",
+        "attempt_id": "0fcbbf21ea364ddca8b6a75289e8a273",
+        "candidate_summary": {
+          "claim_id": "C6",
+          "status": "supported",
+          "metrics": {
+            "n_trials": 10000,
+            "n_grokked": 10000,
+            "frac_slow_cluster": 0.6649,
+            "fast_mean": 0.4090565032251427,
+            "fast_std": 0.1802464340059135,
+            "slow_time_analytic": 1.7047911243886724,
+            "lambda_slow": 0.018928571428571427,
+            "control_pass": true,
+            "bimodal_detected": true
+          },
+          "notes": "Simulated D-dimensional ball model reduction; fast basin gives continuous small t_G, slow basin gives Dirac-like peak at analytic slow time. Positive control is a synthetic mixture with known bimodality."
+        },
+        "candidate_source": "agent_generated",
+        "reference_summary": null,
+        "reference_disagreement": false,
+        "reference_checked": false,
+        "attempt_ids": [
+          "0fcbbf21ea364ddca8b6a75289e8a273"
+        ]
+      }
+    ]
+  },
+  "claims": [
+    {
+      "id": "C1",
+      "title": "Critical exponent in 1D exponential model",
+      "statement": "In the 1D exponential model, the test error $E(t)$ near the grokking transition time $t_\\epsilon$ scales as $E(t) \\propto (t_\\epsilon - t)^1$, indicating a critical exponent of 1.",
+      "kind": "theorem",
+      "testable": true,
+      "test_plan": "Simulate the 1D exponential model described in Section 3.2. Sample $N$ positive and $N$ negative samples from $P^+(x) = e^{-(x-\\epsilon)}\\Theta(x-\\epsilon)$ and $P^-(x) = e^{-(\\epsilon-x)}\\Theta(\\epsilon-x)$ with a shift to induce grokking (as in Fig 3). Train a perceptron $f(x)=\\text{sgn}(x-b)$ using gradient descent on the loss $R = \\frac{1}{2N}\\sum \\frac{1}{2}(\\hat{y}_i - y_i)^2 + \\frac{\\lambda_2}{2}b^2 + \\lambda_1|w|$. Record the test error $E(t)$ for $t < t_\\epsilon$. Fit the log-log plot of $E(t)$ vs $(t_\\epsilon - t)$ to a power law $E(t) = A(t_\\epsilon - t)^\\nu$. Pass if the fitted exponent $\\nu$ is within 0.05 of 1.0.",
+      "evidence_in_paper": "Section 3.2.1, Eq. 9 and 10: 'Grokking in the considered 1D exponential model is a second-order phase transition with the test-error critical exponent equal to one.'",
+      "compute": "cpu-fast",
+      "success_criterion": "The fitted critical exponent $\\nu$ from the log-log slope of test error vs time-to-transition is $1.0 \\pm 0.05$."
+    },
+    {
+      "id": "C2",
+      "title": "Critical exponent in D-dimensional uniform ball model",
+      "statement": "In the D-dimensional uniform ball model, the test error $E_D(t)$ near the grokking transition scales as $E_D(t) \\propto (t_\\epsilon - t)^{\\frac{D+1}{2}}$, where $D$ is the dimension of the latent space.",
+      "kind": "theorem",
+      "testable": true,
+      "test_plan": "Simulate the D-dimensional uniform ball model from Section 3.3. Sample $N$ positive and $N$ negative samples from uniform distributions in unit balls shifted by $\\pm \\epsilon$ along the first axis. Apply a shift to the samples to create a non-typical dataset that exhibits grokking (as described in Section 3.3.1). Train a perceptron $f(\\tilde{x}) = \\text{sgn}(\\tilde{x} \\cdot w)$ using gradient descent. Record test error $E(t)$ for $t < t_\\epsilon$. Fit the log-log plot of $E(t)$ vs $(t_\\epsilon - t)$ to a power law. Pass if the fitted exponent $\\nu$ is within 0.1 of $(D+1)/2$ for $D \\in \\{2, 5, 10\\}$.",
+      "evidence_in_paper": "Section 3.3.1, Eq. 23: 'The critical exponent is hence determined only by the dimensionality of the feature distribution... $E_D(t) \\approx ... (t - t_\\epsilon)^{\\frac{D+1}{2}}$'.",
+      "compute": "cpu-fast",
+      "success_criterion": "The fitted critical exponent $\\nu$ matches the theoretical prediction $(D+1)/2$ within a tolerance of 0.1 for tested dimensions $D$."
+    },
+    {
+      "id": "C4",
+      "title": "Grokking probability decreases with dimension D",
+      "statement": "In the D-dimensional uniform ball model without L1 regularisation ($\\lambda_1 = 0$), the grokking probability decreases exponentially as the dimension $D$ of the latent space increases.",
+      "kind": "empirical",
+      "testable": true,
+      "test_plan": "For fixed $N=10, \\epsilon=1.01, \\lambda_2=0.1, \\lambda_1=0$, run the simulation for $D \\in \\{5, 10, 20, 50\\}$. Estimate the grokking probability by running 1000 trials for each $D$. Pass if the grokking probability monotonically decreases as $D$ increases, and the log of the probability is approximately linear with $D$ (indicating exponential decay).",
+      "evidence_in_paper": "Section 3.3.2: 'We also observe that the grokking probability exponentially decreases with the dimensionality of the latent-space data distribution D.' Fig 8 shows this trend.",
+      "compute": "cpu-fast",
+      "success_criterion": "The estimated grokking probability $P(D)$ is monotonically decreasing with $D$, and $\\ln(P(D))$ shows a negative linear trend with $D$."
+    },
+    {
+      "id": "C5",
+      "title": "Rule-30 CA learning exhibits grokking",
+      "statement": "Training a tensor-network student model to learn the Rule-30 cellular automaton rule exhibits grokking, characterized by a sudden drop in test error to zero after a period of high test error following zero training error.",
+      "kind": "empirical",
+      "testable": true,
+      "test_plan": "Implement the tensor-network attention model described in Section 4.2. Generate training data for the Rule-30 CA (K=1 local rule) with sequence length $M=100$. Train the model using gradient descent with weight decay. Monitor training and test error. Pass if there exists a time interval where training error is 0 (or near 0) but test error is $> 0.5$, followed by a rapid drop in test error to $< 0.05$.",
+      "evidence_in_paper": "Section 4.3: 'We numerically study grokking... on the example of learning a 1D rule-30 cellular automaton... We show that sudden spikes in the training loss correspond to structural changes...'",
+      "compute": "gpu-small",
+      "success_criterion": "The training curve exhibits a phase where train error is $\\approx 0$ and test error is $> 0.5$, followed by a transition to test error $< 0.05$."
+    }
+  ],
+  "feedback": {
+    "C1": {
+      "feedback": "",
+      "auto_feedback": ""
+    },
+    "C2": {
+      "feedback": "",
+      "auto_feedback": ""
+    },
+    "C4": {
+      "feedback": "",
+      "auto_feedback": ""
+    },
+    "C5": {
+      "feedback": "",
+      "auto_feedback": ""
+    }
+  }
+}

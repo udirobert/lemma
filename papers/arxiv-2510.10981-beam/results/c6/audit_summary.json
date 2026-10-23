@@ -1,0 +1,17 @@
+{
+  "claim_id": "C6",
+  "status": "inconclusive",
+  "metrics": {
+    "r2_excess_fit": NaN,
+    "lambda_fit": NaN,
+    "d_min": 1.8514547973068678,
+    "d_min_over_2": 0.9257273986534339,
+    "monotone_decrease": false,
+    "excess_k1": 0.1486344441755787,
+    "excess_k_last": -0.08383594095103328,
+    "control_r2": NaN,
+    "control_lambda": NaN,
+    "control_pass": false
+  },
+  "notes": "Two-task scalar linear mixture; RPV by posterior over task/sign hypotheses; minimax risk via chi-square expectation; excess fitted to exponential."
+}

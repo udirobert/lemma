@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 import time
 from pathlib import Path
@@ -26,6 +27,24 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 
 STATUS_ORDER = ["supported", "falsified", "inconclusive", "not_audited"]
+
+
+def _finite(obj):
+    """Replace NaN/±Inf with None so the index is strict JSON.
+
+    Python's json emits bare NaN/Infinity tokens: json.loads accepts them
+    but JavaScript's JSON.parse rejects them (site builds fail). Honest
+    inconclusive summaries legitimately carry NaN metrics (degenerate
+    fits — first seen in the 2026-10-22 Beam ICL C6 run), so null them
+    out instead of dropping the attempt.
+    """
+    if isinstance(obj, float) and not math.isfinite(obj):
+        return None
+    if isinstance(obj, dict):
+        return {k: _finite(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_finite(v) for v in obj]
+    return obj
 
 
 def load_json(path: Path):
@@ -200,11 +219,13 @@ def main() -> int:
             continue
         entries.append(build_entry(paper_dir, meta, prior_by_dir.get(paper_dir.name)))
 
-    index = {
-        "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
-        "n_papers": len(entries),
-        "papers": entries,
-    }
+    index = _finite(
+        {
+            "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+            "n_papers": len(entries),
+            "papers": entries,
+        }
+    )
     out = papers_dir / "_index.json"
     out.write_text(
         json.dumps(index, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"

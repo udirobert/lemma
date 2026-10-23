@@ -1,0 +1,27 @@
+{
+  "$schema_note": "Curated paper metadata. scripts/build_paper_index.py merges this with derived data (claims.json, results/audit_report.json, judge_report.json, trace stats) into papers/_index.json.",
+  "slug": "beam-ca-grokking",
+  "title": "CA Grokking audited by Beam 1.0 501B (clean conditions)",
+  "source_label": "JMLR 22-1228 / arXiv 2210.15435",
+  "source_url": "https://www.jmlr.org/papers/v22/22-1228.html",
+  "arxiv_url": "https://arxiv.org/abs/2210.15435",
+  "audited_at": "2026-10-22",
+  "blurb": "Same paper, no human feedback, no reviewer references: Reflection Beam 1.0 501B as Lemma's auditor. 2/6 supported (L1 vs L2 grokking probability, bimodal grokking times), C1/C2 honestly falsified on Beam's own implementations (wrong exponents, passing controls), C4/C5 inconclusive. Part of the Build-with-Beam entry and the Beam Audit Bench.",
+  "links": {
+    "logbook": "https://huggingface.co/spaces/Papajams/beam-audit-ca-grokking",
+    "dataset": "https://huggingface.co/datasets/Papajams/beam-audit-bench",
+    "paper": "https://www.jmlr.org/papers/v22/22-1228.html",
+    "model": "https://huggingface.co/reflection/Beam-1.0-501B-A23B"
+  },
+  "role": "beam",
+  "status": "complete",
+  "trace": "trace.jsonl",
+  "xylo": [
+    {"claim": "C1", "label": "exponent nu=1 (missed)"},
+    {"claim": "C2", "label": "(D+1)/2 (missed)"},
+    {"claim": "C3", "label": "L1 beats L2"},
+    {"claim": "C4", "label": "P(D) decreasing"},
+    {"claim": "C5", "label": "Rule-30 (gpu-small)"},
+    {"claim": "C6", "label": "bimodal grok times"}
+  ]
+}

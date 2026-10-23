@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "3bb715f38a614c0fbc0eed885adafc61",
+  "run_id": "20261022-162337-jmlr-22-1228-ca-grokking",
+  "number": 1,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C5",
+    "title": "Rule-30 CA learning exhibits grokking",
+    "statement": "Training a tensor-network student model to learn the Rule-30 cellular automaton rule exhibits grokking, characterized by a sudden drop in test error to zero after a period of high test error following zero training error.",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "Implement the tensor-network attention model described in Section 4.2. Generate training data for the Rule-30 CA (K=1 local rule) with sequence length $M=100$. Train the model using gradient descent with weight decay. Monitor training and test error. Pass if there exists a time interval where training error is 0 (or near 0) but test error is $> 0.5$, followed by a rapid drop in test error to $< 0.05$.",
+    "evidence_in_paper": "Section 4.3: 'We numerically study grokking... on the example of learning a 1D rule-30 cellular automaton... We show that sudden spikes in the training loss correspond to structural changes...'",
+    "compute": "gpu-small",
+    "success_criterion": "The training curve exhibits a phase where train error is $\\approx 0$ and test error is $> 0.5$, followed by a transition to test error $< 0.05$."
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "2f8fd7fb02a2829fac586ef8244d9339f11cdf67a5b9a1ed41d6923042e11999",
+  "script_sha256": "a45353aa9a28fdcd0e3116f5ebe1b13a3b8e750c3887025a270458cb78baf2db",
+  "created_at": "2026-10-22T15:24:43.373573+00:00"
+}

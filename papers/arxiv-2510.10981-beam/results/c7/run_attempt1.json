@@ -1,0 +1,31 @@
+{
+  "attempt": 1,
+  "attempt_id": "0a734f82abb44b50899121b7d38ba12d",
+  "source": "agent_generated",
+  "run_id": "20261022-162538-arxiv-2510.10981",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C7",
+    "status": "inconclusive",
+    "metrics": {
+      "spearman_cells": 0.11572751247156894,
+      "spearman_replicates": 0.0755970598438577,
+      "mean_within_pn_cv": 0.5533155785357945,
+      "control_spearman": -0.9258200997725515,
+      "control_cv": 0.007360149827201829,
+      "control_pass": false,
+      "real_pass": false,
+      "cell_bg_means": {
+        "N100_p20": 0.0008772057230283342,
+        "N200_p10": 0.0021689090623655243,
+        "N400_p5": 0.004090045031149048,
+        "N500_p8": 0.0027560389815750315,
+        "N1000_p4": 0.003587362140919049,
+        "N2000_p2": 0.0014029362843210335,
+        "N1000_p8": 0.002342699212316973
+      }
+    },
+    "notes": "Constant-mean meta-learning task; meta-learner is least squares on all pN prefix examples using mean-pooled context. Bayes Gap = out-of-sample MSE minus exact posterior variance."
+  },
+  "wall_s": 1.7
+}

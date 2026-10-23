@@ -1,0 +1,1 @@
+SUMMARY_JSON={"claim_id": "C1", "status": "falsified", "metrics": {"nu": 1.475906555921819, "t_eps": 10.0, "control_slope": 1.0000000000000002, "control_pass": true, "n_fit_points": 9999, "lambda1": 0.5, "lambda2": 0.0, "epsilon": 1.0}, "notes": "Fitted exponent differs from 1.0 by more than 0.05."}

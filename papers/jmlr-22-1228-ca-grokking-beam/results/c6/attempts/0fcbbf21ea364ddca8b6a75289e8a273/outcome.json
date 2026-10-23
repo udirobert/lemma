@@ -1,0 +1,29 @@
+{
+  "exit_code": 0,
+  "wall_s": 1.101,
+  "summary": {
+    "claim_id": "C6",
+    "status": "supported",
+    "metrics": {
+      "n_trials": 10000,
+      "n_grokked": 10000,
+      "frac_slow_cluster": 0.6649,
+      "fast_mean": 0.4090565032251427,
+      "fast_std": 0.1802464340059135,
+      "slow_time_analytic": 1.7047911243886724,
+      "lambda_slow": 0.018928571428571427,
+      "control_pass": true,
+      "bimodal_detected": true
+    },
+    "notes": "Simulated D-dimensional ball model reduction; fast basin gives continuous small t_G, slow basin gives Dirac-like peak at analytic slow time. Positive control is a synthetic mixture with known bimodality."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "8985d2ca4d6b6cc714d5a38707955c7f10e27b563cf8768971aa25933f7ccc06"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a16437-209a-7319-ae0a-746efa7c73fc"
+}

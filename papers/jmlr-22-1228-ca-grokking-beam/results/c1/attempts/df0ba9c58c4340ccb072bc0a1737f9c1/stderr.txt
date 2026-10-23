@@ -1,0 +1,2 @@
+/Users/udingethe/Dev/lemma/papers/jmlr-22-1228-ca-grokking-beam/results/c1/audit_attempt3.py:56: RuntimeWarning: invalid value encountered in divide
+  ratio = np.where(absW > 1e-12, np.abs(Z) / absW, epsilon)

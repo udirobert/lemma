@@ -1,0 +1,6 @@
+/Users/udingethe/Dev/lemma/papers/jmlr-22-1228-ca-grokking-beam/results/c2/audit_attempt1.py:42: RankWarning: Polyfit may be poorly conditioned
+  slope, intercept = np.polyfit(x, y, 1)
+/Users/udingethe/Dev/lemma/papers/jmlr-22-1228-ca-grokking-beam/results/c2/audit_attempt1.py:42: RankWarning: Polyfit may be poorly conditioned
+  slope, intercept = np.polyfit(x, y, 1)
+/Users/udingethe/Dev/lemma/papers/jmlr-22-1228-ca-grokking-beam/results/c2/audit_attempt1.py:42: RankWarning: Polyfit may be poorly conditioned
+  slope, intercept = np.polyfit(x, y, 1)

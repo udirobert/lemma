@@ -1,0 +1,319 @@
+---
+import "@fontsource-variable/montserrat";
+import "@fontsource-variable/roboto-mono";
+import "../styles/global.css";
+import BgGlass from "../components/BgGlass.astro";
+import ClipMenu from "../components/ClipMenu.astro";
+import beamData from "../data/beam.json";
+
+type Agg = { provider: string; provider_name: string; ok: number; n: number };
+type Episode = {
+  file: string; provider: string; provider_name: string; task: string;
+  task_name: string; full_context: boolean; best_reward: number;
+  best_attempt: number | null; n_attempts: number; recovered: boolean;
+  statuses: Array<string | null>;
+};
+type Bakeoff = { model: string; nu: number | null; ran: boolean; note: string };
+
+const aggregate = beamData.aggregate as Agg[];
+const episodes = beamData.episodes as Episode[];
+const bakeoff = beamData.bakeoff as Bakeoff[];
+const improve = beamData.improve as {
+  clean_nu: number | null; improved_nu: number | null; target: number; tol: number;
+};
+const links = beamData.links as Record<string, string>;
+
+// display order for the ladder: Beam first (competition subject), then the rest
+const ORDER = ["BEAMHF", "KIMIHF", "KIMI", "RUNINFRA", "ANTHROPIC"];
+const ladder = [...aggregate].sort(
+  (a, b) => ORDER.indexOf(a.provider) - ORDER.indexOf(b.provider)
+);
+
+const BAKEOFF_LABELS: Record<string, string> = {
+  runinfra_qwen27b: "RunInfra Qwen 27B",
+  deepseek_v4_pro: "DeepSeek V4 Pro",
+  orca_qwen27b: "Orca Flash / Pro (27B)",
+  kimi_k3: "Kimi K3",
+  beam_1_0_501b: "Beam 1.0 501B",
+};
+
+// failure gallery: what Opus reported vs what the graded alias list needed
+// (verbatim from the published scripts in rl_env/)
+const gallery = [
+  { reported: "median_nu, mean_nu, nu_se_bootstrap", needed: "nu / nu_fitted / exponent" },
+  { reported: "claim_quantity_computed: false → inconclusive", needed: "an actual computed metric" },
+  { reported: 'rel_diff: "not_computed" (attempt 3)', needed: "rel_diff as a number" },
+  { reported: "6 C1 attempts, 0 graded alias hits", needed: "one graded metric per attempt" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Beam — Lemma's Build-with-Beam entry</title>
+    <meta
+      name="description"
+      content="Beam 1.0 501B audited as an AI scientist: a ground-truth benchmark, an RL environment with verifiable rewards, a self-improvement loop, and a four-way episode ladder where Beam wins 4/4 against Claude Opus 5.5's 0/4."
+    />
+    <link rel="canonical" href="https://lemmabio.netlify.app/beam" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0b1018" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lemma" />
+    <meta property="og:title" content="Beam 4/4 vs Opus 5.5 0/4 — verifiable-reward audits, every script published" />
+    <meta
+      property="og:description"
+      content="Lemma's Reflection × Hugging Face Build-with-Beam entry: benchmark, RL environment, self-improvement loop, long-context ablation."
+    />
+    <meta property="og:url" content="https://lemmabio.netlify.app/beam" />
+    <meta property="og:image" content="https://huggingface.co/datasets/Papajams/beam-audit-bench/resolve/main/figures/episode_ladder.png" />
+    <style>
+      html, body { margin: 0; padding: 0; background: #0b1018; }
+      .beam-wrap {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 56px 20px 96px;
+        color: var(--fg);
+        position: relative;
+        z-index: 1;
+      }
+      .beam-kicker {
+        font-family: "Roboto Mono Variable", monospace;
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 14px;
+      }
+      .beam-h1 {
+        font-size: clamp(30px, 5vw, 46px);
+        line-height: 1.12;
+        margin: 0 0 10px;
+        font-weight: 700;
+      }
+      .beam-h1 em { font-style: normal; color: var(--gold); }
+      .beam-sub { color: var(--mut); font-size: 17px; max-width: 640px; margin: 0 0 34px; }
+      .beam-links { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 44px; }
+      .beam-links a {
+        font-family: "Roboto Mono Variable", monospace;
+        font-size: 12.5px;
+        color: var(--fg);
+        text-decoration: none;
+        border: 1px solid var(--edge);
+        background: var(--card);
+        border-radius: 8px;
+        padding: 8px 13px;
+        transition: border-color 0.15s;
+      }
+      .beam-links a:hover { border-color: var(--gold); }
+      .beam-links a.primary { border-color: var(--gold); color: var(--gold); }
+      h2.beam-sec {
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--dim);
+        font-family: "Roboto Mono Variable", monospace;
+        margin: 52px 0 18px;
+        border-bottom: 1px solid var(--edge);
+        padding-bottom: 8px;
+      }
+      .ladder { display: grid; gap: 12px; }
+      .ladder-row { display: grid; grid-template-columns: 180px 1fr 64px; align-items: center; gap: 14px; }
+      .ladder-name { font-size: 14px; color: var(--fg); }
+      .ladder-track { height: 26px; background: var(--card); border: 1px solid var(--edge); border-radius: 6px; overflow: hidden; }
+      .ladder-fill { height: 100%; border-radius: 5px 0 0 5px; }
+      .ladder-score { font-family: "Roboto Mono Variable", monospace; font-size: 14px; font-weight: 700; color: var(--fg); text-align: right; }
+      figure.beam-fig { margin: 26px 0 0; }
+      figure.beam-fig img {
+        width: 100%;
+        border: 1px solid var(--edge);
+        border-radius: 10px;
+        display: block;
+        background: #0b1018;
+      }
+      figure.beam-fig figcaption { color: var(--dim); font-size: 13px; margin-top: 10px; line-height: 1.55; }
+      .bakeoff-table, .gallery-table, .episodes-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13.5px;
+      }
+      .bakeoff-table th, .gallery-table th, .episodes-table th {
+        text-align: left;
+        color: var(--dim);
+        font-family: "Roboto Mono Variable", monospace;
+        font-size: 11.5px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--edge);
+      }
+      .bakeoff-table td, .gallery-table td, .episodes-table td {
+        padding: 9px 10px;
+        border-bottom: 1px solid var(--edge);
+        color: var(--fg);
+        vertical-align: top;
+      }
+      .bakeoff-table tr.hl td { color: var(--gold); font-weight: 600; }
+      .gallery-table td.rep { color: var(--magenta); font-family: "Roboto Mono Variable", monospace; font-size: 12.5px; }
+      .gallery-table td.need { color: var(--teal); font-family: "Roboto Mono Variable", monospace; font-size: 12.5px; }
+      .ep-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 3px; vertical-align: baseline; }
+      .ep-ok { background: var(--teal); }
+      .ep-mid { background: var(--gold); opacity: 0.75; }
+      .ep-bad { background: var(--edge); }
+      .beam-note { color: var(--mut); font-size: 14px; line-height: 1.65; margin: 14px 0 0; max-width: 760px; }
+      .beam-note strong { color: var(--fg); }
+      code.inline { font-family: "Roboto Mono Variable", monospace; font-size: 12px; background: var(--card); border: 1px solid var(--edge); border-radius: 4px; padding: 1px 5px; }
+      @media (max-width: 640px) {
+        .ladder-row { grid-template-columns: 1fr 56px; }
+        .ladder-name { grid-column: 1 / -1; }
+      }
+    </style>
+  </head>
+  <body>
+    <BgGlass />
+    <div class="beam-wrap">
+      <p class="beam-kicker">reflection × hugging face · build with beam · nov 2026</p>
+      <h1 class="beam-h1">
+        Beam wins the <em>auditability axis</em>: 4/4 episodes against a closed
+        frontier model's 0/4
+      </h1>
+      <p class="beam-sub">
+        We pointed Lemma — the AI scientist that distrusts itself — at Beam 1.0
+        501B and built a benchmark, an RL environment with verifiable rewards,
+        a self-improvement loop, and a long-context ablation. Every attempt is
+        published, including the crashes.
+      </p>
+      <nav class="beam-links">
+        <a class="primary" href={links.dataset}>📦 dataset + RL env</a>
+        <a href={links.space_ca}>📗 CA logbook</a>
+        <a href={links.space_icl}>📗 ICL logbook</a>
+        <a href={links.room}>🎛 evidence room</a>
+        <a href={links.github}>💻 code</a>
+        <a href={links.discussion}>competition thread ↗</a>
+      </nav>
+
+      <h2 class="beam-sec">1 · the four-way ladder</h2>
+      <div class="ladder">
+        {ladder.map((a) => (
+          <div class="ladder-row">
+            <span class="ladder-name">{a.provider_name}</span>
+            <div class="ladder-track">
+              <div
+                class="ladder-fill"
+                style={`width: ${(a.ok / a.n) * 100}%; background: ${
+                  a.provider === "BEAMHF" ? "var(--gold)"
+                  : a.provider.startsWith("KIMI") ? "var(--teal)"
+                  : a.provider === "RUNINFRA" ? "var(--violet)"
+                  : "var(--magenta)"
+                }`}
+              ></div>
+            </div>
+            <span class="ladder-score">{a.ok}/{a.n}</span>
+          </div>
+        ))}
+      </div>
+      <p class="beam-note">
+        Keyed tasks in the RL environment — reference answer key recovered,
+        positive control passed, verdict supported. Deterministic grader, no
+        LLM judge. <strong>20 episodes, all published</strong>; the 27B-class
+        model only reached 1.0 after the environment told it the positive
+        control was missing.
+      </p>
+      <figure class="beam-fig">
+        <img src="/beam/episode_ladder.png" alt="Episode success ladder: Beam 4/4, Kimi K3 2/2, 27B-class 3/4, Claude Opus 5.5 0/4" loading="lazy" />
+      </figure>
+
+      <h2 class="beam-sec">2 · opus's 0/4 is a contract failure — the gallery</h2>
+      <p class="beam-note">
+        Opus 5.5 computed the physics but never reported it under a metric name
+        the grader's alias list accepts, or declined to compute at all. Verbatim
+        from its published scripts:
+      </p>
+      <table class="gallery-table">
+        <thead><tr><th>what opus reported</th><th>what the key needed</th></tr></thead>
+        <tbody>
+          {gallery.map((g) => (
+            <tr>
+              <td class="rep">{g.reported}</td>
+              <td class="need">{g.needed}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="beam-note">
+        Its single 1.0 is the <strong>harder</strong> CA C2 task, recovered from
+        the 20k excerpt alone. The capability was there; the auditability
+        contract wasn't. <strong>Reporting what you measured — under the
+        contracted names, with the mandatory control — is part of the skill.</strong>
+      </p>
+
+      <h2 class="beam-sec">3 · the bake-off gate</h2>
+      <table class="bakeoff-table">
+        <thead><tr><th>model</th><th>ν (target 1.0)</th><th>note</th></tr></thead>
+        <tbody>
+          {bakeoff.map((b) => (
+            <tr class:list={[{ hl: b.model === "beam_1_0_501b" }]}>
+              <td>{BAKEOFF_LABELS[b.model] ?? b.model}</td>
+              <td>{b.ran && b.nu != null ? (b.nu > 100 ? `≈ ${Math.round(b.nu)}` : b.nu.toFixed(4)) : "crash / timeout"}</td>
+              <td>{b.note}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h2 class="beam-sec">4 · the self-improvement loop (zero human feedback)</h2>
+      <figure class="beam-fig">
+        <img src="/beam/improve_arc.png" alt="CA C1 exponent: 27B-class off-chart, Beam clean round 1.476 falsified, Beam self-critique 1.0044 supported" loading="lazy" />
+        <figcaption>
+          Beam-as-reviewer diagnosed its own script's bug (unshifted
+          distribution, wrong fit window); Beam-as-auditor fixed it:
+          {improve.clean_nu != null && improve.improved_nu != null && (
+            <> ν {improve.clean_nu.toFixed(4)} → {improve.improved_nu.toFixed(4)} against target {improve.target} ± {improve.tol}.</>
+          )}
+          The flip is <code class="inline">verify_gain</code>-flagged — any move
+          toward “supported” after feedback is the reward-hacking direction, and
+          its metrics are published next to the flag.
+        </figcaption>
+      </figure>
+
+      <h2 class="beam-sec">5 · the 1M context, ablated</h2>
+      <figure class="beam-fig">
+        <img src="/beam/context_ablation.png" alt="CA C2: Beam scores 0.0 with the 20k excerpt and 1.0 with the full 120k-char paper" loading="lazy" />
+        <figcaption>
+          For Beam the D-ball derivation sits past the 20k-char excerpt window:
+          the excerpt arms re-derive the 1D model (ν = D), the full-paper run
+          recovers 1.5001 / 3.0174 / 5.4117 against targets 1.5 / 3.0 / 5.5.
+          Honest footnote: Opus recovered the same series once from the excerpt,
+          so this is a property of how Beam uses context — all four runs are in
+          the dataset.
+        </figcaption>
+      </figure>
+
+      <h2 class="beam-sec">6 · every episode</h2>
+      <table class="episodes-table">
+        <thead><tr><th>episode</th><th>task</th><th>attempts</th><th>best</th></tr></thead>
+        <tbody>
+          {episodes.map((e) => (
+            <tr>
+              <td>{e.provider_name}{e.full_context ? " · full paper" : ""}</td>
+              <td>{e.task_name}</td>
+              <td>
+                {e.statuses.map((s) => (
+                  <span class:list={["ep-dot", s === "supported" ? (e.recovered ? "ep-ok" : "ep-mid") : s === "crash" ? "ep-bad" : "ep-mid"]} title={s ?? ""}></span>
+                ))}
+              </td>
+              <td>{e.best_reward >= 1.0 ? `1.0 @ att ${e.best_attempt}` : e.best_reward.toFixed(2)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p class="beam-note">
+        Each row links to a trajectory in the dataset (<code class="inline">rl_env/</code>)
+        with the full script source of every attempt.
+      </p>
+    </div>
+    <ClipMenu />
+  </body>
+</html>

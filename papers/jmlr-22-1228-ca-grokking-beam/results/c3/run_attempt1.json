@@ -1,0 +1,26 @@
+{
+  "attempt": 1,
+  "attempt_id": "ecdb34600efb41ecb3ca7bb3a8db73dc",
+  "source": "agent_generated",
+  "run_id": "20261022-162337-jmlr-22-1228-ca-grokking",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C3",
+    "status": "supported",
+    "metrics": {
+      "p_grok_l1": 0.13666666666666666,
+      "p_grok_l2": 0.0,
+      "n_trials": 300,
+      "D": 10,
+      "N": 20,
+      "epsilon": 1.01,
+      "lambda2": 0.1,
+      "ratio_l1_over_l2": 136666666666.66666,
+      "control_p_grok_l1": 0.15,
+      "control_p_grok_l2": 0.0,
+      "control_pass": true
+    },
+    "notes": "Empirical grokking probability with L1 exceeds that with L2 for the tested parameters."
+  },
+  "wall_s": 4.13
+}

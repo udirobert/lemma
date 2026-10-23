@@ -1,0 +1,68 @@
+[
+  {
+    "id": "C1",
+    "title": "Critical exponent in 1D exponential model",
+    "statement": "In the 1D exponential model, the test error $E(t)$ near the grokking transition time $t_\\epsilon$ scales as $E(t) \\propto (t_\\epsilon - t)^1$, indicating a critical exponent of 1.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate the 1D exponential model described in Section 3.2. Sample $N$ positive and $N$ negative samples from $P^+(x) = e^{-(x-\\epsilon)}\\Theta(x-\\epsilon)$ and $P^-(x) = e^{-(\\epsilon-x)}\\Theta(\\epsilon-x)$ with a shift to induce grokking (as in Fig 3). Train a perceptron $f(x)=\\text{sgn}(x-b)$ using gradient descent on the loss $R = \\frac{1}{2N}\\sum \\frac{1}{2}(\\hat{y}_i - y_i)^2 + \\frac{\\lambda_2}{2}b^2 + \\lambda_1|w|$. Record the test error $E(t)$ for $t < t_\\epsilon$. Fit the log-log plot of $E(t)$ vs $(t_\\epsilon - t)$ to a power law $E(t) = A(t_\\epsilon - t)^\\nu$. Pass if the fitted exponent $\\nu$ is within 0.05 of 1.0.",
+    "evidence_in_paper": "Section 3.2.1, Eq. 9 and 10: 'Grokking in the considered 1D exponential model is a second-order phase transition with the test-error critical exponent equal to one.'",
+    "compute": "cpu-fast",
+    "success_criterion": "The fitted critical exponent $\\nu$ from the log-log slope of test error vs time-to-transition is $1.0 \\pm 0.05$."
+  },
+  {
+    "id": "C2",
+    "title": "Critical exponent in D-dimensional uniform ball model",
+    "statement": "In the D-dimensional uniform ball model, the test error $E_D(t)$ near the grokking transition scales as $E_D(t) \\propto (t_\\epsilon - t)^{\\frac{D+1}{2}}$, where $D$ is the dimension of the latent space.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate the D-dimensional uniform ball model from Section 3.3. Sample $N$ positive and $N$ negative samples from uniform distributions in unit balls shifted by $\\pm \\epsilon$ along the first axis. Apply a shift to the samples to create a non-typical dataset that exhibits grokking (as described in Section 3.3.1). Train a perceptron $f(\\tilde{x}) = \\text{sgn}(\\tilde{x} \\cdot w)$ using gradient descent. Record test error $E(t)$ for $t < t_\\epsilon$. Fit the log-log plot of $E(t)$ vs $(t_\\epsilon - t)$ to a power law. Pass if the fitted exponent $\\nu$ is within 0.1 of $(D+1)/2$ for $D \\in \\{2, 5, 10\\}$.",
+    "evidence_in_paper": "Section 3.3.1, Eq. 23: 'The critical exponent is hence determined only by the dimensionality of the feature distribution... $E_D(t) \\approx ... (t - t_\\epsilon)^{\\frac{D+1}{2}}$'.",
+    "compute": "cpu-fast",
+    "success_criterion": "The fitted critical exponent $\\nu$ matches the theoretical prediction $(D+1)/2$ within a tolerance of 0.1 for tested dimensions $D$."
+  },
+  {
+    "id": "C3",
+    "title": "Grokking probability increases with L1 regularisation",
+    "statement": "For the D-dimensional uniform ball model, the probability of achieving zero test error (grokking probability) is significantly higher with L1 regularisation ($\\lambda_1 > 0$) compared to L2 regularisation ($\\lambda_1 = 0$), especially for small class separations $\\epsilon$.",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "Run multiple trials of the D-dimensional uniform ball model (e.g., $D=10, N=20, \\epsilon=1.01$). For each trial, train the model with $\\lambda_1=0, \\lambda_2=0.1$ and separately with $\\lambda_1=0.1, \\lambda_2=0.1$. Count the fraction of trials that reach zero test error (grok). Pass if the grokking probability with $\\lambda_1 > 0$ is at least 2x higher than with $\\lambda_1 = 0$, or if the probability with $\\lambda_1 > 0$ is $> 0.5$ while $\\lambda_1 = 0$ is $< 0.1$ (consistent with Fig 8 trends and text in 3.3.2).",
+    "evidence_in_paper": "Section 3.3.2: 'In the case $\\lambda_1 > 0$, the grokking probability can increase even above 90%... In contrast, in the $\\lambda_1 = 0$ case, the grokking probability becomes exponentially small with D.'",
+    "compute": "cpu-fast",
+    "success_criterion": "The empirical grokking probability with L1 regularisation is strictly greater than with L2 regularisation (specifically, $P_{\\text{grok}}(\\lambda_1>0) > P_{\\text{grok}}(\\lambda_1=0)$) for the specified parameters."
+  },
+  {
+    "id": "C4",
+    "title": "Grokking probability decreases with dimension D",
+    "statement": "In the D-dimensional uniform ball model without L1 regularisation ($\\lambda_1 = 0$), the grokking probability decreases exponentially as the dimension $D$ of the latent space increases.",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "For fixed $N=10, \\epsilon=1.01, \\lambda_2=0.1, \\lambda_1=0$, run the simulation for $D \\in \\{5, 10, 20, 50\\}$. Estimate the grokking probability by running 1000 trials for each $D$. Pass if the grokking probability monotonically decreases as $D$ increases, and the log of the probability is approximately linear with $D$ (indicating exponential decay).",
+    "evidence_in_paper": "Section 3.3.2: 'We also observe that the grokking probability exponentially decreases with the dimensionality of the latent-space data distribution D.' Fig 8 shows this trend.",
+    "compute": "cpu-fast",
+    "success_criterion": "The estimated grokking probability $P(D)$ is monotonically decreasing with $D$, and $\\ln(P(D))$ shows a negative linear trend with $D$."
+  },
+  {
+    "id": "C5",
+    "title": "Rule-30 CA learning exhibits grokking",
+    "statement": "Training a tensor-network student model to learn the Rule-30 cellular automaton rule exhibits grokking, characterized by a sudden drop in test error to zero after a period of high test error following zero training error.",
+    "kind": "empirical",
+    "testable": true,
+    "test_plan": "Implement the tensor-network attention model described in Section 4.2. Generate training data for the Rule-30 CA (K=1 local rule) with sequence length $M=100$. Train the model using gradient descent with weight decay. Monitor training and test error. Pass if there exists a time interval where training error is 0 (or near 0) but test error is $> 0.5$, followed by a rapid drop in test error to $< 0.05$.",
+    "evidence_in_paper": "Section 4.3: 'We numerically study grokking... on the example of learning a 1D rule-30 cellular automaton... We show that sudden spikes in the training loss correspond to structural changes...'",
+    "compute": "gpu-small",
+    "success_criterion": "The training curve exhibits a phase where train error is $\\approx 0$ and test error is $> 0.5$, followed by a transition to test error $< 0.05$."
+  },
+  {
+    "id": "C6",
+    "title": "Grokking time distribution bimodality",
+    "statement": "In the D-dimensional uniform ball model limit ($\\lambda_2 \\ll \\epsilon^2$), the grokking time PDF is bimodal, consisting of a continuous distribution for fast relaxation and a Dirac delta peak for slow relaxation.",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate the D-dimensional ball model with parameters $D=5, \\epsilon=2, \\lambda_2=0.01$ (as in Fig 9). Run 10,000 trials with random initial weights $w(0) \\sim \\mathcal{N}(0, I)$. Record the grokking time $t_G$ for each trial that groks. Plot the histogram of $t_G$. Pass if the histogram shows two distinct modes: a broad distribution at smaller $t_G$ and a sharp peak (or cluster of values) at a larger, specific $t_G$ corresponding to the slow relaxation time $t_G = \\frac{1}{2\\lambda_{2,D}}\\ln(\\frac{\\epsilon^4}{\\epsilon^4-1})$.",
+    "evidence_in_paper": "Section 3.3.3: 'By combining the grokking-time PDFs for the fast and the slow relaxation we obtain the grokking-time PDF... In Fig. 9 we show the grokking-time PDFs... The Dirac-delta long-relaxation grokking time is represented by vertical bars.'",
+    "compute": "cpu-fast",
+    "success_criterion": "The empirical distribution of grokking times exhibits two distinct clusters/modes, with one mode centered near the analytically predicted slow-relaxation time."
+  }
+]

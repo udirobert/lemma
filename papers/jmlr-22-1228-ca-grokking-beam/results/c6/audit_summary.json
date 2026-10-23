@@ -1,0 +1,16 @@
+{
+  "claim_id": "C6",
+  "status": "supported",
+  "metrics": {
+    "n_trials": 10000,
+    "n_grokked": 10000,
+    "frac_slow_cluster": 0.6649,
+    "fast_mean": 0.4090565032251427,
+    "fast_std": 0.1802464340059135,
+    "slow_time_analytic": 1.7047911243886724,
+    "lambda_slow": 0.018928571428571427,
+    "control_pass": true,
+    "bimodal_detected": true
+  },
+  "notes": "Simulated D-dimensional ball model reduction; fast basin gives continuous small t_G, slow basin gives Dirac-like peak at analytic slow time. Positive control is a synthetic mixture with known bimodality."
+}

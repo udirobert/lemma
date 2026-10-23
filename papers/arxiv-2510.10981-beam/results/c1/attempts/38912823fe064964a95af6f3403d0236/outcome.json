@@ -1,0 +1,32 @@
+{
+  "exit_code": 0,
+  "wall_s": 9.631,
+  "summary": {
+    "claim_id": "C1",
+    "status": "supported",
+    "metrics": {
+      "R": 0.7877733872952989,
+      "RBG": 0.31149370838468343,
+      "RPV": 0.47693688626658015,
+      "RBG_plus_RPV": 0.7884305946512635,
+      "abs_diff": 0.0006572073559646396,
+      "rel_diff": 0.0008342594032289692,
+      "threshold": 0.007877733872952989,
+      "control_abs_diff": 0.0,
+      "control_pass": true,
+      "n_prompts": 15000,
+      "context_lengths": 5,
+      "n_evaluations": 75000
+    },
+    "notes": "Empirical squared-loss decomposition over a linear-vs-quadratic task mixture; Bayes predictor is the analytic posterior mean. Positive control uses M equal to the Bayes predictor."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "c9ca020c14ff4b8b09fb833c021e2dbf18acdec19d9dc479df7a6cca85758ca0"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a16437-d572-7bb6-86e5-c7e4f9f83ec5"
+}

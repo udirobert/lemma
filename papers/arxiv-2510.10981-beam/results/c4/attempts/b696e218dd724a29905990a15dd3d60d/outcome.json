@@ -1,0 +1,50 @@
+{
+  "exit_code": 0,
+  "wall_s": 4.143,
+  "summary": {
+    "claim_id": "C4",
+    "status": "falsified",
+    "metrics": {
+      "m_values": [
+        4,
+        8,
+        12
+      ],
+      "gap_m": [
+        0.2868191254480657,
+        0.37242749085475435,
+        0.4375744210432442
+      ],
+      "slope_loggap_logm": 0.38365542512882556,
+      "monotonic_m": false,
+      "pn_values": [
+        240,
+        360,
+        720
+      ],
+      "gap_pn": [
+        0.34783293227963713,
+        0.29761611685926964,
+        0.43556143995900903
+      ],
+      "slope_loggap_logpn": 0.24184299136046658,
+      "monotonic_pn": false,
+      "control_pass": true,
+      "oracle_gap": 0.0
+    },
+    "notes": "Synthetic mixture of two Gaussian linear-regression task types; uniform-attention Transformer trained by ERM; Bayes Gap estimated against exact posterior-mean predictor."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig_m.png",
+      "sha256": "3c642f15926696a0e4dfee936e9fc44f864c6f391886f8860a8bdd0d703c446b"
+    },
+    {
+      "path": "figures/fig_pn.png",
+      "sha256": "9c2278804751422b63f05047c94b36b7d99ca7c4693f158fe6c2c5b010563b85"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a16438-485c-71a0-bf17-9c0e0543de34"
+}

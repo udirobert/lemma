@@ -1,0 +1,31 @@
+{
+  "exit_code": 0,
+  "wall_s": 4.135,
+  "summary": {
+    "claim_id": "C3",
+    "status": "supported",
+    "metrics": {
+      "p_grok_l1": 0.13666666666666666,
+      "p_grok_l2": 0.0,
+      "n_trials": 300,
+      "D": 10,
+      "N": 20,
+      "epsilon": 1.01,
+      "lambda2": 0.1,
+      "ratio_l1_over_l2": 136666666666.66666,
+      "control_p_grok_l1": 0.15,
+      "control_p_grok_l2": 0.0,
+      "control_pass": true
+    },
+    "notes": "Empirical grokking probability with L1 exceeds that with L2 for the tested parameters."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "006f013a2e2cfb16c449410276f6852e888d83d4ebdf2587b0bd6c636f551258"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a16436-0f16-7424-a50f-bc2cd69b25d2"
+}

@@ -1,0 +1,591 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "status": "supported",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C1",
+        "status": "supported",
+        "metrics": {
+          "R": 0.7877733872952989,
+          "RBG": 0.31149370838468343,
+          "RPV": 0.47693688626658015,
+          "RBG_plus_RPV": 0.7884305946512635,
+          "abs_diff": 0.0006572073559646396,
+          "rel_diff": 0.0008342594032289692,
+          "threshold": 0.007877733872952989,
+          "control_abs_diff": 0.0,
+          "control_pass": true,
+          "n_prompts": 15000,
+          "context_lengths": 5,
+          "n_evaluations": 75000
+        },
+        "notes": "Empirical squared-loss decomposition over a linear-vs-quadratic task mixture; Bayes predictor is the analytic posterior mean. Positive control uses M equal to the Bayes predictor."
+      },
+      "source": "agent_generated",
+      "attempt_id": "38912823fe064964a95af6f3403d0236",
+      "candidate_summary": {
+        "claim_id": "C1",
+        "status": "supported",
+        "metrics": {
+          "R": 0.7877733872952989,
+          "RBG": 0.31149370838468343,
+          "RPV": 0.47693688626658015,
+          "RBG_plus_RPV": 0.7884305946512635,
+          "abs_diff": 0.0006572073559646396,
+          "rel_diff": 0.0008342594032289692,
+          "threshold": 0.007877733872952989,
+          "control_abs_diff": 0.0,
+          "control_pass": true,
+          "n_prompts": 15000,
+          "context_lengths": 5,
+          "n_evaluations": 75000
+        },
+        "notes": "Empirical squared-loss decomposition over a linear-vs-quadratic task mixture; Bayes predictor is the analytic posterior mean. Positive control uses M equal to the Bayes predictor."
+      },
+      "candidate_source": "agent_generated",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "38912823fe064964a95af6f3403d0236"
+      ]
+    },
+    {
+      "id": "C2",
+      "status": "supported",
+      "attempts": 2,
+      "summary": {
+        "claim_id": "C2",
+        "status": "supported",
+        "metrics": {
+          "r2_joint": 0.9820647954299805,
+          "r2_N_only": 0.3728385606633434,
+          "r2_p_only": 0.21698094959552672,
+          "r2_joint_minus_N": 0.6092262347666371,
+          "r2_joint_minus_p": 0.7650838458344538,
+          "control_pass": true,
+          "control_gap": 0.0,
+          "min_BG": 3.626432276633535e-05,
+          "max_BG": 0.00313685889011629,
+          "joint_params": [
+            7.645775592589728e-05,
+            4.517778118409092,
+            1.1401628108785087,
+            -0.06861856760903372
+          ],
+          "N_params": [
+            2.8699269219444383e-05,
+            0.13785988340743113,
+            1.0306904312228231
+          ],
+          "p_params": [
+            -0.0009448780078003193,
+            0.004156342276219026,
+            0.47436928457849503
+          ]
+        },
+        "notes": "Simplified mean-pooling linear model trained by least squares on synthetic linear-regression prompts; Bayes Gap computed against exact ridge Bayes predictor. Positive control is the exact Bayes predictor with zero gap."
+      },
+      "source": "agent_generated",
+      "attempt_id": "4d05e5c641d546629cec74ec3fbe114d",
+      "candidate_summary": {
+        "claim_id": "C2",
+        "status": "supported",
+        "metrics": {
+          "r2_joint": 0.9820647954299805,
+          "r2_N_only": 0.3728385606633434,
+          "r2_p_only": 0.21698094959552672,
+          "r2_joint_minus_N": 0.6092262347666371,
+          "r2_joint_minus_p": 0.7650838458344538,
+          "control_pass": true,
+          "control_gap": 0.0,
+          "min_BG": 3.626432276633535e-05,
+          "max_BG": 0.00313685889011629,
+          "joint_params": [
+            7.645775592589728e-05,
+            4.517778118409092,
+            1.1401628108785087,
+            -0.06861856760903372
+          ],
+          "N_params": [
+            2.8699269219444383e-05,
+            0.13785988340743113,
+            1.0306904312228231
+          ],
+          "p_params": [
+            -0.0009448780078003193,
+            0.004156342276219026,
+            0.47436928457849503
+          ]
+        },
+        "notes": "Simplified mean-pooling linear model trained by least squares on synthetic linear-regression prompts; Bayes Gap computed against exact ridge Bayes predictor. Positive control is the exact Bayes predictor with zero gap."
+      },
+      "candidate_source": "agent_generated",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "2749ea00fb4c482abad56202c53db747",
+        "4d05e5c641d546629cec74ec3fbe114d"
+      ]
+    },
+    {
+      "id": "C3",
+      "status": "falsified",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C3",
+        "status": "falsified",
+        "metrics": {
+          "n_replicates": 8000,
+          "k_values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "mse_mixture": [
+            2.5311410954421505,
+            1.6936353116256344,
+            1.1693228807612412,
+            0.8619791066168755,
+            0.670610393044109,
+            0.5486605115407468,
+            0.45518837884508256,
+            0.41046086908474333,
+            0.3767041347340292,
+            0.3604620520063995,
+            0.343372521263249,
+            0.33116602509784904,
+            0.321013608887388,
+            0.3136771368390933,
+            0.3070020354271825,
+            0.30127974027207827,
+            0.2963323523550766,
+            0.2932789655347235,
+            0.29051123790681954,
+            0.28736427162221295
+          ],
+          "mse_oracle": [
+            2.4333277030647844,
+            1.5578986752554531,
+            1.0559226207068089,
+            0.7727070152598794,
+            0.5993163836523692,
+            0.5036466134483785,
+            0.4278580682784381,
+            0.38505014237140506,
+            0.35670685384365935,
+            0.3407073245194264,
+            0.32653872282311014,
+            0.3185605084779919,
+            0.31047095880424597,
+            0.3056025674776818,
+            0.2992097561018196,
+            0.2955828360151025,
+            0.29225221261066925,
+            0.2892894778680418,
+            0.2869137304581785,
+            0.28441924120737533
+          ],
+          "gap_mixture_minus_oracle": [
+            0.09781339237736608,
+            0.1357366363701813,
+            0.11340026005443238,
+            0.0892720913569961,
+            0.0712940093917398,
+            0.04501389809236833,
+            0.027330310566644478,
+            0.025410726713338272,
+            0.01999728089036984,
+            0.0197547274869731,
+            0.01683379844013888,
+            0.012605516619857149,
+            0.010542650083142036,
+            0.008074569361411543,
+            0.007792279325362916,
+            0.005696904256975777,
+            0.004080139744407352,
+            0.003989487666681668,
+            0.0035975074486410685,
+            0.002945030414837624
+          ],
+          "initial_gap_k1": 0.09781339237736608,
+          "gap_k5": 0.0712940093917398,
+          "relative_gap_k5": 0.7288777912607922,
+          "monotonic_gap": false,
+          "main_pass": false,
+          "control_pass": true,
+          "control_max_abs_gap": 0.0
+        },
+        "notes": "Audited the Bayes-optimal/sufficiently-pretrained limit: mixture posterior mean versus oracle posterior mean for linear vs quadratic regression tasks. Gap is task-type uncertainty; noise variance cancels in the gap."
+      },
+      "source": "agent_generated",
+      "attempt_id": "29102f80ec4147b898615f26c7edef3f",
+      "candidate_summary": {
+        "claim_id": "C3",
+        "status": "falsified",
+        "metrics": {
+          "n_replicates": 8000,
+          "k_values": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "mse_mixture": [
+            2.5311410954421505,
+            1.6936353116256344,
+            1.1693228807612412,
+            0.8619791066168755,
+            0.670610393044109,
+            0.5486605115407468,
+            0.45518837884508256,
+            0.41046086908474333,
+            0.3767041347340292,
+            0.3604620520063995,
+            0.343372521263249,
+            0.33116602509784904,
+            0.321013608887388,
+            0.3136771368390933,
+            0.3070020354271825,
+            0.30127974027207827,
+            0.2963323523550766,
+            0.2932789655347235,
+            0.29051123790681954,
+            0.28736427162221295
+          ],
+          "mse_oracle": [
+            2.4333277030647844,
+            1.5578986752554531,
+            1.0559226207068089,
+            0.7727070152598794,
+            0.5993163836523692,
+            0.5036466134483785,
+            0.4278580682784381,
+            0.38505014237140506,
+            0.35670685384365935,
+            0.3407073245194264,
+            0.32653872282311014,
+            0.3185605084779919,
+            0.31047095880424597,
+            0.3056025674776818,
+            0.2992097561018196,
+            0.2955828360151025,
+            0.29225221261066925,
+            0.2892894778680418,
+            0.2869137304581785,
+            0.28441924120737533
+          ],
+          "gap_mixture_minus_oracle": [
+            0.09781339237736608,
+            0.1357366363701813,
+            0.11340026005443238,
+            0.0892720913569961,
+            0.0712940093917398,
+            0.04501389809236833,
+            0.027330310566644478,
+            0.025410726713338272,
+            0.01999728089036984,
+            0.0197547274869731,
+            0.01683379844013888,
+            0.012605516619857149,
+            0.010542650083142036,
+            0.008074569361411543,
+            0.007792279325362916,
+            0.005696904256975777,
+            0.004080139744407352,
+            0.003989487666681668,
+            0.0035975074486410685,
+            0.002945030414837624
+          ],
+          "initial_gap_k1": 0.09781339237736608,
+          "gap_k5": 0.0712940093917398,
+          "relative_gap_k5": 0.7288777912607922,
+          "monotonic_gap": false,
+          "main_pass": false,
+          "control_pass": true,
+          "control_max_abs_gap": 0.0
+        },
+        "notes": "Audited the Bayes-optimal/sufficiently-pretrained limit: mixture posterior mean versus oracle posterior mean for linear vs quadratic regression tasks. Gap is task-type uncertainty; noise variance cancels in the gap."
+      },
+      "candidate_source": "agent_generated",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "29102f80ec4147b898615f26c7edef3f"
+      ]
+    },
+    {
+      "id": "C4",
+      "status": "falsified",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C4",
+        "status": "falsified",
+        "metrics": {
+          "m_values": [
+            4,
+            8,
+            12
+          ],
+          "gap_m": [
+            0.2868191254480657,
+            0.37242749085475435,
+            0.4375744210432442
+          ],
+          "slope_loggap_logm": 0.38365542512882556,
+          "monotonic_m": false,
+          "pn_values": [
+            240,
+            360,
+            720
+          ],
+          "gap_pn": [
+            0.34783293227963713,
+            0.29761611685926964,
+            0.43556143995900903
+          ],
+          "slope_loggap_logpn": 0.24184299136046658,
+          "monotonic_pn": false,
+          "control_pass": true,
+          "oracle_gap": 0.0
+        },
+        "notes": "Synthetic mixture of two Gaussian linear-regression task types; uniform-attention Transformer trained by ERM; Bayes Gap estimated against exact posterior-mean predictor."
+      },
+      "source": "agent_generated",
+      "attempt_id": "b696e218dd724a29905990a15dd3d60d",
+      "candidate_summary": {
+        "claim_id": "C4",
+        "status": "falsified",
+        "metrics": {
+          "m_values": [
+            4,
+            8,
+            12
+          ],
+          "gap_m": [
+            0.2868191254480657,
+            0.37242749085475435,
+            0.4375744210432442
+          ],
+          "slope_loggap_logm": 0.38365542512882556,
+          "monotonic_m": false,
+          "pn_values": [
+            240,
+            360,
+            720
+          ],
+          "gap_pn": [
+            0.34783293227963713,
+            0.29761611685926964,
+            0.43556143995900903
+          ],
+          "slope_loggap_logpn": 0.24184299136046658,
+          "monotonic_pn": false,
+          "control_pass": true,
+          "oracle_gap": 0.0
+        },
+        "notes": "Synthetic mixture of two Gaussian linear-regression task types; uniform-attention Transformer trained by ERM; Bayes Gap estimated against exact posterior-mean predictor."
+      },
+      "candidate_source": "agent_generated",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "b696e218dd724a29905990a15dd3d60d"
+      ]
+    },
+    {
+      "id": "C5",
+      "status": "supported",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C5",
+        "status": "supported",
+        "metrics": {
+          "corr_wasserstein_bayes_gap": 0.9616661943004613,
+          "corr_wasserstein_posterior_variance": -0.5268940532559684,
+          "mean_abs_change_bayes_gap": 3.1441992896509015,
+          "mean_abs_change_posterior_variance": 0.009629331180550725,
+          "ratio_pv_bg": 0.0030625702423642495,
+          "control_pass": true,
+          "control_corr_bg": 0.9998748230411402,
+          "control_corr_pv": 0.11293284711502614,
+          "bg_source": 0.7756171732590129,
+          "pv_source": 0.218540914605361
+        },
+        "notes": "Monte Carlo Bayesian linear regression; model fixed at 0; W1 estimated empirically between input distributions."
+      },
+      "source": "agent_generated",
+      "attempt_id": "0f9054c90a424cfbab6dcf05bbf644ac",
+      "candidate_summary": {
+        "claim_id": "C5",
+        "status": "supported",
+        "metrics": {
+          "corr_wasserstein_bayes_gap": 0.9616661943004613,
+          "corr_wasserstein_posterior_variance": -0.5268940532559684,
+          "mean_abs_change_bayes_gap": 3.1441992896509015,
+          "mean_abs_change_posterior_variance": 0.009629331180550725,
+          "ratio_pv_bg": 0.0030625702423642495,
+          "control_pass": true,
+          "control_corr_bg": 0.9998748230411402,
+          "control_corr_pv": 0.11293284711502614,
+          "bg_source": 0.7756171732590129,
+          "pv_source": 0.218540914605361
+        },
+        "notes": "Monte Carlo Bayesian linear regression; model fixed at 0; W1 estimated empirically between input distributions."
+      },
+      "candidate_source": "agent_generated",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "0f9054c90a424cfbab6dcf05bbf644ac"
+      ]
+    },
+    {
+      "id": "C6",
+      "status": "inconclusive",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C6",
+        "status": "inconclusive",
+        "metrics": {
+          "r2_excess_fit": NaN,
+          "lambda_fit": NaN,
+          "d_min": 1.8514547973068678,
+          "d_min_over_2": 0.9257273986534339,
+          "monotone_decrease": false,
+          "excess_k1": 0.1486344441755787,
+          "excess_k_last": -0.08383594095103328,
+          "control_r2": NaN,
+          "control_lambda": NaN,
+          "control_pass": false
+        },
+        "notes": "Two-task scalar linear mixture; RPV by posterior over task/sign hypotheses; minimax risk via chi-square expectation; excess fitted to exponential."
+      },
+      "source": "agent_generated",
+      "attempt_id": "9c875984269240a09d63dfe42e002c72",
+      "candidate_summary": {
+        "claim_id": "C6",
+        "status": "inconclusive",
+        "metrics": {
+          "r2_excess_fit": NaN,
+          "lambda_fit": NaN,
+          "d_min": 1.8514547973068678,
+          "d_min_over_2": 0.9257273986534339,
+          "monotone_decrease": false,
+          "excess_k1": 0.1486344441755787,
+          "excess_k_last": -0.08383594095103328,
+          "control_r2": NaN,
+          "control_lambda": NaN,
+          "control_pass": false
+        },
+        "notes": "Two-task scalar linear mixture; RPV by posterior over task/sign hypotheses; minimax risk via chi-square expectation; excess fitted to exponential."
+      },
+      "candidate_source": "agent_generated",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "9c875984269240a09d63dfe42e002c72"
+      ]
+    },
+    {
+      "id": "C7",
+      "status": "inconclusive",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C7",
+        "status": "inconclusive",
+        "metrics": {
+          "spearman_cells": 0.11572751247156894,
+          "spearman_replicates": 0.0755970598438577,
+          "mean_within_pn_cv": 0.5533155785357945,
+          "control_spearman": -0.9258200997725515,
+          "control_cv": 0.007360149827201829,
+          "control_pass": false,
+          "real_pass": false,
+          "cell_bg_means": {
+            "N100_p20": 0.0008772057230283342,
+            "N200_p10": 0.0021689090623655243,
+            "N400_p5": 0.004090045031149048,
+            "N500_p8": 0.0027560389815750315,
+            "N1000_p4": 0.003587362140919049,
+            "N2000_p2": 0.0014029362843210335,
+            "N1000_p8": 0.002342699212316973
+          }
+        },
+        "notes": "Constant-mean meta-learning task; meta-learner is least squares on all pN prefix examples using mean-pooled context. Bayes Gap = out-of-sample MSE minus exact posterior variance."
+      },
+      "source": "agent_generated",
+      "attempt_id": "0a734f82abb44b50899121b7d38ba12d",
+      "candidate_summary": {
+        "claim_id": "C7",
+        "status": "inconclusive",
+        "metrics": {
+          "spearman_cells": 0.11572751247156894,
+          "spearman_replicates": 0.0755970598438577,
+          "mean_within_pn_cv": 0.5533155785357945,
+          "control_spearman": -0.9258200997725515,
+          "control_cv": 0.007360149827201829,
+          "control_pass": false,
+          "real_pass": false,
+          "cell_bg_means": {
+            "N100_p20": 0.0008772057230283342,
+            "N200_p10": 0.0021689090623655243,
+            "N400_p5": 0.004090045031149048,
+            "N500_p8": 0.0027560389815750315,
+            "N1000_p4": 0.003587362140919049,
+            "N2000_p2": 0.0014029362843210335,
+            "N1000_p8": 0.002342699212316973
+          }
+        },
+        "notes": "Constant-mean meta-learning task; meta-learner is least squares on all pN prefix examples using mean-pooled context. Bayes Gap = out-of-sample MSE minus exact posterior variance."
+      },
+      "candidate_source": "agent_generated",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "0a734f82abb44b50899121b7d38ba12d"
+      ]
+    }
+  ]
+}

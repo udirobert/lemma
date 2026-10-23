@@ -1,0 +1,30 @@
+{
+  "exit_code": 0,
+  "wall_s": 2.183,
+  "summary": {
+    "claim_id": "C6",
+    "status": "inconclusive",
+    "metrics": {
+      "r2_excess_fit": NaN,
+      "lambda_fit": NaN,
+      "d_min": 1.8514547973068678,
+      "d_min_over_2": 0.9257273986534339,
+      "monotone_decrease": false,
+      "excess_k1": 0.1486344441755787,
+      "excess_k_last": -0.08383594095103328,
+      "control_r2": NaN,
+      "control_lambda": NaN,
+      "control_pass": false
+    },
+    "notes": "Two-task scalar linear mixture; RPV by posterior over task/sign hypotheses; minimax risk via chi-square expectation; excess fitted to exponential."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "e18ce8eb387201a5adb0f7975d94dd156f750f626297ec8242fdf632de8b35f8"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a16438-b09e-79aa-b965-59c37e35b443"
+}

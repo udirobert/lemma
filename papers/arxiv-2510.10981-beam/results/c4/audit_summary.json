@@ -1,0 +1,33 @@
+{
+  "claim_id": "C4",
+  "status": "falsified",
+  "metrics": {
+    "m_values": [
+      4,
+      8,
+      12
+    ],
+    "gap_m": [
+      0.2868191254480657,
+      0.37242749085475435,
+      0.4375744210432442
+    ],
+    "slope_loggap_logm": 0.38365542512882556,
+    "monotonic_m": false,
+    "pn_values": [
+      240,
+      360,
+      720
+    ],
+    "gap_pn": [
+      0.34783293227963713,
+      0.29761611685926964,
+      0.43556143995900903
+    ],
+    "slope_loggap_logpn": 0.24184299136046658,
+    "monotonic_pn": false,
+    "control_pass": true,
+    "oracle_gap": 0.0
+  },
+  "notes": "Synthetic mixture of two Gaussian linear-regression task types; uniform-attention Transformer trained by ERM; Bayes Gap estimated against exact posterior-mean predictor."
+}

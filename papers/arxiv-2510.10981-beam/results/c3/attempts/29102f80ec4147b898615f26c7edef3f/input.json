@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "attempt_id": "29102f80ec4147b898615f26c7edef3f",
+  "run_id": "20261022-162538-arxiv-2510.10981",
+  "number": 1,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C3",
+    "title": "Rapid Task-Type Identification (Posterior Concentration)",
+    "statement": "In a mixture of task types, the inference-time error (MSE) of a sufficiently pretrained Transformer rapidly approaches the 'Bayes (oracle)' curve (which assumes knowledge of the true task family) as the number of in-context examples k increases, demonstrating that the task-type identification error vanishes exponentially fast.",
+    "kind": "empirical_claim",
+    "testable": true,
+    "test_plan": "Pretrain a Transformer on a mixture of two distinct regression tasks (e.g., linear and non-linear) with large N and p to minimize the Bayes Gap. At inference time, evaluate the MSE for k = 1 to 20 in-context examples. Compare the Transformer's MSE curve to two baselines: 'Bayes (mixture)' (posterior mean over all tasks) and 'Bayes (oracle)' (posterior mean for the true task only). Measure the gap between Transformer MSE and Oracle MSE.",
+    "evidence_in_paper": "Figure 2 (right panel), Theorem 3.3, Section 4 Findings (2)",
+    "compute": "gpu-small",
+    "success_criterion": "The gap between the Transformer's MSE and the Bayes (oracle) MSE decreases monotonically with k and is less than 10% of the initial gap (at k=1) by k=5."
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "4ccb6e57fde4e47978f15e38d102fc7b26bad175cabb7ac4ddac325155052608",
+  "script_sha256": "cca303793e25e73c8f194c14da3ca7b8f88175616d7ea98c9ea6c3b511c3db4c",
+  "created_at": "2026-10-22T15:26:05.277445+00:00"
+}

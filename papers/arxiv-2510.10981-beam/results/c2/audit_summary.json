@@ -1,0 +1,32 @@
+{
+  "claim_id": "C2",
+  "status": "supported",
+  "metrics": {
+    "r2_joint": 0.9820647954299805,
+    "r2_N_only": 0.3728385606633434,
+    "r2_p_only": 0.21698094959552672,
+    "r2_joint_minus_N": 0.6092262347666371,
+    "r2_joint_minus_p": 0.7650838458344538,
+    "control_pass": true,
+    "control_gap": 0.0,
+    "min_BG": 3.626432276633535e-05,
+    "max_BG": 0.00313685889011629,
+    "joint_params": [
+      7.645775592589728e-05,
+      4.517778118409092,
+      1.1401628108785087,
+      -0.06861856760903372
+    ],
+    "N_params": [
+      2.8699269219444383e-05,
+      0.13785988340743113,
+      1.0306904312228231
+    ],
+    "p_params": [
+      -0.0009448780078003193,
+      0.004156342276219026,
+      0.47436928457849503
+    ]
+  },
+  "notes": "Simplified mean-pooling linear model trained by least squares on synthetic linear-regression prompts; Bayes Gap computed against exact ridge Bayes predictor. Positive control is the exact Bayes predictor with zero gap."
+}

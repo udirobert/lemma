@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-2510.10981-beam/results/c2/audit_attempt1.py", line 201, in <module>
+    gap = evaluate_gap(params, p, eval_rng)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-2510.10981-beam/results/c2/audit_attempt1.py", line 147, in evaluate_gap
+    bp = bayes_predict(X[:, :k, :], Y[:, :k], X[:, k, :])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/udingethe/Dev/lemma/papers/arxiv-2510.10981-beam/results/c2/audit_attempt1.py", line 44, in bayes_predict
+    mu = np.linalg.solve(A, bvec)  # (M,deff)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/udingethe/Dev/lemma/.venv/lib/python3.12/site-packages/numpy/linalg/_linalg.py", line 463, in solve
+    r = gufunc(a, b, signature=signature)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: solve: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (m,m),(m,n)->(m,n) (size 300 is different from 3)

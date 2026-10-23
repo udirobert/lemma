@@ -1,0 +1,25 @@
+{
+  "attempt": 1,
+  "attempt_id": "0f9054c90a424cfbab6dcf05bbf644ac",
+  "source": "agent_generated",
+  "run_id": "20261022-162538-arxiv-2510.10981",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C5",
+    "status": "supported",
+    "metrics": {
+      "corr_wasserstein_bayes_gap": 0.9616661943004613,
+      "corr_wasserstein_posterior_variance": -0.5268940532559684,
+      "mean_abs_change_bayes_gap": 3.1441992896509015,
+      "mean_abs_change_posterior_variance": 0.009629331180550725,
+      "ratio_pv_bg": 0.0030625702423642495,
+      "control_pass": true,
+      "control_corr_bg": 0.9998748230411402,
+      "control_corr_pv": 0.11293284711502614,
+      "bg_source": 0.7756171732590129,
+      "pv_source": 0.218540914605361
+    },
+    "notes": "Monte Carlo Bayesian linear regression; model fixed at 0; W1 estimated empirically between input distributions."
+  },
+  "wall_s": 2.1
+}

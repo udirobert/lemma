@@ -1,0 +1,37 @@
+{
+  "exit_code": 0,
+  "wall_s": 4.215,
+  "summary": {
+    "claim_id": "C2",
+    "status": "falsified",
+    "metrics": {
+      "control_pass": true,
+      "max_abs_err": 5.424742501084005,
+      "D2_nu": 0.07525749891599527,
+      "D2_target": 1.5,
+      "D2_abs_err": 1.4247425010840047,
+      "D2_t_eps": 0.01,
+      "D2_n_fit_points": 1,
+      "D5_nu": 0.07525749891599527,
+      "D5_target": 3.0,
+      "D5_abs_err": 2.9247425010840047,
+      "D5_t_eps": 0.01,
+      "D5_n_fit_points": 1,
+      "D10_nu": 0.07525749891599527,
+      "D10_target": 5.5,
+      "D10_abs_err": 5.424742501084005,
+      "D10_t_eps": 0.01,
+      "D10_n_fit_points": 1
+    },
+    "notes": "Least-squares perceptron gradient flow on shifted uniform-ball data; exact spherical-cap test error; power-law fit near transition."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "8a265d4041dbb6d74a9b17989ed8810d22a473d32bdc69bae487df2bfcf1d670"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a16436-0ef5-7693-8b4d-ab79e1b05416"
+}

@@ -1,0 +1,28 @@
+{
+  "exit_code": 0,
+  "wall_s": 1.575,
+  "summary": {
+    "claim_id": "C1",
+    "status": "falsified",
+    "metrics": {
+      "nu": 1.475906555921819,
+      "t_eps": 10.0,
+      "control_slope": 1.0000000000000002,
+      "control_pass": true,
+      "n_fit_points": 9999,
+      "lambda1": 0.5,
+      "lambda2": 0.0,
+      "epsilon": 1.0
+    },
+    "notes": "Fitted exponent differs from 1.0 by more than 0.05."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "426f8cb40ff095530a4020dd5ecf0baefb200e531673233edd9677c34bc28165"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a16436-0f15-78d4-891a-6c7f76f8c2dd"
+}

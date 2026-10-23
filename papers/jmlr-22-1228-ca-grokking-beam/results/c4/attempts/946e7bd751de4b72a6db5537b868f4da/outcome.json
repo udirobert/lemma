@@ -1,0 +1,30 @@
+{
+  "exit_code": 0,
+  "wall_s": 1.007,
+  "summary": {
+    "claim_id": "C4",
+    "status": "inconclusive",
+    "metrics": {
+      "P_D5": 0.003,
+      "P_D10": 0.0,
+      "P_D20": 0.001,
+      "P_D50": 0.0,
+      "monotonic_decrease": false,
+      "log_slope": -0.07324081924454065,
+      "log_r2": 1.0,
+      "trials_per_D": 1000,
+      "control_pass": true,
+      "control_r2": 1.0
+    },
+    "notes": "Full D-dimensional ridge-regression minimizer test-zero condition; control is exact exponential decay."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/fig.png",
+      "sha256": "91b7dbb7ae5c10119397e015835ebfe0ac7541d7632054a1a53b15bf14136dfe"
+    }
+  ],
+  "weave_url": "https://wandb.ai/persidian/lemma-audits/r/call/01a16436-6dbc-7290-9ca5-4a4a3547eeda"
+}

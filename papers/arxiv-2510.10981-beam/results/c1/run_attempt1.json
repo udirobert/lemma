@@ -1,0 +1,27 @@
+{
+  "attempt": 1,
+  "attempt_id": "38912823fe064964a95af6f3403d0236",
+  "source": "agent_generated",
+  "run_id": "20261022-162538-arxiv-2510.10981",
+  "exit_code": 0,
+  "summary": {
+    "claim_id": "C1",
+    "status": "supported",
+    "metrics": {
+      "R": 0.7877733872952989,
+      "RBG": 0.31149370838468343,
+      "RPV": 0.47693688626658015,
+      "RBG_plus_RPV": 0.7884305946512635,
+      "abs_diff": 0.0006572073559646396,
+      "rel_diff": 0.0008342594032289692,
+      "threshold": 0.007877733872952989,
+      "control_abs_diff": 0.0,
+      "control_pass": true,
+      "n_prompts": 15000,
+      "context_lengths": 5,
+      "n_evaluations": 75000
+    },
+    "notes": "Empirical squared-loss decomposition over a linear-vs-quadratic task mixture; Bayes predictor is the analytic posterior mean. Positive control uses M equal to the Bayes predictor."
+  },
+  "wall_s": 9.63
+}
