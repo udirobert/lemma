@@ -410,10 +410,43 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
   </div>
 </section>
 
+<section class="hermes-band">
+  <div class="hb-inner">
+    <div class="hb-head">
+      <span class="hb-chip">native Hermes plugin</span>
+      <h2 class="hb-title">audits what your agent reads</h2>
+      <p class="hb-sub">five tools, an ambient paper-link hook, and a live Audit Room pane — inside <a href="https://hermes-agent.nousresearch.com" target="_blank" rel="noopener">Hermes Agent ↗</a>. it notices the arxiv link before you ask, then runs the claims.</p>
+    </div>
+    <div class="hb-grid">
+      <div class="hb-cell"><span class="hb-k">ambient</span><span class="hb-v">pre-LLM hook detects paper links — offers an audit unprompted</span></div>
+      <div class="hb-cell"><span class="hb-k">tools</span><span class="hb-v">quick_audit · audit · status · judge · improve — plus /audit</span></div>
+      <div class="hb-cell"><span class="hb-k">audit room</span><span class="hb-v">live stage + trace tail + verdict chips, watchable while it works</span></div>
+      <div class="hb-cell"><span class="hb-k">self-distrust</span><span class="hb-v">⚑ verify_gain flags flips to supported — the reward-hacking direction</span></div>
+    </div>
+    <a class="hb-install" href="https://github.com/udirobert/lemma/tree/main/hermes-plugin" target="_blank" rel="noopener"><code>hermes plugins install lemma</code><span>source + typeform ↗</span></a>
+  </div>
+</section>
+
 <footer data-specimen="cloud">
   <p>lemma · the trace is the demo</p>
 </footer>
 
+<style>
+  .hermes-band { border-top: 1px solid var(--dim, #64708a33); padding: 64px 24px 72px; }
+  .hb-inner { max-width: 980px; margin: 0 auto; }
+  .hb-chip { font-size: 13px; letter-spacing: .18em; text-transform: uppercase; color: var(--teal, #1ec2b5); }
+  .hb-title { font-family: var(--font-m, monospace); font-size: clamp(28px, 4vw, 42px); margin: 12px 0 10px; color: var(--ink, #f1f3f6); }
+  .hb-sub { color: var(--dim, #64708a); font-size: 17px; max-width: 640px; line-height: 1.6; }
+  .hb-sub a { color: var(--teal, #1ec2b5); }
+  .hb-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin: 34px 0 30px; }
+  .hb-cell { border: 1px solid var(--dim, #64708a44); border-radius: 8px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; background: #0b101888; }
+  .hb-k { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold, #fab533); font-family: var(--font-m, monospace); }
+  .hb-v { color: var(--ink, #f1f3f6); font-size: 15px; line-height: 1.55; }
+  .hb-install { display: inline-flex; align-items: center; gap: 18px; border: 1px solid var(--teal, #1ec2b5); border-radius: 8px; padding: 16px 24px; text-decoration: none; }
+  .hb-install code { font-family: var(--font-m, monospace); font-size: 19px; color: var(--teal, #1ec2b5); font-weight: 700; }
+  .hb-install span { color: var(--dim, #64708a); font-size: 14px; }
+  @media (max-width: 720px) { .hb-grid { grid-template-columns: 1fr; } }
+</style>
 <script src="../motion.ts"></script>
 <script src="../player.ts"></script>
 <script src="../signals.ts"></script>
