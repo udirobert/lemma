@@ -48,6 +48,15 @@ deadline 2026-11-08). `lemma design <target>` runs the stage skeleton
 runs on Modal L4 via `scripts/modal_boltz_smoke.py` — local 8 GB Mac is
 dev-only (see `runs/protein-smoke-2026-11-04.md`).
 
+## Incoming capability: Hermes agent plugin
+
+Secondary hackathon entry (behind elcaro) wrapping the audit pipeline as a
+native Hermes plugin: `lemma_quick_audit` / `lemma_audit` / `lemma_judge` /
+`lemma_status` tools + bundled `audit-this-paper` skill, planned as
+`hermes-plugin/` in this repo. Plan, niche scouting and sequencing:
+`HERMES.md` (repo root). Not built yet; decision gate Sun Nov 9 — cut
+without ceremony if the elcaro primary entry needs the time.
+
 ## Module map (`agent/`)
 
 | Module | Role |

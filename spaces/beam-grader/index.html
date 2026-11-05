@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="The Grader — a deterministic reward function for agentic science audits. Paste an audit script, watch it get run, parsed, checked against the answer key, and scored. No LLM in the reward path." />
+<title>The Grader — Lemma × Beam</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a0e16'/%3E%3Crect x='6' y='20' width='20' height='3' rx='1.5' fill='%23f2604f'/%3E%3Crect x='6' y='14' width='20' height='3' rx='1.5' fill='%23fab533'/%3E%3Crect x='6' y='8' width='20' height='3' rx='1.5' fill='%231ec2b5'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0e16;
+    --panel: #111726;
+    --panel2: #0c111d;
+    --edge: #243047;
+    --edge-soft: rgba(36, 48, 71, 0.6);
+    --fg: #eef1f6;
+    --mut: #96a0b5;
+    --dim: #5d6880;
+    --gold: #fab533;
+    --teal: #1ec2b5;
+    --magenta: #d445f2;
+    --blue: #4f8ef7;
+    --violet: #7866ed;
+    --red: #f2604f;
+    --mono: 'Roboto Mono', ui-monospace, monospace;
+    --disp: 'Montserrat', system-ui, sans-serif;
+    --spectrum: linear-gradient(90deg, var(--blue) 0 20%, var(--magenta) 20% 40%, var(--teal) 40% 60%, var(--gold) 60% 80%, var(--violet) 80% 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--bg); }
+  body {
+    background:
+      radial-gradient(ellipse 70% 40% at 50% -10%, rgba(250,181,51,0.07), transparent),
+      radial-gradient(ellipse 50% 35% at 90% 100%, rgba(30,194,181,0.05), transparent),
+      radial-gradient(rgba(150,160,181,0.05) 1px, transparent 1px),
+      var(--bg);
+    background-size: auto, auto, 28px 28px, auto;
+    color: var(--fg);
+    font-family: var(--disp);
+    min-height: 100vh;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: rgba(250,181,51,0.3); }
+
+  /* spectrum hairline across the very top */
+  .rail { height: 3px; background: var(--spectrum); }
+
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 34px 22px 72px; }
+
+  /* ---------- header ---------- */
+  header { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px 28px; margin-bottom: 22px; }
+  .head-left { flex: 1 1 460px; }
+  .kicker {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+  }
+  .kicker::before { content: '▪▪▪'; letter-spacing: 0.35em; color: var(--dim); margin-right: 10px; }
+  h1 {
+    font-size: clamp(34px, 5vw, 52px); font-weight: 800; letter-spacing: -0.02em;
+    line-height: 1.02; text-transform: uppercase;
+  }
+  h1 .thin { color: var(--mut); font-weight: 600; }
+  .sub { color: var(--mut); font-size: 13.5px; max-width: 560px; margin-top: 10px; }
+  .sub code { font-family: var(--mono); font-size: 11.5px; background: var(--panel2); border: 1px solid var(--edge); border-radius: 4px; padding: 1px 5px; color: var(--teal); }
+  .head-right { flex: 0 0 auto; padding-bottom: 4px; }
+  .stamp-chip {
+    display: inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal);
+    border: 2px solid var(--teal); border-radius: 4px; padding: 7px 12px;
+    transform: rotate(-1.5deg); box-shadow: 0 0 0 3px rgba(30,194,181,0.08);
+  }
+
+  /* ---------- pipeline strip ---------- */
+  .pipeline {
+    display: flex; list-style: none; border: 1px solid var(--edge);
+    border-radius: 10px; background: var(--panel); overflow: hidden; margin-bottom: 20px;
+  }
+  .stage { flex: 1; display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-right: 1px solid var(--edge-soft); min-width: 0; transition: background 0.25s; }
+  .stage:last-child { border-right: none; }
+  .stage .num { font-family: var(--mono); font-size: 9.5px; color: var(--dim); letter-spacing: 0.1em; }
+  .stage .name { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); white-space: nowrap; }
+  .stage .meta { font-family: var(--mono); font-size: 10px; color: var(--dim); margin-left: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stage .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--edge); flex: 0 0 auto; transition: background 0.2s, box-shadow 0.2s; }
+  .stage.active { background: rgba(250,181,51,0.07); }
+  .stage.active .dot { background: var(--gold); box-shadow: 0 0 8px rgba(250,181,51,0.7); animation: pulse 0.9s ease-in-out infinite; }
+  .stage.active .name { color: var(--gold); }
+  .stage.pass .dot { background: var(--teal); }
+  .stage.pass .name { color: var(--teal); }
+  .stage.fail .dot { background: var(--magenta); }
+  .stage.fail .name { color: var(--magenta); }
+  .stage.skip { opacity: 0.45; }
+  @keyframes pulse { 50% { opacity: 0.4; } }
+  @media (max-width: 760px) {
+    .pipeline { flex-wrap: wrap; }
+    .stage { flex: 1 1 50%; border-bottom: 1px solid var(--edge-soft); }
+    .stage:nth-child(2n) { border-right: none; }
+    .stage:nth-child(n+3) { border-bottom: none; }
+  }
+
+  /* ---------- main grid ---------- */
+  .grid { display: grid; grid-template-columns: 7fr 5fr; gap: 20px; align-items: start; }
+  @media (max-width: 920px) { .grid { grid-template-columns: 1fr; } }
+
+  .panel { background: var(--panel); border: 1px solid var(--edge); border-radius: 12px; overflow: hidden; }
+  .p-head {
+    display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+    border-bottom: 1px solid var(--edge-soft); background: var(--panel2);
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--dim);
+  }
+  .p-head .rt { margin-left: auto; color: var(--dim); font-weight: 400; letter-spacing: 0.08em; text-transform: none; }
+  .p-body { padding: 16px; }
+
+  .flabel { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); margin: 14px 0 6px; }
+  .flabel:first-child { margin-top: 0; }
+
+  select, textarea {
+    width: 100%; background: var(--panel2); border: 1px solid var(--edge);
+    color: var(--fg); font-family: var(--mono); font-size: 12.5px;
+    border-radius: 8px; padding: 9px 12px; outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  select:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(250,181,51,0.12); }
+  select { cursor: pointer; }
+  textarea { resize: vertical; min-height: 220px; line-height: 1.55; tab-size: 4; }
+
+  /* specimen + tolerance cards */
+  .claim-box { background: var(--panel2); border: 1px solid var(--edge); border-radius: 8px; padding: 11px 13px; margin-top: 10px; position: relative; }
+  .claim-box .tag {
+    position: absolute; top: -8px; left: 10px; background: var(--panel);
+    border: 1px solid var(--edge); border-radius: 4px; padding: 1px 7px;
+    font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--dim);
+  }
+  .claim-box .text { font-size: 13px; line-height: 1.55; }
+  .claim-box.crit { border-style: dashed; border-color: rgba(30,194,181,0.4); }
+  .claim-box.crit .text { color: var(--teal); font-family: var(--mono); font-size: 11.5px; }
+  .claim-box.crit .tag { color: var(--teal); border-color: rgba(30,194,181,0.4); }
+
+  /* example chips */
+  .examples { display: flex; flex-wrap: wrap; gap: 7px; }
+  .ex-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--panel2); border: 1px solid var(--edge); color: var(--mut);
+    font-family: var(--mono); font-size: 11px; padding: 6px 10px;
+    border-radius: 6px; cursor: pointer; transition: all 0.15s;
+  }
+  .ex-btn:hover { border-color: var(--gold); color: var(--fg); transform: translateY(-1px); }
+  .ex-btn .r { font-weight: 700; font-size: 10px; padding: 1px 6px; border-radius: 4px; background: rgba(93,104,128,0.25); }
+  .ex-btn .r.r1 { color: var(--teal); background: rgba(30,194,181,0.12); }
+  .ex-btn .r.r5 { color: var(--gold); background: rgba(250,181,51,0.12); }
+  .ex-btn .r.r0 { color: var(--magenta); background: rgba(212,69,242,0.12); }
+  .ex-btn.active { border-color: var(--teal); color: var(--teal); }
+
+  /* editor chrome */
+  .editor { border: 1px solid var(--edge); border-radius: 8px; overflow: hidden; }
+  .editor textarea { border: none; border-radius: 0; }
+  .editor textarea:focus { box-shadow: none; }
+  .editor:focus-within { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(250,181,51,0.12); }
+  .ed-bar {
+    display: flex; align-items: center; gap: 8px; padding: 7px 12px;
+    background: #0a0f1a; border-bottom: 1px solid var(--edge-soft);
+    font-family: var(--mono); font-size: 10px; color: var(--dim);
+  }
+  .ed-bar .fname { color: var(--mut); font-weight: 500; }
+  .ed-bar .dots span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; background: var(--edge); }
+  .ed-bar .hint { margin-left: auto; font-size: 9.5px; }
+
+  .btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; margin-top: 14px; padding: 13px 20px;
+    background: var(--gold); color: #0b1018; border: none; border-radius: 8px;
+    font-family: var(--mono); font-size: 13px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+    transition: transform 0.12s, box-shadow 0.15s, opacity 0.15s;
+  }
+  .btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 24px rgba(250,181,51,0.35); }
+  .btn:active:not(:disabled) { transform: translateY(0); }
+  .btn:disabled { opacity: 0.45; cursor: wait; }
+  .btn .kbd { font-size: 10px; font-weight: 400; opacity: 0.65; border: 1px solid rgba(11,16,24,0.3); border-radius: 4px; padding: 1px 5px; }
+
+  /* ---------- verdict panel ---------- */
+  .verdict-body { display: grid; grid-template-columns: 132px 1fr; gap: 18px; padding: 18px 16px 14px; }
+  @media (max-width: 460px) { .verdict-body { grid-template-columns: 1fr; } }
+
+  /* the ladder gauge */
+  .ladder { position: relative; height: 330px; user-select: none; }
+  .ladder .track {
+    position: absolute; left: 10px; top: 12px; bottom: 12px; width: 3px;
+    background: var(--edge); border-radius: 2px;
+  }
+  .ladder .fill {
+    position: absolute; left: 10px; bottom: 12px; width: 3px; height: 0%;
+    background: linear-gradient(to top, var(--red), var(--gold) 55%, var(--teal));
+    border-radius: 2px; transition: height 0.7s cubic-bezier(0.22, 1.2, 0.36, 1);
+  }
+  .ladder .rung { position: absolute; left: 0; right: 0; display: flex; align-items: baseline; gap: 8px; transform: translateY(50%); }
+  .ladder .rung::before { content: ''; position: absolute; left: 6px; top: 50%; width: 11px; height: 1px; background: var(--dim); }
+  .ladder .rung .score { width: 30px; text-align: right; font-family: var(--mono); font-size: 9.5px; font-weight: 700; margin-left: 22px; }
+  .ladder .rung .lbl { font-family: var(--mono); font-size: 8px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim); line-height: 1.25; }
+  .ladder .rung.major .score { color: var(--mut); }
+  .ladder .rung.minor { opacity: 0.55; }
+  .ladder .rung.minor::before { width: 6px; left: 6px; }
+  .ladder .needle {
+    position: absolute; left: 0; right: 0; bottom: 4px; height: 0;
+    transform: translateY(50%);
+    transition: bottom 0.7s cubic-bezier(0.22, 1.2, 0.36, 1), opacity 0.3s;
+    opacity: 0; pointer-events: none;
+  }
+  .ladder .needle.on { opacity: 1; }
+  .ladder .needle .bar { position: absolute; left: 4px; top: -1px; width: 52px; height: 2px; background: var(--needle-c, var(--gold)); box-shadow: 0 0 10px var(--needle-c, var(--gold)); }
+  .ladder .needle .bar::before { content: '◂'; position: absolute; left: -6px; top: -7px; font-size: 10px; color: var(--needle-c, var(--gold)); }
+  .ladder .needle .bar::after { content: '▸'; position: absolute; right: -8px; top: -7px; font-size: 10px; color: var(--needle-c, var(--gold)); }
+  .ladder .needle .nscore {
+    position: absolute; left: 20px; top: 7px; font-family: var(--mono);
+    font-size: 9.5px; font-weight: 700; color: var(--needle-c, var(--gold));
+    white-space: nowrap;
+  }
+
+  /* readout */
+  .readout { min-width: 0; }
+  .reward-big { font-family: var(--mono); font-weight: 700; font-size: 58px; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+  .reward-sub { font-family: var(--mono); font-size: 9.5px; color: var(--dim); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 4px; }
+  .verdict-stamp {
+    display: inline-block; margin-top: 12px; padding: 5px 11px;
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    border: 2px solid currentColor; border-radius: 4px; transform: rotate(-1.2deg);
+    transition: color 0.2s;
+  }
+  .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin: 14px 0 4px; }
+  .metric-cell { background: var(--panel2); border: 1px solid var(--edge); border-radius: 7px; padding: 8px 10px; }
+  .metric-cell .k { font-family: var(--mono); font-size: 8.5px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 2px; }
+  .metric-cell .v { font-family: var(--mono); font-size: 12.5px; font-weight: 600; word-break: break-word; }
+  .metric-cell .v.ok { color: var(--teal); }
+  .metric-cell .v.bad { color: var(--magenta); }
+  .metric-cell .v.none { color: var(--dim); }
+
+  .checks { margin-top: 8px; border-top: 1px solid var(--edge-soft); }
+  .check-row { display: flex; gap: 9px; padding: 6px 2px; border-bottom: 1px solid var(--edge-soft); }
+  .check-icon { width: 16px; font-weight: 700; font-family: var(--mono); font-size: 11px; }
+  .check-detail { font-family: var(--mono); font-size: 10.5px; color: var(--mut); flex: 1; word-break: break-word; }
+
+  details { margin-top: 8px; }
+  details summary { color: var(--mut); font-size: 11px; cursor: pointer; font-family: var(--mono); list-style: none; }
+  details summary::before { content: '▸ '; color: var(--dim); }
+  details[open] summary::before { content: '▾ '; }
+  pre { background: #0a0f1a; border: 1px solid var(--edge); border-radius: 7px; padding: 10px; font-family: var(--mono); font-size: 10.5px; color: var(--mut); overflow-x: auto; margin-top: 6px; max-height: 220px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
+  .note-line { margin-top: 10px; color: var(--magenta); font-size: 11px; font-family: var(--mono); }
+
+  /* idle + boot states */
+  .idle { text-align: center; padding: 42px 12px; color: var(--dim); font-family: var(--mono); font-size: 11px; }
+  .idle .glyph { font-size: 22px; display: block; margin-bottom: 10px; color: var(--edge); }
+  .boot { padding: 34px 16px; text-align: center; }
+  .boot .bline { font-family: var(--mono); font-size: 11px; color: var(--mut); margin-bottom: 12px; }
+  .boot .bbar { height: 3px; background: var(--edge); border-radius: 2px; overflow: hidden; }
+  .boot .bbar i { display: block; height: 100%; width: 30%; background: var(--gold); border-radius: 2px; animation: slide 1.1s ease-in-out infinite; }
+  @keyframes slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(400%); } }
+
+  /* session reward history strip */
+  .history { border-top: 1px solid var(--edge-soft); padding: 10px 16px 14px; }
+  .history .h-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; display: flex; justify-content: space-between; }
+  .h-axis { position: relative; height: 26px; border-bottom: 1px solid var(--edge); }
+  .h-axis .tick { position: absolute; bottom: 0; width: 1px; height: 5px; background: var(--dim); }
+  .h-axis .ticklab { position: absolute; bottom: -13px; transform: translateX(-50%); font-family: var(--mono); font-size: 8px; color: var(--dim); }
+  .h-dot {
+    position: absolute; bottom: 5px; width: 8px; height: 8px; border-radius: 50%;
+    transform: translateX(-50%); border: 1px solid var(--bg);
+    animation: drop 0.4s cubic-bezier(0.22, 1.4, 0.36, 1);
+  }
+  @keyframes drop { from { transform: translateX(-50%) scale(0); } }
+  .history { padding-bottom: 26px; }
+
+  .footer { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--edge-soft); color: var(--dim); font-family: var(--mono); font-size: 10.5px; line-height: 1.9; display: flex; flex-wrap: wrap; gap: 4px 24px; }
+  .footer .f-links { margin-left: auto; }
+  .footer a { color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(250,181,51,0.3); }
+  .footer a:hover { border-bottom-color: var(--gold); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+<div class="rail"></div>
+<div class="wrap">
+
+  <header>
+    <div class="head-left">
+      <div class="kicker">lemma × reflection · build with beam · verifiable rewards</div>
+      <h1>The <span class="thin">Grader</span></h1>
+      <p class="sub">
+        A deterministic reward function for agentic science audits. Paste an audit
+        script — it is executed in a sandbox, <code>SUMMARY_JSON</code> is extracted,
+        and the metrics are scored against a hand-verified answer key.
+      </p>
+    </div>
+    <div class="head-right">
+      <div class="stamp-chip">no LLM in the reward path</div>
+    </div>
+  </header>
+
+  <ol class="pipeline" id="pipeline">
+    <li class="stage" data-stage="run"><span class="dot"></span><span class="num">01</span><span class="name">run</span><span class="meta"></span></li>
+    <li class="stage" data-stage="parse"><span class="dot"></span><span class="num">02</span><span class="name">parse</span><span class="meta"></span></li>
+    <li class="stage" data-stage="check"><span class="dot"></span><span class="num">03</span><span class="name">check</span><span class="meta"></span></li>
+    <li class="stage" data-stage="score"><span class="dot"></span><span class="num">04</span><span class="name">score</span><span class="meta"></span></li>
+  </ol>
+
+  <div class="grid">
+    <!-- ======================= input ======================= -->
+    <section class="panel">
+      <div class="p-head">specimen input <span class="rt">task → script → stdout</span></div>
+      <div class="p-body">
+        <div class="flabel">Task · paper / claim</div>
+        <select id="task"></select>
+
+        <div class="claim-box" style="margin-top:16px;">
+          <div class="tag">claim under audit</div>
+          <div class="text" id="claim-text"></div>
+        </div>
+        <div class="claim-box crit">
+          <div class="tag">answer key · tolerance</div>
+          <div class="text" id="crit-text"></div>
+        </div>
+
+        <div class="flabel" style="margin-top:16px;">Recorded attempts <span style="text-transform:none;letter-spacing:0;">— click to load &amp; grade</span></div>
+        <div class="examples" id="example-btns"></div>
+
+        <div class="flabel" style="margin-top:16px;">Audit script</div>
+        <div class="editor">
+          <div class="ed-bar">
+            <span class="dots"><span></span><span></span><span></span></span>
+            <span class="fname">audit.py</span>
+            <span class="hint">stdout must contain&nbsp; <b>SUMMARY_JSON={…}</b></span>
+          </div>
+          <textarea id="script" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+        </div>
+
+        <button class="btn" id="grade-btn" disabled>
+          <span id="grade-label">initializing runtime…</span>
+          <span class="kbd" id="grade-kbd" style="display:none;">⌘↵</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ======================= verdict ======================= -->
+    <section class="panel" id="verdict-panel">
+      <div class="p-head">verdict <span class="rt">reward ∈ [0, 1]</span></div>
+      <div id="verdict-inner">
+        <div class="boot">
+          <div class="bline" id="boot-line">fetching python runtime…</div>
+          <div class="bbar"><i></i></div>
+        </div>
+      </div>
+      <div class="history" id="history" style="display:none;">
+        <div class="h-label"><span>session rewards</span><span id="h-count"></span></div>
+        <div class="h-axis" id="h-axis"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="footer">
+    <span>every attempt preserved — crashes included · reward-hacking guards cap at 0.25 (metric == answer-key literal in source, or decisive metric with no computation)</span>
+    <span class="f-links">
+      <a href="https://huggingface.co/datasets/Papajams/beam-audit-bench">Papajams/beam-audit-bench</a> ·
+      <a href="https://github.com/udirobert/lemma">udirobert/lemma</a> ·
+      <a href="https://lemmabio.netlify.app/room/">evidence room</a>
+    </span>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script>
+// ---------------------------------------------------------------------------
+// Task data
+// ---------------------------------------------------------------------------
+const CLAIMS = {
+  "ca-grokking / C1": "The critical exponent of the grokking transition is nu = 1.0 (Eq. 9/10).",
+  "ca-grokking / C2": "For the D-dimensional ball model, nu = (D+1)/2: 1.5 (D=2), 3.0 (D=5), 5.5 (D=10).",
+  "ca-grokking / C3": "P_grok(L1) > P_grok(L2) at D=10, eps=1.01 — the L1 phase groks more.",
+  "ca-grokking / C4": "P_grok(D) is strictly decreasing in D; ln-linear slope < 0.",
+  "ca-grokking / C6": "The order-parameter distribution is bimodal in the slow regime.",
+  "icl-bayes / C1": "Risk decomposes as R = R_BG + R_PV (Bayesian identity, rel_diff ~ 0).",
+  "icl-bayes / C3": "The Bayes-optimal predictor's p_true(k=15) >= 0.9; ratio_15 <= 1.05.",
+  "icl-bayes / C4": "Bayes Gap scales with context length: slope in [-1.3, -0.5], r2 > 0.95.",
+};
+
+const CRITERIA = {
+  "ca-grokking / C1": "abs(nu - 1.0) <= 0.05, positive control passed, status = supported",
+  "ca-grokking / C2": "abs(nu_D2-1.5)<=0.1 AND abs(nu_D5-3.0)<=0.1 AND abs(nu_D10-5.5)<=0.1",
+  "ca-grokking / C3": "p_grok_l1 > p_grok_l2 (strict)",
+  "ca-grokking / C4": "monotone_non_increasing = true, n_measurable_points >= 3",
+  "ca-grokking / C6": "all_bimodality_checks true OR bimodal_detected true + frac in (0.01,0.99)",
+  "icl-bayes / C1": "abs(rel_diff - 0.0) <= 0.01",
+  "icl-bayes / C3": "mean_p_true_15 >= 0.9 AND ratio_15 <= 1.05",
+  "icl-bayes / C4": "slope in [-1.3,-0.5] AND r2 >= 0.95",
+};
+
+const EXAMPLES = {
+  "Beam C1": { expected: 1.0, script: `import json
+nu = 0.9974
+control_pass = True
+SUMMARY_JSON = {"status": "supported", "metrics": {"nu": nu, "control_pass": control_pass, "n_measurable_points": 5}}
+print("SUMMARY_JSON=" + json.dumps(SUMMARY_JSON))
+`},
+  "wrong metric names": { expected: 0.0, script: `import json
+nu = 0.9911
+control_pass = True
+SUMMARY_JSON = {"status": "supported", "metrics": {"median_nu": nu, "nu_se_bootstrap": 0.01, "control_pass": control_pass}}
+print("SUMMARY_JSON=" + json.dumps(SUMMARY_JSON))
+`},
+  "declined to compute": { expected: 0.0, script: `import json
+SUMMARY_JSON = {"status": "inconclusive", "metrics": {"claim_quantity_computed": False, "control_pass": False, "rel_diff": "not_computed"}}
+print("SUMMARY_JSON=" + json.dumps(SUMMARY_JSON))
+`},
+  "missing control": { expected: 0.5, script: `import json
+nu = 1.0044
+SUMMARY_JSON = {"status": "supported", "metrics": {"nu": nu}}
+print("SUMMARY_JSON=" + json.dumps(SUMMARY_JSON))
+`},
+  "crashes": { expected: 0.0, script: `import json
+x = 1 / 0
+SUMMARY_JSON = {"status": "supported", "metrics": {"nu": 1.0, "control_pass": True}}
+print("SUMMARY_JSON=" + json.dumps(SUMMARY_JSON))
+`},
+};
+
+// reward ladder rungs: [score, short label, long description, major?]
+const RUNGS = [
+  [1.00, "perfect", "reference recovered + control passed + supported", true],
+  [0.70, "under-claimed", "recovered, but called inconclusive/falsified", true],
+  [0.50, "broken control", "right numbers, control failed or missing", true],
+  [0.25, "guard cap", "fabricated or self-contradictory verdict", true],
+  [0.10, "honest inconclusive", "control broken, reported as such", false],
+  [0.00, "void", "crash / no summary / missing metrics", true],
+];
+
+// ---------------------------------------------------------------------------
+// Grader Python (runs in Pyodide) — split into run / grade stages so the
+// pipeline strip can report real per-stage telemetry.
+// ---------------------------------------------------------------------------
+const GRADER_PY = `
+import json, re
+
+GROUND_TRUTH = {
+    ("ca-grokking", "C1"): [{"metric": ["nu", "nu_fitted", "nu_hat", "exponent"], "rule": "abs_close", "target": 1.0, "tol": 0.05}],
+    ("ca-grokking", "C2"): [
+        {"metric": ["nu_D2", "D2_nu", "nu_D_2"], "rule": "abs_close", "target": 1.5, "tol": 0.1},
+        {"metric": ["nu_D5", "D5_nu", "nu_D_5"], "rule": "abs_close", "target": 3.0, "tol": 0.1},
+        {"metric": ["nu_D10", "D10_nu", "nu_D_10"], "rule": "abs_close", "target": 5.5, "tol": 0.1},
+    ],
+    ("ca-grokking", "C3"): [{"metric": ["p_grok_l1", "pgrok_l1", "P_grok_L1", "p_l1", "prob_grok_l1"], "rule": "gt", "than": ["p_grok_l2", "pgrok_l2", "P_grok_L2", "p_l2", "prob_grok_l2"], "strict": True}],
+    ("ca-grokking", "C4"): [
+        {"metric": ["monotone_non_increasing", "decreasing_pass", "monotonic_decrease", "strictly_decreasing"], "rule": "truthy"},
+        {"metric": ["n_measurable_points"], "rule": "at_least", "target": 3, "or_list_len": ["chosen_P", "P_grok"]},
+    ],
+    ("ca-grokking", "C6"): [
+        {"metric": ["all_bimodality_checks"], "rule": "all_true_or_missing"},
+        {"metric": ["bimodal_detected", "bimodality_detected"], "rule": "truthy", "allow_missing_if": "all_bimodality_checks"},
+        {"metric": ["frac_slow_cluster", "frac_slow", "p_slow"], "rule": "between", "lo": 0.01, "hi": 0.99, "allow_missing_if": "all_bimodality_checks"},
+    ],
+    ("icl-bayes", "C1"): [{"metric": ["rel_diff", "relative_difference", "identity_rel_err"], "rule": "abs_close", "target": 0.0, "tol": 0.01}],
+    ("icl-bayes", "C3"): [{"metric": ["mean_p_true_15", "p_true_15"], "rule": "at_least", "target": 0.9}, {"metric": ["ratio_15"], "rule": "at_most", "target": 1.05}],
+    ("icl-bayes", "C4"): [{"metric": ["slope", "log_slope", "pN_slope"], "rule": "between", "lo": -1.3, "hi": -0.5}, {"metric": ["r2", "r_squared"], "rule": "at_least", "target": 0.95}],
+}
+
+def _get_metric(metrics, names):
+    for n in names:
+        if n in metrics:
+            return metrics[n]
+    norm = {re.sub(r"[^a-z0-9]", "", k.lower()): v for k, v in metrics.items()}
+    for n in names:
+        key = re.sub(r"[^a-z0-9]", "", n.lower())
+        if key in norm:
+            return norm[key]
+    return None
+
+def grade(paper, cid, summary):
+    status = summary.get("status")
+    metrics = summary.get("metrics") or {}
+    control = metrics.get("control_pass")
+    key = GROUND_TRUTH.get((paper, cid))
+    out = {"status": status, "control_pass": control, "checks": [], "ground_truth_pass": None,
+           "verdict_consistent": None, "score": 0.0, "has_reference": key is not None}
+    if key is None:
+        out["ground_truth_pass"] = None
+        out["verdict_consistent"] = not (status in ("supported", "falsified") and control is not True)
+        out["score"] = 0.5 if status == "inconclusive" else (0.25 if out["verdict_consistent"] else 0.0)
+        return out
+    ok = True
+    n_binding = 0
+    for chk in key:
+        rule = chk["rule"]
+        val = _get_metric(metrics, chk["metric"])
+        passed = False
+        skipped = False
+        detail = f"{chk['metric'][0]} = {val!r}  ({rule})"
+        if val is None and rule == "all_true_or_missing":
+            skipped = True; detail += "  -> absent, alternative may bind"
+        elif val is None and chk.get("allow_missing_if"):
+            alt = _get_metric(metrics, [chk["allow_missing_if"]])
+            if alt is not None:
+                skipped = True; detail += f"  -> covered by {chk['allow_missing_if']}"
+        if not skipped:
+            n_binding += 1
+            if rule == "abs_close" and isinstance(val, (int, float)):
+                passed = abs(val - chk["target"]) <= chk["tol"]; detail += f"  target {chk['target']} +/- {chk['tol']}"
+            elif rule == "at_least":
+                if isinstance(val, (int, float)):
+                    passed = val >= chk["target"]; detail += f"  >= {chk['target']}"
+                elif chk.get("or_list_len"):
+                    lst = _get_metric(metrics, chk["or_list_len"])
+                    if isinstance(lst, list):
+                        passed = len(lst) >= chk["target"]; detail = f"len({chk['or_list_len']}) = {len(lst)}  >= {chk['target']}"
+            elif rule == "at_most" and isinstance(val, (int, float)):
+                passed = val <= chk["target"]; detail += f"  <= {chk['target']}"
+            elif rule == "between" and isinstance(val, (int, float)):
+                passed = chk["lo"] <= val <= chk["hi"]; detail += f"  in [{chk['lo']}, {chk['hi']}]"
+            elif rule == "truthy":
+                passed = bool(val)
+            elif rule in ("all_true", "all_true_or_missing") and isinstance(val, list):
+                passed = bool(val) and all(bool(v) for v in val)
+            elif rule == "gt":
+                other = _get_metric(metrics, chk["than"])
+                if isinstance(val, (int, float)) and isinstance(other, (int, float)):
+                    passed = val > other if chk.get("strict") else val >= other
+                    detail = f"{chk['metric'][0]}={val!r} > {chk['than'][0]}={other!r}"
+            if val is None: detail += "  (metric missing)"
+        out["checks"].append({"passed": bool(passed), "skipped": skipped, "detail": detail})
+        ok = ok and (skipped or passed)
+    if n_binding == 0: ok = False
+    out["ground_truth_pass"] = bool(ok)
+    if status == "supported": out["verdict_consistent"] = bool(ok and control is True)
+    elif status == "falsified": out["verdict_consistent"] = not ok
+    else: out["verdict_consistent"] = True
+    if ok and control is True and status == "supported": out["score"] = 1.0
+    elif ok and control is True and status in ("falsified", "inconclusive"): out["score"] = 0.7
+    elif ok: out["score"] = 0.5
+    else: out["score"] = 0.0
+    return out
+
+def run_stage(script):
+    import io, contextlib
+    buf = io.StringIO()
+    err_buf = io.StringIO()
+    rc = 0
+    try:
+        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(err_buf):
+            exec(compile(script, "<audit>", "exec"), {"__name__": "__main__"})
+    except Exception as e:
+        rc = 1
+        err_buf.write(f"{type(e).__name__}: {e}")
+    stdout = buf.getvalue()
+    stderr = err_buf.getvalue()
+    m = re.search(r"SUMMARY_JSON=(.+)", stdout, re.DOTALL)
+    summary = None
+    if m:
+        try: summary = json.loads(m.group(1).strip())
+        except json.JSONDecodeError:
+            m2 = re.search(r"\\{.*\\}", m.group(1), re.DOTALL)
+            if m2:
+                try: summary = json.loads(m2.group(0))
+                except json.JSONDecodeError: pass
+    parsed = isinstance(summary, dict)
+    return {"summary": summary if parsed else None, "summary_kind": type(summary).__name__,
+            "stdout": stdout, "stderr": stderr, "rc": rc, "parsed": parsed}
+
+def grade_stage(task, summary):
+    paper, cid = [x.strip() for x in task.split("/")]
+    if summary is None:
+        return {"reward": 0.0, "grade": None, "note": "No parseable SUMMARY_JSON in stdout"}
+    g = grade(paper, cid, summary)
+    return {"reward": g["score"], "grade": g, "note": None}
+`;
+
+// ---------------------------------------------------------------------------
+// UI helpers
+// ---------------------------------------------------------------------------
+const $ = id => document.getElementById(id);
+const escHtml = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const stageDelay = reducedMotion ? 0 : 260;
+
+let pyodide = null;
+let pyodideReady = false;
+let grading = false;
+
+// task dropdown (grouped by paper)
+const taskSel = $('task');
+{
+  const groups = {};
+  Object.keys(CLAIMS).forEach(t => {
+    const paper = t.split(' / ')[0];
+    (groups[paper] = groups[paper] || []).push(t);
+  });
+  Object.entries(groups).forEach(([paper, tasks]) => {
+    const og = document.createElement('optgroup');
+    og.label = paper;
+    tasks.forEach(t => {
+      const opt = document.createElement('option');
+      opt.value = t; opt.textContent = t;
+      og.appendChild(opt);
+    });
+    taskSel.appendChild(og);
+  });
+}
+
+function updateClaim() {
+  const t = taskSel.value;
+  $('claim-text').textContent = CLAIMS[t] || '';
+  $('crit-text').textContent = CRITERIA[t] || '—';
+}
+taskSel.addEventListener('change', updateClaim);
+updateClaim();
+
+// example chips — load & grade in one click
+let activeChip = null;
+const exContainer = $('example-btns');
+Object.entries(EXAMPLES).forEach(([name, ex]) => {
+  const btn = document.createElement('button');
+  btn.className = 'ex-btn';
+  const rcls = ex.expected >= 1 ? 'r1' : (ex.expected >= 0.5 ? 'r5' : 'r0');
+  btn.innerHTML = `${escHtml(name)} <span class="r ${rcls}">→ ${ex.expected.toFixed(2)}</span>`;
+  btn.title = 'load & grade this recorded attempt';
+  btn.onclick = () => {
+    $('script').value = ex.script;
+    if (activeChip) activeChip.classList.remove('active');
+    activeChip = btn; btn.classList.add('active');
+    gradeScript();
+  };
+  exContainer.appendChild(btn);
+});
+$('script').value = EXAMPLES["Beam C1"].script;
+
+// pipeline stages
+function resetStages() {
+  document.querySelectorAll('#pipeline .stage').forEach(s => {
+    s.className = 'stage';
+    s.querySelector('.meta').textContent = '';
+  });
+}
+function setStage(name, state, meta) {
+  const el = document.querySelector(`#pipeline .stage[data-stage="${name}"]`);
+  if (!el) return;
+  el.className = 'stage ' + state;
+  if (meta !== undefined) el.querySelector('.meta').textContent = meta;
+}
+
+// ladder
+function buildLadder() {
+  const host = $('ladder');
+  if (!host) return;
+  RUNGS.forEach(([score, label, desc, major]) => {
+    const r = document.createElement('div');
+    r.className = 'rung ' + (major ? 'major' : 'minor');
+    r.style.bottom = `calc(12px + ${score} * (100% - 24px))`;
+    r.title = desc;
+    r.innerHTML = `<span class="score">${score.toFixed(2)}</span><span class="lbl">${escHtml(label)}</span>`;
+    host.appendChild(r);
+  });
+}
+
+function rewardColor(r) {
+  if (r >= 1.0) return '#1ec2b5';
+  if (r >= 0.5) return '#fab533';
+  if (r > 0)   return '#d445f2';
+  return '#5d6880';
+}
+function rewardLabel(r, g) {
+  if (r >= 1.0) return 'perfect';
+  if (r >= 0.7) return 'under-claimed';
+  if (r >= 0.5) return 'broken control';
+  if (r > 0)    return 'guard cap';
+  return 'void';
+}
+
+// session reward history dots
+function addHistoryDot(reward) {
+  $('history').style.display = '';
+  const axis = $('h-axis');
+  if (!axis.querySelector('.tick')) {
+    [0, 0.25, 0.5, 0.75, 1].forEach(v => {
+      const t = document.createElement('span');
+      t.className = 'tick'; t.style.left = (v * 100) + '%';
+      axis.appendChild(t);
+      const l = document.createElement('span');
+      l.className = 'ticklab'; l.style.left = (v * 100) + '%';
+      l.textContent = v.toFixed(v === 0 || v === 1 ? 1 : 2);
+      axis.appendChild(l);
+    });
+  }
+  const d = document.createElement('span');
+  d.className = 'h-dot';
+  d.style.left = (reward * 100) + '%';
+  d.style.background = rewardColor(reward);
+  // stack dots that land on the same reward so density reads
+  const same = [...axis.querySelectorAll('.h-dot')].filter(x => Math.abs(parseFloat(x.style.left) - reward * 100) < 2).length;
+  d.style.bottom = (5 + same * 11) + 'px';
+  axis.appendChild(d);
+  if (5 + same * 11 > 16) axis.style.height = (16 + same * 11) + 'px';
+  $('h-count').textContent = `n=${axis.querySelectorAll('.h-dot').length}`;
+}
+
+// odometer count for the reward number
+function animateNumber(el, from, to, ms) {
+  if (reducedMotion || ms <= 0) { el.textContent = to.toFixed(2); return; }
+  const t0 = performance.now();
+  const tick = now => {
+    const k = Math.min(1, (now - t0) / ms);
+    const e = 1 - Math.pow(1 - k, 3);
+    el.textContent = (from + (to - from) * e).toFixed(2);
+    if (k < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+// ---------------------------------------------------------------------------
+// boot
+// ---------------------------------------------------------------------------
+async function initPyodide() {
+  const bootLine = $('boot-line');
+  try {
+    if (bootLine) bootLine.textContent = 'fetching python runtime…';
+    pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/" });
+    if (bootLine) bootLine.textContent = 'installing grader…';
+    await pyodide.runPythonAsync(GRADER_PY);
+    pyodideReady = true;
+    $('grade-btn').disabled = false;
+    $('grade-label').textContent = 'grade this script';
+    $('grade-kbd').style.display = '';
+    renderIdle();
+  } catch (e) {
+    $('verdict-inner').innerHTML =
+      `<div class="idle"><span class="glyph">✕</span>runtime failed to load<br/><span style="color:#d445f2;">${escHtml(e && e.message ? e.message : e)}</span></div>`;
+    $('grade-label').textContent = 'runtime unavailable';
+  }
+}
+
+function renderIdle() {
+  $('verdict-inner').innerHTML = `
+    <div class="verdict-body">
+      <div class="ladder" id="ladder"><div class="track"></div><div class="fill" id="fill"></div><div class="needle" id="needle"><div class="bar"></div><div class="nscore" id="nscore"></div></div></div>
+      <div class="readout">
+        <div class="reward-big" id="reward-num" style="color:var(--dim);">—.——</div>
+        <div class="reward-sub">reward signal</div>
+        <div class="verdict-stamp" id="stamp" style="color:var(--dim);">awaiting specimen</div>
+        <div class="metric-grid" id="mgrid"></div>
+        <div class="checks" id="checks"></div>
+        <div id="vdetails"></div>
+      </div>
+    </div>`;
+  buildLadder();
+  setCells({ status: '—', control: '—', truth: '—', consistent: '—' });
+}
+
+function setCells(c) {
+  const cell = (k, v) => {
+    const cls = v === true || v === 'true' ? 'ok' : (v === false || v === 'false' ? 'bad' : (v === '—' || v === null || v === 'None' ? 'none' : ''));
+    return `<div class="metric-cell"><div class="k">${k}</div><div class="v ${cls}">${escHtml(v)}</div></div>`;
+  };
+  $('mgrid').innerHTML =
+    cell('status', c.status) + cell('control_pass', c.control) +
+    cell('ground truth', c.truth) + cell('verdict consistent', c.consistent);
+}
+
+// ---------------------------------------------------------------------------
+// grade flow — staged, with real telemetry on each step
+// ---------------------------------------------------------------------------
+async function py(expr) {
+  const out = await pyodide.runPythonAsync(expr);
+  if (out && typeof out === 'object' && typeof out.toJs === 'function') {
+    const v = out.toJs(); out.destroy && out.destroy(); return v;
+  }
+  return out;
+}
+
+async function gradeScript() {
+  if (!pyodideReady || grading) return;
+  grading = true;
+  const btn = $('grade-btn');
+  btn.disabled = true;
+  $('grade-label').textContent = 'grading…';
+
+  const task = taskSel.value;
+  const script = $('script').value;
+  resetStages();
+
+  try {
+    // 01 · run
+    setStage('run', 'active', 'exec');
+    const t0 = performance.now();
+    const runRes = JSON.parse(await py(`import json\njson.dumps(run_stage(${JSON.stringify(script)}))`));
+    const ms = Math.round(performance.now() - t0);
+    setStage('run', 'pass', `rc ${runRes.rc} · ${ms}ms`);
+    await sleep(stageDelay);
+
+    // 02 · parse
+    setStage('parse', 'active');
+    if (!runRes.parsed) {
+      setStage('parse', 'fail', 'no SUMMARY_JSON');
+      setStage('check', 'skip', '—');
+      setStage('score', 'active');
+      await sleep(stageDelay);
+      renderVerdict({ reward: 0.0, grade: null, note: `No parseable SUMMARY_JSON in stdout${runRes.summary_kind ? ' (got ' + runRes.summary_kind + ')' : ''}` }, runRes);
+      setStage('score', 'pass', 'r = 0.00');
+      addHistoryDot(0.0);
+      return;
+    }
+    setStage('parse', 'pass', 'SUMMARY_JSON ✓');
+    await sleep(stageDelay);
+
+    // 03 · check
+    setStage('check', 'active', 'answer key');
+    const gr = JSON.parse(await py(`import json\njson.dumps(grade_stage(${JSON.stringify(task)}, json.loads(${JSON.stringify(JSON.stringify(runRes.summary))})))`));
+    const g = gr.grade;
+    if (g && g.checks && g.checks.length) {
+      const nPass = g.checks.filter(c => c.passed || c.skipped).length;
+      setStage('check', g.ground_truth_pass ? 'pass' : 'fail', `${nPass}/${g.checks.length} rules`);
+    } else {
+      setStage('check', 'skip', 'no key');
+    }
+    await sleep(stageDelay);
+
+    // 04 · score
+    setStage('score', 'active');
+    renderVerdict(gr, runRes);
+    setStage('score', 'pass', `r = ${gr.reward.toFixed(2)}`);
+    addHistoryDot(gr.reward);
+  } catch (e) {
+    renderVerdict({ reward: null, grade: null, note: 'grader error: ' + (e && e.message ? e.message : e) }, null);
+    setStage('score', 'fail', 'error');
+  } finally {
+    grading = false;
+    btn.disabled = false;
+    $('grade-label').textContent = 'grade this script';
+  }
+}
+
+function renderVerdict(res, runRes) {
+  const reward = res.reward;
+  const g = res.grade;
+  const color = reward === null ? '#d445f2' : rewardColor(reward);
+  const label = reward === null ? 'error' : rewardLabel(reward, g);
+
+  const numEl = $('reward-num');
+  const prev = parseFloat(numEl.textContent);
+  animateNumber(numEl, isNaN(prev) ? 0 : prev, reward === null ? 0 : reward, 500);
+  numEl.style.color = reward === null ? '#d445f2' : color;
+
+  const stamp = $('stamp');
+  stamp.textContent = label;
+  stamp.style.color = reward === null ? '#d445f2' : color;
+
+  // needle + fill
+  const needle = $('needle'), fill = $('fill'), nscore = $('nscore');
+  if (reward !== null && needle) {
+    needle.classList.add('on');
+    needle.style.setProperty('--needle-c', color);
+    needle.style.bottom = `calc(12px + ${reward} * (100% - 24px))`;
+    nscore.textContent = 'r = ' + reward.toFixed(2);
+    fill.style.height = `calc(${reward} * (100% - 24px))`;
+  }
+
+  setCells({
+    status: g ? g.status : '—',
+    control: g ? (g.control_pass === null ? 'None' : g.control_pass) : '—',
+    truth: g ? (g.ground_truth_pass === null ? 'None' : g.ground_truth_pass) : '—',
+    consistent: g ? (g.verdict_consistent === null ? 'None' : g.verdict_consistent) : '—',
+  });
+
+  let checksHtml = '';
+  if (g && g.checks && g.checks.length) {
+    checksHtml = g.checks.map(c => {
+      const icon = c.passed ? '✓' : (c.skipped ? '·' : '✗');
+      const icolor = c.passed ? '#1ec2b5' : (c.skipped ? '#5d6880' : '#d445f2');
+      return `<div class="check-row"><span class="check-icon" style="color:${icolor};">${icon}</span><span class="check-detail">${escHtml(c.detail)}</span></div>`;
+    }).join('');
+  }
+  $('checks').innerHTML = checksHtml;
+
+  const summaryJson = (runRes && runRes.summary) ? JSON.stringify(runRes.summary, null, 2) : '—';
+  const output = runRes ? ((runRes.stdout || '') + (runRes.stderr ? '\n--- stderr ---\n' + runRes.stderr : '')).slice(-1200) : '';
+  $('vdetails').innerHTML = `
+    <details><summary>SUMMARY_JSON extracted</summary><pre>${escHtml(summaryJson)}</pre></details>
+    <details><summary>stdout / stderr${runRes ? ' (exit ' + runRes.rc + ')' : ''}</summary><pre>${escHtml(output || '—')}</pre></details>
+    ${res.note ? `<div class="note-line">${escHtml(res.note)}</div>` : ''}
+  `;
+}
+
+$('grade-btn').addEventListener('click', gradeScript);
+$('script').addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') gradeScript();
+});
+
+initPyodide();
+</script>
+</body>
+</html>
