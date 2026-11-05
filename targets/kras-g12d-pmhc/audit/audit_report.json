@@ -1,0 +1,235 @@
+{
+  "units": [
+    {
+      "did": "d1",
+      "seq_id": "d1_0_s3",
+      "aa": "AAAADAALRAAVVAEHAAAVAAALSGLPAAVAAAVAAAVGAVLAAGYAAAGAAALLALALRRGDRALPAPLLAALLAATALYAVVRALVDAAVAAAV",
+      "complexes": {
+        "pmhc_g12d": {
+          "iptm": 0.8553710579872131,
+          "binder_peptide_iptm": 0.5333309769630432,
+          "complex_plddt": 0.8632169365882874
+        },
+        "pmhc_wt": {
+          "iptm": 0.8553710579872131,
+          "binder_peptide_iptm": 0.5333309769630432,
+          "complex_plddt": 0.8632169365882874
+        },
+        "hla_apo": {
+          "iptm": 0.8553710579872131,
+          "binder_peptide_iptm": null,
+          "complex_plddt": 0.8632169365882874
+        }
+      },
+      "verdict": "decoy_leak"
+    },
+    {
+      "did": "d1",
+      "seq_id": "d1_0_s2",
+      "aa": "AAAAHAALVAAVVAELAAAVAASLAGLPAAARAALAAAAGAAAAAFFLAAGAAARLALWEFRGERALPPAELAALRAARALYEAGRAIVDGLVASSV",
+      "complexes": {
+        "pmhc_g12d": {
+          "iptm": 0.8025632500648499,
+          "binder_peptide_iptm": 0.3290448784828186,
+          "complex_plddt": 0.8640318512916565
+        },
+        "pmhc_wt": {
+          "iptm": 0.8553710579872131,
+          "binder_peptide_iptm": 0.5333309769630432,
+          "complex_plddt": 0.8632169365882874
+        },
+        "hla_apo": {
+          "iptm": 0.8025632500648499,
+          "binder_peptide_iptm": null,
+          "complex_plddt": 0.8640318512916565
+        }
+      },
+      "verdict": "decoy_leak"
+    },
+    {
+      "did": "d2",
+      "seq_id": "d2_1_s8",
+      "aa": "AATLAALRAARAALAAQLAAARALLEAAADTPLYRELAAEVAELEAVCAGEPLAPATLAALEAGLTAAAATVAAILAAQPDVPADLVAALDAAETAASALLAALFRARVATET",
+      "complexes": {
+        "pmhc_g12d": {
+          "iptm": 0.8553710579872131,
+          "binder_peptide_iptm": 0.5333309769630432,
+          "complex_plddt": 0.8632169365882874
+        },
+        "pmhc_wt": {
+          "iptm": 0.8025632500648499,
+          "binder_peptide_iptm": 0.3290448784828186,
+          "complex_plddt": 0.8640318512916565
+        },
+        "hla_apo": {
+          "iptm": 0.8553710579872131,
+          "binder_peptide_iptm": null,
+          "complex_plddt": 0.8632169365882874
+        }
+      },
+      "verdict": "decoy_leak"
+    },
+    {
+      "did": "d2",
+      "seq_id": "d2_1_s6",
+      "aa": "AAATAALAAQRAALAAALAELAALLEAAAATPLYRALAEEVRAMRATMAGAVLSAATIAALEAERTAACAVLSQILQAQPNIPEDLLAAIDAALAQVNALLASMHRARVALED",
+      "complexes": {
+        "pmhc_g12d": {
+          "iptm": 0.8025632500648499,
+          "binder_peptide_iptm": 0.3290448784828186,
+          "complex_plddt": 0.8640318512916565
+        },
+        "pmhc_wt": {
+          "iptm": 0.8553710579872131,
+          "binder_peptide_iptm": 0.5333309769630432,
+          "complex_plddt": 0.8632169365882874
+        },
+        "hla_apo": {
+          "iptm": 0.8025632500648499,
+          "binder_peptide_iptm": null,
+          "complex_plddt": 0.8640318512916565
+        }
+      },
+      "verdict": "decoy_leak"
+    },
+    {
+      "did": "d3",
+      "seq_id": "d3_2_s2",
+      "aa": "LRAEAETRRAQLTAQAAALEAQIAALEAARAAAAAADAAAAAALAAALALAQAQLANKKAAIAALDAILAALAAGDEAAAKAAAAAFDKENTATSLANQEAAAALAAARAAAAAAA",
+      "complexes": {
+        "pmhc_g12d": {
+          "iptm": 0.8553710579872131,
+          "binder_peptide_iptm": 0.5333309769630432,
+          "complex_plddt": 0.8632169365882874
+        },
+        "pmhc_wt": {
+          "iptm": 0.8025632500648499,
+          "binder_peptide_iptm": 0.3290448784828186,
+          "complex_plddt": 0.8640318512916565
+        },
+        "hla_apo": {
+          "iptm": 0.8553710579872131,
+          "binder_peptide_iptm": null,
+          "complex_plddt": 0.8632169365882874
+        }
+      },
+      "verdict": "decoy_leak"
+    },
+    {
+      "did": "d3",
+      "seq_id": "d3_2_s3",
+      "aa": "LEAELRARLHQLAARAAALRAEIAALEAEQAAAAAADAAAAALLAARLALARAAAAAAEDHAARLAAVLAALAAGDAAAARAAAAALDADAAAGGLAQRTAAAALAAAEAAAKAAA",
+      "complexes": {
+        "pmhc_g12d": {
+          "iptm": 0.8025632500648499,
+          "binder_peptide_iptm": 0.3290448784828186,
+          "complex_plddt": 0.8640318512916565
+        },
+        "pmhc_wt": {
+          "iptm": 0.8553710579872131,
+          "binder_peptide_iptm": 0.5333309769630432,
+          "complex_plddt": 0.8632169365882874
+        },
+        "hla_apo": {
+          "iptm": 0.8025632500648499,
+          "binder_peptide_iptm": null,
+          "complex_plddt": 0.8640318512916565
+        }
+      },
+      "verdict": "decoy_leak"
+    },
+    {
+      "did": "d4",
+      "seq_id": "d4_3_s3",
+      "aa": "ADEAEVAAVRAQSAALDALLAEAAAAAAATAAAGDAASAAATATAAAGALAAHYVALVHHAEAGSPSPERRALIDENLAKIDEAVAA",
+      "complexes": {
+        "pmhc_g12d": {
+          "iptm": 0.8553710579872131,
+          "binder_peptide_iptm": 0.5333309769630432,
+          "complex_plddt": 0.8632169365882874
+        },
+        "pmhc_wt": {
+          "iptm": 0.9604396820068359,
+          "binder_peptide_iptm": 0.9121179580688477,
+          "complex_plddt": 0.9632838368415833
+        },
+        "hla_apo": {
+          "iptm": 0.8025632500648499,
+          "binder_peptide_iptm": null,
+          "complex_plddt": 0.8640318512916565
+        }
+      },
+      "verdict": "decoy_leak"
+    },
+    {
+      "did": "d4",
+      "seq_id": "d4_3_s6",
+      "aa": "AVEAELAAVRAAAAALAAAAAAAAAAAAAAAATGDAASVAATRTANAAALAAAEVAVVAALREGSPSPAVRAACDAILAAIDARVAA",
+      "complexes": {
+        "pmhc_g12d": {
+          "iptm": 0.9004946351051331,
+          "binder_peptide_iptm": 0.6665537357330322,
+          "complex_plddt": 0.9251030683517456
+        },
+        "pmhc_wt": {
+          "iptm": 0.8025632500648499,
+          "binder_peptide_iptm": 0.3290448784828186,
+          "complex_plddt": 0.8640318512916565
+        },
+        "hla_apo": {
+          "iptm": 0.9004946351051331,
+          "binder_peptide_iptm": null,
+          "complex_plddt": 0.9251030683517456
+        }
+      },
+      "verdict": "decoy_leak"
+    },
+    {
+      "did": "d5",
+      "seq_id": "d5_4_s4",
+      "aa": "DLVAAAEAAGLPADLIARLRARLAAQELAGDPAALARQRRAVEGLLAILEEMLALPVEEIRARAGQIEALLDDLFLLTSLVEGFDAAVARREALTARLHAKVVVEA",
+      "complexes": {
+        "pmhc_g12d": {
+          "iptm": 0.8025632500648499,
+          "binder_peptide_iptm": 0.3290448784828186,
+          "complex_plddt": 0.8640318512916565
+        },
+        "pmhc_wt": {
+          "iptm": 0.9004946351051331,
+          "binder_peptide_iptm": 0.6665537357330322,
+          "complex_plddt": 0.9251030683517456
+        },
+        "hla_apo": {
+          "iptm": 0.8025632500648499,
+          "binder_peptide_iptm": null,
+          "complex_plddt": 0.8640318512916565
+        }
+      },
+      "verdict": "decoy_leak"
+    },
+    {
+      "did": "d5",
+      "seq_id": "d5_4_s6",
+      "aa": "DLIAAARAAGLPEDLIRELEAALARRELSGRADDLARLRRAVAGLRAWLDELLARPRAELERLRGQIEAALRDLVRLTSLVEGVEAALAEAAEWRARLRAVLEEAA",
+      "complexes": {
+        "pmhc_g12d": {
+          "iptm": 0.9004946351051331,
+          "binder_peptide_iptm": 0.6665537357330322,
+          "complex_plddt": 0.9251030683517456
+        },
+        "pmhc_wt": {
+          "iptm": 0.8025632500648499,
+          "binder_peptide_iptm": 0.3290448784828186,
+          "complex_plddt": 0.8640318512916565
+        },
+        "hla_apo": {
+          "iptm": 0.9004946351051331,
+          "binder_peptide_iptm": null,
+          "complex_plddt": 0.9251030683517456
+        }
+      },
+      "verdict": "decoy_leak"
+    }
+  ],
+  "note": "boltz iptm is a docking-confidence proxy, not a KD \u2014 verdicts are screen-level calls"
+}

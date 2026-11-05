@@ -38,15 +38,26 @@ The `lemma` wrapper runs `python -m agent.cli`. Each stage is idempotent:
 re-running a stage that already has outputs under `papers/<id>/` reuses them
 (claims.json, results/audit_report.json) rather than redoing work.
 
+## Incoming capability: protein-binder design
+
+Lemma is expanding from auditing papers to designing proteins with the same
+audit discipline. Planning doc: `PROTEIN.md` (repo root). First target
+workdir: `targets/kras-g12d-pmhc/` (Anthropic × Adaptyv Challenge 05,
+deadline 2026-11-08). `lemma design <target>` runs the stage skeleton
+(`agent/design.py`: propose → design → audit → evidence → judge); scoring
+runs on Modal L4 via `scripts/modal_boltz_smoke.py` — local 8 GB Mac is
+dev-only (see `runs/protein-smoke-2026-11-04.md`).
+
 ## Module map (`agent/`)
 
 | Module | Role |
 |--------|------|
-| `cli.py` | `lemma` entry point: `audit`, `judge`, `search`; resolves `--workdir` to an absolute path (relative paths double up inside subprocess `cwd`) |
+| `cli.py` | `lemma` entry point: `audit`, `design`, `judge`, `search`; resolves `--workdir` to an absolute path (relative paths double up inside subprocess `cwd`) |
 | `extract.py` | Stage 1 — claims.json; `success_criterion` from the claim's own statement only |
 | `auditor.py` | Stage 2 — writes/runs self-contained numpy scripts, iterates ≤3×; mandatory positive control; verdict-vs-metrics validator; feedback + reviewer-reference escalation (below) |
 | `evidence.py` | Stage 3 — builds the Trackio logbook from results + trace; refuses to build if an ancestor dir holds a `.trackio` logbook; resolves the `trackio` binary next to `sys.executable` |
 | `judge.py` | Stage 4 — automated evidence-trustworthiness judge (structure, evidence, integrity, cost, trace) |
+| `design.py` | `lemma design` — protein-design stage skeleton (PROTEIN.md): propose/design/audit/evidence/judge over `targets/<id>/`; unimplemented stages report pending/blocked rather than fabricate outputs |
 | `papers.py` | Resolve arxiv / openreview / local PDF → text; Firecrawl markdown with PyMuPDF fallback |
 | `firecrawl.py` | Evidence search (web → research index → arxiv fallback) + PDF parsing |
 | `paperclip.py` | Paperclip (GXL) corpus: `lemma search` discovery + per-claim literature-context cells (X-API-Key auth) |

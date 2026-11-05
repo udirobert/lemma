@@ -1,0 +1,17 @@
+{
+  "target": "kras-g12d-pmhc",
+  "verdict": "reject",
+  "reasons": [
+    "no sequences pass the anti-objective screen: {'decoy_leak': 10}",
+    "do NOT submit \u2014 the decoys are the ranking; a decoy_leak design ranks at the bottom"
+  ],
+  "candidates": [
+    "d1",
+    "d2",
+    "d3",
+    "d4",
+    "d5"
+  ],
+  "n_audited": 5,
+  "max_designs": 20
+}

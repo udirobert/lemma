@@ -1,0 +1,21 @@
+# lemma protein-design dependencies (PROTEIN.md).
+#
+# Two separate venvs — the pins conflict:
+#
+#   .venv-bio  — Boltz-2 scoring path (torch resolves to latest; boltz runs
+#                with --no_kernels unless cuequivariance-torch is added)
+#     uv venv .venv-bio --python 3.12
+#     uv pip install --python .venv-bio/bin/python boltz
+#
+#   .venv-chai — Chai-1 scoring path (pins torch<2.7, incompatible with
+#                boltz's resolve)
+#     uv venv .venv-chai --python 3.12
+#     uv pip install --python .venv-chai/bin/python chai_lab
+#
+# NOTE: use a native arm64 interpreter — /usr/local/bin/python3.12 on this
+# machine is x86_64 (Rosetta) and silently poisons timings. Check
+# `python -c "import platform; print(platform.machine())"` first.
+#
+# Local inference is dev-only (8 GB M3 impractical — see
+# runs/protein-smoke-2026-11-04.md). Real predictions run on Modal L4 via
+# scripts/modal_boltz_smoke.py.

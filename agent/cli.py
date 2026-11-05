@@ -6,6 +6,7 @@ Usage:
   python -m agent.cli extract-server [--port 8787]  # free HTTP claim extract
   python -m agent.cli judge <workdir>           # judge an existing run
   python -m agent.cli judge --regression        # judge the grokking fixture
+  python -m agent.cli design <target>           # protein design (PROTEIN.md)
 
 <source> is an arxiv id (2601.19791), openreview id, or local PDF path.
 """
@@ -19,9 +20,11 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PAPERS_DIR = REPO_ROOT / "papers"
+TARGETS_DIR = REPO_ROOT / "targets"
 GROKKING_DIR = PAPERS_DIR / "5nNNVY8NW4-grokking"
 
 STAGES = ("extract", "audit", "evidence", "judge")
+DESIGN_STAGES = ("propose", "design", "audit", "evidence", "judge")
 
 
 def main() -> int:
@@ -120,6 +123,21 @@ def main() -> int:
     p_extract_srv.add_argument("--host", default="127.0.0.1")
     p_extract_srv.add_argument("--port", type=int, default=8787)
 
+    p_design = sub.add_parser(
+        "design",
+        help="protein design pipeline on a target workdir (PROTEIN.md; "
+        "stage skeleton — see agent/design.py)",
+    )
+    p_design.add_argument(
+        "target",
+        help="target workdir: path (targets/kras-g12d-pmhc) or bare name",
+    )
+    p_design.add_argument(
+        "--stages",
+        default=",".join(DESIGN_STAGES),
+        help=f"comma-separated subset of {DESIGN_STAGES}",
+    )
+
     args = parser.parse_args()
     if args.cmd == "judge":
         return _judge(args)
@@ -137,6 +155,8 @@ def main() -> int:
         from agent.extract_http import serve as serve_extract
 
         return serve_extract(host=args.host, port=args.port)
+    if args.cmd == "design":
+        return _design(args)
     return _audit(args)
 
 
@@ -270,6 +290,41 @@ def _audit(args: argparse.Namespace) -> int:
 
     trace.log("pipeline", "done", stages=stages)
     return 0
+
+
+def _design(args: argparse.Namespace) -> int:
+    from agent import design as design_mod
+    from agent import weave_ops
+    from agent.traces import Trace
+
+    # Positional may be a path or a bare target name under targets/.
+    # Resolve to absolute — stages may hand paths to subprocess(cwd=...).
+    raw = Path(args.target)
+    workdir = raw.resolve() if raw.is_dir() else (TARGETS_DIR / args.target).resolve()
+    if not workdir.is_dir():
+        print(f"[lemma] no target workdir at {workdir}", file=sys.stderr)
+        return 1
+
+    stages = [s.strip() for s in args.stages.split(",") if s.strip() in DESIGN_STAGES]
+    run_id = time.strftime("%Y%m%d-%H%M%S")
+    trace = Trace(f"design-{workdir.name}-{run_id}")
+
+    if weave_ops.init_weave(trace):
+        print("[lemma] weave: live")
+    else:
+        print(f"[lemma] weave: off ({weave_ops.disabled_reason()})")
+    trace.log(
+        "pipeline",
+        "start",
+        target=workdir.name,
+        stages=stages,
+        workdir=str(workdir),
+    )
+    print(f"[lemma] run {trace.run_id} | stages={','.join(stages)} | {workdir}")
+
+    rc = design_mod.run(workdir, stages, trace)
+    trace.log("pipeline", "done", stages=stages)
+    return rc
 
 
 def _eval(args: argparse.Namespace) -> int:

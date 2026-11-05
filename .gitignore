@@ -123,3 +123,4 @@ slides_token.json
 site/node_modules/
 site/dist/
 site/.astro/
+boltz_results_*/

@@ -1,0 +1,69 @@
+{
+  "id": "kras-g12d-pmhc",
+  "name": "KRAS G12D pMHC binder (mutation-specific)",
+  "competition": "Anthropic x Adaptyv Challenge 05 (Proteinbase, open/Track-3)",
+  "deadline": "2026-11-08T23:59:00-12:00",
+  "pdb_reference": "7OW6 (chains A-C, TCR removed)",
+  "chains": {
+    "hla": {
+      "label": "HLA-A*11:01 heavy chain",
+      "uniprot": "Q5S3G3",
+      "range": "25-305",
+      "sequence": "GSHSMRYFYTSVSRPGRGEPRFIAVGYVDDTQFVRFDSDAASQRMEPRAPWIEQEGPEYWDQETRNVKAQSQTDRVDLGTLRGYYNQSEDGSHTIQIMYGCDVGPDGRFLRGYRQDAYDGKDYIALNEDLRSWTAADMAAQITKRKWEAAHAAEQQRAYLEGRCVEWLRRYLENGKETLQRTDPPKTHMTHHPISDHEATLRCWALGFYPAEITLTWQRDGEDQTQDTELVETRPAGDGTFQKWAAVVVPSGEEQRYTCHVQHEGLPKPLTLRWELSSQPT"
+    },
+    "b2m": {
+      "label": "beta-2-microglobulin",
+      "uniprot": "P61769",
+      "range": "21-119",
+      "sequence": "IQRTPKIQVYSRHPAENGKSNFLNCYVSGFHPSDIEVDLLKNGERIEKVEHSDLSFSKDWSFYLLYYTEFTPTEKDEYACRVNHVTLSQPKIVKWDRDM"
+    },
+    "peptide_g12d": {
+      "label": "KRAS G12D peptide (p6 = D)",
+      "uniprot": "P01116",
+      "range": "7-16",
+      "sequence": "VVVGADGVGK"
+    },
+    "peptide_wt": {
+      "label": "KRAS wild-type peptide (p6 = G)",
+      "uniprot": "P01116",
+      "range": "7-16",
+      "sequence": "VVVGAGGVGK"
+    }
+  },
+  "complexes": [
+    {
+      "id": "pmhc_g12d",
+      "role": "primary",
+      "chains": ["hla", "b2m", "peptide_g12d"],
+      "inputs": {"boltz": "inputs/pmhc_g12d.yaml", "chai": "inputs/pmhc_g12d.fasta"},
+      "objective": "minimize KD — bind here"
+    },
+    {
+      "id": "pmhc_wt",
+      "role": "decoy",
+      "anti_objective": "mutation_specificity",
+      "chains": ["hla", "b2m", "peptide_wt"],
+      "inputs": {"boltz": "inputs/pmhc_wt.yaml", "chai": "inputs/pmhc_wt.fasta"},
+      "objective": "no detectable binding — must fail here"
+    },
+    {
+      "id": "hla_apo",
+      "role": "decoy",
+      "anti_objective": "peptide_dependence",
+      "chains": ["hla", "b2m"],
+      "inputs": {"boltz": "inputs/hla_apo.yaml", "chai": "inputs/hla_apo.fasta"},
+      "objective": "no detectable binding — must fail here"
+    }
+  ],
+  "constraints": {
+    "max_designs": 20,
+    "length_aa": [10, 250],
+    "single_chain": true,
+    "formats": ["general protein", "nanobody", "scFv", "Fab"],
+    "de_novo_zero_shot": true,
+    "novel_sequences": true,
+    "no_natural_binder_derivation": true
+  },
+  "declared_target_surface": "peptide + groove (TCR-read surface)",
+  "submission": "Proteinbase; method note + declared target surface + evidence links"
+}

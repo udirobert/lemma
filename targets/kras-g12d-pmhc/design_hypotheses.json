@@ -1,0 +1,81 @@
+{
+  "target_id": "kras-g12d-pmhc",
+  "generated_at": "2026-11-04T21:39:09+0000",
+  "model": "beamhf:reflection/Beam-1.0-501B-A23B",
+  "target_sha256": "05e77a58dcb31f5c",
+  "literature_hits": 0,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "title": "Nanobody CDR3 Arg-fork salt bridge to p6 Asp",
+      "binder_format": "nanobody",
+      "scaffold_rationale": "De novo VHH-like single domain (~110-125 aa) with no TCR or natural binder template; long CDR3 can descend into the MHC groove while framework contacts the alpha2 helix.",
+      "target_surface": "Peptide p5 Ala-p8 Val, especially p6 Asp side-chain carboxylate (OD1/OD2), plus the top of the HLA-A*11 alpha2 helix.",
+      "mechanism": "CDR3 tip places an Arg guanidinium within salt-bridge/H-bond distance of the p6 Asp carboxylate, with an adjacent Ser/Thr H-bonding to the same carboxylate; CDR1/CDR2 pack against alpha2 residues to position the loop. Hydrophobic CDR3 side chains contact p7 Gly/p8 Val.",
+      "discrimination_hypothesis": "The WT peptide has Gly at p6, so it lacks the carboxylate required to satisfy the buried Arg; the resulting unsatisfied charge and empty pocket make WT binding strongly disfavored, whereas G12D provides the complementary Asp.",
+      "peptide_dependence_hypothesis": "The highest-affinity contacts are to p6-p8 and the peptide-dependent groove conformation; without peptide, those contacts and the stabilized groove surface are absent.",
+      "generation_plan": "De novo CDR3 motif design with RFantibody/RFdiffusion, sequence optimization with ProteinMPNN, and filtering by AlphaFold2/Chai or Boltz structure and interface metrics.",
+      "failure_modes": [
+        "Arg may remain solvent-exposed rather than forming the intended salt bridge",
+        "CDR3 may not adopt the designed conformation in the actual VHH framework",
+        "WT may still bind through backbone H-bonds if the Arg is not sufficiently buried",
+        "Nanobody may express poorly or aggregate"
+      ],
+      "risk": "medium: strong chemical specificity mechanism, but loop conformation and electrostatic desolvation are uncertain"
+    },
+    {
+      "id": "H2",
+      "title": "De novo miniprotein with an Asp-binding pocket and peptide clamp",
+      "binder_format": "general",
+      "scaffold_rationale": "A 55-85 aa de novo helical bundle designed against the pMHC surface, with no natural binder derivation; concave pocket plus flanking helices provide both affinity and shape complementarity.",
+      "target_surface": "Peptide p4 Gly-p8 Val and flanking tops of alpha1 and alpha2 helices, with the pocket centered on p6 Asp.",
+      "mechanism": "A pocket lined by Arg/Lys plus Asn/Ser forms a desolvated H-bond network to the p6 Asp carboxylate; adjacent hydrophobic residues clamp p5 Ala and p8 Val; scaffold helices pack against groove helices for orientation.",
+      "discrimination_hypothesis": "Pocket charge and geometry are matched to an Asp side chain; WT p6 Gly cannot fill the pocket or neutralize the basic residue, creating an unsatisfied charge and steric/energetic penalty.",
+      "peptide_dependence_hypothesis": "The clamp and pocket include direct contacts to peptide atoms p5-p8; apo HLA lacks these atoms and the peptide-stabilized groove, so the designed interface cannot form.",
+      "generation_plan": "Target-conditioned RFdiffusion against the pMHC complex, ProteinMPNN sequence design, then AlphaFold2/Chai or Boltz validation with negative-design scoring against WT and apo complexes.",
+      "failure_modes": [
+        "Designed pocket may collapse or fail to desolvate the Arg-Asp pair",
+        "Miniprotein may be thermodynamically unstable",
+        "WT binding may occur if hydrophobic contacts dominate over the Asp-specific pocket",
+        "Apo HLA may present a partially compatible empty groove"
+      ],
+      "risk": "medium-high: best opportunity for true de novo specificity, but pocket preorganization is difficult"
+    },
+    {
+      "id": "H3",
+      "title": "scFv with electrostatic CDR-H3 and hydrophobic CDR-L3",
+      "binder_format": "scfv",
+      "scaffold_rationale": "De novo VH-VL single chain (~240-250 aa) with no natural binder derivation; CDR-H3 provides mutation-specific electrostatic recognition while CDR-L3 provides peptide-context affinity.",
+      "target_surface": "Peptide p6 Asp-p8 Val and the alpha1 helix top, especially p6 side chain and p8 Val side chain.",
+      "mechanism": "CDR-H3 contains an Arg that forms a salt bridge to p6 Asp carboxylate; CDR-L3 packs a hydrophobic residue against p8 Val; framework/CDR contacts to alpha1 orient the Fv. The combined contact set requires both the mutant side chain and peptide context.",
+      "discrimination_hypothesis": "WT p6 Gly cannot form the CDR-H3 salt bridge, and without that anchor the CDR-L3 hydrophobic contact alone is insufficient for detectable binding.",
+      "peptide_dependence_hypothesis": "CDR-L3 contacts p8 Val and CDR-H3 contacts p6 Asp; both are peptide atoms absent in apo HLA, and empty MHC lacks the peptide-dependent groove conformation.",
+      "generation_plan": "De novo Fv design with RFantibody or target-conditioned diffusion, CDR sequence optimization with ProteinMPNN, and validation by AlphaFold2/Chai plus WT/apo counter-screens.",
+      "failure_modes": [
+        "scFv may misfold or aggregate due to VH-VL pairing uncertainty",
+        "CDR loops may not match the designed geometry",
+        "WT may retain weak binding through hydrophobic CDR-L3 contacts",
+        "Linker length or orientation may prevent simultaneous H3/L3 contacts"
+      ],
+      "risk": "high: two-domain complexity and loop uncertainty, but strong potential for affinity plus specificity"
+    },
+    {
+      "id": "H4",
+      "title": "Short beta-hairpin peptide reader with an Arg tip",
+      "binder_format": "general",
+      "scaffold_rationale": "A 30-45 aa de novo beta-hairpin, small enough to insert between alpha1 and alpha2; no natural binder or TCR template. Its strand backbone can H-bond to peptide backbone while the tip reads p6 Asp.",
+      "target_surface": "Peptide backbone p5-p8 and p6 Asp side chain, with flanking contacts to groove helices.",
+      "mechanism": "The hairpin tip Arg forms a salt bridge to p6 Asp; adjacent strand residues H-bond to peptide backbone carbonyl/amide groups; hydrophobic side chains on the opposite face pack against groove helices.",
+      "discrimination_hypothesis": "The Arg tip requires the p6 Asp carboxylate; WT Gly cannot satisfy it, and the backbone H-bond network is only productive when the mutant side chain anchors the hairpin.",
+      "peptide_dependence_hypothesis": "Strand backbone H-bonds are to peptide atoms p5-p8; apo HLA lacks these atoms, so the hairpin has no peptide anchor and should not bind.",
+      "generation_plan": "Motif scaffolding with RFdiffusion for the Arg-Asp salt bridge and peptide backbone H-bonds, sequence design with ProteinMPNN, and stability filtering with AlphaFold2/Chai.",
+      "failure_modes": [
+        "Short beta-hairpin may be unstable or unstructured in solution",
+        "Arg tip may fail to reach p6 Asp without clashing with groove helices",
+        "Backbone H-bonds may be satisfied by solvent instead of peptide",
+        "WT may still permit hairpin binding through backbone contacts alone"
+      ],
+      "risk": "high: minimal scaffold gives clear specificity logic but low stability and affinity ceiling"
+    }
+  ]
+}

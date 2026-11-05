@@ -1,0 +1,76 @@
+{
+  "id": "d2",
+  "backbone": "rfd_1.pdb",
+  "binder_len_aa": 113,
+  "sequences": [
+    {
+      "seq_id": "d2_1_s1",
+      "aa": "AEVVAALKARAAELAAEAEKAAKLLEKASETELYKKLAEEVKKIAETMKGEPLAPETIAALEKGLTEAYRVISEILKANPNIPEDLLAALDAFLRAVNAYLAALKRARVALED",
+      "mpnn_score": 1.1863,
+      "mpnn_global_score": 1.5568
+    },
+    {
+      "seq_id": "d2_1_s2",
+      "aa": "DARLAELRARAAALRAQLAAAAAALKAAADTPLFKELQAVVDEAAATMAGEPLAPETIERLEALLTRACAVWSQILAANPNIPADLQATLDAALTALNAYLAALHRARVETEL",
+      "mpnn_score": 1.0983,
+      "mpnn_global_score": 1.5377
+    },
+    {
+      "seq_id": "d2_1_s3",
+      "aa": "AATLAALRAAAAALAAELAAALAALEEAADTPLFRELAAEVAALRATMAGEPLAPETIAALEAERTAICRTWARILAENPEIPEELEATLHAALRAVAAYLAAMHRARVALED",
+      "mpnn_score": 1.112,
+      "mpnn_global_score": 1.5458
+    },
+    {
+      "seq_id": "d2_1_s4",
+      "aa": "AAATAAIAALRAALAAKLAEALALLEAAAATPAYKALAAEVAAMRATMAGAPLSPATIAALEAQLTAANAAIAQIYAANPNIPADLQAALDAALTAANALLATLHRARVATET",
+      "mpnn_score": 1.1162,
+      "mpnn_global_score": 1.5406
+    },
+    {
+      "seq_id": "d2_1_s5",
+      "aa": "AAALAALRAAAAALAAAGAAALAALEAAAETPLYKQLAATVAAAIATMAGEPLSPETIAALEAQRTAFAAAVAQIYAAAPEVPADFRDTLDAFARDLDALIAAMHRARVDLEL",
+      "mpnn_score": 1.1079,
+      "mpnn_global_score": 1.5485
+    },
+    {
+      "seq_id": "d2_1_s6",
+      "aa": "AAATAALAAQRAALAAALAELAALLEAAAATPLYRALAEEVRAMRATMAGAVLSAATIAALEAERTAACAVLSQILQAQPNIPEDLLAAIDAALAQVNALLASMHRARVALED",
+      "mpnn_score": 1.0834,
+      "mpnn_global_score": 1.5332
+    },
+    {
+      "seq_id": "d2_1_s7",
+      "aa": "AAALAALQARRAAAAAALAALQAALTAAADTPLYRKAAEEVAKIQETMKGEPLADETIAALEAERTALCRVLSEIYAANPNIPADLLDAIDAALRDVSALLAEMFRARVATEL",
+      "mpnn_score": 1.1381,
+      "mpnn_global_score": 1.5413
+    },
+    {
+      "seq_id": "d2_1_s8",
+      "aa": "AATLAALRAARAALAAQLAAARALLEAAADTPLYRELAAEVAELEAVCAGEPLAPATLAALEAGLTAAAATVAAILAAQPDVPADLVAALDAAETAASALLAALFRARVATET",
+      "mpnn_score": 1.0698,
+      "mpnn_global_score": 1.5325
+    }
+  ],
+  "hypotheses": [
+    "H1",
+    "H2",
+    "H3",
+    "H4"
+  ],
+  "generation": {
+    "method": "rfdiffusion Complex_base + proteinmpnn v_48_020",
+    "contig": "A1-276/0 B1-99/0 C1-10/0 80-120",
+    "hotspots": [
+      "C4",
+      "C5",
+      "C6",
+      "C7",
+      "C8"
+    ],
+    "mpnn_sampling_temp": 0.1,
+    "seed": 37,
+    "compute": "modal a10g"
+  },
+  "novelty_attestation": "de novo RFD backbone; not derived from any natural binder. Sequence novelty NOT yet checked vs reference DBs \u2014 flagged for the audit stage."
+}
