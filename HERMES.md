@@ -1,8 +1,10 @@
 # HERMES.md — Lemma rides inside Hermes: the agent that audits what agents read
 
-**Status:** planned — secondary entry behind elcaro (see `PROTEIN.md` for the
-other new muscle). Sibling to `HACKATHON.md` / `SUBMISSION.md` / `PROTEIN.md`.
-**Last updated:** 2026-11-05.
+**Status:** scaffold built 2026-11-05 — `hermes-plugin/` is doctor-clean with
+all 4 tools registering (`hermes plugins doctor hermes-plugin --ci` passes;
+handlers verified against real workdirs). Secondary entry behind elcaro (see
+`PROTEIN.md` for the other new muscle). Sibling to `HACKATHON.md` /
+`SUBMISSION.md` / `PROTEIN.md`. **Last updated:** 2026-11-05.
 
 ## The event
 
