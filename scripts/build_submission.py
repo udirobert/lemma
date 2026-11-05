@@ -57,7 +57,7 @@ def main() -> int:
             {
                 "name": f"lemma-{u['did']}-{u['seq_id']}",
                 "sequence": u["aa"],
-                "molecule_class": "protein",
+                "molecule_class": "single_chain",
                 "length_aa": len(u["aa"]),
                 **m,
                 "screen_verdict": u.get("verdict"),
@@ -71,7 +71,14 @@ def main() -> int:
     rows.sort(
         key=lambda r: (r["screen_margin"] is not None, r["screen_margin"]), reverse=True
     )
-    rows = rows[:max_designs]
+    # Portal requires unique sequences; MPNN can emit identical seqs on
+    # different backbones — keep the best-ranked instance of each.
+    seen, deduped = set(), []
+    for r in rows:
+        if r["sequence"] not in seen:
+            seen.add(r["sequence"])
+            deduped.append(r)
+    rows = deduped[:max_designs]
 
     out_dir = wd / "submission"
     out_dir.mkdir(exist_ok=True)
