@@ -92,7 +92,7 @@ def chai_predict(fasta_name: str, fasta_text: str) -> dict:
 
 @app.function(
     image=image,
-    gpu="L4",
+    gpu="a10g",  # L4 starved 2026-11-05 (queued undispatched); a10g dispatches
     timeout=3600,
     memory=32768,
     volumes={CACHE_DIR: cache_volume, RESULTS_DIR: results_volume},

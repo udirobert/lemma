@@ -19,7 +19,13 @@ Track: open / Track 3 · max 20 designs · de novo, zero-shot, single chain
 3. **Positive control** — the 7OW6 TCR (α+β), a binder known to
    discriminate G12D from WT, scored through the identical screen
    (rules explicitly permit known binders for metric calibration).
-   Result: `<fill: control iptm/margins when batch lands>`.
+   Result: complex ipTM 0.956 / 0.961 / 0.907 on g12d / wt / apo —
+   margin −0.005, i.e. **the control also reads decoy-parity**. The
+   ipTM-margin gate cannot resolve the p6 single-atom difference; our
+   in-silico decoy_leak verdicts are uninformative about specificity
+   and we submit ranked by margin + binder→peptide pair ipTM with this
+   caveat declared, not hidden. Kept sub-signal: TCR→HLA pair ipTM
+   drops ~0.10 in the peptide-free complex (0.84 vs 0.93–0.94).
 4. **Novelty** — de novo RFdiffusion backbones; no natural-binder
    derivation. Sequence-similarity attestation: `<fill: status>`.
 
@@ -28,10 +34,11 @@ Track: open / Track 3 · max 20 designs · de novo, zero-shot, single chain
 - Boltz-2 ipTM is a docking-confidence proxy, **not a KD**. Margins are
   screen-level signals, not affinity measurements.
 - A single-atom p6 Asp→Gly difference on a 10-mer buried in a 390-res
-  complex may sit below the screen's resolution. The positive control
-  calibrates exactly this: if the TCR also reads decoy-parity, the
-  in-silico margin is not informative and we say so rather than dress
-  the numbers.
+  complex sits below this screen's resolution — demonstrated, not
+  hypothesised: the known-discriminative 7OW6 TCR scores decoy-parity
+  (−0.005 margin). Our decoy_leak screen verdicts therefore cannot
+  convict designs on specificity; the wet-lab decoy measurements are
+  the real gate, exactly as the challenge intends.
 - Round 1 verdict (5 backbones × top-2 MPNN seqs × 3 complexes = 30
   predictions): 10/10 decoy_leak — binders predicted to dock the HLA
   scaffold indiscriminately. Round 2 (12 backbones, p6-anchored

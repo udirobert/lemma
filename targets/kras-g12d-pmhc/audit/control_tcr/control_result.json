@@ -1,0 +1,16 @@
+{
+ "binder": "7OW6 TCR alpha+beta (known G12D discriminator \u2014 positive control)",
+ "complex_iptm": {
+  "pmhc_g12d": 0.9563,
+  "pmhc_wt": 0.9608,
+  "hla_apo": 0.9065
+ },
+ "margin_g12d_vs_worst_decoy": -0.0045,
+ "tcr_to_hla_pair_iptm": {
+  "pmhc_g12d": 0.9328,
+  "pmhc_wt": 0.9392,
+  "hla_apo": 0.8446
+ },
+ "screen_verdict": "decoy_leak",
+ "interpretation": "KNOWN-discriminative binder fails the iptm-margin screen: global ipTM cannot resolve the single-atom p6 Asp->Gly difference. The screen is falsified, not the designs \u2014 decoy_leak verdicts from round 1 are uninformative. Sub-signal worth keeping: TCR->HLA pair ipTM drops ~0.10 in apo vs peptide-loaded complexes."
+}

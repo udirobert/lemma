@@ -610,7 +610,11 @@ def judge(workdir: Path, trace: Trace) -> dict:
     )
     audited_dir = workdir / "audit"
     n_audited = (
-        sum(1 for d in audited_dir.iterdir() if d.is_dir())
+        sum(
+            1
+            for d in audited_dir.iterdir()
+            if d.is_dir() and not d.name.startswith("control")
+        )
         if audited_dir.is_dir()
         else 0
     )
@@ -637,17 +641,34 @@ def judge(workdir: Path, trace: Trace) -> dict:
         units = []
         if audit_report_path.is_file():
             units = json.loads(audit_report_path.read_text()).get("units", [])
+        control_p = audited_dir / "control_tcr" / "control_result.json"
+        control = json.loads(control_p.read_text()) if control_p.is_file() else None
+        control_falsified = (
+            control is not None and control.get("screen_verdict") == "decoy_leak"
+        )
         passing = [u for u in units if u.get("verdict") == "passes_screen"]
         if not passing:
             counts = {}
             for u in units:
                 counts[u["verdict"]] = counts.get(u["verdict"], 0) + 1
-            verdict = "reject"
-            reasons = [
-                f"no sequences pass the anti-objective screen: {counts}",
-                "do NOT submit — the decoys are the ranking; a decoy_leak "
-                "design ranks at the bottom",
-            ]
+            if control_falsified:
+                verdict = "hold"
+                reasons = [
+                    f"no sequences pass the anti-objective screen: {counts}",
+                    "positive control also fails the screen (7OW6 TCR "
+                    f"margin={control['margin_g12d_vs_worst_decoy']}) — the "
+                    "iptm-margin gate cannot resolve the p6 single-atom "
+                    "difference; designs are unconvicted, not falsified. "
+                    "Rank best-margin candidates and declare the screen's "
+                    "limits in the method note.",
+                ]
+            else:
+                verdict = "reject"
+                reasons = [
+                    f"no sequences pass the anti-objective screen: {counts}",
+                    "do NOT submit — the decoys are the ranking; a decoy_leak "
+                    "design ranks at the bottom",
+                ]
         else:
             verdict = "submit"
             reasons = [
@@ -664,6 +685,8 @@ def judge(workdir: Path, trace: Trace) -> dict:
         "n_audited": n_audited,
         "max_designs": max_designs,
     }
+    if control is not None:
+        report["positive_control"] = control
     out = workdir / JUDGE_JSON
     out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     trace.log("judge", "verdict", verdict=verdict, reasons=reasons, path=str(out))
