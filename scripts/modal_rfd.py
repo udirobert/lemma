@@ -25,6 +25,12 @@ app = modal.App("lemma-protein-rfd")
 CACHE_DIR = "/rfd-cache"
 cache_volume = modal.Volume.from_name("rfd-cache", create_if_missing=True)
 
+# Results also land here inside the remote function, so a local client
+# disconnect (sleep, wifi) cannot lose a finished run — recover with
+# `modal volume get protein-rfd-outputs <run_name> <local_dir>`.
+OUT_DIR = "/rfd-outputs"
+out_volume = modal.Volume.from_name("protein-rfd-outputs", create_if_missing=True)
+
 RFD_MODELS = {
     "Base_ckpt.pt": "http://files.ipd.uw.edu/pub/RFdiffusion/"
     "6f5902ac237024bdd0c176cb93063dc4/Base_ckpt.pt",
@@ -118,7 +124,7 @@ def _ensure_models() -> None:
     gpu="a10g",
     timeout=7200,
     memory=32768,
-    volumes={CACHE_DIR: cache_volume},
+    volumes={CACHE_DIR: cache_volume, OUT_DIR: out_volume},
 )
 def rfd_design(
     pdb_text: str,
@@ -127,6 +133,7 @@ def rfd_design(
     n: int = 5,
     contig: str | None = None,
     seed: int | None = None,
+    run_name: str = "run",
 ) -> dict:
     """Diffuse `n` binder backbones onto the target PDB + run ProteinMPNN.
 
@@ -188,6 +195,26 @@ def rfd_design(
                 if f.parent.name != "out"
                 else f.name
             ] = f.read_bytes()
+
+    import json
+
+    out_root = P(OUT_DIR) / run_name
+    for rel, data in files.items():
+        p = out_root / rel
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_bytes(data)
+    (out_root / "_done.json").write_text(
+        json.dumps(
+            {
+                "rfd_rc": rfd.returncode,
+                "mpnn_rc": mpnn_rc,
+                "n_backbones": len(backbones),
+                "rfd_wall_s": round(rfd_wall, 1),
+                "mpnn_wall_s": round(mpnn_wall, 1),
+            }
+        )
+    )
+    out_volume.commit()
 
     return {
         "rfd_wall_s": round(rfd_wall, 1),
@@ -289,22 +316,35 @@ def main(
     binder_len: str = "80-120",
     seed: int = 0,
     hotspots: str = "C4,C5,C6,C7,C8",
+    run_name: str = "",
 ):
     repo = Path(__file__).resolve().parent.parent
     if check:
         print(doctor.remote())
         return
 
+    dest = Path(out) if out else (repo / "targets/kras-g12d-pmhc/designs/_rfd_round1")
+    run_name = run_name or dest.name
     pdb = repo / "targets/kras-g12d-pmhc/inputs/7ow6_pmhc.pdb"
     hotspot_list = [h.strip() for h in hotspots.split(",") if h.strip()]
     print(f"submitting rfd design: n={n} len={binder_len} hotspots={hotspot_list}")
-    result = rfd_design.remote(
+    # spawn(), not remote(): a spawned call is not cancelled when this
+    # client disconnects — it finishes and its outputs sit in the
+    # protein-rfd-outputs volume for `modal volume get` recovery.
+    call = rfd_design.spawn(
         pdb.read_text(),
         hotspot_list,
         binder_len=binder_len,
         n=n,
         seed=seed or None,
+        run_name=run_name,
     )
+    print(
+        f"spawned {call.object_id} run_name={run_name} — survives "
+        "disconnect; recover via `modal volume get protein-rfd-outputs "
+        f"{run_name} <dir>`"
+    )
+    result = call.get()
     print(
         f"rfd {result['rfd_wall_s']}s rc={result['rfd_rc']} "
         f"backbones={result['n_backbones']} | mpnn {result['mpnn_wall_s']}s "
@@ -315,7 +355,6 @@ def main(
     if result.get("mpnn_rc"):
         print(result["mpnn_log_tail"])
 
-    dest = Path(out) if out else (repo / "targets/kras-g12d-pmhc/designs/_rfd_round1")
     for rel, data in result["files"].items():
         p = dest / rel
         p.parent.mkdir(parents=True, exist_ok=True)

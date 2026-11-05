@@ -20,6 +20,12 @@ app = modal.App("lemma-protein-smoke")
 CACHE_DIR = "/boltz-cache"
 cache_volume = modal.Volume.from_name("boltz-cache", create_if_missing=True)
 
+# Every finished prediction is also written here inside the remote
+# function, so a client disconnect cannot lose completed work —
+# recover with `modal volume get protein-boltz-results <name> <dir>`.
+RESULTS_DIR = "/boltz-results"
+results_volume = modal.Volume.from_name("protein-boltz-results", create_if_missing=True)
+
 image = modal.Image.debian_slim(python_version="3.12").pip_install("boltz")
 
 chai_image = modal.Image.debian_slim(python_version="3.12").pip_install("chai_lab")
@@ -89,7 +95,7 @@ def chai_predict(fasta_name: str, fasta_text: str) -> dict:
     gpu="L4",
     timeout=3600,
     memory=32768,
-    volumes={CACHE_DIR: cache_volume},
+    volumes={CACHE_DIR: cache_volume, RESULTS_DIR: results_volume},
 )
 def predict(
     yaml_name: str,
@@ -136,6 +142,18 @@ def predict(
             if f.is_file() and f.stat().st_size < 20 * 1024 * 1024:
                 files[str(f.relative_to(out))] = f.read_bytes()
 
+    import json
+
+    res_root = P(RESULTS_DIR) / yaml_name
+    for rel, data in files.items():
+        p = res_root / rel
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_bytes(data)
+    (res_root / "_done.json").write_text(
+        json.dumps({"exit_code": proc.returncode, "wall_s": round(wall_s, 1)})
+    )
+    results_volume.commit()
+
     return {
         "wall_s": wall_s,
         "exit_code": proc.returncode,
@@ -152,13 +170,15 @@ def main(input: str = "pmhc_g12d", model: str = "boltz", manifest: str = ""):
         import json
 
         jobs = json.loads(Path(manifest).read_text())
-        print(f"submitting {len(jobs)} boltz predictions (map, gpu=a10g)")
-        results = list(
-            predict.starmap(
-                [(j["name"], j["yaml"], True, True) for j in jobs],
-                return_exceptions=False,
-            )
+        print(
+            f"submitting {len(jobs)} boltz predictions (spawn, gpu=L4; "
+            "survives disconnect, results in protein-boltz-results)"
         )
+        # spawn(), not starmap(): spawned calls are not cancelled if this
+        # client disconnects — each finished prediction lands in the
+        # protein-boltz-results volume for `modal volume get` recovery.
+        calls = [predict.spawn(j["name"], j["yaml"], True, True) for j in jobs]
+        results = [c.get() for c in calls]
         for j, result in zip(jobs, results, strict=True):
             dest = Path(j["out_dir"])
             for rel, data in result["files"].items():

@@ -691,6 +691,6 @@ def run(workdir: Path, stages: list[str], trace: Trace) -> int:
         status = result.get("status", "?")
         detail = result.get("verdict") or result.get("reason") or ""
         print(f"[lemma]   {name}: {status} {detail}".rstrip())
-        if status == "blocked":
+        if status in ("blocked", "failed"):
             rc = 1
     return rc
