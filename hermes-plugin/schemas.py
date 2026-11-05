@@ -48,6 +48,27 @@ LEMMA_AUDIT = {
     },
 }
 
+LEMMA_IMPROVE = {
+    "name": "lemma_improve",
+    "description": (
+        "Run lemma's self-improvement loop on an audited paper: a "
+        "reviewer-persona drafts feedback on weak/inconclusive claims, the "
+        "audit re-runs, and before/after is recorded (feedback is advisory "
+        "— human reviewer notes still outrank it). Background run; poll "
+        "with lemma_status."
+    ),
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "paper": {
+                "type": "string",
+                "description": "Workdir name under the lemma papers dir.",
+            },
+        },
+        "required": ["paper"],
+    },
+}
+
 LEMMA_STATUS = {
     "name": "lemma_status",
     "description": (

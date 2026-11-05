@@ -37,6 +37,15 @@ def register(ctx):
         schema=schemas.LEMMA_JUDGE,
         handler=partial(tools.lemma_judge, ctx=ctx),
     )
+    ctx.register_tool(
+        name="lemma_improve",
+        toolset="lemma",
+        schema=schemas.LEMMA_IMPROVE,
+        handler=partial(tools.lemma_improve, ctx=ctx),
+    )
+
+    # Ambient: notice paper links in user turns, offer (never run) an audit
+    ctx.register_hook("pre_llm_call", partial(tools.paper_link_hint, ctx=ctx))
 
     # /audit <source> — zero-latency demo path: dispatch our own quick audit
     ctx.register_command(

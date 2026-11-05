@@ -224,6 +224,70 @@ def lemma_status(args: dict, ctx=None, **kwargs) -> str:
     return json.dumps({"papers": papers, "dir": str(PAPERS_DIR)})
 
 
+def lemma_improve(args: dict, ctx=None, **kwargs) -> str:
+    """The self-distrust loop, in the background: reviewer feedback ->
+    re-audit -> before/after recorded (agent/meta.py)."""
+    err = _need_repo(ctx)
+    if err:
+        return err
+    paper = (args.get("paper") or "").strip()
+    workdir = PAPERS_DIR / paper
+    if not workdir.is_dir():
+        return json.dumps(
+            {"error": f"no workdir {workdir}", "hint": "lemma_status lists them"}
+        )
+    repo = _repo(ctx)
+    log_p = workdir / "lemma_improve.log"
+    try:
+        with log_p.open("ab") as log:
+            proc = subprocess.Popen(
+                [_python(repo), "-m", "agent.cli", "improve", str(workdir)],
+                cwd=repo,
+                stdout=log,
+                stderr=subprocess.STDOUT,
+                start_new_session=True,
+            )
+        return json.dumps(
+            {
+                "started": True,
+                "pid": proc.pid,
+                "workdir": str(workdir),
+                "log": str(log_p),
+                "hint": "feedback.auto.md is advisory; re-audit before/after "
+                "is recorded in improve_<ts>.json — poll lemma_status",
+            }
+        )
+    except Exception as e:
+        return json.dumps({"error": f"{type(e).__name__}: {e}"})
+
+
+_PAPER_RE = re.compile(
+    r"(arxiv\.org/(?:abs|pdf)/[\w.]+|openreview\.net/forum\?id=[\w-]+|"
+    r"arxiv:[\w.]+)",
+    re.I,
+)
+
+
+def paper_link_hint(ctx=None, user_message="", **kwargs):
+    """pre_llm_call observer: notice a paper link, offer the audit.
+
+    Context injection only — never blocks, never audits unasked."""
+    if not user_message or _repo(ctx) is None:
+        return None
+    m = _PAPER_RE.search(user_message)
+    if not m:
+        return None
+    return {
+        "context": (
+            f"[lemma] paper link detected ({m.group(1)}). "
+            "lemma_quick_audit can extract + numerically audit its claims "
+            "(supported/falsified/inconclusive with a preserved evidence "
+            "trail) — or /audit <id>. Offer it if the user wants the claims "
+            "checked; don't run it unprompted."
+        )
+    }
+
+
 def lemma_judge(args: dict, ctx=None, **kwargs) -> str:
     """Re-run the judge stage on an existing workdir."""
     err = _need_repo(ctx)

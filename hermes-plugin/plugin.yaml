@@ -12,6 +12,9 @@ provides_tools:
   - lemma_audit
   - lemma_status
   - lemma_judge
+  - lemma_improve
+provides_hooks:
+  - pre_llm_call
 provides_commands:
   - audit
 config_schema:
