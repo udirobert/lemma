@@ -7,6 +7,7 @@ plugin_data_dir("lemma")/papers — plus claim detail and figures
 """
 
 import base64
+import contextlib
 import json
 import sys
 from pathlib import Path
@@ -37,6 +38,40 @@ async def papers():
         entry.update(_verdicts(d))
         out.append(entry)
     return {"papers": out}
+
+
+@router.get("/runs")
+async def runs():
+    """In-flight audits: workdir had file activity < 5 min ago and no
+    judge verdict yet. Includes the last trace lines — the pane shows
+    the audit *working*, not just its results."""
+    import time
+
+    now = time.time()
+    out = []
+    for d in _dirs():
+        newest = 0.0
+        for p in d.rglob("*"):
+            with contextlib.suppress(OSError):
+                newest = max(newest, p.stat().st_mtime)
+        if now - newest > 300 or (d / "judge_report.json").is_file():
+            continue
+        tail = []
+        trace = d / "trace.jsonl"
+        if trace.is_file():
+            with contextlib.suppress(Exception):
+                tail = [
+                    json.loads(ln).get("event") or ln[:80]
+                    for ln in trace.read_text().splitlines()[-3:]
+                ]
+        out.append(
+            {
+                "workdir": d.name,
+                "last_activity_s": int(now - newest),
+                "trace_tail": tail,
+            }
+        )
+    return {"runs": out}
 
 
 @router.get("/papers/{name}")

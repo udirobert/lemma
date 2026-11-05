@@ -97,6 +97,28 @@ Ranked by judge-visible value ("does more than a prompt or skill could"):
    not just the tool — paper-auditing is a thin-user niche and the
    judges know it.
 
+## Beyond parity — 2026-11-05 evening
+
+Parity reached (tools + hook + pane + skill). To *win*, sell the
+epistemic process, not the verdict — only lemma can demo "the agent
+discovering its own metric is broken":
+
+1. **Live Audit Room** — pane shows a run *in progress* (stage,
+   attempts, trace tail) via broadcast_plugin_event or a 3 s ctx.rest
+   poll (rss-reader precedent). Video: link → hint → /audit → claims
+   appear → control fails → `inconclusive`. Honesty as theater.
+2. **Audit what the agent says** — `post_llm_call` scans
+   assistant_response for paper citations → offer audit. "Audits what
+   agents read — including its own answers." ~20 lines.
+3. **Self-distrust as UI** — `verify_gain` flag (flip TO supported
+   post-feedback = reward-hacking direction) and screen-integrity
+   badge (control failed → can't convict → hold) surface in the pane.
+4. **Stretch — audit certificates**: workdir manifest hash →
+   machine-checkable verdict card via dispatch_tool for other plugins.
+   Lemma as ecosystem trust oracle.
+
+Build order: live pane → post_llm_call → badges → certificates.
+
 ## Sequencing and dependencies
 
 - **elcaro is the primary Hermes entry** (security niche, bigger user pool,

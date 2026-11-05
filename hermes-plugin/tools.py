@@ -268,13 +268,22 @@ _PAPER_RE = re.compile(
 )
 
 
-def paper_link_hint(ctx=None, user_message="", **kwargs):
-    """pre_llm_call observer: notice a paper link, offer the audit.
+def paper_link_hint(ctx=None, user_message="", conversation_history=None, **kwargs):
+    """pre_llm_call observer: notice a paper link — in the user's turn OR
+    in what the agent itself just claimed — and offer the audit.
 
     Context injection only — never blocks, never audits unasked."""
-    if not user_message or _repo(ctx) is None:
+    if _repo(ctx) is None:
         return None
-    m = _PAPER_RE.search(user_message)
+    hay = user_message or ""
+    # also scan the last assistant message: audit what the agent *says*
+    if not _PAPER_RE.search(hay) and conversation_history:
+        try:
+            for m in conversation_history[-2:]:
+                hay += " " + (m.get("content", "") if isinstance(m, dict) else str(m))
+        except Exception:
+            pass
+    m = _PAPER_RE.search(hay)
     if not m:
         return None
     return {

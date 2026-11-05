@@ -67,9 +67,18 @@ function Detail({ ctx, name }) {
 
 function AuditRoom({ ctx }) {
   const [papers, setPapers] = useState(null)
+  const [runs, setRuns] = useState({})
   const [sel, setSel] = useState(null)
   useEffect(() => {
-    ctx.rest('/papers').then((r) => setPapers(r.papers || [])).catch(() => setPapers([]))
+    const load = () => {
+      ctx.rest('/papers').then((r) => setPapers(r.papers || [])).catch(() => setPapers([]))
+      ctx.rest('/runs').then((r) =>
+        setRuns(Object.fromEntries((r.runs || []).map((x) => [x.workdir, x])))
+      ).catch(() => {})
+    }
+    load()
+    const t = setInterval(load, 3000)
+    return () => clearInterval(t)
   }, [])
   if (papers === null)
     return jsx('div', { className: 'p-3 text-xs opacity-60', children: 'loading…' })
@@ -82,18 +91,29 @@ function AuditRoom({ ctx }) {
         ' on an arXiv id.',
       ],
     })
-  const list = papers.map((p) =>
-    jsxs('button', {
-      type: 'button',
-      onClick: () => setSel(p.workdir === sel ? null : p.workdir),
-      className: 'flex w-full items-center gap-2 rounded px-2 py-1 text-left text-xs hover:bg-white/5',
+  const list = papers.map((p) => {
+    const run = runs[p.workdir]
+    return jsxs('div', {
       children: [
-        chip(p.judge || 'run'),
-        jsx('span', { className: 'truncate', children: p.workdir }),
+        jsxs('button', {
+          type: 'button',
+          onClick: () => setSel(p.workdir === sel ? null : p.workdir),
+          className: 'flex w-full items-center gap-2 rounded px-2 py-1 text-left text-xs hover:bg-white/5',
+          children: [
+            run ? jsx('span', { style: { color: '#1ec2b5' }, children: '▸ live' })
+                : chip(p.judge || 'run'),
+            jsx('span', { className: 'truncate', children: p.workdir }),
+          ],
+        }),
+        run &&
+          jsx('div', {
+            className: 'pl-4 text-[10px] font-mono opacity-50 truncate',
+            children: (run.trace_tail || []).join(' · ') || 'working…',
+          }),
       ],
       key: p.workdir,
     })
-  )
+  })
   return jsxs('div', {
     className: 'flex h-full flex-col gap-1 overflow-hidden p-2 text-sm',
     children: [
