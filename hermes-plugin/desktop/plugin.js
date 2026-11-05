@@ -103,6 +103,12 @@ function AuditRoom({ ctx }) {
             run ? jsx('span', { style: { color: '#1ec2b5' }, children: '▸ live' })
                 : chip(p.judge || 'run'),
             jsx('span', { className: 'truncate', children: p.workdir }),
+            (p.flags || []).length > 0 &&
+              jsx('span', {
+                title: (p.flags || []).join(', '),
+                style: { color: '#fab533' },
+                children: '⚑',
+              }),
           ],
         }),
         run &&

@@ -80,6 +80,24 @@ def _verdicts(workdir: Path) -> dict:
     if judge_p.is_file():
         jr = json.loads(judge_p.read_text())
         out["judge"] = jr.get("verdict") or jr.get("overall")
+    flags = []
+    for imp in workdir.glob("results/improve_*.json"):
+        try:
+            if json.loads(imp.read_text()).get("verify_gain"):
+                flags.append("verify_gain")
+                break
+        except Exception:
+            continue
+    report_p2 = workdir / "results" / "audit_report.json"
+    if report_p2.is_file():
+        try:
+            rep = json.loads(report_p2.read_text())
+            if any(c.get("reference_disagreement") for c in rep.get("claims", [])):
+                flags.append("reference_disagreement")
+        except Exception:
+            pass
+    if flags:
+        out["flags"] = flags
     out["trace"] = str(workdir / "trace.jsonl")
     return out
 
