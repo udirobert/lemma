@@ -1,0 +1,75 @@
+{
+ "method": "NW %identity vs 7OW6 TCR a/b + verbatim 8-mer coverage vs SwissProt (rg -F); coarse, declared",
+ "results": [
+  {
+   "design": "d1-d1_0_s3",
+   "len": 97,
+   "tcr_max_identity": 0.1829,
+   "kmer8_verbatim_frac": 0.5333,
+   "kmer8_verbatim_frac_nolowcomp": 0.3571
+  },
+  {
+   "design": "d1-d1_0_s2",
+   "len": 97,
+   "tcr_max_identity": 0.1789,
+   "kmer8_verbatim_frac": 0.5333,
+   "kmer8_verbatim_frac_nolowcomp": 0.4412
+  },
+  {
+   "design": "d2-d2_1_s8",
+   "len": 113,
+   "tcr_max_identity": 0.2114,
+   "kmer8_verbatim_frac": 0.3962,
+   "kmer8_verbatim_frac_nolowcomp": 0.3191
+  },
+  {
+   "design": "d2-d2_1_s6",
+   "len": 113,
+   "tcr_max_identity": 0.2033,
+   "kmer8_verbatim_frac": 0.283,
+   "kmer8_verbatim_frac_nolowcomp": 0.1556
+  },
+  {
+   "design": "d3-d3_2_s2",
+   "len": 116,
+   "tcr_max_identity": 0.2033,
+   "kmer8_verbatim_frac": 0.5273,
+   "kmer8_verbatim_frac_nolowcomp": 0.2857
+  },
+  {
+   "design": "d3-d3_2_s3",
+   "len": 116,
+   "tcr_max_identity": 0.1829,
+   "kmer8_verbatim_frac": 0.6909,
+   "kmer8_verbatim_frac_nolowcomp": 0.4286
+  },
+  {
+   "design": "d4-d4_3_s3",
+   "len": 87,
+   "tcr_max_identity": 0.1789,
+   "kmer8_verbatim_frac": 0.35,
+   "kmer8_verbatim_frac_nolowcomp": 0.1613
+  },
+  {
+   "design": "d4-d4_3_s6",
+   "len": 87,
+   "tcr_max_identity": 0.1675,
+   "kmer8_verbatim_frac": 0.3611,
+   "kmer8_verbatim_frac_nolowcomp": 0.1923
+  },
+  {
+   "design": "d5-d5_4_s4",
+   "len": 106,
+   "tcr_max_identity": 0.2033,
+   "kmer8_verbatim_frac": 0.18,
+   "kmer8_verbatim_frac_nolowcomp": 0.1633
+  },
+  {
+   "design": "d5-d5_4_s6",
+   "len": 106,
+   "tcr_max_identity": 0.2033,
+   "kmer8_verbatim_frac": 0.26,
+   "kmer8_verbatim_frac_nolowcomp": 0.2449
+  }
+ ]
+}

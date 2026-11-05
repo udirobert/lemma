@@ -328,9 +328,12 @@ def main(
     pdb = repo / "targets/kras-g12d-pmhc/inputs/7ow6_pmhc.pdb"
     hotspot_list = [h.strip() for h in hotspots.split(",") if h.strip()]
     print(f"submitting rfd design: n={n} len={binder_len} hotspots={hotspot_list}")
-    # spawn(), not remote(): a spawned call is not cancelled when this
-    # client disconnects — it finishes and its outputs sit in the
-    # protein-rfd-outputs volume for `modal volume get` recovery.
+    # spawn(), not remote(): the caller isn't blocked on result
+    # delivery. NOTE: spawn alone does NOT survive a client
+    # disconnect — the ephemeral app still stops and kills the call
+    # (proven 2026-11-05, attempt died mid-run). Invoke with
+    # `modal run --detach` so the app outlives the client; outputs
+    # are recoverable from the protein-rfd-outputs volume.
     call = rfd_design.spawn(
         pdb.read_text(),
         hotspot_list,

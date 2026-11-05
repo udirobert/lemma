@@ -27,7 +27,12 @@ Track: open / Track 3 · max 20 designs · de novo, zero-shot, single chain
    caveat declared, not hidden. Kept sub-signal: TCR→HLA pair ipTM
    drops ~0.10 in the peptide-free complex (0.84 vs 0.93–0.94).
 4. **Novelty** — de novo RFdiffusion backbones; no natural-binder
-   derivation. Sequence-similarity attestation: `<fill: status>`.
+   derivation. Coarse attestation (`scripts/novelty_check.py`):
+   17–21% NW identity vs the 7OW6 TCR (background) and 18–69%
+   verbatim 8-mer coverage vs SwissProt — the overlap is a
+   low-complexity artifact (Ala-rich MPNN collapse), declared as such.
+   Sequences are novel but low-diversity; see per-design metrics in
+   `novelty_attestation.json`.
 
 ## What we claim, and what we do not
 

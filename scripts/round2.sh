@@ -2,11 +2,12 @@
 # Round 2, unattended: tighter hotspots (C5-C7, centered on p6-Asp) +
 # shorter binders (60-100 aa), 12 backbones, then organize/audit/judge.
 #
-# Disconnect-safety (the round-2 failure that killed the first attempt):
+# Disconnect-safety (the round-2 failures that killed attempts 1+2):
 # remote functions write their outputs to Modal volumes inside the job
-# (protein-rfd-outputs / protein-boltz-results) and calls use .spawn(),
-# which is NOT cancelled when the local client disconnects. If `modal
-# run` drops, this script recovers finished results via
+# (protein-rfd-outputs / protein-boltz-results) and `modal run` uses
+# --detach, which does NOT stop the app when the local client drops —
+# .spawn() alone is NOT enough, it dies with the ephemeral app.
+# If `modal run` drops, this script recovers finished results via
 # `modal volume get` and re-runs the idempotent stages for the rest —
 # it never restarts finished work.
 #
@@ -38,14 +39,13 @@ attempt=0
 until vol_has_done "$RFD_VOL" "$RFD_RUN" || [ "$attempt" -ge 3 ]; do
   attempt=$((attempt + 1))
   echo "--- rfd attempt $attempt ---"
-  if modal run scripts/modal_rfd.py --n 12 --binder-len 60-100 \
+  modal run --detach scripts/modal_rfd.py --n 12 --binder-len 60-100 \
       --hotspots C5,C6,C7 --out "$WD/designs/$RFD_RUN" \
-      --run-name "$RFD_RUN"; then
-    break
-  fi
-  echo "rfd run dropped (attempt $attempt); spawned job may still be" \
-    "running — polling volume for _done.json up to 75 min" \
-    "(12 backbones ~ 55 min remote)"
+      --run-name "$RFD_RUN" || \
+      echo "rfd client dropped (attempt $attempt); detached job keeps" \
+        "running remotely — polling volume for _done.json up to 75 min" \
+        "(12 backbones ~ 55 min remote)"
+  # whatever the exit status: wait until the remote _done marker lands
   for _ in $(seq 1 75); do
     vol_has_done "$RFD_VOL" "$RFD_RUN" && break
     sleep 60

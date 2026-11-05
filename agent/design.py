@@ -473,6 +473,8 @@ def audit(workdir: Path, trace: Trace) -> dict:
         cmd = [
             "modal",
             "run",
+            "--detach",  # keep the app (and its spawned predicts) alive
+            # if this client drops — results land in the results volume
             str(repo / "scripts/modal_boltz_smoke.py"),
             "--manifest",
             str(manifest),

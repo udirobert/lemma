@@ -171,12 +171,15 @@ def main(input: str = "pmhc_g12d", model: str = "boltz", manifest: str = ""):
 
         jobs = json.loads(Path(manifest).read_text())
         print(
-            f"submitting {len(jobs)} boltz predictions (spawn, gpu=L4; "
-            "survives disconnect, results in protein-boltz-results)"
+            f"submitting {len(jobs)} boltz predictions (spawn, gpu=a10g; "
+            "with --detach survives disconnect; results in "
+            "protein-boltz-results)"
         )
-        # spawn(), not starmap(): spawned calls are not cancelled if this
-        # client disconnects — each finished prediction lands in the
-        # protein-boltz-results volume for `modal volume get` recovery.
+        # spawn(), not starmap(): caller isn't blocked on delivery.
+        # NOTE: spawn alone does NOT survive client disconnect (the
+        # ephemeral app stops and kills the calls) — invoke with
+        # `modal run --detach`; finished predictions then still land
+        # in the protein-boltz-results volume for `modal volume get`.
         calls = [predict.spawn(j["name"], j["yaml"], True, True) for j in jobs]
         results = [c.get() for c in calls]
         for j, result in zip(jobs, results, strict=True):
