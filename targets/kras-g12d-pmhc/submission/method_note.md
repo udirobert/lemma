@@ -64,7 +64,8 @@ not count (off-limits per challenge rules).
 ## Evidence
 
 - Repo trail (audit scripts, per-prediction confidence outputs, judge
-  verdicts, run notes): `<link to GitHub / shared drive>`
+  verdicts, run notes): https://github.com/udirobert/lemma/tree/main/targets/kras-g12d-pmhc
+  (run notes: https://github.com/udirobert/lemma/tree/main/runs)
 - designs.csv is generated from `audit/audit_report.json` by
   `scripts/build_submission.py`; ranking = g12d ipTM minus worst-decoy
   ipTM, descending.
