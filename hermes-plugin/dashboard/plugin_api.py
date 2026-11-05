@@ -8,6 +8,7 @@ plugin_data_dir("lemma")/papers — plus claim detail and figures
 
 import base64
 import contextlib
+import importlib.util
 import json
 import sys
 from pathlib import Path
@@ -15,7 +16,12 @@ from pathlib import Path
 from fastapi import APIRouter, HTTPException
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from tools import PAPERS_DIR, _verdicts
+_spec = importlib.util.spec_from_file_location(
+    "lemma_plugin_tools", Path(__file__).resolve().parent.parent / "tools.py"
+)
+_mod = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_mod)
+PAPERS_DIR, _verdicts = _mod.PAPERS_DIR, _mod._verdicts
 
 router = APIRouter()
 
