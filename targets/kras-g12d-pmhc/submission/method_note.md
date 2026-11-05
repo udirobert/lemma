@@ -55,6 +55,40 @@ Track: open / Track 3 · max 20 designs · de novo, zero-shot, single chain
   decoy measurements are the real gate, exactly as the challenge
   intends.
 
+## Contact-level audit (post-submission re-analysis, round-2b)
+
+After the hold verdict we re-audited every prediction at the resolution
+the screen cannot reach: per-residue binder→peptide contact maps and
+interface PAE parsed from the stored Boltz-2 outputs (script:
+`scripts/modal_contact_audit.py`, results: `audit/contact_audit.json`,
+control anchored the same way).
+
+- **Control anchor:** the 7OW6 TCR engages 6/10 peptide residues with
+  12 heavy-atom contacts (<5 A) to p6 and interface ipSAE 0.993 — in
+  BOTH g12d and wt, exactly the "reads the peptide position" signature
+  expected of a TCR. Contact metrics resolve what ipTM margins cannot.
+- **Ranking rule changed.** Margin ranking convicted nothing; contact
+  ranking uses (peptide engagement, p6 differential =
+  g12d p6 contacts − wt p6 contacts, g12d p6 contacts, ipSAE, peptide
+  coverage). designs.csv is regenerated under this rule — margin kept
+  as a column, no longer the sort key.
+- **7 candidates are predicted mutation-preferring (Δ > 0):** top hit
+  `lemma-d8-d8_2_s2` makes 20 contacts to p6-Asp at 2.9 A in G12D and
+  **zero** contacts (28 A away) in WT — engages the discriminating
+  residue only in the mutant complex. d16_3_s1 (+13), d21_8_s4 (+7),
+  d15_2_s1 (+6), d14_11_s1 (+3) show the same differential geometry;
+  d10_4_s4 (+2, ipSAE 0.989) and d12_1_s5 (+1) weaker.
+- **The margin screen's top picks were misleading:** its rank-1
+  (d12_1_s6) contacts p6 0× in G12D but 27× in WT — predicted
+  WT-*preferring*, the anti-target. Its rank-2 (d13_10_s7) sits 33 A
+  from the peptide entirely. Both are excluded from this submission.
+- Caveats stand: contact maps are still predictions on the same model
+  family that failed the margin gate; a predicted contact to the p6
+  carboxylate is a specificity *handle*, not proof. Round-1 units
+  (d1–d5) are excluded from contact ranking — their prediction files
+  were not retained; they remain in audit_report.json for the record.
+  The wet-lab decoy measurements remain the real gate.
+
 ## Declared target surface
 
 Peptide + groove mouth, centered on p6-Asp — the surface a TCR reads.

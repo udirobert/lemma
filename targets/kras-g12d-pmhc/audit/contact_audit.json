@@ -1,0 +1,7361 @@
+{
+ "units": {
+  "d10_d10_4_s4_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 1.99,
+   "binder_receptor_atom_contacts_5A": 343,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 9.54,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 8.25,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 7.16,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 5.79,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 4.27,
+      "n_contacts_5A": 4
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 3.43,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.93,
+      "n_contacts_5A": 23
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.78,
+      "n_contacts_5A": 22
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 3.06,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 5.27,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 5,
+    "peptide_contact_fraction": 0.5,
+    "binder_peptide_min_dist": 2.93,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 3.43,
+     "n_contacts_5A": 9
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 67,
+    "interface_pae_mean": 2.53,
+    "interface_pae_min": 0.58,
+    "ipsae_d0_10": 0.989,
+    "interface_pae_contacts": 0.98
+   },
+   "peptide_vs_receptor_contacts": 0.195
+  },
+  "d10_d10_4_s4_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.35,
+   "binder_receptor_atom_contacts_5A": 342,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 6.07,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 4.71,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 4.47,
+      "n_contacts_5A": 2
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 2.89,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.41,
+      "n_contacts_5A": 16
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 4.0,
+      "n_contacts_5A": 7
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.08,
+      "n_contacts_5A": 7
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.6,
+      "n_contacts_5A": 17
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 3.32,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 5.22,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 8,
+    "peptide_contact_fraction": 0.8,
+    "binder_peptide_min_dist": 2.89,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 4.0,
+     "n_contacts_5A": 7
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 68,
+    "interface_pae_mean": 3.63,
+    "interface_pae_min": 0.77,
+    "ipsae_d0_10": 0.952,
+    "interface_pae_contacts": 2.01
+   },
+   "peptide_vs_receptor_contacts": 0.199
+  },
+  "d10_d10_4_s4_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.35,
+   "binder_receptor_atom_contacts_5A": 457
+  },
+  "d10_d10_4_s6_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.66,
+   "binder_receptor_atom_contacts_5A": 152,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 10.06,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 8.57,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 7.14,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 5.14,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 5.23,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 5.11,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.05,
+      "n_contacts_5A": 5
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.44,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.46,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 7.81,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 2,
+    "peptide_contact_fraction": 0.2,
+    "binder_peptide_min_dist": 3.05,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 5.11,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 14,
+    "interface_pae_mean": 14.89,
+    "interface_pae_min": 8.41,
+    "ipsae_d0_10": 0.495,
+    "interface_pae_contacts": 10.11
+   },
+   "peptide_vs_receptor_contacts": 0.092
+  },
+  "d10_d10_4_s6_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.73,
+   "binder_receptor_atom_contacts_5A": 220,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 29.01,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 25.43,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 22.44,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 21.62,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 18.49,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 17.17,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 14.96,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 12.33,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 10.59,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 7.52,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 7.52,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 17.17,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 26.08,
+    "interface_pae_min": 23.24
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d10_d10_4_s6_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.4,
+   "binder_receptor_atom_contacts_5A": 217
+  },
+  "d11_d11_0_s3_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.31,
+   "binder_receptor_atom_contacts_5A": 180,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 26.21,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 23.13,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 19.44,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 17.5,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 14.82,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 11.73,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 8.52,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 7.96,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 7.23,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.85,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 6.85,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 11.73,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 15.45,
+    "interface_pae_min": 10.94
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d11_d11_0_s3_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.18,
+   "binder_receptor_atom_contacts_5A": 452,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 9.5,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 8.37,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 7.51,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 5.69,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 2.87,
+      "n_contacts_5A": 25
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 3.75,
+      "n_contacts_5A": 17
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.37,
+      "n_contacts_5A": 8
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.55,
+      "n_contacts_5A": 21
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 2.77,
+      "n_contacts_5A": 21
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.18,
+      "n_contacts_5A": 7
+     }
+    ],
+    "peptide_residues_contacted": 6,
+    "peptide_contact_fraction": 0.6,
+    "binder_peptide_min_dist": 2.77,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 3.75,
+     "n_contacts_5A": 17
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 99,
+    "interface_pae_mean": 6.23,
+    "interface_pae_min": 3.11,
+    "ipsae_d0_10": 0.802,
+    "interface_pae_contacts": 4.95
+   },
+   "peptide_vs_receptor_contacts": 0.219
+  },
+  "d11_d11_0_s3_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.01,
+   "binder_receptor_atom_contacts_5A": 252
+  },
+  "d11_d11_0_s5_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.55,
+   "binder_receptor_atom_contacts_5A": 264,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 8.47,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 7.71,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 6.49,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 4.62,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 4.4,
+      "n_contacts_5A": 8
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 2.69,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.62,
+      "n_contacts_5A": 29
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.75,
+      "n_contacts_5A": 16
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 4.24,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 5.56,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 6,
+    "peptide_contact_fraction": 0.6,
+    "binder_peptide_min_dist": 2.62,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 2.69,
+     "n_contacts_5A": 9
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 72,
+    "interface_pae_mean": 5.24,
+    "interface_pae_min": 2.65,
+    "ipsae_d0_10": 0.891,
+    "interface_pae_contacts": 3.49
+   },
+   "peptide_vs_receptor_contacts": 0.273
+  },
+  "d11_d11_0_s5_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 1.21,
+   "binder_receptor_atom_contacts_5A": 462,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 11.21,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 8.96,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 8.24,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 5.85,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.41,
+      "n_contacts_5A": 17
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 3.88,
+      "n_contacts_5A": 21
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 4.17,
+      "n_contacts_5A": 3
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.0,
+      "n_contacts_5A": 13
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.12,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.92,
+      "n_contacts_5A": 1
+     }
+    ],
+    "peptide_residues_contacted": 5,
+    "peptide_contact_fraction": 0.5,
+    "binder_peptide_min_dist": 3.0,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 3.88,
+     "n_contacts_5A": 21
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 55,
+    "interface_pae_mean": 4.31,
+    "interface_pae_min": 1.87,
+    "ipsae_d0_10": 0.934,
+    "interface_pae_contacts": 2.63
+   },
+   "peptide_vs_receptor_contacts": 0.119
+  },
+  "d11_d11_0_s5_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 1.98,
+   "binder_receptor_atom_contacts_5A": 708
+  },
+  "d12_d12_1_s6_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 1.33,
+   "binder_receptor_atom_contacts_5A": 171,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 20.47,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 16.67,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 14.53,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 12.26,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 9.15,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 7.08,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 4.86,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 6.63,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.09,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.78,
+      "n_contacts_5A": 1
+     }
+    ],
+    "peptide_residues_contacted": 2,
+    "peptide_contact_fraction": 0.2,
+    "binder_peptide_min_dist": 4.78,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 7.08,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 2,
+    "interface_pae_mean": 18.05,
+    "interface_pae_min": 13.88,
+    "ipsae_d0_10": 0.283,
+    "interface_pae_contacts": 16.01
+   },
+   "peptide_vs_receptor_contacts": 0.012
+  },
+  "d12_d12_1_s6_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.12,
+   "binder_receptor_atom_contacts_5A": 246,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 9.56,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 9.36,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 7.97,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 5.54,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 2.49,
+      "n_contacts_5A": 34
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 3.58,
+      "n_contacts_5A": 27
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.43,
+      "n_contacts_5A": 14
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.43,
+      "n_contacts_5A": 14
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.0,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.93,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 5,
+    "peptide_contact_fraction": 0.5,
+    "binder_peptide_min_dist": 2.49,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 3.58,
+     "n_contacts_5A": 27
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 90,
+    "interface_pae_mean": 16.32,
+    "interface_pae_min": 13.5,
+    "ipsae_d0_10": 0.292,
+    "interface_pae_contacts": 15.62
+   },
+   "peptide_vs_receptor_contacts": 0.366
+  },
+  "d12_d12_1_s6_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.57,
+   "binder_receptor_atom_contacts_5A": 567
+  },
+  "d12_d12_1_s5_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.66,
+   "binder_receptor_atom_contacts_5A": 264,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 6.62,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 5.35,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 4.35,
+      "n_contacts_5A": 2
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 2.66,
+      "n_contacts_5A": 15
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 4.22,
+      "n_contacts_5A": 8
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 4.61,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 1.68,
+      "n_contacts_5A": 24
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 2.84,
+      "n_contacts_5A": 19
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 3.22,
+      "n_contacts_5A": 7
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.79,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 7,
+    "peptide_contact_fraction": 0.7,
+    "binder_peptide_min_dist": 1.68,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 4.61,
+     "n_contacts_5A": 1
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 76,
+    "interface_pae_mean": 6.08,
+    "interface_pae_min": 4.29,
+    "ipsae_d0_10": 0.796,
+    "interface_pae_contacts": 5.06
+   },
+   "peptide_vs_receptor_contacts": 0.288
+  },
+  "d12_d12_1_s5_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.83,
+   "binder_receptor_atom_contacts_5A": 258,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 18.02,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 14.89,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 12.24,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 9.36,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 5.97,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 5.22,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 6.16,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 4.08,
+      "n_contacts_5A": 3
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.14,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 5.67,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 1,
+    "peptide_contact_fraction": 0.1,
+    "binder_peptide_min_dist": 4.08,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 5.22,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 3,
+    "interface_pae_mean": 10.19,
+    "interface_pae_min": 6.47,
+    "ipsae_d0_10": 0.596,
+    "interface_pae_contacts": 8.28
+   },
+   "peptide_vs_receptor_contacts": 0.012
+  },
+  "d12_d12_1_s5_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.08,
+   "binder_receptor_atom_contacts_5A": 646
+  },
+  "d13_d13_10_s1_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.52,
+   "binder_receptor_atom_contacts_5A": 211,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 23.96,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 21.15,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 17.17,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 15.23,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 12.78,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 10.45,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 6.91,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 4.72,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 6.33,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.81,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 1,
+    "peptide_contact_fraction": 0.1,
+    "binder_peptide_min_dist": 4.72,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 10.45,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 1,
+    "interface_pae_mean": 17.7,
+    "interface_pae_min": 13.76,
+    "ipsae_d0_10": 0.285,
+    "interface_pae_contacts": 15.92
+   },
+   "peptide_vs_receptor_contacts": 0.005
+  },
+  "d13_d13_10_s1_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.29,
+   "binder_receptor_atom_contacts_5A": 161,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 14.25,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 10.5,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 8.86,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 7.04,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.47,
+      "n_contacts_5A": 10
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 4.78,
+      "n_contacts_5A": 3
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.72,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.6,
+      "n_contacts_5A": 19
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 2.54,
+      "n_contacts_5A": 25
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.4,
+      "n_contacts_5A": 3
+     }
+    ],
+    "peptide_residues_contacted": 6,
+    "peptide_contact_fraction": 0.6,
+    "binder_peptide_min_dist": 2.54,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 4.78,
+     "n_contacts_5A": 3
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 69,
+    "interface_pae_mean": 14.04,
+    "interface_pae_min": 9.84,
+    "ipsae_d0_10": 0.383,
+    "interface_pae_contacts": 12.76
+   },
+   "peptide_vs_receptor_contacts": 0.429
+  },
+  "d13_d13_10_s1_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.35,
+   "binder_receptor_atom_contacts_5A": 430
+  },
+  "d13_d13_10_s7_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.99,
+   "binder_receptor_atom_contacts_5A": 194,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 38.23,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 34.55,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 37.27,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 38.83,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 36.98,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 36.29,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 40.07,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 38.65,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 37.39,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 32.95,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 32.95,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 36.29,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 23.12,
+    "interface_pae_min": 19.26
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d13_d13_10_s7_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.4,
+   "binder_receptor_atom_contacts_5A": 174,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 26.93,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 24.26,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 20.1,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 19.11,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 16.97,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 14.71,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 12.55,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 8.2,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 7.36,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.6,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 6.6,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 14.71,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 14.85,
+    "interface_pae_min": 10.72
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d13_d13_10_s7_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.56,
+   "binder_receptor_atom_contacts_5A": 503
+  },
+  "d14_d14_11_s5_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 35.45,
+   "binder_receptor_atom_contacts_5A": 0,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 59.87,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 55.93,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 56.87,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 56.51,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 53.05,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 54.11,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 54.74,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 55.85,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 54.38,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 55.05,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 53.05,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 54.11,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 29.12,
+    "interface_pae_min": 27.93
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d14_d14_11_s5_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.62,
+   "binder_receptor_atom_contacts_5A": 236,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 37.51,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 35.92,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 37.65,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 41.06,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 42.74,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 43.63,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 41.49,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 39.84,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 39.95,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 33.63,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 33.63,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 43.63,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 19.42,
+    "interface_pae_min": 16.05
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d14_d14_11_s5_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 1.64,
+   "binder_receptor_atom_contacts_5A": 543
+  },
+  "d14_d14_11_s1_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 3.26,
+   "binder_receptor_atom_contacts_5A": 138,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 6.61,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 6.99,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 5.48,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 4.5,
+      "n_contacts_5A": 4
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 2.7,
+      "n_contacts_5A": 10
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 4.87,
+      "n_contacts_5A": 3
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.79,
+      "n_contacts_5A": 14
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.23,
+      "n_contacts_5A": 15
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 4.63,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 7.75,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 6,
+    "peptide_contact_fraction": 0.6,
+    "binder_peptide_min_dist": 2.7,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 4.87,
+     "n_contacts_5A": 3
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 47,
+    "interface_pae_mean": 21.3,
+    "interface_pae_min": 19.09,
+    "ipsae_d0_10": 0.193,
+    "interface_pae_contacts": 20.47
+   },
+   "peptide_vs_receptor_contacts": 0.341
+  },
+  "d14_d14_11_s1_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.69,
+   "binder_receptor_atom_contacts_5A": 170,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 18.72,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 14.85,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 12.9,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 10.73,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 6.67,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 5.92,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 5.42,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 4.46,
+      "n_contacts_5A": 3
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.66,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.58,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 1,
+    "peptide_contact_fraction": 0.1,
+    "binder_peptide_min_dist": 4.46,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 5.92,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 3,
+    "interface_pae_mean": 20.99,
+    "interface_pae_min": 17.14,
+    "ipsae_d0_10": 0.217,
+    "interface_pae_contacts": 19.01
+   },
+   "peptide_vs_receptor_contacts": 0.018
+  },
+  "d14_d14_11_s1_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 1.88,
+   "binder_receptor_atom_contacts_5A": 361
+  },
+  "d15_d15_2_s1_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.11,
+   "binder_receptor_atom_contacts_5A": 256,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 11.89,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 8.5,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 8.2,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 7.24,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.97,
+      "n_contacts_5A": 4
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 3.57,
+      "n_contacts_5A": 6
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.74,
+      "n_contacts_5A": 40
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 2.99,
+      "n_contacts_5A": 27
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 3.59,
+      "n_contacts_5A": 2
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 5.51,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 5,
+    "peptide_contact_fraction": 0.5,
+    "binder_peptide_min_dist": 2.74,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 3.57,
+     "n_contacts_5A": 6
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 79,
+    "interface_pae_mean": 6.46,
+    "interface_pae_min": 3.83,
+    "ipsae_d0_10": 0.826,
+    "interface_pae_contacts": 4.58
+   },
+   "peptide_vs_receptor_contacts": 0.309
+  },
+  "d15_d15_2_s1_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 1.39,
+   "binder_receptor_atom_contacts_5A": 271,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 30.91,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 28.69,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 27.84,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 30.39,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 30.3,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 30.47,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 27.72,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 24.34,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 22.58,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 18.1,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 18.1,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 30.47,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 10.38,
+    "interface_pae_min": 6.59
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d15_d15_2_s1_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.39,
+   "binder_receptor_atom_contacts_5A": 341
+  },
+  "d15_d15_2_s7_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.44,
+   "binder_receptor_atom_contacts_5A": 104,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 12.22,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 9.28,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 7.22,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 4.84,
+      "n_contacts_5A": 2
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.91,
+      "n_contacts_5A": 5
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 4.18,
+      "n_contacts_5A": 3
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.96,
+      "n_contacts_5A": 22
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.84,
+      "n_contacts_5A": 4
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 2.55,
+      "n_contacts_5A": 11
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.59,
+      "n_contacts_5A": 1
+     }
+    ],
+    "peptide_residues_contacted": 7,
+    "peptide_contact_fraction": 0.7,
+    "binder_peptide_min_dist": 2.55,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 4.18,
+     "n_contacts_5A": 3
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 48,
+    "interface_pae_mean": 16.37,
+    "interface_pae_min": 14.19,
+    "ipsae_d0_10": 0.283,
+    "interface_pae_contacts": 15.94
+   },
+   "peptide_vs_receptor_contacts": 0.462
+  },
+  "d15_d15_2_s7_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.09,
+   "binder_receptor_atom_contacts_5A": 210,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 7.0,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 6.32,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 4.96,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 3.22,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.9,
+      "n_contacts_5A": 15
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 3.03,
+      "n_contacts_5A": 42
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.81,
+      "n_contacts_5A": 16
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.58,
+      "n_contacts_5A": 13
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 2.98,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.71,
+      "n_contacts_5A": 1
+     }
+    ],
+    "peptide_residues_contacted": 8,
+    "peptide_contact_fraction": 0.8,
+    "binder_peptide_min_dist": 2.81,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 3.03,
+     "n_contacts_5A": 42
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 106,
+    "interface_pae_mean": 5.16,
+    "interface_pae_min": 3.13,
+    "ipsae_d0_10": 0.831,
+    "interface_pae_contacts": 4.5
+   },
+   "peptide_vs_receptor_contacts": 0.505
+  },
+  "d15_d15_2_s7_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.1,
+   "binder_receptor_atom_contacts_5A": 140
+  },
+  "d16_d16_3_s1_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 1.44,
+   "binder_receptor_atom_contacts_5A": 187,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 10.0,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 8.63,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 8.15,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 6.34,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.35,
+      "n_contacts_5A": 14
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 3.21,
+      "n_contacts_5A": 13
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 4.12,
+      "n_contacts_5A": 10
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 4.13,
+      "n_contacts_5A": 5
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 6.56,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.96,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 4,
+    "peptide_contact_fraction": 0.4,
+    "binder_peptide_min_dist": 3.21,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 3.21,
+     "n_contacts_5A": 13
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 42,
+    "interface_pae_mean": 16.19,
+    "interface_pae_min": 13.37,
+    "ipsae_d0_10": 0.305,
+    "interface_pae_contacts": 15.12
+   },
+   "peptide_vs_receptor_contacts": 0.225
+  },
+  "d16_d16_3_s1_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.42,
+   "binder_receptor_atom_contacts_5A": 182,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 12.64,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 10.53,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 8.62,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 6.21,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 4.02,
+      "n_contacts_5A": 6
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 5.07,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 4.6,
+      "n_contacts_5A": 2
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.63,
+      "n_contacts_5A": 2
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.46,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.41,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 3,
+    "peptide_contact_fraction": 0.3,
+    "binder_peptide_min_dist": 3.63,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 5.07,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 10,
+    "interface_pae_mean": 13.66,
+    "interface_pae_min": 10.89,
+    "ipsae_d0_10": 0.388,
+    "interface_pae_contacts": 12.6
+   },
+   "peptide_vs_receptor_contacts": 0.055
+  },
+  "d16_d16_3_s1_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.13,
+   "binder_receptor_atom_contacts_5A": 567
+  },
+  "d16_d16_3_s3_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.1,
+   "binder_receptor_atom_contacts_5A": 276,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 31.5,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 33.71,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 36.18,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 39.71,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 41.93,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 42.19,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 46.45,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 47.4,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 48.68,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 42.93,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 31.5,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 42.19,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 14.36,
+    "interface_pae_min": 8.64
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d16_d16_3_s3_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 3.36,
+   "binder_receptor_atom_contacts_5A": 98,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 25.36,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 21.59,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 19.46,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 17.03,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 12.89,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 13.88,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 12.13,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 9.57,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 8.21,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.44,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 6.44,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 13.88,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 23.35,
+    "interface_pae_min": 20.05,
+    "ipsae_d0_10": 0.195,
+    "interface_pae_contacts": 20.35
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d16_d16_3_s3_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.02,
+   "binder_receptor_atom_contacts_5A": 525
+  },
+  "d17_d17_4_s2_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 1.44,
+   "binder_receptor_atom_contacts_5A": 237,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 26.23,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 25.56,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 21.94,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 22.1,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 19.76,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 16.48,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 14.73,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 13.21,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 10.64,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 7.56,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 7.56,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 16.48,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 23.51,
+    "interface_pae_min": 20.55
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d17_d17_4_s2_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 1.99,
+   "binder_receptor_atom_contacts_5A": 455,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 17.49,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 14.45,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 11.21,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 8.58,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 5.51,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 3.9,
+      "n_contacts_5A": 7
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.71,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.42,
+      "n_contacts_5A": 14
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.02,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.48,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 3,
+    "peptide_contact_fraction": 0.3,
+    "binder_peptide_min_dist": 2.71,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 3.9,
+     "n_contacts_5A": 7
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 30,
+    "interface_pae_mean": 11.96,
+    "interface_pae_min": 7.37,
+    "ipsae_d0_10": 0.478,
+    "interface_pae_contacts": 10.5
+   },
+   "peptide_vs_receptor_contacts": 0.066
+  },
+  "d17_d17_4_s2_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.48,
+   "binder_receptor_atom_contacts_5A": 414
+  },
+  "d17_d17_4_s5_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.7,
+   "binder_receptor_atom_contacts_5A": 106,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 21.45,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 17.43,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 15.62,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 13.66,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 10.2,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 8.43,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 8.21,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 9.55,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 8.53,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.65,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 6.65,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 8.43,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 23.17,
+    "interface_pae_min": 18.87,
+    "ipsae_d0_10": 0.201,
+    "interface_pae_contacts": 19.95
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d17_d17_4_s5_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 1.41,
+   "binder_receptor_atom_contacts_5A": 339,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 18.45,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 21.12,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 20.56,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 23.52,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 26.66,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 26.6,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 24.88,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 24.11,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 24.64,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 19.3,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 18.45,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 26.6,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 24.49,
+    "interface_pae_min": 19.48
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d17_d17_4_s5_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.22,
+   "binder_receptor_atom_contacts_5A": 311
+  },
+  "d18_d18_5_s8_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.34,
+   "binder_receptor_atom_contacts_5A": 228,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 15.45,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 11.71,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 9.94,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 7.4,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 5.47,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 6.13,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.4,
+      "n_contacts_5A": 11
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 2.68,
+      "n_contacts_5A": 19
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 2.46,
+      "n_contacts_5A": 13
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 5.13,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 3,
+    "peptide_contact_fraction": 0.3,
+    "binder_peptide_min_dist": 2.46,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 6.13,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 43,
+    "interface_pae_mean": 12.8,
+    "interface_pae_min": 6.29,
+    "ipsae_d0_10": 0.615,
+    "interface_pae_contacts": 7.97
+   },
+   "peptide_vs_receptor_contacts": 0.189
+  },
+  "d18_d18_5_s8_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.75,
+   "binder_receptor_atom_contacts_5A": 171,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 17.36,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 13.54,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 11.65,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 9.6,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 5.59,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 5.84,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 5.0,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.48,
+      "n_contacts_5A": 11
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 2.82,
+      "n_contacts_5A": 12
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 5.4,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 2,
+    "peptide_contact_fraction": 0.2,
+    "binder_peptide_min_dist": 2.82,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 5.84,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 23,
+    "interface_pae_mean": 13.85,
+    "interface_pae_min": 6.93,
+    "ipsae_d0_10": 0.589,
+    "interface_pae_contacts": 8.37
+   },
+   "peptide_vs_receptor_contacts": 0.135
+  },
+  "d18_d18_5_s8_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.54,
+   "binder_receptor_atom_contacts_5A": 652
+  },
+  "d18_d18_5_s2_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.43,
+   "binder_receptor_atom_contacts_5A": 150,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 15.59,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 11.62,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 10.62,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 9.15,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 6.04,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 4.59,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.05,
+      "n_contacts_5A": 30
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.5,
+      "n_contacts_5A": 17
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 3.28,
+      "n_contacts_5A": 6
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.87,
+      "n_contacts_5A": 3
+     }
+    ],
+    "peptide_residues_contacted": 5,
+    "peptide_contact_fraction": 0.5,
+    "binder_peptide_min_dist": 3.05,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 4.59,
+     "n_contacts_5A": 1
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 57,
+    "interface_pae_mean": 18.43,
+    "interface_pae_min": 14.71,
+    "ipsae_d0_10": 0.278,
+    "interface_pae_contacts": 16.15
+   },
+   "peptide_vs_receptor_contacts": 0.38
+  },
+  "d18_d18_5_s2_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.25,
+   "binder_receptor_atom_contacts_5A": 216,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 15.34,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 11.2,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 10.53,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 8.99,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 5.56,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 4.56,
+      "n_contacts_5A": 4
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.36,
+      "n_contacts_5A": 6
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.63,
+      "n_contacts_5A": 13
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 3.91,
+      "n_contacts_5A": 6
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.4,
+      "n_contacts_5A": 4
+     }
+    ],
+    "peptide_residues_contacted": 5,
+    "peptide_contact_fraction": 0.5,
+    "binder_peptide_min_dist": 3.36,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 4.56,
+     "n_contacts_5A": 4
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 33,
+    "interface_pae_mean": 9.93,
+    "interface_pae_min": 5.31,
+    "ipsae_d0_10": 0.687,
+    "interface_pae_contacts": 6.76
+   },
+   "peptide_vs_receptor_contacts": 0.153
+  },
+  "d18_d18_5_s2_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.63,
+   "binder_receptor_atom_contacts_5A": 376
+  },
+  "d19_d19_6_s7_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.74,
+   "binder_receptor_atom_contacts_5A": 198,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 20.52,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 16.55,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 14.96,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 12.97,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 9.73,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 7.35,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 5.58,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 5.77,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 3.63,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 3.99,
+      "n_contacts_5A": 4
+     }
+    ],
+    "peptide_residues_contacted": 2,
+    "peptide_contact_fraction": 0.2,
+    "binder_peptide_min_dist": 3.63,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 7.35,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 13,
+    "interface_pae_mean": 9.84,
+    "interface_pae_min": 5.18,
+    "ipsae_d0_10": 0.737,
+    "interface_pae_contacts": 5.97
+   },
+   "peptide_vs_receptor_contacts": 0.066
+  },
+  "d19_d19_6_s7_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.75,
+   "binder_receptor_atom_contacts_5A": 186,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 23.03,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 22.97,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 19.7,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 22.88,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 24.93,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 21.73,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 21.01,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 18.3,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 18.27,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 14.69,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 14.69,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 21.73,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 12.05,
+    "interface_pae_min": 7.16
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d19_d19_6_s7_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.91,
+   "binder_receptor_atom_contacts_5A": 279
+  },
+  "d19_d19_6_s2_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.0,
+   "binder_receptor_atom_contacts_5A": 76,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 31.42,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 30.07,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 27.59,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 29.57,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 29.42,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 24.4,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 29.01,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 25.11,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 22.9,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 19.16,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 19.16,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 24.4,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 27.13,
+    "interface_pae_min": 25.04
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d19_d19_6_s2_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.64,
+   "binder_receptor_atom_contacts_5A": 36,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 34.28,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 31.94,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 31.16,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 33.91,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 34.57,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 34.7,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 32.27,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 29.11,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 28.05,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 22.1,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 22.1,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 34.7,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 27.18,
+    "interface_pae_min": 24.92
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d19_d19_6_s2_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.13,
+   "binder_receptor_atom_contacts_5A": 274
+  },
+  "d20_d20_7_s5_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.15,
+   "binder_receptor_atom_contacts_5A": 287,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 18.34,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 14.51,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 12.48,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 10.6,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 7.4,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 5.04,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.79,
+      "n_contacts_5A": 17
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.48,
+      "n_contacts_5A": 27
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 2.59,
+      "n_contacts_5A": 16
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.54,
+      "n_contacts_5A": 3
+     }
+    ],
+    "peptide_residues_contacted": 4,
+    "peptide_contact_fraction": 0.4,
+    "binder_peptide_min_dist": 2.59,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 5.04,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 63,
+    "interface_pae_mean": 2.78,
+    "interface_pae_min": 0.46,
+    "ipsae_d0_10": 0.993,
+    "interface_pae_contacts": 0.78
+   },
+   "peptide_vs_receptor_contacts": 0.22
+  },
+  "d20_d20_7_s5_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.3,
+   "binder_receptor_atom_contacts_5A": 293,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 18.2,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 14.3,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 12.41,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 10.28,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 6.74,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 6.92,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 4.55,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.52,
+      "n_contacts_5A": 19
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 2.73,
+      "n_contacts_5A": 14
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.43,
+      "n_contacts_5A": 4
+     }
+    ],
+    "peptide_residues_contacted": 4,
+    "peptide_contact_fraction": 0.4,
+    "binder_peptide_min_dist": 2.73,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 6.92,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 38,
+    "interface_pae_mean": 2.82,
+    "interface_pae_min": 0.54,
+    "ipsae_d0_10": 0.991,
+    "interface_pae_contacts": 0.92
+   },
+   "peptide_vs_receptor_contacts": 0.13
+  },
+  "d20_d20_7_s5_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.53,
+   "binder_receptor_atom_contacts_5A": 257
+  },
+  "d20_d20_7_s2_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.24,
+   "binder_receptor_atom_contacts_5A": 255,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 18.19,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 14.21,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 12.43,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 10.57,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 7.18,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 5.53,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.58,
+      "n_contacts_5A": 12
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.7,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 2.75,
+      "n_contacts_5A": 12
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.29,
+      "n_contacts_5A": 3
+     }
+    ],
+    "peptide_residues_contacted": 4,
+    "peptide_contact_fraction": 0.4,
+    "binder_peptide_min_dist": 2.58,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 5.53,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 36,
+    "interface_pae_mean": 2.25,
+    "interface_pae_min": 0.69,
+    "ipsae_d0_10": 0.992,
+    "interface_pae_contacts": 0.9
+   },
+   "peptide_vs_receptor_contacts": 0.141
+  },
+  "d20_d20_7_s2_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.13,
+   "binder_receptor_atom_contacts_5A": 257,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 17.86,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 13.93,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 12.16,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 10.23,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 6.69,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 6.15,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 4.58,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.45,
+      "n_contacts_5A": 5
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 3.14,
+      "n_contacts_5A": 10
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.11,
+      "n_contacts_5A": 5
+     }
+    ],
+    "peptide_residues_contacted": 4,
+    "peptide_contact_fraction": 0.4,
+    "binder_peptide_min_dist": 3.14,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 6.15,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 21,
+    "interface_pae_mean": 2.44,
+    "interface_pae_min": 0.72,
+    "ipsae_d0_10": 0.99,
+    "interface_pae_contacts": 0.99
+   },
+   "peptide_vs_receptor_contacts": 0.082
+  },
+  "d20_d20_7_s2_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.5,
+   "binder_receptor_atom_contacts_5A": 161
+  },
+  "d21_d21_8_s2_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.64,
+   "binder_receptor_atom_contacts_5A": 199,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 7.76,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 8.34,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 8.09,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 5.7,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.47,
+      "n_contacts_5A": 19
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 2.73,
+      "n_contacts_5A": 10
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.08,
+      "n_contacts_5A": 36
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 2.93,
+      "n_contacts_5A": 12
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.83,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 9.07,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 4,
+    "peptide_contact_fraction": 0.4,
+    "binder_peptide_min_dist": 2.73,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 2.73,
+     "n_contacts_5A": 10
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 77,
+    "interface_pae_mean": 8.49,
+    "interface_pae_min": 6.14,
+    "ipsae_d0_10": 0.628,
+    "interface_pae_contacts": 7.72
+   },
+   "peptide_vs_receptor_contacts": 0.387
+  },
+  "d21_d21_8_s2_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 1.66,
+   "binder_receptor_atom_contacts_5A": 254,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 3.88,
+      "n_contacts_5A": 5
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 2.32,
+      "n_contacts_5A": 11
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 3.84,
+      "n_contacts_5A": 11
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 3.4,
+      "n_contacts_5A": 15
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.49,
+      "n_contacts_5A": 21
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 3.16,
+      "n_contacts_5A": 30
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 5.3,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.88,
+      "n_contacts_5A": 7
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.32,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 8.36,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 7,
+    "peptide_contact_fraction": 0.7,
+    "binder_peptide_min_dist": 2.32,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 3.16,
+     "n_contacts_5A": 30
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 100,
+    "interface_pae_mean": 9.88,
+    "interface_pae_min": 7.48,
+    "ipsae_d0_10": 0.567,
+    "interface_pae_contacts": 8.76
+   },
+   "peptide_vs_receptor_contacts": 0.394
+  },
+  "d21_d21_8_s2_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.33,
+   "binder_receptor_atom_contacts_5A": 573
+  },
+  "d21_d21_8_s4_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.29,
+   "binder_receptor_atom_contacts_5A": 189,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 5.79,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 6.3,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 5.55,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 3.79,
+      "n_contacts_5A": 7
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.31,
+      "n_contacts_5A": 16
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 4.34,
+      "n_contacts_5A": 7
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.32,
+      "n_contacts_5A": 17
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.34,
+      "n_contacts_5A": 15
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 6.39,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.52,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 5,
+    "peptide_contact_fraction": 0.5,
+    "binder_peptide_min_dist": 3.31,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 4.34,
+     "n_contacts_5A": 7
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 62,
+    "interface_pae_mean": 17.42,
+    "interface_pae_min": 15.49,
+    "ipsae_d0_10": 0.254,
+    "interface_pae_contacts": 17.17
+   },
+   "peptide_vs_receptor_contacts": 0.328
+  },
+  "d21_d21_8_s4_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.31,
+   "binder_receptor_atom_contacts_5A": 329,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 42.58,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 40.09,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 43.04,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 46.2,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 47.32,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 48.84,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 47.05,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 45.87,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 45.96,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 39.02,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 39.02,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 48.84,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 14.45,
+    "interface_pae_min": 10.35
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d21_d21_8_s4_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.1,
+   "binder_receptor_atom_contacts_5A": 414
+  },
+  "d22_d22_9_s7_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.11,
+   "binder_receptor_atom_contacts_5A": 200,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 13.01,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 9.6,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 8.58,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 6.65,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 4.51,
+      "n_contacts_5A": 2
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 4.44,
+      "n_contacts_5A": 2
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.32,
+      "n_contacts_5A": 32
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.63,
+      "n_contacts_5A": 27
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 4.39,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 7.45,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 5,
+    "peptide_contact_fraction": 0.5,
+    "binder_peptide_min_dist": 2.32,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 4.44,
+     "n_contacts_5A": 2
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 64,
+    "interface_pae_mean": 10.96,
+    "interface_pae_min": 7.34,
+    "ipsae_d0_10": 0.581,
+    "interface_pae_contacts": 8.51
+   },
+   "peptide_vs_receptor_contacts": 0.32
+  },
+  "d22_d22_9_s7_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.54,
+   "binder_receptor_atom_contacts_5A": 357,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 11.48,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 8.93,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 7.74,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 6.21,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 2.52,
+      "n_contacts_5A": 20
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 3.09,
+      "n_contacts_5A": 16
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 4.13,
+      "n_contacts_5A": 12
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.84,
+      "n_contacts_5A": 6
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 4.64,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.86,
+      "n_contacts_5A": 1
+     }
+    ],
+    "peptide_residues_contacted": 6,
+    "peptide_contact_fraction": 0.6,
+    "binder_peptide_min_dist": 2.52,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 3.09,
+     "n_contacts_5A": 16
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 56,
+    "interface_pae_mean": 5.98,
+    "interface_pae_min": 2.63,
+    "ipsae_d0_10": 0.84,
+    "interface_pae_contacts": 4.34
+   },
+   "peptide_vs_receptor_contacts": 0.157
+  },
+  "d22_d22_9_s7_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.55,
+   "binder_receptor_atom_contacts_5A": 364
+  },
+  "d22_d22_9_s8_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 3.35,
+   "binder_receptor_atom_contacts_5A": 106,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 22.76,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 19.47,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 16.68,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 13.94,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 10.88,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 8.87,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 5.66,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 4.76,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.71,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 7.01,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 1,
+    "peptide_contact_fraction": 0.1,
+    "binder_peptide_min_dist": 4.76,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 8.87,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 1,
+    "interface_pae_mean": 21.08,
+    "interface_pae_min": 16.44,
+    "ipsae_d0_10": 0.24,
+    "interface_pae_contacts": 17.81
+   },
+   "peptide_vs_receptor_contacts": 0.009
+  },
+  "d22_d22_9_s8_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.58,
+   "binder_receptor_atom_contacts_5A": 187,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 26.08,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 22.91,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 19.32,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 17.83,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 14.22,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 13.04,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 11.21,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 7.21,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 6.79,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 5.89,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 5.89,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 13.04,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 19.52,
+    "interface_pae_min": 14.9,
+    "ipsae_d0_10": 0.271,
+    "interface_pae_contacts": 16.4
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d22_d22_9_s8_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.13,
+   "binder_receptor_atom_contacts_5A": 266
+  },
+  "d6_d6_0_s3_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 1.81,
+   "binder_receptor_atom_contacts_5A": 318,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 7.18,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 5.22,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 4.89,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 3.49,
+      "n_contacts_5A": 7
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 4.28,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 4.78,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.41,
+      "n_contacts_5A": 26
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 2.97,
+      "n_contacts_5A": 28
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 2.04,
+      "n_contacts_5A": 15
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.97,
+      "n_contacts_5A": 1
+     }
+    ],
+    "peptide_residues_contacted": 8,
+    "peptide_contact_fraction": 0.8,
+    "binder_peptide_min_dist": 2.04,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 4.78,
+     "n_contacts_5A": 1
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 80,
+    "interface_pae_mean": 16.34,
+    "interface_pae_min": 11.55,
+    "ipsae_d0_10": 0.356,
+    "interface_pae_contacts": 13.53
+   },
+   "peptide_vs_receptor_contacts": 0.252
+  },
+  "d6_d6_0_s3_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.39,
+   "binder_receptor_atom_contacts_5A": 236,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 13.97,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 10.27,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 8.89,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 7.14,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.49,
+      "n_contacts_5A": 4
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 4.0,
+      "n_contacts_5A": 3
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.19,
+      "n_contacts_5A": 10
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.64,
+      "n_contacts_5A": 7
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 4.62,
+      "n_contacts_5A": 4
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 5.13,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 5,
+    "peptide_contact_fraction": 0.5,
+    "binder_peptide_min_dist": 3.19,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 4.0,
+     "n_contacts_5A": 3
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 28,
+    "interface_pae_mean": 16.17,
+    "interface_pae_min": 11.58,
+    "ipsae_d0_10": 0.347,
+    "interface_pae_contacts": 13.74
+   },
+   "peptide_vs_receptor_contacts": 0.119
+  },
+  "d6_d6_0_s3_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.23,
+   "binder_receptor_atom_contacts_5A": 478
+  },
+  "d6_d6_0_s2_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.44,
+   "binder_receptor_atom_contacts_5A": 210,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 22.41,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 19.36,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 15.95,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 13.57,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 10.63,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 9.06,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 5.28,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 4.35,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.35,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 7.48,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 1,
+    "peptide_contact_fraction": 0.1,
+    "binder_peptide_min_dist": 4.35,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 9.06,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 1,
+    "interface_pae_mean": 9.8,
+    "interface_pae_min": 4.83,
+    "ipsae_d0_10": 0.737,
+    "interface_pae_contacts": 5.98
+   },
+   "peptide_vs_receptor_contacts": 0.005
+  },
+  "d6_d6_0_s2_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.03,
+   "binder_receptor_atom_contacts_5A": 360,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 12.6,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 9.95,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 8.26,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 5.55,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.38,
+      "n_contacts_5A": 19
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 3.82,
+      "n_contacts_5A": 10
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 4.38,
+      "n_contacts_5A": 4
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 4.09,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 3.38,
+      "n_contacts_5A": 7
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.4,
+      "n_contacts_5A": 2
+     }
+    ],
+    "peptide_residues_contacted": 6,
+    "peptide_contact_fraction": 0.6,
+    "binder_peptide_min_dist": 3.38,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 3.82,
+     "n_contacts_5A": 10
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 51,
+    "interface_pae_mean": 9.69,
+    "interface_pae_min": 5.49,
+    "ipsae_d0_10": 0.692,
+    "interface_pae_contacts": 6.67
+   },
+   "peptide_vs_receptor_contacts": 0.142
+  },
+  "d6_d6_0_s2_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.05,
+   "binder_receptor_atom_contacts_5A": 561
+  },
+  "d7_d7_1_s8_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.5,
+   "binder_receptor_atom_contacts_5A": 334,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 12.97,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 9.84,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 7.13,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 4.45,
+      "n_contacts_5A": 2
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 2.45,
+      "n_contacts_5A": 15
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 4.23,
+      "n_contacts_5A": 6
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.76,
+      "n_contacts_5A": 32
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.76,
+      "n_contacts_5A": 19
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 3.1,
+      "n_contacts_5A": 10
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.9,
+      "n_contacts_5A": 2
+     }
+    ],
+    "peptide_residues_contacted": 7,
+    "peptide_contact_fraction": 0.7,
+    "binder_peptide_min_dist": 2.45,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 4.23,
+     "n_contacts_5A": 6
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 86,
+    "interface_pae_mean": 5.94,
+    "interface_pae_min": 2.03,
+    "ipsae_d0_10": 0.93,
+    "interface_pae_contacts": 2.72
+   },
+   "peptide_vs_receptor_contacts": 0.257
+  },
+  "d7_d7_1_s8_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.68,
+   "binder_receptor_atom_contacts_5A": 318,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 14.15,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 10.79,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 8.77,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 6.36,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.42,
+      "n_contacts_5A": 20
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 3.94,
+      "n_contacts_5A": 11
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.78,
+      "n_contacts_5A": 3
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.9,
+      "n_contacts_5A": 12
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 3.51,
+      "n_contacts_5A": 11
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.79,
+      "n_contacts_5A": 2
+     }
+    ],
+    "peptide_residues_contacted": 6,
+    "peptide_contact_fraction": 0.6,
+    "binder_peptide_min_dist": 3.42,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 3.94,
+     "n_contacts_5A": 11
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 59,
+    "interface_pae_mean": 8.32,
+    "interface_pae_min": 3.53,
+    "ipsae_d0_10": 0.773,
+    "interface_pae_contacts": 5.62
+   },
+   "peptide_vs_receptor_contacts": 0.186
+  },
+  "d7_d7_1_s8_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.02,
+   "binder_receptor_atom_contacts_5A": 597
+  },
+  "d7_d7_1_s6_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.41,
+   "binder_receptor_atom_contacts_5A": 172,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 31.82,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 29.85,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 25.63,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 25.22,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 23.48,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 19.47,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 19.01,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 14.6,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 13.32,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 10.46,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 10.46,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 19.47,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 18.48,
+    "interface_pae_min": 15.34
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d7_d7_1_s6_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 1.68,
+   "binder_receptor_atom_contacts_5A": 134,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 10.25,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 9.01,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 8.2,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 5.61,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.53,
+      "n_contacts_5A": 21
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 2.29,
+      "n_contacts_5A": 17
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.56,
+      "n_contacts_5A": 6
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.53,
+      "n_contacts_5A": 10
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.94,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 7.09,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 4,
+    "peptide_contact_fraction": 0.4,
+    "binder_peptide_min_dist": 2.29,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 2.29,
+     "n_contacts_5A": 17
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 54,
+    "interface_pae_mean": 20.71,
+    "interface_pae_min": 17.82,
+    "ipsae_d0_10": 0.206,
+    "interface_pae_contacts": 19.68
+   },
+   "peptide_vs_receptor_contacts": 0.403
+  },
+  "d7_d7_1_s6_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.5,
+   "binder_receptor_atom_contacts_5A": 435
+  },
+  "d8_d8_2_s2_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.2,
+   "binder_receptor_atom_contacts_5A": 256,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 6.88,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 5.75,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 5.55,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 4.2,
+      "n_contacts_5A": 13
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 2.33,
+      "n_contacts_5A": 32
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 2.9,
+      "n_contacts_5A": 20
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.63,
+      "n_contacts_5A": 29
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 4.4,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 3.93,
+      "n_contacts_5A": 7
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.13,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 6,
+    "peptide_contact_fraction": 0.6,
+    "binder_peptide_min_dist": 2.33,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 2.9,
+     "n_contacts_5A": 20
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 102,
+    "interface_pae_mean": 11.88,
+    "interface_pae_min": 8.72,
+    "ipsae_d0_10": 0.503,
+    "interface_pae_contacts": 9.95
+   },
+   "peptide_vs_receptor_contacts": 0.398
+  },
+  "d8_d8_2_s2_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.36,
+   "binder_receptor_atom_contacts_5A": 429,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 26.59,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 22.82,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 25.45,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 26.87,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 26.52,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 28.06,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 26.03,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 24.22,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 23.22,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 18.62,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 18.62,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 28.06,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 7.73,
+    "interface_pae_min": 2.64
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d8_d8_2_s2_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 1.7,
+   "binder_receptor_atom_contacts_5A": 407
+  },
+  "d8_d8_2_s3_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.41,
+   "binder_receptor_atom_contacts_5A": 233,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 22.52,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 19.02,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 16.4,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 13.95,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 11.17,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 7.7,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 6.11,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 6.26,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 5.23,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 5.58,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 0,
+    "peptide_contact_fraction": 0.0,
+    "binder_peptide_min_dist": 5.23,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 7.7,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 0,
+    "interface_pae_mean": 9.67,
+    "interface_pae_min": 4.55,
+    "ipsae_d0_10": 0.52,
+    "interface_pae_contacts": 9.72
+   },
+   "peptide_vs_receptor_contacts": 0.0
+  },
+  "d8_d8_2_s3_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.83,
+   "binder_receptor_atom_contacts_5A": 143,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 26.2,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 23.45,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 19.31,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 18.47,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 16.16,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 14.6,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 11.94,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 8.64,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 6.33,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 4.64,
+      "n_contacts_5A": 2
+     }
+    ],
+    "peptide_residues_contacted": 1,
+    "peptide_contact_fraction": 0.1,
+    "binder_peptide_min_dist": 4.64,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 14.6,
+     "n_contacts_5A": 0
+    },
+    "p6_contacted": false,
+    "binder_peptide_atom_contacts_5A": 2,
+    "interface_pae_mean": 11.06,
+    "interface_pae_min": 5.76,
+    "ipsae_d0_10": 0.696,
+    "interface_pae_contacts": 6.61
+   },
+   "peptide_vs_receptor_contacts": 0.014
+  },
+  "d8_d8_2_s3_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.55,
+   "binder_receptor_atom_contacts_5A": 295
+  },
+  "d9_d9_3_s3_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.78,
+   "binder_receptor_atom_contacts_5A": 188,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 7.77,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 6.75,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 7.04,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 4.95,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 2.76,
+      "n_contacts_5A": 15
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 3.7,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.19,
+      "n_contacts_5A": 11
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 5.58,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 7.76,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 10.41,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 4,
+    "peptide_contact_fraction": 0.4,
+    "binder_peptide_min_dist": 2.76,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 3.7,
+     "n_contacts_5A": 9
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 36,
+    "interface_pae_mean": 3.78,
+    "interface_pae_min": 0.93,
+    "ipsae_d0_10": 0.985,
+    "interface_pae_contacts": 1.23
+   },
+   "peptide_vs_receptor_contacts": 0.191
+  },
+  "d9_d9_3_s3_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.67,
+   "binder_receptor_atom_contacts_5A": 203,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 8.78,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 8.03,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 7.62,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 5.72,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 2.2,
+      "n_contacts_5A": 30
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 3.28,
+      "n_contacts_5A": 11
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 4.75,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 6.97,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 7.72,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 10.42,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 3,
+    "peptide_contact_fraction": 0.3,
+    "binder_peptide_min_dist": 2.2,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 3.28,
+     "n_contacts_5A": 11
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 42,
+    "interface_pae_mean": 4.01,
+    "interface_pae_min": 1.07,
+    "ipsae_d0_10": 0.977,
+    "interface_pae_contacts": 1.53
+   },
+   "peptide_vs_receptor_contacts": 0.207
+  },
+  "d9_d9_3_s3_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 1.9,
+   "binder_receptor_atom_contacts_5A": 497
+  },
+  "d9_d9_3_s6_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 3.08,
+   "binder_receptor_atom_contacts_5A": 126,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 7.67,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 5.59,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 4.85,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 3.3,
+      "n_contacts_5A": 18
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 2.6,
+      "n_contacts_5A": 18
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 4.49,
+      "n_contacts_5A": 2
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.01,
+      "n_contacts_5A": 35
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.55,
+      "n_contacts_5A": 20
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 4.62,
+      "n_contacts_5A": 1
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 7.89,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 7,
+    "peptide_contact_fraction": 0.7,
+    "binder_peptide_min_dist": 2.6,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 4.49,
+     "n_contacts_5A": 2
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 95,
+    "interface_pae_mean": 14.25,
+    "interface_pae_min": 10.4,
+    "ipsae_d0_10": 0.415,
+    "interface_pae_contacts": 11.92
+   },
+   "peptide_vs_receptor_contacts": 0.754
+  },
+  "d9_d9_3_s6_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.63,
+   "binder_receptor_atom_contacts_5A": 227,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 14.37,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 10.13,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 9.74,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 7.52,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.71,
+      "n_contacts_5A": 5
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 4.02,
+      "n_contacts_5A": 4
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 3.3,
+      "n_contacts_5A": 8
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.34,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 3.45,
+      "n_contacts_5A": 7
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 6.12,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 5,
+    "peptide_contact_fraction": 0.5,
+    "binder_peptide_min_dist": 3.3,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 4.02,
+     "n_contacts_5A": 4
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 33,
+    "interface_pae_mean": 6.77,
+    "interface_pae_min": 2.57,
+    "ipsae_d0_10": 0.885,
+    "interface_pae_contacts": 3.58
+   },
+   "peptide_vs_receptor_contacts": 0.145
+  },
+  "d9_d9_3_s6_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C"
+    ]
+   },
+   "binder_receptor_min_dist": 2.57,
+   "binder_receptor_atom_contacts_5A": 418
+  },
+  "control_tcr_pmhc_g12d": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D",
+     "E"
+    ]
+   },
+   "binder_receptor_min_dist": 2.67,
+   "binder_receptor_atom_contacts_5A": 391,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 6.58,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 6.05,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 5.7,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 3.95,
+      "n_contacts_5A": 10
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.86,
+      "n_contacts_5A": 12
+     },
+     {
+      "pos": 6,
+      "resname": "ASP",
+      "min_dist": 3.36,
+      "n_contacts_5A": 12
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.99,
+      "n_contacts_5A": 44
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.8,
+      "n_contacts_5A": 19
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 2.87,
+      "n_contacts_5A": 10
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 5.68,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 6,
+    "peptide_contact_fraction": 0.6,
+    "binder_peptide_min_dist": 2.87,
+    "p6": {
+     "pos": 6,
+     "resname": "ASP",
+     "min_dist": 3.36,
+     "n_contacts_5A": 12
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 107,
+    "interface_pae_mean": 4.79,
+    "interface_pae_min": 0.49,
+    "ipsae_d0_10": 0.993,
+    "interface_pae_contacts": 0.81
+   },
+   "peptide_vs_receptor_contacts": 0.274
+  },
+  "control_tcr_pmhc_wt": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "peptide": [
+     "C"
+    ],
+    "binder": [
+     "D",
+     "E"
+    ]
+   },
+   "binder_receptor_min_dist": 2.25,
+   "binder_receptor_atom_contacts_5A": 394,
+   "peptide": {
+    "peptide_profile": [
+     {
+      "pos": 1,
+      "resname": "VAL",
+      "min_dist": 6.6,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 2,
+      "resname": "VAL",
+      "min_dist": 6.17,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 3,
+      "resname": "VAL",
+      "min_dist": 5.71,
+      "n_contacts_5A": 0
+     },
+     {
+      "pos": 4,
+      "resname": "GLY",
+      "min_dist": 3.88,
+      "n_contacts_5A": 10
+     },
+     {
+      "pos": 5,
+      "resname": "ALA",
+      "min_dist": 3.78,
+      "n_contacts_5A": 16
+     },
+     {
+      "pos": 6,
+      "resname": "GLY",
+      "min_dist": 3.34,
+      "n_contacts_5A": 12
+     },
+     {
+      "pos": 7,
+      "resname": "GLY",
+      "min_dist": 2.71,
+      "n_contacts_5A": 53
+     },
+     {
+      "pos": 8,
+      "resname": "VAL",
+      "min_dist": 3.42,
+      "n_contacts_5A": 28
+     },
+     {
+      "pos": 9,
+      "resname": "GLY",
+      "min_dist": 2.74,
+      "n_contacts_5A": 9
+     },
+     {
+      "pos": 10,
+      "resname": "LYS",
+      "min_dist": 5.61,
+      "n_contacts_5A": 0
+     }
+    ],
+    "peptide_residues_contacted": 6,
+    "peptide_contact_fraction": 0.6,
+    "binder_peptide_min_dist": 2.71,
+    "p6": {
+     "pos": 6,
+     "resname": "GLY",
+     "min_dist": 3.34,
+     "n_contacts_5A": 12
+    },
+    "p6_contacted": true,
+    "binder_peptide_atom_contacts_5A": 128,
+    "interface_pae_mean": 4.49,
+    "interface_pae_min": 0.49,
+    "ipsae_d0_10": 0.994,
+    "interface_pae_contacts": 0.75
+   },
+   "peptide_vs_receptor_contacts": 0.325
+  },
+  "control_tcr_hla_apo": {
+   "chains": {
+    "hla": [
+     "A"
+    ],
+    "b2m": [
+     "B"
+    ],
+    "binder": [
+     "C",
+     "D"
+    ]
+   },
+   "binder_receptor_min_dist": 2.15,
+   "binder_receptor_atom_contacts_5A": 396
+  }
+ },
+ "n_indexed": 105
+}
