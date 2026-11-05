@@ -12,6 +12,8 @@ provides_tools:
   - lemma_audit
   - lemma_status
   - lemma_judge
+provides_commands:
+  - audit
 config_schema:
   api_key:
     type: secret

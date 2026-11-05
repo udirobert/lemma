@@ -37,3 +37,11 @@ def register(ctx):
         schema=schemas.LEMMA_JUDGE,
         handler=partial(tools.lemma_judge, ctx=ctx),
     )
+
+    # /audit <source> — zero-latency demo path: dispatch our own quick audit
+    ctx.register_command(
+        "audit",
+        lambda raw: ctx.dispatch_tool("lemma_quick_audit", {"source": raw.strip()}),
+        description="Lemma quick audit (arXiv/OpenReview id or PDF path)",
+        args_hint="<paper>",
+    )

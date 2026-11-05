@@ -57,21 +57,45 @@ Integration requirements from the developer guide (verified): native
 registration**, so LLM calls must be lazy; ANTHROPIC_API_KEY via Hermes's
 credential path, not lemma's `.env` habit.
 
+## Competitive bar — scouted 2026-11-05 (marketplace + Tavily)
+
+976 plugins (213 Official / 9 Certified / ~1,465 Community). Top tools by
+stars: Oh My Hermes bridge 5.1k (model routing + **Desktop status pane** +
+evidence probes), phone-harness 4.3k (real device control), sem-weave 3.4k,
+LetsFG 2.2k, solana pay 1.8k. Official featured plugins ship Desktop pages
+(Memory Wiki), approval UX loops (Telegram Business), and bundled skills
+that install/drive real software (Blender). Every catalog entry carries a
+"Disclosure —" blurb; bundled workflow skills are table stakes.
+
+**Read:** a thin wrapper is mid-pack. Every top plugin adds a *surface* —
+Desktop panes, gateway channels, ambient hooks — not just tools. Lemma's
+moat is the evidence trail (persistent, inspectable, judged); the plugin
+must *surface* it, not just wrap it.
+
 ## Path to winning, custom to lemma
 
-1. **Reliability first:** the demo fixture is a paper whose verdict we have
-   already reproduced end-to-end (grokking fixture qualifies). The video
-   cannot flake — judges see it once.
-2. **A "quick audit" mode** is the one genuine lemma change this entry needs:
-   the pipeline was built for reviewer-runs, not one-shot plugin users.
-   Cap first pass at 2 claims, surface progress per stage.
-3. **Polish:** evidence trail surfaced so it's enumerable from the plugin
-   (`lemma_status` lists per-claim verdicts + file paths). Desktop evidence
-   pane only if elcaro is already on schedule — it is the first thing to cut.
-4. **Creativity/honesty line:** "the agent distrusts itself and ships the
-   receipts" — the `improve` re-audit loop (reviewer feedback → re-audit →
-   before/after recorded) is real existing capability and maps to "does more
-   than a prompt could" better than any wrapper we could write.
+Ranked by judge-visible value ("does more than a prompt or skill could"):
+
+1. **Desktop page — Audit Room** (the differentiator). `agent/audit_room.py`
+   already exports a typed evidence bundle (claims → attempts → figures →
+   verdicts) for the site's `/room/`; a `desktop/plugin.js` page renders the
+   same bundle over `plugin_data_dir("lemma")`. Demos the moat in 10 s:
+   "the conversation ended in a preserved evidence folder you can inspect."
+2. **Observer hook — arXiv/PDF link detection.** Ambient behavior: notice
+   `arxiv.org/abs/…` in the conversation, offer `lemma_quick_audit`.
+3. **`lemma_improve` tool** — wraps `agent/meta.py`: reviewer feedback →
+   re-audit → before/after. "The agent distrusts itself and ships the
+   receipts" — lemma's actual novelty, already built and hardened.
+4. **`/audit <id>` slash command** — `register_command`, ~15 lines.
+5. **Reliability:** the demo fixture is a paper whose verdict we have
+   already reproduced end-to-end (grokking/1903.08560 fixture). The video
+   cannot flake — `lemma_status` on a pre-seeded workdir is the fallback.
+6. **Disclosure blurb** in the catalog entry — polish marker every real
+   plugin has.
+7. **Cut:** `lemma_search`, `hermes lemma` CLI subcommand, extra pane
+   polish. Demo sells the pattern ("agent that audits what it reads"),
+   not just the tool — paper-auditing is a thin-user niche and the
+   judges know it.
 
 ## Sequencing and dependencies
 
