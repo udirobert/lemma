@@ -1,0 +1,29 @@
+name: lemma
+version: 0.1.0
+description: >-
+  Audit scientific claims end to end — extract testable claims from a
+  paper, write and run numerical audit scripts with a mandatory positive
+  control, and judge the evidence trail. Verdicts ship with the receipts:
+  claims.json, audit_report.json, judge_report.json and an append-only
+  trace you can inspect.
+author: Papajams
+provides_tools:
+  - lemma_quick_audit
+  - lemma_audit
+  - lemma_status
+  - lemma_judge
+config_schema:
+  api_key:
+    type: secret
+    env: ANTHROPIC_API_KEY
+    label: Anthropic API key
+    description: >-
+      Used by lemma's auditor LLM. Stored through Hermes's credential
+      path, never written to config.yaml.
+  repo_path:
+    type: str
+    default: ""
+    label: Lemma repo path
+    description: >-
+      Absolute path to a lemma checkout (contains agent/). Required —
+      the plugin shells out to `python -m agent.cli` there.
