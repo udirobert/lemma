@@ -1,0 +1,70 @@
+{
+  "id": "d13",
+  "backbone": "rfd_10.pdb",
+  "batch": "_rfd_round2",
+  "binder_len_aa": 78,
+  "sequences": [
+    {
+      "seq_id": "d13_10_s1",
+      "aa": "ALAAAVAAEVAAARAELAALRATADADPAAAERAARLAADLAARAAALAAAGTVAAELAALAAEAAALAAALRARLAA",
+      "mpnn_score": 0.9555,
+      "mpnn_global_score": 1.5508
+    },
+    {
+      "seq_id": "d13_10_s2",
+      "aa": "ALEAAVAAEVAAAREELEELKKNYKKDKSIVRKLRELAERLRARAAELAARGVVSPELAELAEEAEKLAKEKEAELAA",
+      "mpnn_score": 1.117,
+      "mpnn_global_score": 1.5967
+    },
+    {
+      "seq_id": "d13_10_s3",
+      "aa": "ALAAAVAAYVAEARAALAELKATADADPDVAERAAALAAELRARAAELAAHGTLSPELEALAAETAALAAAARARAAA",
+      "mpnn_score": 1.0095,
+      "mpnn_global_score": 1.5719
+    },
+    {
+      "seq_id": "d13_10_s4",
+      "aa": "ATAAAVAALVEEYKKKLEELKKNKEKDPKIAEELAKLAAELREEVARLAALGTVSPELAELAEEAEKLAAEKRAELAA",
+      "mpnn_score": 1.0941,
+      "mpnn_global_score": 1.5839
+    },
+    {
+      "seq_id": "d13_10_s5",
+      "aa": "ALAAAVAALVAEARARLAELEATAAADPEIAARLAALAADLEAAAARLAAQGTVSAELRALAAAARALAAAKRAEAAA",
+      "mpnn_score": 1.0157,
+      "mpnn_global_score": 1.5799
+    },
+    {
+      "seq_id": "d13_10_s6",
+      "aa": "ALAAAVAARVAEYRAKLEELRATLEEDPDIAERLAALADDLRAEAARLAAHGTLSAELDALAEEAAALAAEKRAAAAA",
+      "mpnn_score": 1.01,
+      "mpnn_global_score": 1.5818
+    },
+    {
+      "seq_id": "d13_10_s7",
+      "aa": "ALAAAVAARVAEARARLAELRATRDADPEADRRAAALAAELREEAARLAAHGVVSPELAALAAETAALAAELRARLAA",
+      "mpnn_score": 0.961,
+      "mpnn_global_score": 1.5619
+    },
+    {
+      "seq_id": "d13_10_s8",
+      "aa": "ALAAAVAALVAAARAELEELRKTLDEDPSIAEKLTALAARLRETAARLAAHGVLSPELRALAAEAAALAAEKRARLAA",
+      "mpnn_score": 1.0858,
+      "mpnn_global_score": 1.5875
+    }
+  ],
+  "hypotheses": [
+    "H1",
+    "H2",
+    "H3",
+    "H4"
+  ],
+  "generation": {
+    "method": "rfdiffusion Complex_base + proteinmpnn v_48_020",
+    "batch_dir": "_rfd_round2",
+    "mpnn_sampling_temp": 0.1,
+    "seed": 37,
+    "compute": "modal a10g"
+  },
+  "novelty_attestation": "de novo RFD backbone; not derived from any natural binder. Sequence novelty NOT yet checked vs reference DBs \u2014 flagged for the audit stage."
+}

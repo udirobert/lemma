@@ -51,11 +51,19 @@ dev-only (see `runs/protein-smoke-2026-11-04.md`).
 ## Incoming capability: Hermes agent plugin
 
 Secondary hackathon entry (behind elcaro) wrapping the audit pipeline as a
-native Hermes plugin: `lemma_quick_audit` / `lemma_audit` / `lemma_judge` /
-`lemma_status` tools + bundled `audit-this-paper` skill, planned as
-`hermes-plugin/` in this repo. Plan, niche scouting and sequencing:
-`HERMES.md` (repo root). Not built yet; decision gate Sun Nov 9 — cut
-without ceremony if the elcaro primary entry needs the time.
+native Hermes plugin (`hermes-plugin/` in this repo — BUILT): five tools
+(`lemma_quick_audit` / `lemma_audit` / `lemma_status` / `lemma_judge` /
+`lemma_improve`), the `/audit` slash command, an ambient `pre_llm_call`
+paper-link hook (also scans the agent's own citations), and a Desktop
+Audit Room pane (live stage + trace tail + verdict chips + `verify_gain`
+/ `reference_disagreement` self-distrust badges) backed by
+`dashboard/plugin_api.py` at `/api/plugins/lemma/*` (verified mounted on
+the dashboard server :9119 — `ctx.rest` proven). Install-tested in a real
+`HERMES_HOME`; `hermes plugins doctor --ci` clean. Catalog PR open:
+`NousResearch/hermes-agent#149514` (pins `bacb0ef`). Plan and status:
+`HERMES.md` (repo root). Gotcha logged there: plugin API files must load
+siblings by path — `from tools import` collides with hermes-agent's own
+`tools` package inside the dashboard process.
 
 ## Module map (`agent/`)
 

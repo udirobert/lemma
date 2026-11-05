@@ -1,0 +1,70 @@
+{
+  "id": "d16",
+  "backbone": "rfd_3.pdb",
+  "batch": "_rfd_round2",
+  "binder_len_aa": 64,
+  "sequences": [
+    {
+      "seq_id": "d16_3_s1",
+      "aa": "ALTAEQRAELRALLEELARARAADPAEAAAVAARLAARLAALPPGEAPQLAARLRRQVDVALLV",
+      "mpnn_score": 1.0841,
+      "mpnn_global_score": 1.5842
+    },
+    {
+      "seq_id": "d16_3_s2",
+      "aa": "PLTPEERAALRELLEALVAAQKADAAAAAALRAELAAWLAALPPGETPQLAAALARQVRVERLV",
+      "mpnn_score": 1.0935,
+      "mpnn_global_score": 1.5942
+    },
+    {
+      "seq_id": "d16_3_s3",
+      "aa": "ALTPEQRAALRALLERHARAAAADPAAAAAVAAEIAAFLAALPPADTPQLAAALARQVYVELAV",
+      "mpnn_score": 1.0675,
+      "mpnn_global_score": 1.5925
+    },
+    {
+      "seq_id": "d16_3_s4",
+      "aa": "APTPEQRAALEALVRALFRAYAADPAAAAAVAAELAAFLAALPPGEVPQLAAAAARRARVALLV",
+      "mpnn_score": 1.0817,
+      "mpnn_global_score": 1.5944
+    },
+    {
+      "seq_id": "d16_3_s5",
+      "aa": "ALTPEEVARLEELLREHARAAAEDPARAAEVAAEIEAFAASLPAGELPQLRARLARQVYVELVV",
+      "mpnn_score": 1.1246,
+      "mpnn_global_score": 1.5999
+    },
+    {
+      "seq_id": "d16_3_s6",
+      "aa": "MLTEEQIEKIKELLVELAKAEKEDKEKAKEVRKELKAFLKSLPQGETKQIAAALARQVYVELFV",
+      "mpnn_score": 1.2715,
+      "mpnn_global_score": 1.616
+    },
+    {
+      "seq_id": "d16_3_s7",
+      "aa": "ALTAEERARLRELLEALEAARKEDPKRAEELKKELEAFVASLPPGEVEALVARLLREVRVERLV",
+      "mpnn_score": 1.1984,
+      "mpnn_global_score": 1.5956
+    },
+    {
+      "seq_id": "d16_3_s8",
+      "aa": "ALTAEQRAEIRRLVEELEEAELADEERAKEVAARLAEFVASLPQGEVPQLVAATARQVHVERVV",
+      "mpnn_score": 1.1698,
+      "mpnn_global_score": 1.6108
+    }
+  ],
+  "hypotheses": [
+    "H1",
+    "H2",
+    "H3",
+    "H4"
+  ],
+  "generation": {
+    "method": "rfdiffusion Complex_base + proteinmpnn v_48_020",
+    "batch_dir": "_rfd_round2",
+    "mpnn_sampling_temp": 0.1,
+    "seed": 37,
+    "compute": "modal a10g"
+  },
+  "novelty_attestation": "de novo RFD backbone; not derived from any natural binder. Sequence novelty NOT yet checked vs reference DBs \u2014 flagged for the audit stage."
+}

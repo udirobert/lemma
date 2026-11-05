@@ -46,9 +46,14 @@ Track: open / Track 3 · max 20 designs · de novo, zero-shot, single chain
   the real gate, exactly as the challenge intends.
 - Round 1 verdict (5 backbones × top-2 MPNN seqs × 3 complexes = 30
   predictions): 10/10 decoy_leak — binders predicted to dock the HLA
-  scaffold indiscriminately. Round 2 (12 backbones, p6-anchored
-  hotspots) reran under the same screen; results and per-design
-  metrics are in the linked evidence trail.
+  scaffold indiscriminately.
+- Round 2 verdict (22 backbones, p6-anchored hotspots, 44 ranked
+  candidates): **hold** — 39 decoy_leak, 5 borderline, and the positive
+  control itself fails the screen (7OW6 TCR margin −0.0045), so no
+  candidate can be convicted on specificity by this screen. designs.csv
+  ships the borderline tail ranked by margin (best 0.1281); the wet-lab
+  decoy measurements are the real gate, exactly as the challenge
+  intends.
 
 ## Declared target surface
 

@@ -1,0 +1,70 @@
+{
+  "id": "d10",
+  "backbone": "rfd_4.pdb",
+  "batch": "_rfd_round1",
+  "binder_len_aa": 106,
+  "sequences": [
+    {
+      "seq_id": "d10_4_s1",
+      "aa": "DIIAALEAAGAPADLIARMRAALEREALSGRADLLARQEAALAALEAILDELLAEDVATIRARAGQIAALLDDLLILGSLVRGVDWALARVEEYRARLRAKVEEAA",
+      "mpnn_score": 1.0579,
+      "mpnn_global_score": 1.5386
+    },
+    {
+      "seq_id": "d10_4_s2",
+      "aa": "DVLAALRAAGLPEALLREAAAALARRALAGDPAALARRRAALAGLEAILAELLEEDVETIRERLGQIEALLRDLVLLAAEVEGVDAAIARAAEWEARLRAKLEEES",
+      "mpnn_score": 1.0601,
+      "mpnn_global_score": 1.5536
+    },
+    {
+      "seq_id": "d10_4_s3",
+      "aa": "DLLAAARAAGLPAALVAALAADLERDALSGRADDLARRRAAVAGLLAILDELLAAPVEEIRARRGQIEALLDDLYRLTARVEGFDAAVARTAELRARLEEVVERAA",
+      "mpnn_score": 1.0255,
+      "mpnn_global_score": 1.5442
+    },
+    {
+      "seq_id": "d10_4_s4",
+      "aa": "DLVAAAEAAGLPADLIARLRARLAAQELAGDPAALARQRRAVEGLLAILEEMLALPVEEIRARAGQIEALLDDLFLLTSLVEGFDAAVARREALTARLHAKVVVEA",
+      "mpnn_score": 1.0397,
+      "mpnn_global_score": 1.5201
+    },
+    {
+      "seq_id": "d10_4_s5",
+      "aa": "DVVAAARAAGLPDALVTRLRAALEADALRGDPAALARRERALEGLLAILEEELAGPVEEQRRRAGQIEALLDDLYLTASAVRGVDAALALVEELRARLRARVVEEA",
+      "mpnn_score": 1.0634,
+      "mpnn_global_score": 1.5399
+    },
+    {
+      "seq_id": "d10_4_s6",
+      "aa": "DLIAAARAAGLPEDLIRELEAALARRELSGRADDLARLRRAVAGLRAWLDELLARPRAELERLRGQIEAALRDLVRLTSLVEGVEAALAEAAEWRARLRAVLEEAA",
+      "mpnn_score": 1.0384,
+      "mpnn_global_score": 1.5374
+    },
+    {
+      "seq_id": "d10_4_s7",
+      "aa": "NLIEAAKKAGEPESLIKRMEAVLEAERLSGDPARLARLRRALEGLRAILEELLEKPVEELKKREGQIKALLEDLFLLASLVEGFEAALKEVKRFKELIEKKVVEES",
+      "mpnn_score": 1.1529,
+      "mpnn_global_score": 1.5806
+    },
+    {
+      "seq_id": "d10_4_s8",
+      "aa": "DLVAAAEAAGLPAALVEQLRAVLARDALAGDAARLAARRRALEALEAILEELLKKPVEELKKREGQIEALFDDLFLLASLVHGFDYAVAKTAELRKKYEKKVVEES",
+      "mpnn_score": 1.0978,
+      "mpnn_global_score": 1.5567
+    }
+  ],
+  "hypotheses": [
+    "H1",
+    "H2",
+    "H3",
+    "H4"
+  ],
+  "generation": {
+    "method": "rfdiffusion Complex_base + proteinmpnn v_48_020",
+    "batch_dir": "_rfd_round1",
+    "mpnn_sampling_temp": 0.1,
+    "seed": 37,
+    "compute": "modal a10g"
+  },
+  "novelty_attestation": "de novo RFD backbone; not derived from any natural binder. Sequence novelty NOT yet checked vs reference DBs \u2014 flagged for the audit stage."
+}

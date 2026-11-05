@@ -121,14 +121,31 @@ Build order: live pane → post_llm_call → badges → certificates.
 
 ## Sequencing and dependencies
 
-- **elcaro is the primary Hermes entry** (security niche, bigger user pool,
-  clearer "more than a prompt" story — see `elcaro/docs/hermes-plugin.md`).
-- lemma port is ~1.5 days. Decision gate: **Sun Nov 9** — if elcaro's video
-  is recorded, lemma ships as a second entry the same day; if not, lemma is
-  cut without ceremony.
-- Do not let this collide with `PROTEIN.md` (Challenge 05, Nov 8). The
-  protein smoke test has priority in any shared-time conflict; plugin work
-  resumes after Sunday.
+## Status — built and verified (Nov 5)
+
+- **Plugin complete**: 5 tools, `/audit` command, ambient `pre_llm_call`
+  hook (user turns + agent's own citations), Desktop Audit Room pane with
+  live `/runs` polling + `verify_gain`/`reference_disagreement` badges,
+  disclosure blurb in `plugin.yaml`. `hermes plugins doctor --ci` clean;
+  install-tested in a real `HERMES_HOME`.
+- **ctx.rest verified live**: `dashboard/plugin_api.py` mounts at
+  `/api/plugins/lemma/*` on the dashboard server (:9119) — proven via the
+  OpenAPI schema after fixing the `from tools import` → hermes-agent
+  `tools` package name collision (`bacb0ef`; sibling imports in plugin API
+  files must load by path).
+- **Catalog PR open**: `NousResearch/hermes-agent#149514`, pinned `bacb0ef`
+  (includes the mount fix). At the human-merge gate.
+- **Video shipped**: 64 s HyperFrames film (product-first: plugin card →
+  problem → terminal beat → rupture → stats → flag → showcase → card) in
+  `~/Downloads/lemma-culture-dish.mp4`; source in `/tmp/lemma-film` (kept
+  out of the repo by decision).
+- **Site**: `index.astro` hermes-band live (`1c0c5bf`); builds clean.
+- **Pending**: typeform submission (blurb: "audits what agents read" —
+  news, benchmarks, GitHub issues, papers); PR merge; certificates stretch.
+
+- elcaro remains the primary entry; lemma ships alongside. `PROTEIN.md`
+  round-2 finished **hold** (screen invalid per positive control) —
+  Proteinbase bundle regenerated, method note declares the limit.
 
 ## Links
 

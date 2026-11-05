@@ -1,0 +1,70 @@
+{
+  "id": "d20",
+  "backbone": "rfd_7.pdb",
+  "batch": "_rfd_round2",
+  "binder_len_aa": 69,
+  "sequences": [
+    {
+      "seq_id": "d20_7_s1",
+      "aa": "MYEWAVLLAKREKLVAEGGDQAEIDALTERIRALLEEERARGSDPAVLAVLEARFAATEAMIAAERAAA",
+      "mpnn_score": 1.0083,
+      "mpnn_global_score": 1.5831
+    },
+    {
+      "seq_id": "d20_7_s2",
+      "aa": "MTEAARLLARAEKLAAEGGDQAEIDALLARIDALLAAERAAGTDPATLAVLEANLAALRATLAALRAAA",
+      "mpnn_score": 0.8981,
+      "mpnn_global_score": 1.5674
+    },
+    {
+      "seq_id": "d20_7_s3",
+      "aa": "MYEAARLLAEAEKLVAAGGDEAEIAALLARIRALLDAMAAAGTDPAVLAVLRANLAATEAMIAALRAAA",
+      "mpnn_score": 0.9486,
+      "mpnn_global_score": 1.5843
+    },
+    {
+      "seq_id": "d20_7_s4",
+      "aa": "MYEAARLLAKAEKLEEEGGDEEEIEKLLKEIEALLAKEKAAGSDPEVLAVLEANLAATKKTIAAIRAAK",
+      "mpnn_score": 0.978,
+      "mpnn_global_score": 1.5745
+    },
+    {
+      "seq_id": "d20_7_s5",
+      "aa": "MTEAARLLAEAERLLEAGGDAAEIEALLARIEALLAAEAAAGADPATLAVLEANLAATRATIAALRAAA",
+      "mpnn_score": 0.9081,
+      "mpnn_global_score": 1.5665
+    },
+    {
+      "seq_id": "d20_7_s6",
+      "aa": "MHEAARLLAQAEKLEAAGGDQAEIDALLAQIDALLAAARAAGTDPATLAVLEARRAATRATIAALRAAA",
+      "mpnn_score": 0.9382,
+      "mpnn_global_score": 1.5749
+    },
+    {
+      "seq_id": "d20_7_s7",
+      "aa": "MYRAAELLAKAEKLAAEGGDQAEIDALLEQIEAELAAMRASGADPAVLAVLEANLAATKATLAAMRAAA",
+      "mpnn_score": 0.9138,
+      "mpnn_global_score": 1.5681
+    },
+    {
+      "seq_id": "d20_7_s8",
+      "aa": "MYEAARLLAKAEKLVEEGGPEEEIEKLLKEIEELLAKERAAGTDPATLAVLEANYEATKKTIEAIRAAR",
+      "mpnn_score": 0.9862,
+      "mpnn_global_score": 1.5821
+    }
+  ],
+  "hypotheses": [
+    "H1",
+    "H2",
+    "H3",
+    "H4"
+  ],
+  "generation": {
+    "method": "rfdiffusion Complex_base + proteinmpnn v_48_020",
+    "batch_dir": "_rfd_round2",
+    "mpnn_sampling_temp": 0.1,
+    "seed": 37,
+    "compute": "modal a10g"
+  },
+  "novelty_attestation": "de novo RFD backbone; not derived from any natural binder. Sequence novelty NOT yet checked vs reference DBs \u2014 flagged for the audit stage."
+}

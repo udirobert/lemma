@@ -1,0 +1,70 @@
+{
+  "id": "d21",
+  "backbone": "rfd_8.pdb",
+  "batch": "_rfd_round2",
+  "binder_len_aa": 60,
+  "sequences": [
+    {
+      "seq_id": "d21_8_s1",
+      "aa": "SLAAALAAAEAEAAATRRQFLTNQIARLKALAAAQPALAAQYNAQAAALEAELAAAEAAA",
+      "mpnn_score": 1.0861,
+      "mpnn_global_score": 1.6077
+    },
+    {
+      "seq_id": "d21_8_s2",
+      "aa": "SAAAAAAAAAAAAAAARREALTNQIARLKAEAAAIPAKAAEYNAQAAALEAELAAAEAAA",
+      "mpnn_score": 1.0003,
+      "mpnn_global_score": 1.5887
+    },
+    {
+      "seq_id": "d21_8_s3",
+      "aa": "SLAAALAAAAAEALATLTERLTNQIARLEARAAAIPAKAAEYNAAAAAARAELAARLAAA",
+      "mpnn_score": 1.1493,
+      "mpnn_global_score": 1.6223
+    },
+    {
+      "seq_id": "d21_8_s4",
+      "aa": "SLAAALAAEAAAAAATLRERLERQIARLRDEAAAIPAKAAEYAAKAAALEAELAAREAAA",
+      "mpnn_score": 1.03,
+      "mpnn_global_score": 1.5946
+    },
+    {
+      "seq_id": "d21_8_s5",
+      "aa": "SAAAAAAAEAAAALATETARLTNQIARLNAEAAAIPAKAAEYNAAAAALTAALAARLAAR",
+      "mpnn_score": 1.0723,
+      "mpnn_global_score": 1.6045
+    },
+    {
+      "seq_id": "d21_8_s6",
+      "aa": "SAAAAAAAEAAAAAAVRRQRLTNQIARLREMAAAMPAKKAEYDAQAAALEAALAAAEAAA",
+      "mpnn_score": 1.0381,
+      "mpnn_global_score": 1.5963
+    },
+    {
+      "seq_id": "d21_8_s7",
+      "aa": "SLAALLAAEAAAALATRTEALTNQIARLRAEAAAIPARAAEYAAAAAALEAELAAELAAL",
+      "mpnn_score": 1.1028,
+      "mpnn_global_score": 1.6211
+    },
+    {
+      "seq_id": "d21_8_s8",
+      "aa": "SAAAAEAAAAAAAAAAEDERLANQIARLEAEAAANPKNAAYYRAQAAALRAARAARAAAA",
+      "mpnn_score": 1.0608,
+      "mpnn_global_score": 1.6096
+    }
+  ],
+  "hypotheses": [
+    "H1",
+    "H2",
+    "H3",
+    "H4"
+  ],
+  "generation": {
+    "method": "rfdiffusion Complex_base + proteinmpnn v_48_020",
+    "batch_dir": "_rfd_round2",
+    "mpnn_sampling_temp": 0.1,
+    "seed": 37,
+    "compute": "modal a10g"
+  },
+  "novelty_attestation": "de novo RFD backbone; not derived from any natural binder. Sequence novelty NOT yet checked vs reference DBs \u2014 flagged for the audit stage."
+}

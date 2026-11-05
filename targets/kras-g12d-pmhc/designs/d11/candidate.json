@@ -1,0 +1,70 @@
+{
+  "id": "d11",
+  "backbone": "rfd_0.pdb",
+  "batch": "_rfd_round2",
+  "binder_len_aa": 76,
+  "sequences": [
+    {
+      "seq_id": "d11_0_s1",
+      "aa": "ARATELAELQLTIDVADRAVANWPEIDAEDQAIIDAARAAGAPASTIALARQARAERRANVAAIRAQYAEQAAALA",
+      "mpnn_score": 1.0329,
+      "mpnn_global_score": 1.5683
+    },
+    {
+      "seq_id": "d11_0_s2",
+      "aa": "ERATQAAELQKVIDVAAAAAAAAPAIAAERQAIIDAAKAAGAPASTIALAKAAAAASGATRAAITAQYTAELAALA",
+      "mpnn_score": 1.0337,
+      "mpnn_global_score": 1.5806
+    },
+    {
+      "seq_id": "d11_0_s3",
+      "aa": "ERAAQLAELQRVIDVAERARAAWPERDAEWDAVIAAAEAAGAPASTIALARAARDAERANVAAVIAEARAQAAALA",
+      "mpnn_score": 1.0194,
+      "mpnn_global_score": 1.5616
+    },
+    {
+      "seq_id": "d11_0_s4",
+      "aa": "ERATALAELQRTIDVAERAFAAWPEIEAEWNAIIAKNKAAGADASTIALAEQALADRRATLAAIRAAATAEAAALA",
+      "mpnn_score": 1.0453,
+      "mpnn_global_score": 1.5704
+    },
+    {
+      "seq_id": "d11_0_s5",
+      "aa": "ERATEAAELAKTIAVAERAAAAAPAIDAEDDAVIAAAEAAGAPASTIALARAARAARTATRAAIIAEKTAELAALA",
+      "mpnn_score": 1.0108,
+      "mpnn_global_score": 1.5647
+    },
+    {
+      "seq_id": "d11_0_s6",
+      "aa": "ERATQLAEEQKTIDVAERAAAEAPARDAEHQAIIDANKAAGAPASTIALAEAARAAEGANRAAVIAQKTEEAAALA",
+      "mpnn_score": 1.0522,
+      "mpnn_global_score": 1.5802
+    },
+    {
+      "seq_id": "d11_0_s7",
+      "aa": "ERALAAREAALTIEVADRALAAWPEIEAEHQAIIAQARAAGAPASTIALAEAALAARRANVEAIRALKAEELAALR",
+      "mpnn_score": 1.0714,
+      "mpnn_global_score": 1.5686
+    },
+    {
+      "seq_id": "d11_0_s8",
+      "aa": "ERATALAEAQRTIDVAERAVAAAPEIDAEDQAIIDAAEAAGAPASTIALARAAAAARGANIAAIRALYTAEAAALA",
+      "mpnn_score": 1.0171,
+      "mpnn_global_score": 1.5676
+    }
+  ],
+  "hypotheses": [
+    "H1",
+    "H2",
+    "H3",
+    "H4"
+  ],
+  "generation": {
+    "method": "rfdiffusion Complex_base + proteinmpnn v_48_020",
+    "batch_dir": "_rfd_round2",
+    "mpnn_sampling_temp": 0.1,
+    "seed": 37,
+    "compute": "modal a10g"
+  },
+  "novelty_attestation": "de novo RFD backbone; not derived from any natural binder. Sequence novelty NOT yet checked vs reference DBs \u2014 flagged for the audit stage."
+}
