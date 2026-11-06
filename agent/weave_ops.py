@@ -1,12 +1,13 @@
 """Optional W&B Weave tracing shim (CoreWeave Hacks build).
 
-With WANDB_API_KEY set (and `weave` installed), init_weave() activates and
-@op wraps pipeline functions in weave ops so every stage — extract, per-claim
-audit attempts, script tool runs, judge — lands in the Weave UI next to the
-auto-patched OpenAI/Anthropic LLM calls.
+Off by default: init_weave() activates only with LEMMA_WEAVE=1 (on/true/yes)
+AND WANDB_API_KEY set — a key's presence alone never turns on third-party
+tracing. When active, @op wraps pipeline functions in weave ops so every
+stage — extract, per-claim audit attempts, script tool runs, judge — lands
+in the Weave UI next to the auto-patched OpenAI/Anthropic LLM calls.
 
-Without a key the shim is a pass-through: the append-only JSONL trace remains
-the only record and nothing breaks. `LEMMA_WEAVE=off` forces the shim off.
+When off the shim is a pass-through: the append-only JSONL trace remains
+the only record and nothing breaks.
 """
 
 from __future__ import annotations
@@ -19,15 +20,24 @@ _DISABLED_REASON: str | None = None
 
 
 def init_weave(trace=None) -> bool:
-    """Initialise Weave if configured. Returns True when tracing is live."""
+    """Initialise Weave only when explicitly enabled. Returns True when
+    tracing is live. Weave is OFF unless LEMMA_WEAVE=1 (or on/true/yes)
+    AND WANDB_API_KEY is set — tracing to a third-party service is never
+    implied by a key's presence."""
     global _ACTIVE, _DISABLED_REASON
     if _ACTIVE:
         return True
     from dotenv import load_dotenv
 
-    load_dotenv(override=True)
-    if os.environ.get("LEMMA_WEAVE", "").strip().lower() in {"0", "off", "false"}:
-        _DISABLED_REASON = "disabled via LEMMA_WEAVE"
+    if not os.environ.get("LEMMA_NO_DOTENV"):
+        load_dotenv(override=True)
+    if os.environ.get("LEMMA_WEAVE", "").strip().lower() not in {
+        "1",
+        "on",
+        "true",
+        "yes",
+    }:
+        _DISABLED_REASON = "weave off (set LEMMA_WEAVE=1 to enable)"
         return False
     if not os.environ.get("WANDB_API_KEY", "").strip():
         _DISABLED_REASON = "WANDB_API_KEY not set"

@@ -10,12 +10,10 @@ import base64
 import contextlib
 import importlib.util
 import json
-import sys
 from pathlib import Path
 
 from fastapi import APIRouter, HTTPException
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 _spec = importlib.util.spec_from_file_location(
     "lemma_plugin_tools", Path(__file__).resolve().parent.parent / "tools.py"
 )

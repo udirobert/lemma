@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import os
 import re
 import urllib.request
 from pathlib import Path
@@ -44,7 +45,10 @@ def resolve(source: str, workdir: Path) -> dict:
     source = normalize_source(source)
 
     if Path(source).is_file():
-        return _from_pdf(Path(source), workdir)
+        pdf_path = Path(source)
+        if err := _local_pdf_rejected(pdf_path):
+            raise ValueError(f"local paper source rejected: {err}")
+        return _from_pdf(pdf_path, workdir)
 
     m = ARXIV_RE.match(source.strip())
     if m:
@@ -57,6 +61,29 @@ def resolve(source: str, workdir: Path) -> dict:
         f"Cannot resolve paper source {source!r}; expected arxiv id "
         "(e.g. 2601.19791), arxiv/openreview URL, or a local PDF path."
     )
+
+
+def _local_pdf_rejected(pdf_path: Path) -> str | None:
+    """Local-file sources are restricted to real PDFs under configured
+    roots — a model-driven run must not ship arbitrary host files to the
+    PDF parse service. Allowed roots: LEMMA_LOCAL_PDF_DIRS (os.pathsep
+    separated); defaults to the current working directory."""
+    if pdf_path.suffix.lower() != ".pdf":
+        return "local sources must be .pdf files"
+    try:
+        with pdf_path.open("rb") as f:
+            if f.read(4) != b"%PDF":
+                return "file lacks a %PDF header"
+    except OSError as e:
+        return f"unreadable: {e}"
+    raw = os.environ.get("LEMMA_LOCAL_PDF_DIRS", "")
+    roots = [Path(p).resolve() for p in raw.split(os.pathsep) if p.strip()]
+    if not roots:
+        roots = [Path.cwd().resolve()]
+    resolved = pdf_path.resolve()
+    if not any(resolved.is_relative_to(r) for r in roots):
+        return f"outside allowed dirs ({', '.join(str(r) for r in roots)})"
+    return None
 
 
 def _from_pdf(pdf_path: Path, workdir: Path) -> dict:

@@ -9,6 +9,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 from pathlib import Path
 
 try:
@@ -23,20 +24,34 @@ QUICK_TIMEOUT = 900  # seconds; the quick path must stay video-length
 
 
 def _repo(ctx=None) -> Path | None:
-    """Resolve the lemma repo: config repo_path -> env -> dev-mode parent."""
-    for cand in (
-        ctx.get_config("repo_path") if ctx else None,
-        os.environ.get("LEMMA_REPO"),
-        str(Path(__file__).resolve().parent.parent),  # dev: repo/hermes-plugin
-    ):
-        if cand and (Path(cand) / "agent" / "cli.py").is_file():
-            return Path(cand)
-    return None
+    """The pinned install tree: catalog installs clone the whole repo at
+    the reviewed SHA, so agent/ sits next to hermes-plugin/. Never an
+    arbitrary checkout — the code that runs is the code that was
+    reviewed."""
+    root = Path(__file__).resolve().parent.parent
+    return root if (root / "agent" / "cli.py").is_file() else None
 
 
-def _python(repo: Path) -> str:
-    venv = repo / ".venv" / "bin" / "python"
-    return str(venv) if venv.is_file() else "python3"
+def _child_env() -> dict[str, str]:
+    """Minimal env for pipeline children: no inherited Hermes process
+    env (no other profile's secrets, no tool tokens). Credentials enter
+    only through agent.secret_scope.get_secret — Hermes's route."""
+    env = {
+        "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
+        "HOME": os.environ.get("HOME", "/tmp"),
+        "LEMMA_NO_DOTENV": "1",
+        "LEMMA_LOCAL_PDF_DIRS": str(PAPERS_DIR),
+    }
+    key = None
+    try:
+        from agent.secret_scope import get_secret
+
+        key = get_secret("ANTHROPIC_API_KEY")
+    except Exception:  # doctor/dev context without hermes-agent
+        key = os.environ.get("ANTHROPIC_API_KEY")
+    if key:
+        env["ANTHROPIC_API_KEY"] = key
+    return env
 
 
 def _slug(source: str) -> str:
@@ -46,13 +61,27 @@ def _slug(source: str) -> str:
 
 def _run(repo: Path, argv: list[str], timeout: int) -> tuple[int, str]:
     proc = subprocess.run(
-        [_python(repo), "-m", "agent.cli", *argv],
+        [sys.executable, "-m", "agent.cli", *argv],
         cwd=repo,
+        env=_child_env(),
         capture_output=True,
         text=True,
         timeout=timeout,
     )
     return proc.returncode, proc.stdout + proc.stderr
+
+
+def _paper_dir(paper: str) -> Path | None:
+    """Resolve a workdir name under the plugin papers dir — names only,
+    never paths."""
+    if (
+        not paper
+        or Path(paper).is_absolute()
+        or any(s in paper for s in ("/", "\\", ".."))
+    ):
+        return None
+    d = (PAPERS_DIR / paper).resolve()
+    return d if d.is_dir() and d.parent == PAPERS_DIR.resolve() else None
 
 
 def _claim_ids(workdir: Path, max_claims: int) -> list[str]:
@@ -106,9 +135,8 @@ def _need_repo(ctx=None) -> str | None:
     if _repo(ctx) is None:
         return json.dumps(
             {
-                "error": "lemma repo not found — set the plugin's "
-                "'repo_path' setting (or LEMMA_REPO) to a checkout "
-                "containing agent/cli.py"
+                "error": "lemma pipeline not found beside the plugin — "
+                "expected agent/cli.py in the installed tree"
             }
         )
     return None
@@ -192,7 +220,7 @@ def lemma_audit(args: dict, ctx=None, **kwargs) -> str:
         with log_p.open("ab") as log:
             proc = subprocess.Popen(
                 [
-                    _python(repo),
+                    sys.executable,
                     "-m",
                     "agent.cli",
                     "audit",
@@ -201,6 +229,7 @@ def lemma_audit(args: dict, ctx=None, **kwargs) -> str:
                     str(workdir),
                 ],
                 cwd=repo,
+                env=_child_env(),
                 stdout=log,
                 stderr=subprocess.STDOUT,
                 start_new_session=True,
@@ -225,7 +254,7 @@ def lemma_status(args: dict, ctx=None, **kwargs) -> str:
         return json.dumps({"papers": [], "dir": str(PAPERS_DIR)})
     dirs = (
         [PAPERS_DIR / paper]
-        if paper
+        if paper and _paper_dir(paper)
         else sorted(
             d for d in PAPERS_DIR.iterdir() if d.is_dir() and not d.name.startswith("_")
         )
@@ -249,18 +278,19 @@ def lemma_improve(args: dict, ctx=None, **kwargs) -> str:
     if err:
         return err
     paper = (args.get("paper") or "").strip()
-    workdir = PAPERS_DIR / paper
-    if not workdir.is_dir():
+    workdir = _paper_dir(paper)
+    if workdir is None:
         return json.dumps(
-            {"error": f"no workdir {workdir}", "hint": "lemma_status lists them"}
+            {"error": f"no workdir {paper!r}", "hint": "lemma_status lists them"}
         )
     repo = _repo(ctx)
     log_p = workdir / "lemma_improve.log"
     try:
         with log_p.open("ab") as log:
             proc = subprocess.Popen(
-                [_python(repo), "-m", "agent.cli", "improve", str(workdir)],
+                [sys.executable, "-m", "agent.cli", "improve", str(workdir)],
                 cwd=repo,
+                env=_child_env(),
                 stdout=log,
                 stderr=subprocess.STDOUT,
                 start_new_session=True,
@@ -321,10 +351,10 @@ def lemma_judge(args: dict, ctx=None, **kwargs) -> str:
     if err:
         return err
     paper = (args.get("paper") or "").strip()
-    workdir = PAPERS_DIR / paper
-    if not workdir.is_dir():
+    workdir = _paper_dir(paper)
+    if workdir is None:
         return json.dumps(
-            {"error": f"no workdir {workdir}", "hint": "lemma_status lists them"}
+            {"error": f"no workdir {paper!r}", "hint": "lemma_status lists them"}
         )
     try:
         rc, log = _run(_repo(ctx), ["judge", str(workdir)], 300)

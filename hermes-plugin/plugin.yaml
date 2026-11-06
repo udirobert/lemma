@@ -1,14 +1,17 @@
 name: lemma
-version: 0.1.0
+version: 0.2.0
 description: >-
   Audit scientific claims end to end — extract testable claims from a
   paper, write and run numerical audit scripts with a mandatory positive
   control, and judge the evidence trail. Verdicts ship with the receipts:
   claims.json, audit_report.json, judge_report.json and an append-only
   trace you can inspect. Disclosure — paper text and audit prompts go to
-  your configured LLM provider (e.g. Anthropic via ANTHROPIC_API_KEY);
-  paper fetches hit arXiv/OpenReview/Firecrawl; all audit artifacts stay
-  local under plugin_data_dir("lemma").
+  your configured LLM provider (Anthropic via ANTHROPIC_API_KEY); paper
+  fetches hit arxiv.org/openreview.net (or api.firecrawl.dev when a
+  FIRECRAWL_API_KEY is configured); LLM-written audit scripts execute
+  inside a sandbox (no network, workdir-only writes, minimal env) and
+  are refused where no sandbox exists; all audit artifacts stay local
+  under plugin_data_dir("lemma").
 author: Papajams
 provides_tools:
   - lemma_quick_audit
@@ -20,18 +23,17 @@ provides_hooks:
   - pre_llm_call
 provides_commands:
   - audit
-config_schema:
-  api_key:
-    type: secret
-    env: ANTHROPIC_API_KEY
-    label: Anthropic API key
-    description: >-
-      Used by lemma's auditor LLM. Stored through Hermes's credential
-      path, never written to config.yaml.
-  repo_path:
-    type: str
-    default: ""
-    label: Lemma repo path
-    description: >-
-      Absolute path to a lemma checkout (contains agent/). Required —
-      the plugin shells out to `python -m agent.cli` there.
+requires_env:
+  - name: ANTHROPIC_API_KEY
+    description: Anthropic API key used by lemma's auditor LLM.
+    url: https://console.anthropic.com/
+    secret: true
+python_dependencies:
+  - "numpy>=1.26,<3"
+  - "scipy>=1.11,<2"
+  - "matplotlib>=3.8,<4"
+  - "anthropic>=0.40,<1"
+  - "openai>=1.50,<3"
+  - "PyMuPDF>=1.24,<2"
+  - "python-dotenv>=1.0,<2"
+  - "requests>=2.31,<3"

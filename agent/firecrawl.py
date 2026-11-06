@@ -22,12 +22,18 @@ from dotenv import load_dotenv
 
 from agent.traces import Trace
 
+
+def _load_env() -> None:
+    if not os.environ.get("LEMMA_NO_DOTENV"):
+        load_dotenv(override=True)
+
+
 BASE = "https://api.firecrawl.dev"
 TIMEOUT_S = 45
 
 
 def _headers() -> dict:
-    load_dotenv(override=True)
+    _load_env()
     key = os.environ.get("FIRECRAWL_API_KEY", "").strip()
     headers = {"Content-Type": "application/json"}
     if key:

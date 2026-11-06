@@ -14,12 +14,9 @@ from __future__ import annotations
 import json
 import math
 import re
-import subprocess
-import sys
-import time
 from pathlib import Path
 
-from agent import records
+from agent import records, script_sandbox
 from agent.llm import complete, extract_json
 from agent.traces import Trace
 from agent.weave_ops import op
@@ -33,24 +30,16 @@ MAX_OUT_CHARS = 4000
 @op
 def _run_script(
     script_path: Path, workdir: Path, timeout_s: float = RUN_TIMEOUT_S
-) -> tuple[int, str, str, float]:
-    """Execute one audit script as a subprocess. A weave op when tracing is
-    live so each run shows up as a tool span under the audit attempt."""
-    t0 = time.time()
-    try:
-        proc = subprocess.run(
-            [sys.executable, str(script_path.resolve())],
-            cwd=str(workdir.resolve()),
-            capture_output=True,
-            text=True,
-            timeout=timeout_s,
-        )
-        exit_code, out, err = proc.returncode, proc.stdout, proc.stderr
-    except subprocess.TimeoutExpired as e:
-        exit_code = -1
-        out = _tail(e.stdout)
-        err = f"TIMEOUT after {timeout_s}s\n{_tail(e.stderr)}"
-    return exit_code, out, err, time.time() - t0
+) -> tuple[int, str, str, float, str]:
+    """Execute one audit script under script_sandbox isolation (no
+    network, workdir-only writes, minimal env — see script_sandbox.py).
+    A weave op when tracing is live so each run shows up as a tool span
+    under the audit attempt."""
+    res = script_sandbox.run_generated(script_path, workdir, timeout_s)
+    out, err = res.stdout, res.stderr
+    if res.note:
+        err = (err + "\n" if err else "") + res.note
+    return res.exit_code, out, err, res.wall_s, res.mode
 
 
 def _tail(chunk: str | bytes | None) -> str:
@@ -269,10 +258,10 @@ def audit_one(
         executed += 1
         before_figures = records.figure_hashes(claim_dir)
 
-        exit_code, out, err, duration = _run_script(script_path, workdir)
+        exit_code, out, err, duration, exec_mode = _run_script(script_path, workdir)
         trace.tool_run(
             "audit",
-            f"{sys.executable} {script_path.name}",
+            f"{exec_mode} {script_path.name}",
             exit_code,
             duration,
             len(out) + len(err),
@@ -461,10 +450,10 @@ def audit_one(
             ),
         )
         before_figures = records.figure_hashes(claim_dir)
-        exit_code, out, err, duration = _run_script(ref_path, workdir)
+        exit_code, out, err, duration, exec_mode = _run_script(ref_path, workdir)
         trace.tool_run(
             "audit",
-            f"{sys.executable} {ref_path.name}",
+            f"{exec_mode} {ref_path.name}",
             exit_code,
             duration,
             len(out) + len(err),

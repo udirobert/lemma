@@ -26,13 +26,19 @@ from dotenv import load_dotenv
 
 from agent.traces import Trace
 
+
+def _load_env() -> None:
+    if not os.environ.get("LEMMA_NO_DOTENV"):
+        load_dotenv(override=True)
+
+
 MCP_URL = "https://paperclip.gxl.ai/mcp"
 TIMEOUT_S = 60
 DEFAULT_SOURCE = "arxiv"
 
 
 def available() -> tuple[bool, str]:
-    load_dotenv(override=True)
+    _load_env()
     key = os.environ.get("PAPERCLIP_API_KEY", "").strip()
     if not key:
         return False, "PAPERCLIP_API_KEY not set"

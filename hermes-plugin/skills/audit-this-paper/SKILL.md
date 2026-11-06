@@ -38,8 +38,7 @@ numerical audit scripts, and reports honest verdicts:
 
 ## Setup the user may need
 
-The plugin shells out to a lemma repo checkout. If a call returns
-"lemma repo not found", the user must set `repo_path` in the plugin
-settings (or `LEMMA_REPO`). The auditor's LLM needs
-`ANTHROPIC_API_KEY` (or a `LEMMA_ENDPOINTS` provider) — set it in the
-plugin's credential fields, not in chat.
+The plugin runs the pipeline shipped inside its own install — if a
+call returns "lemma pipeline not found", the install is incomplete;
+reinstall. The auditor's LLM needs `ANTHROPIC_API_KEY` — set it in the
+plugin's credential fields (requires_env), not in chat.

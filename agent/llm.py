@@ -19,9 +19,16 @@ import json
 import os
 import time
 
-from dotenv import load_dotenv
-
 from agent.traces import Trace
+
+
+def _load_env() -> None:
+    """.env is the standalone CLI's config source. Under Hermes the
+    plugin spawns us with LEMMA_NO_DOTENV=1 and passes credentials in
+    through the process env — files are never read for secrets."""
+    if not os.environ.get("LEMMA_NO_DOTENV"):
+        _load_env()
+
 
 ANTHROPIC_DEFAULT_MODEL = "claude-sonnet-4-5-20250929"
 OPENAI_DEFAULT_MODEL = "gpt-4o"
@@ -40,7 +47,7 @@ _provider_fail_at: dict[str, float] = {}
 
 
 def _endpoint_names() -> list[str]:
-    load_dotenv(override=True)
+    _load_env()
     raw = os.environ.get("LEMMA_ENDPOINTS", "").strip()
     return [n.strip().upper() for n in raw.split(",") if n.strip()]
 
@@ -87,7 +94,7 @@ def _endpoint_cfg(name: str) -> dict | None:
 
 
 def _providers() -> list[str]:
-    load_dotenv(override=True)
+    _load_env()
     explicit = os.environ.get("LEMMA_PROVIDER", "").strip().lower()
     if explicit:
         others = [
@@ -114,7 +121,7 @@ def _providers() -> list[str]:
 
 
 def model_name(provider: str | None = None) -> str:
-    load_dotenv(override=True)
+    _load_env()
     p = (provider or "").upper()
     if p in _endpoint_names():
         cfg = _endpoint_cfg(p)
@@ -244,7 +251,7 @@ def _complete_one(
 
     if p == "OPENAI":
         if "openai" not in _clients:
-            load_dotenv(override=True)
+            _load_env()
             base_url = (
                 os.environ.get("OPENAI_BASE_URL")
                 or os.environ.get("OPENAI_API_BASE")
