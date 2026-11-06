@@ -91,7 +91,8 @@ siblings by path — `from tools import` collides with hermes-agent's own
 | `paperclip.py` | Paperclip (GXL) corpus: `lemma search` discovery + per-claim literature-context cells (X-API-Key auth) |
 | `llm.py` | Multi-provider LLM wrapper: ordered `LEMMA_ENDPOINTS` + anthropic + openai; explicit 240 s HTTP timeout, no SDK retries (we own the loop); 429 Retry-After backoff; 60s error window → fallback; `LEMMA_<NAME>_MAX_TOKENS` floor for reasoning models. W&B Inference plugs in as a named endpoint (`LEMMA_WANDB_*`) |
 | `traces.py` | Append-only JSONL trace logger (`llm_call`, `tool_run`, `note`) |
-| `weave_ops.py` | Optional Weave shim (CoreWeave Hacks): `init_weave()` when `WANDB_API_KEY` is set; `@op` wraps stages so extract/audit/script-runs/judge + auto-patched LLM calls land in the Weave UI. Pass-through otherwise — `LEMMA_WEAVE=off` forces it off |
+| `weave_ops.py` | Optional Weave shim (CoreWeave Hacks): explicit opt-in only — `init_weave()` requires `LEMMA_WEAVE=1` AND `WANDB_API_KEY`; `@op` wraps stages so extract/audit/script-runs/judge + auto-patched LLM calls land in the Weave UI. Pass-through otherwise |
+| `script_sandbox.py` | Sandboxed exec for LLM-written audit scripts: sandbox-exec (macOS) / bwrap (Linux) — no network, workdir-only writes, minimal env, rlimits. Fail-closed where no sandbox exists; `LEMMA_AUDIT_HOST_EXEC=1` is the unsafe operator escape |
 | `evals.py` | `lemma eval` — scorer suite (verdict-vs-reference, self-consistency, control honesty, evidence completeness, decisiveness) run as a Weave Evaluation or a local table (`--no-weave`) |
 | `meta.py` | `lemma improve` — self-improvement loop: reviewer-persona LLM drafts `results/<cid>/feedback.auto.md` from a claim's failure context (latest script, summary, persisted failure tails, trace events), then re-audits. Advisory only: human `feedback.md` outranks it and `reviewer_reference.py` still wins — the loop can't edit either. `improve_<ts>.json` records before/after plus `verify_gain`: any flip *to* `supported` post-feedback is flagged for eyeballing (that's the reward-hacking direction) |
 | `records.py` | Immutable per-execution attempt snapshots (`results/<cid>/attempts/<uuid>/`): input.json (claim snapshot, feedback, hashes), script, stdout/stderr, outcome.json, changed figures. `finish_attempt` refuses to overwrite; numbering advances above all existing legacy artifacts |
@@ -202,6 +203,15 @@ Landing counters, xylophone bars, artifact links, `/papers/` index and
 - All secrets live in `.env` (gitignored) — copy from `.env.example`. It has
   `600` permissions; pre-commit hooks scan for leaked secrets on every commit.
 - `deploy_vps.sh` refuses to run if `.env` has no Anthropic/OpenAI key.
+- Generated audit scripts run under `agent/script_sandbox.py` (no
+  network, workdir-only writes, minimal env): sandbox-exec on macOS,
+  bwrap on Linux. `bootstrap_vps.sh` installs bubblewrap; without it
+  audits fail closed (`sandbox_unavailable`). `LEMMA_AUDIT_HOST_EXEC=1`
+  runs without isolation — unsafe, never the default.
+- `lemma audit <local.pdf>` only accepts real `.pdf` files under
+  `LEMMA_LOCAL_PDF_DIRS` (default: cwd) — not arbitrary paths.
+- Weave tracing is off unless `LEMMA_WEAVE=1` is set explicitly;
+  `WANDB_API_KEY` alone no longer enables it.
 
 ## Documentation discipline
 
