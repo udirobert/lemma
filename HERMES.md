@@ -134,7 +134,18 @@ Build order: live pane → post_llm_call → badges → certificates.
   `tools` package name collision (`bacb0ef`; sibling imports in plugin API
   files must load by path).
 - **Catalog PR open**: `NousResearch/hermes-agent#149514`, pinned `bacb0ef`
-  (includes the mount fix). At the human-merge gate.
+  (includes the mount fix).
+- **Maintainer review received** (teknium1, changes requested at
+  `bacb0ef`): blocker = unsandboxed execution of LLM-written audit
+  scripts (`agent/auditor.py` subprocess, no env=) reachable from
+  model-callable tools. Full fix list: sandbox+minimal env for generated
+  code (or per-run approval), minimal env for CLI children, ship
+  pipeline inside the pin (agent/ outside hermes-plugin/), restrict
+  local sources to .pdf-in-datadir, reject path-traversal paper values,
+  Weave opt-in only, drop load_dotenv(override=True) for
+  secret_scope.get_secret, remove sys.path.insert in plugin_api.py,
+  README covering network endpoints + detached runs + generated-code
+  exec. Fix → re-pin → comment.
 - **Video shipped**: 64 s HyperFrames film (product-first: plugin card →
   problem → terminal beat → rupture → stats → flag → showcase → card) in
   `~/Downloads/lemma-culture-dish.mp4`; source in `/tmp/lemma-film` (kept

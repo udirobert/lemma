@@ -43,10 +43,21 @@ re-running a stage that already has outputs under `papers/<id>/` reuses them
 Lemma is expanding from auditing papers to designing proteins with the same
 audit discipline. Planning doc: `PROTEIN.md` (repo root). First target
 workdir: `targets/kras-g12d-pmhc/` (Anthropic × Adaptyv Challenge 05,
-deadline 2026-11-08). `lemma design <target>` runs the stage skeleton
+**submitted** 2026-11-05, resubmission-ready after the contact-level
+re-rank). `lemma design <target>` runs the stage skeleton
 (`agent/design.py`: propose → design → audit → evidence → judge); scoring
 runs on Modal L4 via `scripts/modal_boltz_smoke.py` — local 8 GB Mac is
 dev-only (see `runs/protein-smoke-2026-11-04.md`).
+
+Round-2b added `scripts/modal_contact_audit.py`: Modal-side contact-level
+audit (binder→peptide contact maps + interface PAE from stored Boltz-2
+outputs on the `protein-boltz-results` volume — nothing downloads) →
+`audit/contact_audit.json`. `scripts/build_submission.py` then ranks by
+peptide engagement → p6 contact differential (g12d−wt) → ipSAE when that
+file exists, falling back to ipTM margin otherwise. Finding:
+`runs/protein-contact-audit-2026-11-05.md` — 7 mutation-preferring
+candidates surfaced that the margin screen buried; its own rank-1 was
+predicted WT-preferring.
 
 ## Incoming capability: Hermes agent plugin
 
