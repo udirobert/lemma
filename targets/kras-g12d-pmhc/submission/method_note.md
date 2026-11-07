@@ -100,8 +100,10 @@ not count (off-limits per challenge rules).
 - Repo trail (audit scripts, per-prediction confidence outputs, judge
   verdicts, run notes): https://github.com/udirobert/lemma/tree/main/targets/kras-g12d-pmhc
   (run notes: https://github.com/udirobert/lemma/tree/main/runs)
-- designs.csv is generated from `audit/audit_report.json` by
-  `scripts/build_submission.py`; ranking = g12d ipTM minus worst-decoy
-  ipTM, descending.
+- designs.csv is generated from `audit/audit_report.json` +
+  `audit/contact_audit.json` by `scripts/build_submission.py`;
+  ranking = peptide engagement → p6 contact differential
+  (g12d − wt) → g12d p6 contacts → interface ipSAE → coverage,
+  descending. ipTM margin retained as an evidence column.
 - Compute: all inference on Modal L4/A10G; per-prediction ~110 s;
   counts and timings in run notes.

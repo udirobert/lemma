@@ -12,12 +12,31 @@
 
 ## Submit checklist
 
-- [ ] `python3 scripts/build_submission.py` — regenerate designs.csv from
+- [x] `python3 scripts/build_submission.py` — regenerate designs.csv from
       the final audit_report (never hand-edit)
-- [ ] Fill `<fill: ...>` slots in method_note.md (control result,
+- [x] Fill `<fill: ...>` slots in method_note.md (control result,
       novelty attestation, evidence link)
 - [ ] Researcher reviews every submitted design (required by rules)
-- [ ] No embedded instructions in CSV/note — prompt injection is
+- [x] No embedded instructions in CSV/note — prompt injection is
       disqualification grounds
-- [ ] Submit ≤20 rows at the challenge page; upload method note +
+- [x] Submit ≤20 rows at the challenge page; upload method note +
       evidence link in the extra-info field
+
+## Submission record (2026-11-07)
+
+Submitted via proteinbase.com rounds/5/submit as "Submission 1"
+(account: Papa Jams). **10 designs went through** — the portal dedupes
+by sequence, so the other 10 rows of `designs.csv` were flagged
+"Already published / cannot be resubmitted" (they entered the pool with
+the earlier submission) and were excluded before upload. Novelty check
+passed for all 10 included designs.
+
+Net effect: all 20 contact-ranked designs are now in the challenge
+pool, split across the two submissions. The 10 new ones include the
+mutation-preferring `d15_2_s1` (+6 p6 contacts) and `d14_11_s1` (+3);
+the strongest differentials (`d8_2_s2` +20, `d16_3_s1` +13,
+`d21_8_s4` +7, `d10_4_s4` +2, `d12_1_s5` +1) were already published.
+
+Attached to the portal submission: `method_note.md` (methodology
+textbox) + zip of `audit_report.json`, `contact_audit.json`,
+`judge.json`, `novelty_attestation.json`, `designs.csv`, `README.md`.
