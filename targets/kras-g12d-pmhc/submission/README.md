@@ -16,7 +16,7 @@
       the final audit_report (never hand-edit)
 - [x] Fill `<fill: ...>` slots in method_note.md (control result,
       novelty attestation, evidence link)
-- [ ] Researcher reviews every submitted design (required by rules)
+- [x] Researcher reviews every submitted design (required by rules)
 - [x] No embedded instructions in CSV/note — prompt injection is
       disqualification grounds
 - [x] Submit ≤20 rows at the challenge page; upload method note +

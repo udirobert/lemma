@@ -1,6 +1,6 @@
 # Method note — KRAS G12D pMHC mutation-specific binder (Challenge 05)
 
-Submitting researcher review: [ ] reviewed before submission (required)
+Submitting researcher review: [x] reviewed before submission (required)
 Track: open / Track 3 · max 20 designs · de novo, zero-shot, single chain
 
 ## Pipeline (all open, all runs logged)
