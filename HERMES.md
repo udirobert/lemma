@@ -133,7 +133,7 @@ Build order: live pane → post_llm_call → badges → certificates.
   OpenAPI schema after fixing the `from tools import` → hermes-agent
   `tools` package name collision (`bacb0ef`; sibling imports in plugin API
   files must load by path).
-- **Catalog PR open**: `NousResearch/hermes-agent#149514`, pinned `bacb0ef`
+- **Catalog PR open**: `NousResearch/hermes-agent#149514`, pinned `98b061d`
   (includes the mount fix).
 - **Maintainer review received** (teknium1, changes requested at
   `bacb0ef`): blocker = unsandboxed execution of LLM-written audit

@@ -71,7 +71,7 @@ Audit Room pane (live stage + trace tail + verdict chips + `verify_gain`
 `dashboard/plugin_api.py` at `/api/plugins/lemma/*` (verified mounted on
 the dashboard server :9119 — `ctx.rest` proven). Install-tested in a real
 `HERMES_HOME`; `hermes plugins doctor --ci` clean. Catalog PR open:
-`NousResearch/hermes-agent#149514` (pins `bacb0ef`). Plan and status:
+`NousResearch/hermes-agent#149514` (pins `98b061d`). Plan and status:
 `HERMES.md` (repo root). Gotchas logged there: plugin API files must load
 siblings by path — `from tools import` collides with hermes-agent's own
 `tools` package inside the dashboard process — and the catalog installs
