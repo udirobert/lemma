@@ -38,4 +38,4 @@ indent-style = "space"
 line-ending = "lf"
 
 [tool.ruff.lint.isort]
-known-first-party = ["lemma"]
+known-first-party = ["lemma", "lemma_pipeline"]

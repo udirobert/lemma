@@ -1,4 +1,4 @@
-"""Tool handlers — thin subprocess wrappers over `python -m agent.cli`.
+"""Tool handlers — thin subprocess wrappers over `python -m lemma_pipeline.cli`.
 
 Handlers never raise: every path returns a JSON string. The plugin only
 orchestrates — all audit state lives under plugin_data_dir("lemma"),
@@ -8,6 +8,7 @@ never in the install tree or the repo.
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -23,16 +24,36 @@ PAPERS_DIR = DATA_ROOT / "papers"
 QUICK_TIMEOUT = 900  # seconds; the quick path must stay video-length
 
 
-def _repo(ctx=None) -> Path | None:
-    """The pinned install tree: catalog installs clone the whole repo at
-    the reviewed SHA, so agent/ sits next to hermes-plugin/. Never an
-    arbitrary checkout — the code that runs is the code that was
-    reviewed."""
-    root = Path(__file__).resolve().parent.parent
-    return root if (root / "agent" / "cli.py").is_file() else None
+def _pipeline_root(ctx=None) -> Path | None:
+    """The installed plugin dir: catalog installs check out only
+    hermes-plugin/ (subdir install), so the pipeline lives in the vendored
+    lemma_pipeline/ package inside it — generated from agent/ by
+    scripts/sync_hermes_plugin.py. The package is deliberately not named
+    `agent`: that would collide with hermes-agent's own agent package on
+    sys.path. Never an arbitrary checkout — the code that runs is the code
+    that was reviewed."""
+    root = Path(__file__).resolve().parent
+    return root if (root / "lemma_pipeline" / "cli.py").is_file() else None
 
 
-def _child_env() -> dict[str, str]:
+def _plugin_flag(ctx, key: str, env_name: str) -> bool:
+    """Behaviour toggles are plugin config (plugins.entries.lemma.settings,
+    declared in plugin.yaml config_schema — surfaced in the Desktop Plugins
+    settings form), not .env entries. The env var remains as a dev/direct
+    fallback when no plugin context is available."""
+    try:
+        if ctx is not None:
+            val = ctx.get_config(key)
+            if val is not None:
+                if isinstance(val, str):
+                    return val.strip().lower() in ("1", "true", "yes", "on")
+                return bool(val)
+    except Exception:
+        pass
+    return os.environ.get(env_name) == "1"
+
+
+def _child_env(ctx=None) -> dict[str, str]:
     """Minimal env for pipeline children: no inherited Hermes process
     env (no other profile's secrets, no tool tokens). Credentials enter
     only through agent.secret_scope.get_secret — Hermes's route."""
@@ -42,15 +63,46 @@ def _child_env() -> dict[str, str]:
         "LEMMA_NO_DOTENV": "1",
         "LEMMA_LOCAL_PDF_DIRS": str(PAPERS_DIR),
     }
-    key = None
+    # PM activates the dependency environment by putting its site-packages
+    # on this process's sys.path; children spawned from sys.executable do
+    # not inherit sys.path, so hand them the same entries explicitly —
+    # otherwise plugin python_dependencies (fitz, trackio's deps, ...) are
+    # invisible to the pipeline. Restricted to site-packages so the
+    # hermes-agent checkout root never leaks `agent`/`tools` names in.
+    site_dirs = [
+        p
+        for p in dict.fromkeys(sys.path)
+        if p and "site-packages" in p and Path(p).is_dir()
+    ]
+    if site_dirs:
+        env["PYTHONPATH"] = os.pathsep.join(site_dirs)
+    if _plugin_flag(ctx, "host_exec", "LEMMA_AUDIT_HOST_EXEC"):
+        env["LEMMA_AUDIT_HOST_EXEC"] = "1"
+    if _plugin_flag(ctx, "weave", "LEMMA_WEAVE"):
+        env["LEMMA_WEAVE"] = "1"
+    # Provider parity with agent/llm.py: Anthropic direct, or any
+    # OpenAI-compatible endpoint (OPENAI_API_KEY/BASE_URL/MODEL covers
+    # Venice, OpenRouter, local servers, ...). Values come only through
+    # Hermes's secret route, never inherited process env.
     try:
         from agent.secret_scope import get_secret
 
-        key = get_secret("ANTHROPIC_API_KEY")
+        secrets = {
+            v: get_secret(v)
+            for v in (
+                "ANTHROPIC_API_KEY",
+                "OPENAI_API_KEY",
+                "OPENAI_BASE_URL",
+                "OPENAI_API_BASE",
+                "OPENAI_MODEL",
+                "LEMMA_MODEL",
+            )
+        }
     except Exception:  # doctor/dev context without hermes-agent
-        key = os.environ.get("ANTHROPIC_API_KEY")
-    if key:
-        env["ANTHROPIC_API_KEY"] = key
+        secrets = {}
+    for var, val in secrets.items():
+        if val:
+            env[var] = val
     return env
 
 
@@ -59,11 +111,11 @@ def _slug(source: str) -> str:
     return s[:60] or "paper"
 
 
-def _run(repo: Path, argv: list[str], timeout: int) -> tuple[int, str]:
+def _run(root: Path, argv: list[str], timeout: int, ctx=None) -> tuple[int, str]:
     proc = subprocess.run(
-        [sys.executable, "-m", "agent.cli", *argv],
-        cwd=repo,
-        env=_child_env(),
+        [sys.executable, "-m", "lemma_pipeline.cli", *argv],
+        cwd=root,
+        env=_child_env(ctx),
         capture_output=True,
         text=True,
         timeout=timeout,
@@ -131,12 +183,12 @@ def _verdicts(workdir: Path) -> dict:
     return out
 
 
-def _need_repo(ctx=None) -> str | None:
-    if _repo(ctx) is None:
+def _need_pipeline(ctx=None) -> str | None:
+    if _pipeline_root(ctx) is None:
         return json.dumps(
             {
-                "error": "lemma pipeline not found beside the plugin — "
-                "expected agent/cli.py in the installed tree"
+                "error": "lemma pipeline not found in the installed plugin "
+                "— expected lemma_pipeline/cli.py beside tools.py"
             }
         )
     return None
@@ -144,7 +196,7 @@ def _need_repo(ctx=None) -> str | None:
 
 def lemma_quick_audit(args: dict, ctx=None, **kwargs) -> str:
     """extract -> audit first N testable claims -> judge, one workdir."""
-    err = _need_repo(ctx)
+    err = _need_pipeline(ctx)
     if err:
         return err
     source = (args.get("source") or "").strip()
@@ -153,16 +205,17 @@ def lemma_quick_audit(args: dict, ctx=None, **kwargs) -> str:
             {"error": "source required (arXiv/OpenReview id or PDF path)"}
         )
     max_claims = max(1, min(int(args.get("max_claims") or 2), 5))
-    repo = _repo(ctx)
+    root = _pipeline_root(ctx)
     workdir = PAPERS_DIR / _slug(source)
     workdir.mkdir(parents=True, exist_ok=True)
 
     steps = []
     try:
         rc, log = _run(
-            repo,
+            root,
             ["audit", source, "--workdir", str(workdir), "--stages", "extract"],
             QUICK_TIMEOUT // 3,
+            ctx,
         )
         steps.append({"stage": "extract", "rc": rc, "tail": log[-400:]})
         if rc != 0:
@@ -173,7 +226,7 @@ def lemma_quick_audit(args: dict, ctx=None, **kwargs) -> str:
             return json.dumps({"error": "no testable claims extracted", "steps": steps})
 
         rc, log = _run(
-            repo,
+            root,
             [
                 "audit",
                 source,
@@ -185,6 +238,7 @@ def lemma_quick_audit(args: dict, ctx=None, **kwargs) -> str:
                 ",".join(ids),
             ],
             QUICK_TIMEOUT,
+            ctx,
         )
         steps.append({"stage": "audit+judge", "rc": rc, "tail": log[-400:]})
         out = _verdicts(workdir)
@@ -206,13 +260,13 @@ def lemma_quick_audit(args: dict, ctx=None, **kwargs) -> str:
 
 def lemma_audit(args: dict, ctx=None, **kwargs) -> str:
     """Full pipeline in the background; lemma_status reports progress."""
-    err = _need_repo(ctx)
+    err = _need_pipeline(ctx)
     if err:
         return err
     source = (args.get("source") or "").strip()
     if not source:
         return json.dumps({"error": "source required"})
-    repo = _repo(ctx)
+    root = _pipeline_root(ctx)
     workdir = PAPERS_DIR / _slug(source)
     workdir.mkdir(parents=True, exist_ok=True)
     log_p = workdir / "lemma_audit.log"
@@ -222,14 +276,14 @@ def lemma_audit(args: dict, ctx=None, **kwargs) -> str:
                 [
                     sys.executable,
                     "-m",
-                    "agent.cli",
+                    "lemma_pipeline.cli",
                     "audit",
                     source,
                     "--workdir",
                     str(workdir),
                 ],
-                cwd=repo,
-                env=_child_env(),
+                cwd=root,
+                env=_child_env(ctx),
                 stdout=log,
                 stderr=subprocess.STDOUT,
                 start_new_session=True,
@@ -245,6 +299,114 @@ def lemma_audit(args: dict, ctx=None, **kwargs) -> str:
         )
     except Exception as e:
         return json.dumps({"error": f"{type(e).__name__}: {e}"})
+
+
+def _llm_provider_present() -> bool:
+    try:
+        from agent.secret_scope import get_secret
+
+        getter = get_secret
+    except Exception:
+        getter = os.environ.get
+    return any(getter(v) for v in ("ANTHROPIC_API_KEY", "OPENAI_API_KEY"))
+
+
+def _probe(root: Path, code: str, ctx=None, timeout: int = 60) -> tuple[int, str]:
+    """Run `python -c <code>` inside the plugin dir — the same interpreter
+    and cwd the pipeline children get."""
+    proc = subprocess.run(
+        [sys.executable, "-c", code],
+        cwd=root,
+        env=_child_env(ctx),
+        capture_output=True,
+        text=True,
+        timeout=timeout,
+    )
+    return proc.returncode, (proc.stdout + proc.stderr).strip()
+
+
+def lemma_doctor(args: dict, ctx=None, **kwargs) -> str:
+    """Preflight: pipeline resolves + launches, deps import, trackio and
+    sandbox reachable, credential route configured. JSON, never raises."""
+    try:
+        return _doctor(ctx)
+    except Exception as e:
+        return json.dumps({"ok": False, "error": f"{type(e).__name__}: {e}"})
+
+
+def _doctor(ctx=None) -> str:
+    checks: dict = {}
+    issues: list[str] = []
+
+    root = _pipeline_root(ctx)
+    checks["pipeline"] = {"ok": root is not None}
+    if root is None:
+        issues.append("lemma_pipeline/cli.py not found beside tools.py")
+    else:
+        rc, log = _run(root, ["judge", "--help"], 30, ctx)
+        checks["cli"] = {"ok": rc == 0}
+        if rc != 0:
+            issues.append(f"lemma_pipeline.cli failed to launch: {log[-200:]}")
+
+        rc, out = _probe(
+            root,
+            "import numpy, scipy, matplotlib, anthropic, openai, fitz, "
+            "dotenv, requests; print('deps ok')",
+            ctx,
+        )
+        checks["python_deps"] = {"ok": rc == 0, "tail": out[-200:]}
+        if rc != 0:
+            last = out.strip().splitlines()[-1] if out.strip() else out
+            issues.append(f"python dependency missing: {last}")
+
+        rc, out = _probe(
+            root,
+            "from lemma_pipeline import script_sandbox; "
+            "print(script_sandbox.sandbox_kind() or 'none')",
+            ctx,
+        )
+        kind = out.strip().splitlines()[-1] if out.strip() else "unknown"
+        checks["sandbox"] = {
+            "ok": kind in ("sandbox-exec", "bwrap"),
+            "kind": kind,
+            "host_exec": _plugin_flag(ctx, "host_exec", "LEMMA_AUDIT_HOST_EXEC"),
+        }
+        if kind not in ("sandbox-exec", "bwrap") and not checks["sandbox"]["host_exec"]:
+            issues.append(
+                "no audit-script sandbox (sandbox-exec/bwrap) and host_exec "
+                "is off — generated scripts will record sandbox_unavailable"
+            )
+
+    beside = Path(sys.executable).parent / "trackio"
+    trackio = (
+        str(beside) if beside.is_file() else shutil.which("trackio") or "not found"
+    )
+    checks["trackio"] = {"ok": trackio != "not found", "path": trackio}
+    if trackio == "not found":
+        issues.append("trackio CLI not found — evidence stage will fail")
+
+    checks["llm_provider"] = {"ok": _llm_provider_present()}
+    if not checks["llm_provider"]["ok"]:
+        issues.append(
+            "no LLM credential resolvable via Hermes "
+            "(ANTHROPIC_API_KEY or OPENAI_API_KEY)"
+        )
+
+    try:
+        PAPERS_DIR.mkdir(parents=True, exist_ok=True)
+        writable = os.access(PAPERS_DIR, os.W_OK)
+    except Exception:
+        writable = False
+    checks["data_dir"] = {"ok": writable, "path": str(PAPERS_DIR)}
+    if not writable:
+        issues.append(f"cannot write plugin data dir {PAPERS_DIR}")
+
+    checks["settings"] = {
+        "host_exec": _plugin_flag(ctx, "host_exec", "LEMMA_AUDIT_HOST_EXEC"),
+        "weave": _plugin_flag(ctx, "weave", "LEMMA_WEAVE"),
+    }
+
+    return json.dumps({"ok": not issues, "checks": checks, "issues": issues})
 
 
 def lemma_status(args: dict, ctx=None, **kwargs) -> str:
@@ -274,7 +436,7 @@ def lemma_status(args: dict, ctx=None, **kwargs) -> str:
 def lemma_improve(args: dict, ctx=None, **kwargs) -> str:
     """The self-distrust loop, in the background: reviewer feedback ->
     re-audit -> before/after recorded (agent/meta.py)."""
-    err = _need_repo(ctx)
+    err = _need_pipeline(ctx)
     if err:
         return err
     paper = (args.get("paper") or "").strip()
@@ -283,14 +445,14 @@ def lemma_improve(args: dict, ctx=None, **kwargs) -> str:
         return json.dumps(
             {"error": f"no workdir {paper!r}", "hint": "lemma_status lists them"}
         )
-    repo = _repo(ctx)
+    root = _pipeline_root(ctx)
     log_p = workdir / "lemma_improve.log"
     try:
         with log_p.open("ab") as log:
             proc = subprocess.Popen(
-                [sys.executable, "-m", "agent.cli", "improve", str(workdir)],
-                cwd=repo,
-                env=_child_env(),
+                [sys.executable, "-m", "lemma_pipeline.cli", "improve", str(workdir)],
+                cwd=root,
+                env=_child_env(ctx),
                 stdout=log,
                 stderr=subprocess.STDOUT,
                 start_new_session=True,
@@ -321,7 +483,7 @@ def paper_link_hint(ctx=None, user_message="", conversation_history=None, **kwar
     in what the agent itself just claimed — and offer the audit.
 
     Context injection only — never blocks, never audits unasked."""
-    if _repo(ctx) is None:
+    if _pipeline_root(ctx) is None:
         return None
     hay = user_message or ""
     # also scan the last assistant message: audit what the agent *says*
@@ -347,7 +509,7 @@ def paper_link_hint(ctx=None, user_message="", conversation_history=None, **kwar
 
 def lemma_judge(args: dict, ctx=None, **kwargs) -> str:
     """Re-run the judge stage on an existing workdir."""
-    err = _need_repo(ctx)
+    err = _need_pipeline(ctx)
     if err:
         return err
     paper = (args.get("paper") or "").strip()
@@ -357,7 +519,7 @@ def lemma_judge(args: dict, ctx=None, **kwargs) -> str:
             {"error": f"no workdir {paper!r}", "hint": "lemma_status lists them"}
         )
     try:
-        rc, log = _run(_repo(ctx), ["judge", str(workdir)], 300)
+        rc, log = _run(_pipeline_root(ctx), ["judge", str(workdir)], 300, ctx)
         out = _verdicts(workdir)
         out["rc"] = rc
         out["tail"] = log[-400:]

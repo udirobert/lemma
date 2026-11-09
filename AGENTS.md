@@ -72,9 +72,16 @@ Audit Room pane (live stage + trace tail + verdict chips + `verify_gain`
 the dashboard server :9119 — `ctx.rest` proven). Install-tested in a real
 `HERMES_HOME`; `hermes plugins doctor --ci` clean. Catalog PR open:
 `NousResearch/hermes-agent#149514` (pins `bacb0ef`). Plan and status:
-`HERMES.md` (repo root). Gotcha logged there: plugin API files must load
+`HERMES.md` (repo root). Gotchas logged there: plugin API files must load
 siblings by path — `from tools import` collides with hermes-agent's own
-`tools` package inside the dashboard process.
+`tools` package inside the dashboard process — and the catalog installs
+`subdir: hermes-plugin` only, so the pipeline the tools shell out to is a
+vendored copy at `hermes-plugin/lemma_pipeline/` (named to avoid
+hermes-agent's `agent` package). `agent/` stays canonical:
+`scripts/sync_hermes_plugin.py` regenerates the vendored tree and a
+pre-commit hook fails on drift. Behaviour toggles (`host_exec`, `weave`)
+are plugin `config_schema` settings, bridged to `LEMMA_*` env vars only
+inside the minimal child env.
 
 ## Module map (`agent/`)
 

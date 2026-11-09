@@ -1,12 +1,14 @@
 name: lemma
-version: 0.2.0
+version: 0.3.0
+manifest_version: 2
 description: >-
   Audit scientific claims end to end — extract testable claims from a
   paper, write and run numerical audit scripts with a mandatory positive
   control, and judge the evidence trail. Verdicts ship with the receipts:
   claims.json, audit_report.json, judge_report.json and an append-only
   trace you can inspect. Disclosure — paper text and audit prompts go to
-  your configured LLM provider (Anthropic via ANTHROPIC_API_KEY); paper
+  your configured LLM provider (ANTHROPIC_API_KEY, or any OpenAI-compatible
+  endpoint via OPENAI_API_KEY/OPENAI_BASE_URL/OPENAI_MODEL); paper
   fetches hit arxiv.org/openreview.net (or api.firecrawl.dev when a
   FIRECRAWL_API_KEY is configured); LLM-written audit scripts execute
   inside a sandbox (no network, workdir-only writes, minimal env) and
@@ -16,16 +18,18 @@ author: Papajams
 provides_tools:
   - lemma_quick_audit
   - lemma_audit
+  - lemma_doctor
   - lemma_status
   - lemma_judge
   - lemma_improve
 provides_hooks:
   - pre_llm_call
-provides_commands:
-  - audit
 requires_env:
   - name: ANTHROPIC_API_KEY
-    description: Anthropic API key used by lemma's auditor LLM.
+    description: >-
+      LLM credential for the audit pipeline — Anthropic direct, or set
+      OPENAI_API_KEY (+ OPENAI_BASE_URL/OPENAI_MODEL for compatible
+      endpoints) instead and skip this.
     url: https://console.anthropic.com/
     secret: true
 python_dependencies:
@@ -37,3 +41,19 @@ python_dependencies:
   - "PyMuPDF>=1.24,<2"
   - "python-dotenv>=1.0,<2"
   - "requests>=2.31,<3"
+  - "trackio>=0.32.1,<1"
+config_schema:
+  host_exec:
+    type: bool
+    default: false
+    description: >-
+      Run LLM-generated audit scripts without the sandbox (no network
+      isolation, workdir-only writes off). Unsafe — only for environments
+      where sandbox-exec/bwrap is unavailable and you accept the risk.
+      Equivalent to LEMMA_AUDIT_HOST_EXEC=1 for direct runs.
+  weave:
+    type: bool
+    default: false
+    description: >-
+      Send pipeline traces to Weave (explicit opt-in observability).
+      Equivalent to LEMMA_WEAVE=1 for direct runs.

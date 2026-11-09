@@ -87,6 +87,18 @@ LEMMA_STATUS = {
     },
 }
 
+LEMMA_DOCTOR = {
+    "name": "lemma_doctor",
+    "description": (
+        "Preflight check for the lemma plugin: verifies the vendored "
+        "pipeline resolves and launches, Python deps and the trackio CLI "
+        "are importable, the audit-script sandbox is available, and the "
+        "Anthropic credential route is configured. Returns JSON checks "
+        "with ok/issues — run this first if an audit tool errors."
+    ),
+    "parameters": {"type": "object", "properties": {}},
+}
+
 LEMMA_JUDGE = {
     "name": "lemma_judge",
     "description": (

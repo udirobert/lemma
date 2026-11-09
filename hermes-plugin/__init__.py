@@ -26,6 +26,12 @@ def register(ctx):
         handler=partial(tools.lemma_audit, ctx=ctx),
     )
     ctx.register_tool(
+        name="lemma_doctor",
+        toolset="lemma",
+        schema=schemas.LEMMA_DOCTOR,
+        handler=partial(tools.lemma_doctor, ctx=ctx),
+    )
+    ctx.register_tool(
         name="lemma_status",
         toolset="lemma",
         schema=schemas.LEMMA_STATUS,

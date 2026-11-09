@@ -148,6 +148,13 @@ def _from_openreview(oid: str, workdir: Path) -> dict:
     }
 
 
+def _clean_text(text: str) -> str:
+    """PDF extraction leaks C0 control bytes (\\x00 etc.) that strict
+    OpenAI-compatible APIs reject with 'String must not contain null
+    bytes' — drop them before the text reaches a prompt."""
+    return re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]", "", text)
+
+
 def _extract_pdf_text(pdf_path: Path) -> str:
     # Prefer Firecrawl markdown (cleaner for LLM extraction) when keyed.
     try:
@@ -155,7 +162,7 @@ def _extract_pdf_text(pdf_path: Path) -> str:
 
         md = firecrawl.markdown_from_pdf(pdf_path)
         if md:
-            return md[:MAX_TEXT_CHARS]
+            return _clean_text(md)[:MAX_TEXT_CHARS]
     except Exception:
         pass  # degrade to local extraction
 
@@ -164,4 +171,4 @@ def _extract_pdf_text(pdf_path: Path) -> str:
     doc = fitz.open(pdf_path)
     parts = [page.get_text() for page in doc]
     text = "\n".join(parts)
-    return text[:MAX_TEXT_CHARS]
+    return _clean_text(text)[:MAX_TEXT_CHARS]

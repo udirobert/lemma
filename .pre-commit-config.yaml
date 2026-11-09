@@ -29,3 +29,13 @@ repos:
       - id: trailing-whitespace
         exclude: \.jsonl$
       - id: detect-private-key
+
+  # --- hermes-plugin vendored pipeline must match agent/ ---
+  - repo: local
+    hooks:
+      - id: hermes-plugin-sync
+        name: hermes-plugin vendored pipeline in sync
+        entry: python3 scripts/sync_hermes_plugin.py --check
+        language: system
+        pass_filenames: false
+        files: ^(agent/|hermes-plugin/lemma_pipeline/|scripts/sync_hermes_plugin\.py)
