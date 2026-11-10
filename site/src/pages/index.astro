@@ -413,17 +413,20 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
 <section class="hermes-band">
   <div class="hb-inner">
     <div class="hb-head">
-      <span class="hb-chip">native Hermes plugin</span>
+      <span class="hb-chip">live in the Hermes plugin catalog</span>
       <h2 class="hb-title">audits what your agent reads</h2>
-      <p class="hb-sub">five tools, an ambient paper-link hook, and a live Audit Room pane — inside <a href="https://hermes-agent.nousresearch.com" target="_blank" rel="noopener">Hermes Agent ↗</a>. it notices the arxiv link before you ask, then runs the claims.</p>
+      <p class="hb-sub">six tools, an ambient paper-link hook, and a live Audit Room pane — inside <a href="https://hermes-agent.nousresearch.com" target="_blank" rel="noopener">Hermes Agent ↗</a>. it notices the arxiv link before you ask, then runs the claims.</p>
     </div>
     <div class="hb-grid">
       <div class="hb-cell"><span class="hb-k">ambient</span><span class="hb-v">pre-LLM hook detects paper links — offers an audit unprompted</span></div>
-      <div class="hb-cell"><span class="hb-k">tools</span><span class="hb-v">quick_audit · audit · status · judge · improve — plus /audit</span></div>
+      <div class="hb-cell"><span class="hb-k">tools</span><span class="hb-v">quick_audit · audit · doctor · status · judge · improve — plus /audit</span></div>
       <div class="hb-cell"><span class="hb-k">audit room</span><span class="hb-v">live stage + trace tail + verdict chips, watchable while it works</span></div>
       <div class="hb-cell"><span class="hb-k">self-distrust</span><span class="hb-v">⚑ verify_gain flags flips to supported — the reward-hacking direction</span></div>
     </div>
-    <a class="hb-install" href="https://github.com/udirobert/lemma/tree/main/hermes-plugin" target="_blank" rel="noopener"><code>hermes plugins install lemma</code><span>source + typeform ↗</span></a>
+    <div class="hb-cta">
+      <a class="hb-install" href="https://hermes-agent.nousresearch.com/marketplace/lemma" target="_blank" rel="noopener"><code>hermes plugins install lemma</code><span>marketplace listing · v0.3.0 ↗</span></a>
+      <a class="hb-source" href="https://github.com/udirobert/lemma/tree/main/hermes-plugin" target="_blank" rel="noopener">source ↗</a>
+    </div>
   </div>
 </section>
 
@@ -442,9 +445,12 @@ const TRACE: Array<{ tag: string; cls: string; text: string }> = [
   .hb-cell { border: 1px solid var(--dim, #64708a44); border-radius: 8px; padding: 18px 20px; display: flex; flex-direction: column; gap: 8px; background: #0b101888; }
   .hb-k { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold, #fab533); font-family: var(--font-m, monospace); }
   .hb-v { color: var(--ink, #f1f3f6); font-size: 15px; line-height: 1.55; }
+  .hb-cta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
   .hb-install { display: inline-flex; align-items: center; gap: 18px; border: 1px solid var(--teal, #1ec2b5); border-radius: 8px; padding: 16px 24px; text-decoration: none; }
   .hb-install code { font-family: var(--font-m, monospace); font-size: 19px; color: var(--teal, #1ec2b5); font-weight: 700; }
   .hb-install span { color: var(--dim, #64708a); font-size: 14px; }
+  .hb-source { color: var(--dim, #64708a); font-size: 14px; text-decoration: none; border-bottom: 1px solid var(--dim, #64708a66); }
+  .hb-source:hover { color: var(--teal, #1ec2b5); }
   @media (max-width: 720px) { .hb-grid { grid-template-columns: 1fr; } }
 </style>
 <script src="../motion.ts"></script>
