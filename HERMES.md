@@ -133,26 +133,39 @@ Build order: live pane → post_llm_call → badges → certificates.
   OpenAPI schema after fixing the `from tools import` → hermes-agent
   `tools` package name collision (`bacb0ef`; sibling imports in plugin API
   files must load by path).
-- **Catalog PR open**: `NousResearch/hermes-agent#149514`, pinned `98b061d`
-  (includes the mount fix).
-- **Maintainer review received** (teknium1, changes requested at
-  `bacb0ef`): blocker = unsandboxed execution of LLM-written audit
-  scripts (`agent/auditor.py` subprocess, no env=) reachable from
-  model-callable tools. Full fix list: sandbox+minimal env for generated
-  code (or per-run approval), minimal env for CLI children, ship
-  pipeline inside the pin (agent/ outside hermes-plugin/), restrict
-  local sources to .pdf-in-datadir, reject path-traversal paper values,
-  Weave opt-in only, drop load_dotenv(override=True) for
-  secret_scope.get_secret, remove sys.path.insert in plugin_api.py,
-  README covering network endpoints + detached runs + generated-code
-  exec. Fix → re-pin → comment.
+- **MERGED — live in the catalog**: `NousResearch/hermes-agent#149514`
+  merged 2026-11-10 by teknium1; entry at `plugin-catalog/lemma.yaml`,
+  pinned `98b061d`, `tier: community`, `version: 0.3.0`.
+- **Maintainer review — two rounds, both resolved** (teknium1):
+  - Round 1 (`bacb0ef`, changes requested): blocker = unsandboxed
+    execution of LLM-written audit scripts reachable from model-callable
+    tools. Full fix list: sandbox+minimal env for generated code (or
+    per-run approval), minimal env for CLI children, ship pipeline
+    inside the pin (agent/ outside hermes-plugin/), restrict local
+    sources to .pdf-in-datadir, reject path-traversal paper values,
+    Weave opt-in only, drop load_dotenv(override=True) for
+    secret_scope.get_secret, remove sys.path.insert in plugin_api.py,
+    README covering network endpoints + detached runs + generated-code
+    exec.
+  - Round 2 (`3f1e637c`, changes requested): `subdir:` installs only
+    ship `hermes-plugin/` — `agent/` unreachable → vendored
+    `lemma_pipeline/` + `trackio` python dep. Approved at `98b061d`.
+  - Maintainer merge chore `0f036b77`: rewrote the disclosure blurb +
+    added the `version` floor. They *removed* the Firecrawl mention —
+    correctly: `_child_env` never forwards `FIRECRAWL_API_KEY` and
+    `LEMMA_NO_DOTENV=1` blocks `.env`, so api.firecrawl.dev is
+    unreachable under plugin install. **If that key is ever routed via
+    `secret_scope`, the catalog disclosure must be updated to match —
+    an undisclosed network call is delisting material.**
 - **Video shipped**: 64 s HyperFrames film (product-first: plugin card →
   problem → terminal beat → rupture → stats → flag → showcase → card) in
   `~/Downloads/lemma-culture-dish.mp4`; source in `/tmp/lemma-film` (kept
   out of the repo by decision).
 - **Site**: `index.astro` hermes-band live (`1c0c5bf`); builds clean.
-- **Pending**: typeform submission (blurb: "audits what agents read" —
-  news, benchmarks, GitHub issues, papers); PR merge; certificates stretch.
+- **Submitted**: typeform entry (blurb: "audits what agents read" —
+  news, benchmarks, GitHub issues, papers) + demo video posted on X
+  tagging @NousResearch — both sent while the PR was open, ahead of the
+  merge. Remaining stretch: audit certificates.
 
 - elcaro remains the primary entry; lemma ships alongside. `PROTEIN.md`
   round-2 finished **hold** (screen invalid per positive control) —
