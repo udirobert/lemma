@@ -35,10 +35,9 @@ Canonical reusable blurb lives in `sprints/epistemics-2026/application-blurb.md`
 ## Action queue
 
 1. [ ] arXiv the sprint report (cs.AI/cs.CY) — unlocks IAAI + anchors seal heads publicly
-2. [ ] Email sprints@apartresearch.com re: late submission / publication pathway
-3. [ ] Manifund application
-4. [ ] Lightcone Commons application
-5. [ ] Emergent Ventures application
-6. [ ] Anthropic Research Credits application
-7. [ ] Agent Attribution entry scoped by Dec 4
-8. [ ] COAI AITD submission when portal opens Dec 1
+2. [ ] Manifund application
+3. [ ] Lightcone Commons application
+4. [ ] Emergent Ventures application
+5. [ ] Anthropic Research Credits application
+6. [ ] Agent Attribution entry scoped by Dec 4
+7. [ ] COAI AITD submission when portal opens Dec 1
