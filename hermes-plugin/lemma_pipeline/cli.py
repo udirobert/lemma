@@ -145,6 +145,14 @@ def main() -> int:
         help=f"comma-separated subset of {DESIGN_STAGES}",
     )
 
+    p_seal = sub.add_parser(
+        "seal", help="hash-chain the workdir evidence trail (provenance.json)"
+    )
+    p_seal.add_argument("workdir", help="paper dir to seal")
+
+    p_verify = sub.add_parser("verify", help="re-verify a sealed workdir for tampering")
+    p_verify.add_argument("workdir", help="paper dir to verify")
+
     args = parser.parse_args()
     if args.cmd == "judge":
         return _judge(args)
@@ -164,7 +172,30 @@ def main() -> int:
         return serve_extract(host=args.host, port=args.port)
     if args.cmd == "design":
         return _design(args)
+    if args.cmd == "seal":
+        return _seal(args)
+    if args.cmd == "verify":
+        return _verify(args)
     return _audit(args)
+
+
+def _seal(args: argparse.Namespace) -> int:
+    from lemma_pipeline import provenance
+
+    m = provenance.seal(Path(args.workdir).resolve())
+    print(f"[lemma] sealed {m['n_files']} files in {args.workdir}")
+    print(f"[lemma] manifest_root: {m['manifest_root']}")
+    if m.get("trace_head_after_seal"):
+        print(f"[lemma] trace_head:    {m['trace_head_after_seal']}")
+    return 0
+
+
+def _verify(args: argparse.Namespace) -> int:
+    from lemma_pipeline import provenance
+
+    r = provenance.verify(Path(args.workdir).resolve())
+    print(__import__("json").dumps(r, indent=2))
+    return 0 if r["status"] == "ok" else 1
 
 
 def _search(args: argparse.Namespace) -> int:
@@ -292,10 +323,23 @@ def _audit(args: argparse.Namespace) -> int:
             __import__("json").dumps(result, indent=2), encoding="utf-8"
         )
         print(render_markdown(result))
-        if result["verdict"] == "FAIL":
-            return 2
+        verdict = result["verdict"]
+    else:
+        verdict = None
 
     trace.log("pipeline", "done", stages=stages)
+    try:
+        from lemma_pipeline import provenance
+
+        m = provenance.seal(workdir)
+        print(
+            f"[lemma] sealed {m['n_files']} artifacts; "
+            f"manifest_root={m['manifest_root'][:16]}…"
+        )
+    except Exception as e:  # seal failure must never sink a finished audit
+        print(f"[lemma] seal skipped ({type(e).__name__}: {e})")
+    if verdict == "FAIL":
+        return 2
     return 0
 
 

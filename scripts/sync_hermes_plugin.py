@@ -41,6 +41,7 @@ MODULES = [
     "meta",
     "paperclip",
     "papers",
+    "provenance",
     "records",
     "script_sandbox",
     "traces",

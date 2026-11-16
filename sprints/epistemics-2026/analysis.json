@@ -1,0 +1,167 @@
+{
+  "papers": [
+    {
+      "workdir": "5nNNVY8NW4-grokking",
+      "judge_verdict": "PASS",
+      "verdicts": {
+        "supported": 6
+      },
+      "trace_events": {}
+    },
+    {
+      "workdir": "arxiv-1903.08560",
+      "judge_verdict": null,
+      "verdicts": {
+        "inconclusive": 1,
+        "supported": 2
+      },
+      "trace_events": {}
+    },
+    {
+      "workdir": "arxiv-1906.11300",
+      "judge_verdict": null,
+      "verdicts": {
+        "falsified": 2
+      },
+      "trace_events": {}
+    },
+    {
+      "workdir": "arxiv-1912.07242",
+      "judge_verdict": "PASS",
+      "verdicts": {
+        "supported": 5,
+        "falsified": 2,
+        "inconclusive": 2
+      },
+      "trace_events": {
+        "attempt_failed": 19
+      }
+    },
+    {
+      "workdir": "arxiv-2510.10981",
+      "judge_verdict": "PASS",
+      "verdicts": {
+        "supported": 3,
+        "falsified": 2,
+        "inconclusive": 2
+      },
+      "trace_events": {
+        "attempt_failed": 24,
+        "reviewer_reference_executed": 2
+      }
+    },
+    {
+      "workdir": "arxiv-2510.10981-beam",
+      "judge_verdict": "PASS",
+      "verdicts": {
+        "supported": 3,
+        "falsified": 2,
+        "inconclusive": 2
+      },
+      "trace_events": {
+        "attempt_failed": 1
+      }
+    },
+    {
+      "workdir": "arxiv-2607.08077",
+      "judge_verdict": "PASS",
+      "verdicts": {
+        "supported": 2
+      },
+      "trace_events": {}
+    },
+    {
+      "workdir": "jmlr-22-1228-ca-grokking",
+      "judge_verdict": "PASS",
+      "verdicts": {
+        "supported": 5,
+        "inconclusive": 1
+      },
+      "trace_events": {
+        "attempt_failed": 9,
+        "reviewer_reference_executed": 4
+      }
+    },
+    {
+      "workdir": "jmlr-22-1228-ca-grokking-beam",
+      "judge_verdict": "PASS",
+      "verdicts": {
+        "supported": 3,
+        "falsified": 1,
+        "inconclusive": 2
+      },
+      "trace_events": {
+        "attempt_failed": 1
+      }
+    }
+  ],
+  "corpus": {
+    "claims_total": 48,
+    "supported": 29,
+    "falsified": 9,
+    "inconclusive": 10,
+    "not_audited": 0,
+    "decisive_rate": 0.792,
+    "multi_attempt": 7,
+    "control_failed": 6,
+    "reference_checked": 0,
+    "reference_disagreement": 0,
+    "summary_rejected_events": 0,
+    "attempt_failed_events": 54
+  },
+  "test_retest": [
+    {
+      "paper_a": "arxiv-2510.10981",
+      "paper_b": "arxiv-2510.10981-beam",
+      "shared_claims": 7,
+      "agree": 2,
+      "agreement": 0.286,
+      "flips": [
+        {
+          "claim": "C2",
+          "run_a": "falsified",
+          "run_b": "supported"
+        },
+        {
+          "claim": "C3",
+          "run_a": "supported",
+          "run_b": "falsified"
+        },
+        {
+          "claim": "C4",
+          "run_a": "supported",
+          "run_b": "falsified"
+        },
+        {
+          "claim": "C5",
+          "run_a": "inconclusive",
+          "run_b": "supported"
+        },
+        {
+          "claim": "C7",
+          "run_a": "falsified",
+          "run_b": "inconclusive"
+        }
+      ]
+    },
+    {
+      "paper_a": "jmlr-22-1228-ca-grokking",
+      "paper_b": "jmlr-22-1228-ca-grokking-beam",
+      "shared_claims": 6,
+      "agree": 4,
+      "agreement": 0.667,
+      "flips": [
+        {
+          "claim": "C2",
+          "run_a": "supported",
+          "run_b": "falsified"
+        },
+        {
+          "claim": "C4",
+          "run_a": "supported",
+          "run_b": "inconclusive"
+        }
+      ]
+    }
+  ]
+}

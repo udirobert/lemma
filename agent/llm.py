@@ -19,6 +19,8 @@ import json
 import os
 import time
 
+from dotenv import load_dotenv
+
 from agent.traces import Trace
 
 
@@ -27,7 +29,7 @@ def _load_env() -> None:
     plugin spawns us with LEMMA_NO_DOTENV=1 and passes credentials in
     through the process env — files are never read for secrets."""
     if not os.environ.get("LEMMA_NO_DOTENV"):
-        _load_env()
+        load_dotenv(override=True)
 
 
 ANTHROPIC_DEFAULT_MODEL = "claude-sonnet-4-5-20250929"

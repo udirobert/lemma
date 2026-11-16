@@ -23,6 +23,16 @@ the agent that generalizes that workflow to any paper.
 > PASS 5/5. Omnigent orchestrates specialist agents over the deterministic
 > engine (`omnigent/lab/`). Full write-up: [SUBMISSION.md](SUBMISSION.md).
 
+## AI x Epistemics Sprint (Nov 13–15 2026) — preexisting vs new work
+
+For the Apart Research AI x Epistemics Research Sprint submission
+(`sprints/epistemics-2026/`): **preexisting** — the whole audit pipeline
+(`agent/` stages, sandbox, evals, reviewer-reference) and all `papers/*`
+workdirs except `arxiv-1712.09203`. **Written during the sprint** — hash
+chaining in `agent/traces.py`, `agent/provenance.py`, the `seal`/`verify`
+CLI, `scripts/tamper_demo.py`, `scripts/sprint_calibration.py`, the
+`arxiv-1712.09203` audit, and the report.
+
 ## Quick start
 
 ```bash

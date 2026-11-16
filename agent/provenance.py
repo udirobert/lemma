@@ -1,0 +1,197 @@
+"""Tamper-evident provenance for a paper workdir.
+
+``seal`` hashes every artifact into ``provenance.json`` and logs a
+``provenance_seal`` event into the trace, so the trace head becomes a single
+256-bit commitment to the whole evidence trail. ``verify`` recomputes three
+independent layers and reports ok / modified / missing / added:
+
+  1. file manifest  — sha256 of every artifact (excluding trace.jsonl)
+  2. sealed prefix  — sha256 of the trace's first N lines; any edit inside the
+     sealed region breaks it, and appends are the only legal growth
+  3. hash chain     — the trace's own per-record chain (new traces are fully
+     chained; legacy unchained prefixes are still covered by layer 2)
+
+Threat model, honestly: the operator controls the writer, so this catches
+*post-hoc* edits given an externally anchored head (Certificate Transparency
+style). ``provenance.json`` stores a convenience anchor; the security anchor is
+the manifest_root / trace_head published at seal time (report, git, log).
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import time
+from pathlib import Path
+
+from agent.traces import Trace, verify_trace
+
+SEAL_FILE = "provenance.json"
+TRACE_FILE = "trace.jsonl"
+_EXCLUDE_DIRS = {".trackio", "__pycache__", ".git"}
+_EXCLUDE_FILES = {SEAL_FILE, TRACE_FILE, ".DS_Store"}
+
+
+def _sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def file_hashes(workdir: Path) -> dict[str, str]:
+    """SHA-256 of every artifact under workdir (trace handled separately)."""
+    out = {}
+    for p in sorted(workdir.rglob("*")):
+        if not p.is_file():
+            continue
+        rel = p.relative_to(workdir)
+        if rel.parts[0] in _EXCLUDE_DIRS or rel.name in _EXCLUDE_FILES:
+            continue
+        out[str(rel)] = _sha256_file(p)
+    return out
+
+
+def manifest_root(files: dict[str, str]) -> str:
+    canonical = "\n".join(f"{h}  {rel}" for rel, h in sorted(files.items()))
+    return hashlib.sha256(canonical.encode()).hexdigest()
+
+
+def _trace_lines(path: Path) -> list[str]:
+    if not path.is_file():
+        return []
+    return [ln for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
+
+
+def _trace_prefix_sha(lines: list[str]) -> str:
+    return hashlib.sha256("\n".join(lines).encode()).hexdigest()
+
+
+def _trace_run_id(lines: list[str]) -> str | None:
+    if not lines:
+        return None
+    try:
+        return json.loads(lines[0]).get("run_id")
+    except json.JSONDecodeError:
+        return None
+
+
+def seal(workdir: Path | str) -> dict:
+    """Hash the workdir, write provenance.json, log the seal into the trace."""
+    workdir = Path(workdir)
+    files = file_hashes(workdir)
+    trace_path = workdir / TRACE_FILE
+    trace_lines = _trace_lines(trace_path)
+    manifest = {
+        "version": 1,
+        "workdir": workdir.name,
+        "sealed_at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+        "n_files": len(files),
+        "files": files,
+        "manifest_root": manifest_root(files),
+        "trace_sealed_lines": len(trace_lines),
+        "trace_sealed_sha": (_trace_prefix_sha(trace_lines) if trace_lines else None),
+        "trace_head": (verify_trace(trace_path)["head"] if trace_lines else None),
+    }
+    run_id = _trace_run_id(trace_lines)
+    if run_id:
+        t = Trace(run_id=run_id, path=trace_path)
+        t.log(
+            "provenance",
+            "seal",
+            manifest_root=manifest["manifest_root"],
+            n_files=len(files),
+        )
+        manifest["trace_head_after_seal"] = t.chain_head
+    (workdir / SEAL_FILE).write_text(
+        json.dumps(manifest, indent=1, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    return manifest
+
+
+def verify(workdir: Path | str) -> dict:
+    """Re-verify a sealed workdir. Returns a machine-readable report."""
+    workdir = Path(workdir)
+    seal_path = workdir / SEAL_FILE
+    report: dict = {
+        "workdir": str(workdir),
+        "status": "unsealed",
+        "problems": [],
+        "warnings": [],
+    }
+    if not seal_path.is_file():
+        report["problems"].append("no provenance.json — workdir was never sealed")
+        return report
+
+    manifest = json.loads(seal_path.read_text(encoding="utf-8"))
+    sealed = manifest.get("files", {})
+    current = file_hashes(workdir)
+
+    modified = [r for r in sealed if r in current and current[r] != sealed[r]]
+    missing = [r for r in sealed if r not in current]
+    added = [r for r in current if r not in sealed]
+    report["files"] = {
+        "sealed": len(sealed),
+        "modified": modified,
+        "missing": missing,
+        "added": added,
+    }
+
+    root_ok = manifest_root(sealed) == manifest.get("manifest_root")
+    report["manifest_root"] = manifest.get("manifest_root")
+    report["manifest_root_intact"] = root_ok
+    if not root_ok:
+        report["problems"].append(
+            "provenance.json was itself rewritten (manifest_root mismatch)"
+        )
+
+    # Layer 2+3: sealed-prefix integrity, then the hash chain + head.
+    trace_path = workdir / TRACE_FILE
+    sealed_n = manifest.get("trace_sealed_lines") or 0
+    sealed_sha = manifest.get("trace_sealed_sha")
+    sealed_head = manifest.get("trace_head_after_seal") or manifest.get("trace_head")
+    if not trace_path.is_file() and sealed_n:
+        report["problems"].append("trace.jsonl missing")
+    else:
+        lines = _trace_lines(trace_path)
+        report["trace"] = {"sealed_lines": sealed_n, "current_lines": len(lines)}
+        if len(lines) < sealed_n:
+            report["problems"].append(
+                f"trace truncated: {len(lines)} < {sealed_n} sealed lines"
+            )
+        elif sealed_sha and _trace_prefix_sha(lines[:sealed_n]) != sealed_sha:
+            report["problems"].append("sealed trace prefix modified")
+
+        tv = verify_trace(trace_path)
+        unchained_in_sealed = [
+            p for p in tv["problems"] if p.endswith("unchained record")
+        ]
+        hard = [p for p in tv["problems"] if not p.endswith("unchained record")]
+        if unchained_in_sealed:
+            report["warnings"].append(
+                f"{len(unchained_in_sealed)} legacy unchained records "
+                "(integrity covered by sealed-prefix hash)"
+            )
+        report["trace"].update(
+            {
+                "records": tv["records"],
+                "chained": tv["chained"],
+                "chain_problems": hard[:20],
+                "head": tv["head"],
+                "head_matches_seal": (
+                    tv["head"] == sealed_head if sealed_head else None
+                ),
+            }
+        )
+        if hard:
+            report["problems"].append("trace hash chain broken")
+        if sealed_head and tv["head"] != sealed_head:
+            report["problems"].append(
+                "trace head differs from sealed head "
+                "(records appended/rewritten post-seal)"
+            )
+
+    dirty = modified or missing or added or report["problems"]
+    report["status"] = "tampered" if dirty else "ok"
+    return report
