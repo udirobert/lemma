@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "attempt_id": "e34ea1fb00c24484ad9d46f4b544a2f3",
+  "run_id": "20261116-020815-arxiv-1712.09203",
+  "number": 1,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C2",
+    "title": "Generalization gap narrows as initialization scale decreases (Fig. 1)",
+    "statement": "With m=5dr, r=5, U0=\u03b1I, step size 0.0025 and 1e4 GD iterations, the gap between training and test error decreases as \u03b1 decreases from 1 to 1e-3, for d=100 and d=200.",
+    "kind": "figure",
+    "testable": true,
+    "test_plan": "Reproduce the Figure 1 setup for d\u2208{100,200} and \u03b1\u2208{10^0,10^-0.5,...,10^-3}, with 3 resamplings of A_i. Compute relative training error and relative test error ||X\u0302-X*||_F/||X*||_F, and plot the gap against \u03b1.",
+    "evidence_in_paper": "Figure 1",
+    "compute": "gpu-small",
+    "success_criterion": "The test-train gap is smaller at \u03b1=1e-3 than at \u03b1=1, and shows a decreasing trend as \u03b1 decreases for both d.",
+    "success_criterion_source": "paper states gap decreases as \u03b1 decreases"
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "b2519f56bcc95ee236c495b121d3b92d066f21e5146fefbc95a2bdc27d066939",
+  "script_sha256": "ae36d1e498695d9a2d70edf77204595f803436a18592b1f7d5ddb03c2fd5647f",
+  "created_at": "2026-11-16T02:09:27.679123+00:00"
+}

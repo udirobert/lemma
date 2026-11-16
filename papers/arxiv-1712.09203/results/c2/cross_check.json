@@ -1,0 +1,5 @@
+{
+  "query": "Generalization gap narrows as initialization scale decreases (Fig. 1) With m=5dr, r=5, U0=\u03b1I, step size 0.0025 and 1e4 GD iterations, the gap between training and test error decreases as \u03b1 d",
+  "hits": [],
+  "note": "0 related works surfaced via Paperclip (GXL) corpus search (arxiv source); listed as context only \u2014 audit verdicts rest on the numerical evidence above."
+}

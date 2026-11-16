@@ -1,0 +1,74 @@
+[
+  {
+    "id": "C1",
+    "title": "GD with small init recovers low-rank PSD matrix in over-parameterized matrix sensing",
+    "statement": "Under (4r,\u03b4)-RIP, gradient descent on f(U)=1/(2m)\u03a3(y_i-<A_i,UU^T>)^2 with U\u2208R^{d\u00d7d}, initialization U0=\u03b1B (B orthonormal) and small step size achieves ||U_T U_T^T - X*||_F^2 \u2272 \u03b1\u221ad/\u03ba^2 for every T in the range (\u03ba log(d/\u03b1))/\u03b7 \u2272 T \u2272 1/(\u03b7\u221ad \u03ba \u03b1).",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate with d=100, r=5, U* Gaussian with columns normalized, X*=U*U*^T, and m=5dr symmetric Gaussian A_i. Run GD with \u03b7=0.0025 and \u03b1\u2208{1e-1,1e-2,1e-3,1e-4}, using U0=\u03b1I. For each \u03b1, record ||UU^T-X*||_F^2 after convergence (around 1e4 iterations), averaged over 3 seeds. Then regress log(error) on log(\u03b1).",
+    "evidence_in_paper": "Theorem 1.1 and Theorem 4.1 (proof); Figures 1-3 give empirical support.",
+    "compute": "cpu-fast",
+    "success_criterion": "Final squared recovery error decreases as \u03b1 decreases, consistent with O(\u03b1\u221ad) scaling: the fitted log-log slope is positive (about 1), and error is small (\u226a1) for small \u03b1 while the training loss is near zero.",
+    "success_criterion_source": "derived from the claim's error bound \u221d \u03b1\u221ad/\u03ba^2"
+  },
+  {
+    "id": "C2",
+    "title": "Generalization gap narrows as initialization scale decreases (Fig. 1)",
+    "statement": "With m=5dr, r=5, U0=\u03b1I, step size 0.0025 and 1e4 GD iterations, the gap between training and test error decreases as \u03b1 decreases from 1 to 1e-3, for d=100 and d=200.",
+    "kind": "figure",
+    "testable": true,
+    "test_plan": "Reproduce the Figure 1 setup for d\u2208{100,200} and \u03b1\u2208{10^0,10^-0.5,...,10^-3}, with 3 resamplings of A_i. Compute relative training error and relative test error ||X\u0302-X*||_F/||X*||_F, and plot the gap against \u03b1.",
+    "evidence_in_paper": "Figure 1",
+    "compute": "gpu-small",
+    "success_criterion": "The test-train gap is smaller at \u03b1=1e-3 than at \u03b1=1, and shows a decreasing trend as \u03b1 decreases for both d.",
+    "success_criterion_source": "paper states gap decreases as \u03b1 decreases"
+  },
+  {
+    "id": "C3",
+    "title": "Large init overfits: training error <1e-4 but test error ~1e-1 (Fig. 2)",
+    "statement": "With \u03b1=1.0, training error falls below 1e-4 while test error stays on the order of 1e-1. With \u03b1=1e-3, test error is much lower.",
+    "kind": "figure",
+    "testable": true,
+    "test_plan": "Use d=100, r=5, m=5dr, \u03b7=0.0025, and run 2e4 GD iterations for \u03b1=1 and \u03b1=1e-3 over 3 seeds. Track training and test error.",
+    "evidence_in_paper": "Figure 2",
+    "compute": "cpu-fast",
+    "success_criterion": "For \u03b1=1, training error <1e-4 and test error ~1e-1 (between 1e-2 and 1). Test error for \u03b1=1e-3 is lower than for \u03b1=1.",
+    "success_criterion_source": "numbers stated in the paper"
+  },
+  {
+    "id": "C4",
+    "title": "No early stopping needed: test error keeps decreasing up to 1e5 iterations (Fig. 3)",
+    "statement": "With U0=0.01I, m=5dr, r=5 and step size 0.0025, test error keeps decreasing gradually over 1e5 GD iterations and does not diverge, for d=100 and 200.",
+    "kind": "figure",
+    "testable": true,
+    "test_plan": "Run GD for 1e5 iterations with d\u2208{100,200} and log test error every 1e3 iterations.",
+    "evidence_in_paper": "Figure 3",
+    "compute": "gpu-small",
+    "success_criterion": "Test error at 1e5 iterations is \u2264 test error at earlier checkpoints (e.g., 2e4) and shows no divergence; final test error is around 0.02 or below.",
+    "success_criterion_source": "Figure 3 shows test error \u22640.02 at the end"
+  },
+  {
+    "id": "C5",
+    "title": "Factorized GD outperforms projected GD on PSD cone (Fig. 4)",
+    "statement": "For rank-1 X* and m from 5d to 35d, GD on the factorized model consistently recovers X* accurately, while PGD in X-space with projection onto the PSD cone needs more samples and degrades as d increases from 100 to 150.",
+    "kind": "figure",
+    "testable": true,
+    "test_plan": "Use rank 1, d\u2208{100,150} and m\u2208{5d,...,35d}. Run both methods with step 0.0025, stopping when training error <0.001 or after 1e4 iterations. Record test error for each.",
+    "evidence_in_paper": "Figure 4",
+    "compute": "gpu-small",
+    "success_criterion": "Factorized GD test error is low across all m. PGD test error is higher than GD at small m, and PGD at d=150 is worse than at d=100.",
+    "success_criterion_source": "paper's stated comparisons"
+  },
+  {
+    "id": "C6",
+    "title": "SGD/GD from identity initialization fits training data but fails to generalize (Fig. 5)",
+    "statement": "With U0=I, d=100, r=5 and m=5dr, both SGD (step 8e-5, one sample per step) and GD drive training error to about 1e-7 while test error remains large.",
+    "kind": "figure",
+    "testable": true,
+    "test_plan": "Run GD with U0=I until training error is about 1e-7, then measure test error. Run SGD with a reduced iteration budget (the paper uses 4e6) and track both errors.",
+    "evidence_in_paper": "Figure 5",
+    "compute": "gpu-small",
+    "success_criterion": "Training error \u2264 about 1e-6 while relative test error stays on the order of 1e-1 or larger.",
+    "success_criterion_source": "paper states test error remains large"
+  }
+]

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-22T16:54:55+0100",
+  "generated_at": "2026-11-10T16:25:42+0000",
   "n_papers": 9,
   "papers": [
     {
@@ -884,11 +884,11 @@
         "rubric": {
           "structure": {
             "pass": true,
-            "detail": "claims.json (7 claims), audit_report.json present"
+            "detail": "claims.json (9 claims), audit_report.json present"
           },
           "evidence": {
             "pass": true,
-            "detail": "3 audited claims; issues: none"
+            "detail": "9 audited claims; issues: none"
           },
           "integrity": {
             "pass": true,
@@ -900,7 +900,7 @@
           },
           "trace": {
             "pass": true,
-            "detail": "155 events, 12 LLM calls, 47 tool runs, 7 failed attempts preserved"
+            "detail": "332 events, 30 LLM calls, 65 tool runs, 19 failed attempts preserved"
           }
         }
       },

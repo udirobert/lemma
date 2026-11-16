@@ -59,7 +59,7 @@ Scenario C is the instructive one: appending is *legal* trace growth, and the fo
 
 ### 4.2 The audit agent abstains a meaningful fraction of the time
 
-Across 48 claims: 29 supported (60%), 9 falsified (19%), 10 inconclusive (21%) — a 79% decisive rate with a genuine abstention option that was exercised, including verdicts recorded as `falsified` against the paper where the control passed. 6 claims recorded control failures; 54 failed run attempts were persisted rather than hidden. All 6 completed judge runs returned PASS on the preexisting rubric.
+Across 48 claims: 29 supported (60%), 9 falsified (19%), 10 inconclusive (21%) — a 79% decisive rate with a genuine abstention option that was exercised, including verdicts recorded as `falsified` against the paper where the control passed. 6 claims recorded control failures; 54 failed run attempts were persisted rather than hidden. All 7 completed judge runs returned PASS on the preexisting rubric.
 
 ### 4.3 Test-retest: same claims, different backends, 46% verdict agreement
 
@@ -75,7 +75,20 @@ Across 48 claims: 29 supported (60%), 9 falsified (19%), 10 inconclusive (21%) �
 
 ### 4.4 Fresh end-to-end run during the sprint
 
-A full pipeline run on arXiv:1712.09203 (algorithmic regularization in over-parameterized matrix sensing; unseen, 6 extracted claims) was launched during the sprint with all stages pinned to a single frontier model. Its trace is hash-chained from record 1 and its workdir was sealed at completion — the evidence head for this report's headline artifact is printed in the appendix. (Outcomes summarized in Table 3 if complete at submission time.)
+A full pipeline run on arXiv:1712.09203 (algorithmic regularization in over-parameterized matrix sensing; unseen, 6 extracted claims) ran end-to-end during the sprint with all stages pinned to a single frontier model. Its trace is hash-chained from record 1 and its workdir was sealed at completion (heads in Appendix A). Outcome: **3 supported, 3 inconclusive, 0 falsified, judge PASS** over a 145-record chained trace.
+
+| Claim | Verdict | Why |
+|---|---|---|
+| C1 | inconclusive | generated script never ran cleanly in 6 tries — abstained rather than guess |
+| C2 | **supported** | train–test gap shrinks monotonically with α (control Spearman 1.0) |
+| C3 | inconclusive | **its own positive control failed** — refused to issue a verdict on a suspect statistic |
+| C4 | **supported** | test error decreases through 1e5 iterations, no divergence |
+| C5 | **supported** | rank-1 recovery across the full m sweep |
+| C6 | inconclusive | SGD short of the 1e-6 threshold inside the reduced compute budget |
+
+Table 3. Fresh audit outcomes on arXiv:1712.09203.
+
+The abstentions are the instructive part: C3 is control-honesty operating on unseen work — the agent's own positive control failed its RIP check, so the pipeline declined to report a verdict rather than launder a broken statistic into a confident one — and C6 reports its compute budget explicitly instead of quietly falsifying. The fresh trail demonstrates the report's two halves at once: a sealed, inspectable record, and abstention over false confidence.
 
 ## 5. Discussion
 
@@ -108,7 +121,11 @@ Practical implications: (i) audit verdicts should ship with their evidence head 
 
 - Tamper demo: `scripts/tamper_demo.py` — prints the four-scenario result verbatim.
 - Calibration analysis: `sprints/epistemics-2026/analysis.json`; figures in `figures/`.
-- Seal of this report's fresh audit workdir: `manifest_root = <PENDING>`; `trace_head = <PENDING>`.
+- Sealed corpus workdir `papers/arxiv-1912.07242` (9 claims, judge PASS, legacy trace):
+  `manifest_root = ec712f4244518e40dedc03eeb7c28f341e76cc886f9f78c60a7d2ba35e0077f6`;
+  `trace_head (post-seal) = 6a524c5c9876fca0bf3054bdd258176327025cce64480ba11ada0de9ec8d932c`.
+  Re-verify with `./lemma verify papers/arxiv-1912.07242`.
+- Seal of the fresh `papers/arxiv-1712.09203` audit (chained trace, 145 records, judge PASS): `manifest_root = 2234edcf6785bc2d656f544f078f199f086e1b700cf0d27b71b9b36d0d595ab7`; `trace_head (post-seal) = 21f922af1e0b8b5126e5f5c30d211f87016f1da20149ecd04d7f7d1c34248481`. Re-verify with `./lemma verify papers/arxiv-1712.09203`.
 
 ## Appendix B. Preexisting vs new work
 

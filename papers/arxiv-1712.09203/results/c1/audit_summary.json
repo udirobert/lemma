@@ -1,0 +1,9 @@
+{
+  "claim_id": "C1",
+  "status": "inconclusive",
+  "metrics": {
+    "script_exit_code": -1,
+    "attempts_used": 6
+  },
+  "notes": "script failed after 6 tries"
+}

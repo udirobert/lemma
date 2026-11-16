@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "attempt_id": "0d7c4312943040f4b6fd893f440318d7",
+  "run_id": "20261116-020815-arxiv-1712.09203",
+  "number": 2,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C3",
+    "title": "Large init overfits: training error <1e-4 but test error ~1e-1 (Fig. 2)",
+    "statement": "With \u03b1=1.0, training error falls below 1e-4 while test error stays on the order of 1e-1. With \u03b1=1e-3, test error is much lower.",
+    "kind": "figure",
+    "testable": true,
+    "test_plan": "Use d=100, r=5, m=5dr, \u03b7=0.0025, and run 2e4 GD iterations for \u03b1=1 and \u03b1=1e-3 over 3 seeds. Track training and test error.",
+    "evidence_in_paper": "Figure 2",
+    "compute": "cpu-fast",
+    "success_criterion": "For \u03b1=1, training error <1e-4 and test error ~1e-1 (between 1e-2 and 1). Test error for \u03b1=1e-3 is lower than for \u03b1=1.",
+    "success_criterion_source": "numbers stated in the paper"
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "febfd7954fdc28e053c612a8a1714ad264beea919b1adcc6be805b16ef717f2e",
+  "script_sha256": "8542c040c1dbcbdb566e0eb6407ffdddc56035e4fdc82d505f2d69af09066097",
+  "created_at": "2026-11-16T09:09:43.981086+00:00"
+}

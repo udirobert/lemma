@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "attempt_id": "3cd4a72629ad43aea680d84d48307b64",
+  "run_id": "20261116-020815-arxiv-1712.09203",
+  "number": 1,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C6",
+    "title": "SGD/GD from identity initialization fits training data but fails to generalize (Fig. 5)",
+    "statement": "With U0=I, d=100, r=5 and m=5dr, both SGD (step 8e-5, one sample per step) and GD drive training error to about 1e-7 while test error remains large.",
+    "kind": "figure",
+    "testable": true,
+    "test_plan": "Run GD with U0=I until training error is about 1e-7, then measure test error. Run SGD with a reduced iteration budget (the paper uses 4e6) and track both errors.",
+    "evidence_in_paper": "Figure 5",
+    "compute": "gpu-small",
+    "success_criterion": "Training error \u2264 about 1e-6 while relative test error stays on the order of 1e-1 or larger.",
+    "success_criterion_source": "paper states test error remains large"
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "8b8c4d4a62cc51e66539e5b5b67e781c2d4fd44765024b2e3d31534bb4c9a7b3",
+  "script_sha256": "660cfac683e9e562bf29659e7e4e24860d33c08d70139022fd666c6664dd80a5",
+  "created_at": "2026-11-16T09:26:25.164055+00:00"
+}

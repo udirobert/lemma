@@ -1,0 +1,5 @@
+{
+  "query": "SGD/GD from identity initialization fits training data but fails to generalize (Fig. 5) With U0=I, d=100, r=5 and m=5dr, both SGD (step 8e-5, one sample per step) and GD drive training error to about 1e-7 whi",
+  "hits": [],
+  "note": "0 related works surfaced via Paperclip (GXL) corpus search (arxiv source); listed as context only \u2014 audit verdicts rest on the numerical evidence above."
+}

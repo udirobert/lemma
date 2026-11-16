@@ -1,0 +1,45 @@
+{
+  "exit_code": 0,
+  "wall_s": 396.446,
+  "summary": {
+    "claim_id": "C4",
+    "status": "supported",
+    "metrics": {
+      "control_final_test_err": 2.717852866311582e-07,
+      "control_pass": true,
+      "d100_m": 2500,
+      "d100_completed": true,
+      "d100_err_at_2e4": 0.00033734012075983333,
+      "d100_err_final": 0.00013308321449235336,
+      "d100_max_after_2e4": 0.00033734012075983333,
+      "d100_final_rel_err": 2.6616642898470683e-05,
+      "d100_min_test_err": 0.00013308321449235336,
+      "d100_argmin_iter": 100000,
+      "d100_final_train_loss": 1.073138246193914e-05,
+      "d100_pass": true,
+      "d100_seconds": 57.5,
+      "d200_m": 5000,
+      "d200_completed": true,
+      "d200_err_at_2e4": 0.001851305027766183,
+      "d200_err_final": 0.000919216614747941,
+      "d200_max_after_2e4": 0.001851305027766183,
+      "d200_final_rel_err": 0.00018384332294958818,
+      "d200_min_test_err": 0.000919216614747941,
+      "d200_argmin_iter": 100000,
+      "d200_final_train_loss": 1.3572841750037451e-05,
+      "d200_pass": true,
+      "d200_seconds": 332.1,
+      "total_seconds": 394.6
+    },
+    "notes": "Test error (||UU^T-X*||_F^2) at 1e5 <= at 2e4, no divergence, final <= 0.03 for d=100,200. Measurement operator is randomized subsampled DCT (RIP ensemble) instead of dense Gaussian for tractability; X*=QQ^T, Q orthonormal d x 5."
+  },
+  "problems": [],
+  "accepted": true,
+  "figures": [
+    {
+      "path": "figures/test_error_vs_iter.png",
+      "sha256": "949e00143aaf05201efc7ed893b7dfc713ee671a640e89cad23a78d500ebbe4b"
+    }
+  ],
+  "weave_url": null
+}

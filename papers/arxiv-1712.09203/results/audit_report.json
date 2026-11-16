@@ -1,0 +1,580 @@
+{
+  "claims": [
+    {
+      "id": "C1",
+      "status": "inconclusive",
+      "attempts": 3,
+      "summary": {
+        "claim_id": "C1",
+        "status": "inconclusive",
+        "metrics": {
+          "script_exit_code": -1,
+          "attempts_used": 6
+        },
+        "notes": "script failed after 6 tries"
+      },
+      "source": "agent_generated",
+      "attempt_id": "c2a698c0514b419abb36de91e5d2f3b0",
+      "candidate_summary": {
+        "claim_id": "C1",
+        "status": "inconclusive",
+        "metrics": {
+          "script_exit_code": -1,
+          "attempts_used": 6
+        },
+        "notes": "script failed after 6 tries"
+      },
+      "candidate_source": "agent_generated",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "859e29a627f64d7e9799ef6b0176e8d4",
+        "29a2aded7e8c489bb49ca90f7202cad0",
+        "c2a698c0514b419abb36de91e5d2f3b0"
+      ]
+    },
+    {
+      "id": "C2",
+      "status": "supported",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C2",
+        "status": "supported",
+        "metrics": {
+          "d100_control_spearman": 1.0,
+          "d100_mean_gap_by_alpha": [
+            3.2561020904648097,
+            0.39695537201513215,
+            0.08231269444333354,
+            0.023529078910545023,
+            0.007272163632505037,
+            0.002307659426357365,
+            0.0007703662671370808
+          ],
+          "d100_mean_test_by_alpha": [
+            3.3052597856886976,
+            0.443174440284067,
+            0.11284243067410428,
+            0.0420647686717863,
+            0.016688550738486546,
+            0.006265258439780291,
+            0.00225040885230884
+          ],
+          "d100_mean_train_by_alpha": [
+            0.04915769398212433,
+            0.04621906578540802,
+            0.03052973747253418,
+            0.018535690382122993,
+            0.009416387416422367,
+            0.003957598935812712,
+            0.0014800425851717591
+          ],
+          "d100_gap_alpha1": 3.2561020904648097,
+          "d100_gap_alpha1e-3": 0.0007703662671370808,
+          "d100_spearman_logalpha_vs_gap": 1.0,
+          "d200_control_spearman": 1.0,
+          "d200_mean_gap_by_alpha": [
+            6.049080700263642,
+            0.8445718180353129,
+            0.2211796499226724,
+            0.05943445090137069,
+            0.01706672093604548,
+            0.005097783031183577,
+            0.0015857690387215035
+          ],
+          "d200_mean_test_by_alpha": [
+            6.049083775855794,
+            0.8458339684297327,
+            0.2423510247900322,
+            0.08013064946911877,
+            0.029112813125893904,
+            0.010351166920977926,
+            0.0035472587124254127
+          ],
+          "d200_mean_train_by_alpha": [
+            3.0755920761293964e-06,
+            0.0012621503556147218,
+            0.02117137610912323,
+            0.02069619856774807,
+            0.012046092189848423,
+            0.00525338388979435,
+            0.0019614899065345526
+          ],
+          "d200_gap_alpha1": 6.049080700263642,
+          "d200_gap_alpha1e-3": 0.0015857690387215035,
+          "d200_spearman_logalpha_vs_gap": 1.0,
+          "d100_seed0_exact_paper_eta0.0025_T1e4_gap_by_alpha": [
+            3.2419575975170107,
+            0.39778693832560996,
+            0.0826619919020194,
+            0.02310805656526818,
+            0.006914862861116162,
+            0.0021310871120749,
+            0.0006962550865671903
+          ],
+          "control_pass": true,
+          "d100_pass": true,
+          "d200_pass": true,
+          "runtime_s": 24454.874826192856
+        },
+        "notes": "Gap at alpha=1e-3 smaller than at alpha=1 and decreasing trend (Spearman>=0.7) for d=100,200. Main runs use eta=0.025,T=1000 (same eta*T as paper) for CPU budget; d=100 seed0 also run at exact paper eta=0.0025,T=1e4. X*=QQ^T (kappa=1), symmetrized Gaussian A_i, m=5dr."
+      },
+      "source": "agent_generated",
+      "attempt_id": "e34ea1fb00c24484ad9d46f4b544a2f3",
+      "candidate_summary": {
+        "claim_id": "C2",
+        "status": "supported",
+        "metrics": {
+          "d100_control_spearman": 1.0,
+          "d100_mean_gap_by_alpha": [
+            3.2561020904648097,
+            0.39695537201513215,
+            0.08231269444333354,
+            0.023529078910545023,
+            0.007272163632505037,
+            0.002307659426357365,
+            0.0007703662671370808
+          ],
+          "d100_mean_test_by_alpha": [
+            3.3052597856886976,
+            0.443174440284067,
+            0.11284243067410428,
+            0.0420647686717863,
+            0.016688550738486546,
+            0.006265258439780291,
+            0.00225040885230884
+          ],
+          "d100_mean_train_by_alpha": [
+            0.04915769398212433,
+            0.04621906578540802,
+            0.03052973747253418,
+            0.018535690382122993,
+            0.009416387416422367,
+            0.003957598935812712,
+            0.0014800425851717591
+          ],
+          "d100_gap_alpha1": 3.2561020904648097,
+          "d100_gap_alpha1e-3": 0.0007703662671370808,
+          "d100_spearman_logalpha_vs_gap": 1.0,
+          "d200_control_spearman": 1.0,
+          "d200_mean_gap_by_alpha": [
+            6.049080700263642,
+            0.8445718180353129,
+            0.2211796499226724,
+            0.05943445090137069,
+            0.01706672093604548,
+            0.005097783031183577,
+            0.0015857690387215035
+          ],
+          "d200_mean_test_by_alpha": [
+            6.049083775855794,
+            0.8458339684297327,
+            0.2423510247900322,
+            0.08013064946911877,
+            0.029112813125893904,
+            0.010351166920977926,
+            0.0035472587124254127
+          ],
+          "d200_mean_train_by_alpha": [
+            3.0755920761293964e-06,
+            0.0012621503556147218,
+            0.02117137610912323,
+            0.02069619856774807,
+            0.012046092189848423,
+            0.00525338388979435,
+            0.0019614899065345526
+          ],
+          "d200_gap_alpha1": 6.049080700263642,
+          "d200_gap_alpha1e-3": 0.0015857690387215035,
+          "d200_spearman_logalpha_vs_gap": 1.0,
+          "d100_seed0_exact_paper_eta0.0025_T1e4_gap_by_alpha": [
+            3.2419575975170107,
+            0.39778693832560996,
+            0.0826619919020194,
+            0.02310805656526818,
+            0.006914862861116162,
+            0.0021310871120749,
+            0.0006962550865671903
+          ],
+          "control_pass": true,
+          "d100_pass": true,
+          "d200_pass": true,
+          "runtime_s": 24454.874826192856
+        },
+        "notes": "Gap at alpha=1e-3 smaller than at alpha=1 and decreasing trend (Spearman>=0.7) for d=100,200. Main runs use eta=0.025,T=1000 (same eta*T as paper) for CPU budget; d=100 seed0 also run at exact paper eta=0.0025,T=1e4. X*=QQ^T (kappa=1), symmetrized Gaussian A_i, m=5dr."
+      },
+      "candidate_source": "agent_generated",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "e34ea1fb00c24484ad9d46f4b544a2f3"
+      ]
+    },
+    {
+      "id": "C3",
+      "status": "inconclusive",
+      "attempts": 2,
+      "summary": {
+        "claim_id": "C3",
+        "status": "inconclusive",
+        "metrics": {
+          "control_pass": false,
+          "control_rip_emp_norms": [
+            1.0209957413089932,
+            1.0006163224753808,
+            1.0125059611143905
+          ],
+          "control_grad_rel_err": 0.027016737229916817,
+          "seeds_completed": 2,
+          "iterations": 20000,
+          "runtime_s": 1151.6,
+          "d": 100,
+          "r": 5,
+          "m": 2500,
+          "eta": 0.0025,
+          "train_final_alpha1.0": [
+            0.001956960673012105,
+            0.004632427146289469
+          ],
+          "test_final_alpha1.0": [
+            53.58483744449212,
+            53.757134303627694
+          ],
+          "mean_train_alpha1.0": 0.003294693909650787,
+          "mean_test_alpha1.0": 53.67098587405991,
+          "train_final_alpha0.001": [
+            6.548040331075202e-06,
+            1.0453687872073534e-05
+          ],
+          "test_final_alpha0.001": [
+            1.4796189889193893e-05,
+            2.4970067458838367e-05
+          ],
+          "mean_train_alpha0.001": 8.500864101574368e-06,
+          "mean_test_alpha0.001": 1.988312867401613e-05
+        },
+        "notes": "Positive control failed (RIP-norm check or gradient check); statistic suspect. Update uses paper eq (2.2): U <- (I - eta*M_t)U; A_i=(Q+Q^T)/2 Gaussian; X*=U*U*^T rank-5, kappa=1; train err=(1/m)sum residual^2."
+      },
+      "source": "agent_generated",
+      "attempt_id": "0d7c4312943040f4b6fd893f440318d7",
+      "candidate_summary": {
+        "claim_id": "C3",
+        "status": "inconclusive",
+        "metrics": {
+          "control_pass": false,
+          "control_rip_emp_norms": [
+            1.0209957413089932,
+            1.0006163224753808,
+            1.0125059611143905
+          ],
+          "control_grad_rel_err": 0.027016737229916817,
+          "seeds_completed": 2,
+          "iterations": 20000,
+          "runtime_s": 1151.6,
+          "d": 100,
+          "r": 5,
+          "m": 2500,
+          "eta": 0.0025,
+          "train_final_alpha1.0": [
+            0.001956960673012105,
+            0.004632427146289469
+          ],
+          "test_final_alpha1.0": [
+            53.58483744449212,
+            53.757134303627694
+          ],
+          "mean_train_alpha1.0": 0.003294693909650787,
+          "mean_test_alpha1.0": 53.67098587405991,
+          "train_final_alpha0.001": [
+            6.548040331075202e-06,
+            1.0453687872073534e-05
+          ],
+          "test_final_alpha0.001": [
+            1.4796189889193893e-05,
+            2.4970067458838367e-05
+          ],
+          "mean_train_alpha0.001": 8.500864101574368e-06,
+          "mean_test_alpha0.001": 1.988312867401613e-05
+        },
+        "notes": "Positive control failed (RIP-norm check or gradient check); statistic suspect. Update uses paper eq (2.2): U <- (I - eta*M_t)U; A_i=(Q+Q^T)/2 Gaussian; X*=U*U*^T rank-5, kappa=1; train err=(1/m)sum residual^2."
+      },
+      "candidate_source": "agent_generated",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "6e7ec885f5a944fe99c69fb73a332ae7",
+        "0d7c4312943040f4b6fd893f440318d7"
+      ]
+    },
+    {
+      "id": "C4",
+      "status": "supported",
+      "attempts": 2,
+      "summary": {
+        "claim_id": "C4",
+        "status": "supported",
+        "metrics": {
+          "control_final_test_err": 2.717852866311582e-07,
+          "control_pass": true,
+          "d100_m": 2500,
+          "d100_completed": true,
+          "d100_err_at_2e4": 0.00033734012075983333,
+          "d100_err_final": 0.00013308321449235336,
+          "d100_max_after_2e4": 0.00033734012075983333,
+          "d100_final_rel_err": 2.6616642898470683e-05,
+          "d100_min_test_err": 0.00013308321449235336,
+          "d100_argmin_iter": 100000,
+          "d100_final_train_loss": 1.073138246193914e-05,
+          "d100_pass": true,
+          "d100_seconds": 57.5,
+          "d200_m": 5000,
+          "d200_completed": true,
+          "d200_err_at_2e4": 0.001851305027766183,
+          "d200_err_final": 0.000919216614747941,
+          "d200_max_after_2e4": 0.001851305027766183,
+          "d200_final_rel_err": 0.00018384332294958818,
+          "d200_min_test_err": 0.000919216614747941,
+          "d200_argmin_iter": 100000,
+          "d200_final_train_loss": 1.3572841750037451e-05,
+          "d200_pass": true,
+          "d200_seconds": 332.1,
+          "total_seconds": 394.6
+        },
+        "notes": "Test error (||UU^T-X*||_F^2) at 1e5 <= at 2e4, no divergence, final <= 0.03 for d=100,200. Measurement operator is randomized subsampled DCT (RIP ensemble) instead of dense Gaussian for tractability; X*=QQ^T, Q orthonormal d x 5."
+      },
+      "source": "agent_generated",
+      "attempt_id": "cbef0c9f96a648649b49ee98df301bfb",
+      "candidate_summary": {
+        "claim_id": "C4",
+        "status": "supported",
+        "metrics": {
+          "control_final_test_err": 2.717852866311582e-07,
+          "control_pass": true,
+          "d100_m": 2500,
+          "d100_completed": true,
+          "d100_err_at_2e4": 0.00033734012075983333,
+          "d100_err_final": 0.00013308321449235336,
+          "d100_max_after_2e4": 0.00033734012075983333,
+          "d100_final_rel_err": 2.6616642898470683e-05,
+          "d100_min_test_err": 0.00013308321449235336,
+          "d100_argmin_iter": 100000,
+          "d100_final_train_loss": 1.073138246193914e-05,
+          "d100_pass": true,
+          "d100_seconds": 57.5,
+          "d200_m": 5000,
+          "d200_completed": true,
+          "d200_err_at_2e4": 0.001851305027766183,
+          "d200_err_final": 0.000919216614747941,
+          "d200_max_after_2e4": 0.001851305027766183,
+          "d200_final_rel_err": 0.00018384332294958818,
+          "d200_min_test_err": 0.000919216614747941,
+          "d200_argmin_iter": 100000,
+          "d200_final_train_loss": 1.3572841750037451e-05,
+          "d200_pass": true,
+          "d200_seconds": 332.1,
+          "total_seconds": 394.6
+        },
+        "notes": "Test error (||UU^T-X*||_F^2) at 1e5 <= at 2e4, no divergence, final <= 0.03 for d=100,200. Measurement operator is randomized subsampled DCT (RIP ensemble) instead of dense Gaussian for tractability; X*=QQ^T, Q orthonormal d x 5."
+      },
+      "candidate_source": "agent_generated",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "2fb33fd168254183a425fe7964b81f8a",
+        "cbef0c9f96a648649b49ee98df301bfb"
+      ]
+    },
+    {
+      "id": "C5",
+      "status": "supported",
+      "attempts": 3,
+      "summary": {
+        "claim_id": "C5",
+        "status": "supported",
+        "metrics": {
+          "control_pass": true,
+          "control_te_gd": 0.0025735011697681186,
+          "control_te_pgd": 0.003648721010711913,
+          "low_threshold": 0.1,
+          "n_configs_done": 8,
+          "skipped": "[]",
+          "d100_m5d_te_gd": 0.013785376119381283,
+          "d100_m5d_te_pgd": 0.8109153065728734,
+          "d100_m5d_it_gd": 3419,
+          "d100_m5d_it_pgd": 301,
+          "d150_m5d_te_gd": 0.015029522169140965,
+          "d150_m5d_te_pgd": 0.8751514344523543,
+          "d150_m5d_it_gd": 3506,
+          "d150_m5d_it_pgd": 187,
+          "d100_m10d_te_gd": 0.004295611259746607,
+          "d100_m10d_te_pgd": 0.6060350718719869,
+          "d100_m10d_it_gd": 2750,
+          "d100_m10d_it_pgd": 789,
+          "d150_m10d_te_gd": 0.003986485628792337,
+          "d150_m10d_te_pgd": 0.7383466228279533,
+          "d150_m10d_it_gd": 2955,
+          "d150_m10d_it_pgd": 465,
+          "d100_m20d_te_gd": 0.002916025218216966,
+          "d100_m20d_te_pgd": 0.2902912283014042,
+          "d100_m20d_it_gd": 2647,
+          "d100_m20d_it_pgd": 2660,
+          "d150_m20d_te_gd": 0.0028628071898858503,
+          "d150_m20d_te_pgd": 0.5000472561197817,
+          "d150_m20d_it_gd": 2827,
+          "d150_m20d_it_pgd": 1346,
+          "d100_m35d_te_gd": 0.002623282983840092,
+          "d100_m35d_te_pgd": 0.0498115802246962,
+          "d100_m35d_it_gd": 2645,
+          "d100_m35d_it_pgd": 4988,
+          "d150_m35d_te_gd": 0.0025710400995026207,
+          "d150_m35d_te_pgd": 0.20179593568211682,
+          "d150_m35d_it_gd": 2756,
+          "d150_m35d_it_pgd": 3803,
+          "gd_low_all_m": true,
+          "pgd_worse_than_gd_small_m": true,
+          "pgd_d150_worse_than_d100": true,
+          "pgd_mean_te_d100": 0.4392632967427402,
+          "pgd_mean_te_d150": 0.5788353122705515,
+          "runtime_s": 330.72495794296265
+        },
+        "notes": "Rank-1, eta=0.0025, stop at train<1e-3 or 1e4 iters, alpha=1/d, one seed per config, m/d in [5, 10, 20, 35]. GD low across m: True; PGD>GD at m=5d: True; PGD d=150 worse than d=100: True."
+      },
+      "source": "agent_generated",
+      "attempt_id": "5ddc46fbdc714887bf84b729739cf046",
+      "candidate_summary": {
+        "claim_id": "C5",
+        "status": "supported",
+        "metrics": {
+          "control_pass": true,
+          "control_te_gd": 0.0025735011697681186,
+          "control_te_pgd": 0.003648721010711913,
+          "low_threshold": 0.1,
+          "n_configs_done": 8,
+          "skipped": "[]",
+          "d100_m5d_te_gd": 0.013785376119381283,
+          "d100_m5d_te_pgd": 0.8109153065728734,
+          "d100_m5d_it_gd": 3419,
+          "d100_m5d_it_pgd": 301,
+          "d150_m5d_te_gd": 0.015029522169140965,
+          "d150_m5d_te_pgd": 0.8751514344523543,
+          "d150_m5d_it_gd": 3506,
+          "d150_m5d_it_pgd": 187,
+          "d100_m10d_te_gd": 0.004295611259746607,
+          "d100_m10d_te_pgd": 0.6060350718719869,
+          "d100_m10d_it_gd": 2750,
+          "d100_m10d_it_pgd": 789,
+          "d150_m10d_te_gd": 0.003986485628792337,
+          "d150_m10d_te_pgd": 0.7383466228279533,
+          "d150_m10d_it_gd": 2955,
+          "d150_m10d_it_pgd": 465,
+          "d100_m20d_te_gd": 0.002916025218216966,
+          "d100_m20d_te_pgd": 0.2902912283014042,
+          "d100_m20d_it_gd": 2647,
+          "d100_m20d_it_pgd": 2660,
+          "d150_m20d_te_gd": 0.0028628071898858503,
+          "d150_m20d_te_pgd": 0.5000472561197817,
+          "d150_m20d_it_gd": 2827,
+          "d150_m20d_it_pgd": 1346,
+          "d100_m35d_te_gd": 0.002623282983840092,
+          "d100_m35d_te_pgd": 0.0498115802246962,
+          "d100_m35d_it_gd": 2645,
+          "d100_m35d_it_pgd": 4988,
+          "d150_m35d_te_gd": 0.0025710400995026207,
+          "d150_m35d_te_pgd": 0.20179593568211682,
+          "d150_m35d_it_gd": 2756,
+          "d150_m35d_it_pgd": 3803,
+          "gd_low_all_m": true,
+          "pgd_worse_than_gd_small_m": true,
+          "pgd_d150_worse_than_d100": true,
+          "pgd_mean_te_d100": 0.4392632967427402,
+          "pgd_mean_te_d150": 0.5788353122705515,
+          "runtime_s": 330.72495794296265
+        },
+        "notes": "Rank-1, eta=0.0025, stop at train<1e-3 or 1e4 iters, alpha=1/d, one seed per config, m/d in [5, 10, 20, 35]. GD low across m: True; PGD>GD at m=5d: True; PGD d=150 worse than d=100: True."
+      },
+      "candidate_source": "agent_generated",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "c6a5e86768054a7d96acef0cf7aae5e4",
+        "e67655f163584cc89b36e0cc98759929",
+        "5ddc46fbdc714887bf84b729739cf046"
+      ]
+    },
+    {
+      "id": "C6",
+      "status": "inconclusive",
+      "attempts": 1,
+      "summary": {
+        "claim_id": "C6",
+        "status": "inconclusive",
+        "metrics": {
+          "d": 100,
+          "r": 5,
+          "m": 2500,
+          "eta_gd": 0.0518014489611436,
+          "gd_iters": 4300,
+          "gd_train": 9.325242005924456e-09,
+          "gd_test_sq": 54.397546384312804,
+          "gd_rel_test": 3.2984101135035595,
+          "sgd_eta": 8e-05,
+          "sgd_steps": 1120000,
+          "sgd_diverged": false,
+          "sgd_train": 6.056054152219199e-05,
+          "sgd_test_sq": 44.510229121454586,
+          "sgd_rel_test": 2.9836296392633788,
+          "smallinit_train": 1.1510188521408894e-06,
+          "smallinit_rel_test": 0.001140464117207227,
+          "ctrl_train": 4.6115599934470485e-26,
+          "ctrl_test": 2440.2201608518144,
+          "ctrl_expected": 2440.2201608518144,
+          "control_pass": true,
+          "runtime_s": 672.890289068222
+        },
+        "notes": "Training error did not reach <=1e-6 for SGD (reduced budget 1120000 steps vs paper 4e6); test error behaviour: GD rel 3.3, SGD rel 2.98. Small-init GD contrast rel test=0.00114. Train error = f(U)=1/(2m)sum r_i^2; test = ||UU^T-X*||_F^2."
+      },
+      "source": "agent_generated",
+      "attempt_id": "3cd4a72629ad43aea680d84d48307b64",
+      "candidate_summary": {
+        "claim_id": "C6",
+        "status": "inconclusive",
+        "metrics": {
+          "d": 100,
+          "r": 5,
+          "m": 2500,
+          "eta_gd": 0.0518014489611436,
+          "gd_iters": 4300,
+          "gd_train": 9.325242005924456e-09,
+          "gd_test_sq": 54.397546384312804,
+          "gd_rel_test": 3.2984101135035595,
+          "sgd_eta": 8e-05,
+          "sgd_steps": 1120000,
+          "sgd_diverged": false,
+          "sgd_train": 6.056054152219199e-05,
+          "sgd_test_sq": 44.510229121454586,
+          "sgd_rel_test": 2.9836296392633788,
+          "smallinit_train": 1.1510188521408894e-06,
+          "smallinit_rel_test": 0.001140464117207227,
+          "ctrl_train": 4.6115599934470485e-26,
+          "ctrl_test": 2440.2201608518144,
+          "ctrl_expected": 2440.2201608518144,
+          "control_pass": true,
+          "runtime_s": 672.890289068222
+        },
+        "notes": "Training error did not reach <=1e-6 for SGD (reduced budget 1120000 steps vs paper 4e6); test error behaviour: GD rel 3.3, SGD rel 2.98. Small-init GD contrast rel test=0.00114. Train error = f(U)=1/(2m)sum r_i^2; test = ||UU^T-X*||_F^2."
+      },
+      "candidate_source": "agent_generated",
+      "reference_summary": null,
+      "reference_disagreement": false,
+      "reference_checked": false,
+      "attempt_ids": [
+        "3cd4a72629ad43aea680d84d48307b64"
+      ]
+    }
+  ]
+}

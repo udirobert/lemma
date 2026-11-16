@@ -1,0 +1,41 @@
+{
+  "claim_id": "C3",
+  "status": "inconclusive",
+  "metrics": {
+    "control_pass": false,
+    "control_rip_emp_norms": [
+      1.0209957413089932,
+      1.0006163224753808,
+      1.0125059611143905
+    ],
+    "control_grad_rel_err": 0.027016737229916817,
+    "seeds_completed": 2,
+    "iterations": 20000,
+    "runtime_s": 1151.6,
+    "d": 100,
+    "r": 5,
+    "m": 2500,
+    "eta": 0.0025,
+    "train_final_alpha1.0": [
+      0.001956960673012105,
+      0.004632427146289469
+    ],
+    "test_final_alpha1.0": [
+      53.58483744449212,
+      53.757134303627694
+    ],
+    "mean_train_alpha1.0": 0.003294693909650787,
+    "mean_test_alpha1.0": 53.67098587405991,
+    "train_final_alpha0.001": [
+      6.548040331075202e-06,
+      1.0453687872073534e-05
+    ],
+    "test_final_alpha0.001": [
+      1.4796189889193893e-05,
+      2.4970067458838367e-05
+    ],
+    "mean_train_alpha0.001": 8.500864101574368e-06,
+    "mean_test_alpha0.001": 1.988312867401613e-05
+  },
+  "notes": "Positive control failed (RIP-norm check or gradient check); statistic suspect. Update uses paper eq (2.2): U <- (I - eta*M_t)U; A_i=(Q+Q^T)/2 Gaussian; X*=U*U*^T rank-5, kappa=1; train err=(1/m)sum residual^2."
+}

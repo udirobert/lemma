@@ -350,7 +350,7 @@ para(
     "option that was exercised, including verdicts recorded as falsified "
     "against the paper where the control passed. 6 claims recorded control "
     "failures; 54 failed run attempts were persisted rather than hidden. "
-    "All 6 completed judge runs returned PASS on the preexisting rubric."
+    "All 7 completed judge runs returned PASS on the preexisting rubric."
 )
 doc.add_picture(str(FIG / "fig1_verdict_distribution.png"), width=Inches(6.2))
 para(
@@ -409,7 +409,57 @@ para(
 )
 
 h("4.4 Fresh end-to-end run during the sprint", 2)
-para("PENDING_FRESH_RUN_SUMMARY")
+para(
+    "A full pipeline run on arXiv:1712.09203 (algorithmic regularization "
+    "in over-parameterized matrix sensing; unseen, 6 extracted claims) ran "
+    "end-to-end during the sprint with all stages pinned to a single "
+    "frontier model. Its trace is hash-chained from record 1 and its "
+    "workdir was sealed at completion (heads in Appendix A). Outcome: 3 "
+    "supported, 3 inconclusive, 0 falsified, judge PASS over a 145-record "
+    "chained trace."
+)
+table = doc.add_table(rows=7, cols=3)
+table.style = "Light Grid Accent 1"
+hdr = table.rows[0].cells
+for j, t in enumerate(["Claim", "Verdict", "Why"]):
+    hdr[j].text = t
+data = [
+    (
+        "C1",
+        "inconclusive",
+        "generated script never ran cleanly in 6 tries — abstained rather than guess",
+    ),
+    (
+        "C2",
+        "supported",
+        "train–test gap shrinks monotonically with α (control Spearman 1.0)",
+    ),
+    (
+        "C3",
+        "inconclusive",
+        "its own positive control failed — refused a verdict on a suspect statistic",
+    ),
+    ("C4", "supported", "test error decreases through 1e5 iterations, no divergence"),
+    ("C5", "supported", "rank-1 recovery across the full m sweep"),
+    (
+        "C6",
+        "inconclusive",
+        "SGD short of the 1e-6 threshold inside the reduced compute budget",
+    ),
+]
+for i, r in enumerate(data, 1):
+    for j, v in enumerate(r):
+        table.rows[i].cells[j].text = v
+para("Table 3. Fresh audit outcomes on arXiv:1712.09203.", italic=True)
+para(
+    "The abstentions are the instructive part: C3 is control-honesty "
+    "operating on unseen work — the agent's own positive control failed "
+    "its RIP check, so the pipeline declined to report a verdict rather "
+    "than launder a broken statistic into a confident one — and C6 "
+    "reports its compute budget explicitly instead of quietly falsifying. "
+    "The fresh trail demonstrates the report's two halves at once: a "
+    "sealed, inspectable record, and abstention over false confidence."
+)
 
 # ---- 5. Discussion ---------------------------------------------------------
 h("5. Discussion", 1)
@@ -509,7 +559,18 @@ h("Appendix A. Evidence heads and artifacts", 1)
 for t in [
     "Tamper demo: scripts/tamper_demo.py — prints the four-scenario result verbatim.",
     "Calibration analysis: sprints/epistemics-2026/analysis.json; figures in figures/.",
-    "PENDING_SEAL_HEADS",
+    "Sealed corpus workdir papers/arxiv-1912.07242 (9 claims, judge PASS, "
+    "legacy trace): manifest_root = "
+    "ec712f4244518e40dedc03eeb7c28f341e76cc886f9f78c60a7d2ba35e0077f6; "
+    "trace_head (post-seal) = "
+    "6a524c5c9876fca0bf3054bdd258176327025cce64480ba11ada0de9ec8d932c. "
+    "Re-verify with ./lemma verify papers/arxiv-1912.07242.",
+    "Sealed fresh workdir papers/arxiv-1712.09203 (6 claims, judge PASS, "
+    "chained trace, 145 records): manifest_root = "
+    "2234edcf6785bc2d656f544f078f199f086e1b700cf0d27b71b9b36d0d595ab7; "
+    "trace_head (post-seal) = "
+    "21f922af1e0b8b5126e5f5c30d211f87016f1da20149ecd04d7f7d1c34248481. "
+    "Re-verify with ./lemma verify papers/arxiv-1712.09203.",
 ]:
     doc.add_paragraph(t, style="List Bullet")
 

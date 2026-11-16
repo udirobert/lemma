@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "attempt_id": "418b32a151bd4deebfe084aeaf294c23",
+  "run_id": "20261116-015951-arxiv-1712.09203",
+  "number": 2,
+  "source": "agent_generated",
+  "claim": {
+    "id": "C1",
+    "title": "GD with small init recovers low-rank PSD matrix in over-parameterized matrix sensing",
+    "statement": "Under (4r,\u03b4)-RIP, gradient descent on f(U)=1/(2m)\u03a3(y_i-<A_i,UU^T>)^2 with U\u2208R^{d\u00d7d}, initialization U0=\u03b1B (B orthonormal) and small step size achieves ||U_T U_T^T - X*||_F^2 \u2272 \u03b1\u221ad/\u03ba^2 for every T in the range (\u03ba log(d/\u03b1))/\u03b7 \u2272 T \u2272 1/(\u03b7\u221ad \u03ba \u03b1).",
+    "kind": "theorem",
+    "testable": true,
+    "test_plan": "Simulate with d=100, r=5, U* Gaussian with columns normalized, X*=U*U*^T, and m=5dr symmetric Gaussian A_i. Run GD with \u03b7=0.0025 and \u03b1\u2208{1e-1,1e-2,1e-3,1e-4}, using U0=\u03b1I. For each \u03b1, record ||UU^T-X*||_F^2 after convergence (around 1e4 iterations), averaged over 3 seeds. Then regress log(error) on log(\u03b1).",
+    "evidence_in_paper": "Theorem 1.1 and Theorem 4.1 (proof); Figures 1-3 give empirical support.",
+    "compute": "cpu-fast",
+    "success_criterion": "Final squared recovery error decreases as \u03b1 decreases, consistent with O(\u03b1\u221ad) scaling: the fitted log-log slope is positive (about 1), and error is small (\u226a1) for small \u03b1 while the training loss is near zero.",
+    "success_criterion_source": "derived from the claim's error bound \u221d \u03b1\u221ad/\u03ba^2"
+  },
+  "feedback": "",
+  "auto_feedback": "",
+  "criterion_sha256": "79191727ffd322c7aedbcde4e9f0af9358dfca806f12c55685f33239a5064d73",
+  "script_sha256": "c79d7ee5b15bf7622d761120ac9eb44694fcbb229c192bb6b4c5e198bc91190b",
+  "created_at": "2026-11-16T02:01:06.589676+00:00"
+}
