@@ -150,7 +150,7 @@ def main() -> int:
             "dataset": "https://huggingface.co/datasets/Papajams/beam-audit-bench",
             "space_ca": "https://huggingface.co/spaces/Papajams/beam-audit-ca-grokking",
             "space_icl": "https://huggingface.co/spaces/Papajams/beam-audit-icl-bayesian",
-            "room": "https://lemmabio.netlify.app/room/",
+            "room": "https://lemma.famile.xyz/room/",
             "github": "https://github.com/udirobert/lemma",
             "discussion": "https://huggingface.co/reflection/Beam-1.0-501B-A23B/discussions/5",
         },

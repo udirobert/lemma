@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lemmabio.netlify.app/sitemap-index.xml
+Sitemap: https://lemma.famile.xyz/sitemap-index.xml

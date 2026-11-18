@@ -66,14 +66,24 @@ if (form) {
       btn.textContent = "submitting…";
     }
     try {
-      const res = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(
-          Object.fromEntries(fd.entries()) as Record<string, string>
-        ).toString(),
-      });
-      if (!res.ok) throw new Error(String(res.status));
+      const post = () =>
+        fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(
+            Object.fromEntries(fd.entries()) as Record<string, string>
+          ).toString(),
+        });
+      let res: Response | undefined;
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          res = await post();
+          if (res.ok) break;
+        } catch {
+          res = undefined;
+        }
+      }
+      if (!res?.ok) throw new Error(String(res?.status ?? "network"));
       form.innerHTML =
         '<p class="wl-thanks">you\'re on the list — we\'ll write when the gate opens. ' +
         (interest === "request-audit"

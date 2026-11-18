@@ -47,7 +47,8 @@ image = (
 
 BUNDLE_PATH = "/app/audit-room.json"
 DICT_NAME = "lemma-room-state"
-SITE_ORIGIN = "https://lemmabio.netlify.app"
+SITE_ORIGIN = "https://lemma.famile.xyz"
+SITE_ORIGIN_ALT = "https://lemmabio.netlify.app"
 MAX_BODY = 2048
 PER_IP_PER_DAY = 10
 MAX_CONCURRENT = 4
@@ -235,7 +236,7 @@ def api():
 
     job_id_re = re.compile(r"[A-Za-z0-9_-]{4,80}\Z")
     self_origin = "https://thepapajams--lemma-room-api.modal.run"
-    allowed_origins = {SITE_ORIGIN, self_origin}
+    allowed_origins = {SITE_ORIGIN, SITE_ORIGIN_ALT, self_origin}
 
     def _json(payload: dict, status: int = 200) -> JSONResponse:
         return JSONResponse(
