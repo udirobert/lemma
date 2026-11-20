@@ -1,0 +1,1083 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MecCog Challenge Specifics</title>
+<link rel="icon" href="MecCog_logo_transparent.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<style>
+/* Same system as the main page: white ground, indigo ink, orange accent. */
+:root {
+  color-scheme: light;
+  --indigo: #2B1B74; --indigo-soft: #4A35A8;
+  --amber: #F0802B; --mint: #16A06A;
+  --page: #FFFFFF; --tint: #F6F5FB; --surface: #FFFFFF;
+  --ink: #15152B; --ink-soft: #5C5C78; --rule: #E6E5EF;
+  --display: "Poppins", system-ui, sans-serif;
+  --body: "DM Sans", system-ui, -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--page); color: var(--ink); font-family: var(--body); font-size: 1.0625rem; line-height: 1.7; }
+.in { max-width: 82rem; margin-inline: auto; padding-left: max(20px, env(safe-area-inset-left,0px)); padding-right: max(20px, env(safe-area-inset-right,0px)); }
+.nav { border-bottom: 1px solid var(--rule); }
+.nav .in { display: flex; align-items: center; gap: 1.5rem; padding-block: 1.1rem; flex-wrap: wrap; }
+.nav .logo { display: flex; align-items: center; gap: .65rem; color: var(--ink); text-decoration: none; font-family: var(--display); font-weight: 700; font-size: 1.3rem; }
+.nav .logo img { width: 54px; height: 54px; }
+.nav menu { display: flex; gap: 1.4rem; list-style: none; margin: 0 0 0 auto; padding: 0; flex-wrap: wrap; }
+.nav menu a { color: var(--ink-soft); text-decoration: none; font-size: 1.02rem; font-weight: 500; }
+.nav menu a:hover { color: var(--indigo-soft); }
+.btn { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--display); font-weight: 600; font-size: .88rem; padding: .55rem 1.15rem; border-radius: 999px; text-decoration: none; background: var(--amber); color: #231306; border: 2px solid transparent; }
+.btn:hover { filter: brightness(1.07); }
+
+header.page { padding-block: 3rem 1rem; }
+header.page .eyebrow { font-family: var(--display); font-size: .72rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--amber); margin: 0 0 .9rem; }
+header.page h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2.1rem,1.5rem + 2.6vw,3.2rem); letter-spacing: -0.025em; line-height: 1.12; margin: 0; color: var(--indigo); }
+header.page .lede { font-size: 1.15rem; color: var(--ink-soft); max-width: 44ch; margin: 1rem 0 0; }
+
+/* the decision panel */
+.glance { background: var(--tint); border: 1px solid var(--rule); border-radius: 18px; padding: clamp(1.4rem,1rem + 1.6vw,2.2rem); margin-block: 2.5rem 3.5rem; }
+.glance h2 { font-family: var(--display); font-size: 1.15rem; font-weight: 600; margin: 0 0 1.4rem; color: var(--indigo); }
+.when { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit,minmax(11rem,1fr)); margin-bottom: 1.8rem; }
+.when div { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 1rem 1.1rem; min-width: 0; }
+.when dt { font-family: var(--display); font-size: .68rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
+.when dd { margin: .35rem 0 0; font-family: var(--display); font-weight: 600; font-size: 1.15rem; color: var(--indigo); }
+.when dd.go { color: var(--mint); }
+.when-note { display: block; margin-top: .2rem; font-family: var(--body); font-size: .78rem; font-weight: 500; line-height: 1.3; color: var(--ink-soft); }
+.facts { display: grid; gap: .1rem; }
+.facts > div { display: grid; gap: .2rem 1.5rem; padding: .75rem 0; border-top: 1px solid var(--rule); }
+@media (min-width: 46rem) { .facts > div { grid-template-columns: 13rem 1fr; align-items: baseline; } }
+.facts dt { font-weight: 600; color: var(--ink); font-size: .95rem; }
+.facts dd { margin: 0; color: var(--ink-soft); font-size: .97rem; }
+.glance:has(+ .glance-note) { margin-bottom: 1rem; }
+.glance-note { margin: 0 0 3.5rem; padding-inline: .25rem; color: var(--ink-soft); font-size: .95rem; }
+/* phones: the three dates side by side, and labels run into their text as the body's lead-ins do */
+@media (max-width: 45.99rem) {
+  .when { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; margin-bottom: 1.2rem; }
+  .when div { padding: .65rem .7rem; border-radius: 10px; }
+  .when dt { font-size: .58rem; letter-spacing: .1em; line-height: 1.35; }
+  .when dd { margin-top: .25rem; font-size: .95rem; line-height: 1.3; }
+  .facts > div { display: block; padding: .65rem 0; }
+  .facts dt { display: inline; }
+  .facts dt::after { content: ". "; }
+  .facts dd { display: inline; }
+}
+
+main { padding-bottom: 4rem; }
+main .in { display: grid; grid-template-columns: 1fr min(54rem, 100%) 1fr; }
+main .in > * { grid-column: 2; }
+main .in > .tablewrap { grid-column: 1 / -1; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.2; text-wrap: balance; }
+main h1 { font-size: clamp(1.5rem,1.25rem + 1.3vw,2.1rem); font-weight: 600; color: var(--indigo); margin: 3.25rem 0 1rem; padding-top: 1.75rem; border-top: 2px solid var(--rule); }
+main h1:first-child, main .in > .toc + h1 { margin-top: 0; border-top: 0; padding-top: 0; }
+main h2 { font-size: 1.25rem; font-weight: 600; margin: 2.25rem 0 .75rem; }
+main h3 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 .4rem; }
+p { margin: 0 0 1.1rem; }
+a { color: var(--indigo-soft); }
+strong { font-weight: 700; }
+ul, ol { padding-left: 1.3rem; }
+li { margin-bottom: .4rem; }
+code { font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: .88em; background: var(--tint); padding: .1rem .35rem; border-radius: 4px; }
+main p > strong:first-child { color: var(--indigo); font-family: var(--display); font-weight: 600; }
+.tablewrap, table { width: 100%; }
+.tablewrap { overflow-x: auto; margin-bottom: 1.5rem; }
+table { border-collapse: collapse; font-size: .93rem; min-width: 30rem; }
+th, td { padding: .6rem .8rem; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+th { font-family: var(--display); font-weight: 600; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); border-bottom-width: 2px; }
+tr:last-child td { border-bottom: 0; }
+footer { background: var(--tint); border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: .92rem; }
+footer a { color: var(--indigo-soft); }
+/* collapsible top-level sections; each spans the grid so its tables can still break out */
+main .in > .sec { grid-column: 1 / -1; border-top: 2px solid var(--rule); }
+.sec > * { max-width: 54rem; margin-inline: auto; }
+.sec > .tablewrap { max-width: none; }
+.sec > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.15rem 0; }
+.sec > summary::-webkit-details-marker { display: none; }
+.sec > summary::after { content: ""; flex: none; width: .55rem; height: .55rem; margin-right: .35rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: translateY(-25%) rotate(45deg); }
+.sec[open] > summary::after { transform: translateY(25%) rotate(-135deg); }
+.sec > summary:hover::after { border-color: var(--indigo-soft); }
+.sec > summary h1 { margin: 0; padding: 0; border: 0; }
+.sec[open] { padding-bottom: 1.75rem; }
+.sec[open] > summary { padding-bottom: .9rem; }
+.sec > summary + h2 { margin-top: .5rem; }
+.more { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 1.1rem; }
+.more + .more { margin-top: -1.1rem; border-top: 0; }
+.more > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .7rem 0; font-family: var(--display); font-weight: 600; font-size: .98rem; color: var(--indigo); }
+.more > summary::-webkit-details-marker { display: none; }
+.more > summary::after { content: ""; flex: none; width: .45rem; height: .45rem; margin-right: .35rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: translateY(-25%) rotate(45deg); }
+.more[open] > summary::after { transform: translateY(25%) rotate(-135deg); }
+.more > summary:hover::after { border-color: var(--indigo-soft); }
+.more[open] { padding-bottom: .3rem; }
+.sec-controls { display: flex; justify-content: flex-end; margin-bottom: .75rem; }
+.expand-all { font: inherit; font-size: .88rem; font-weight: 500; color: var(--indigo-soft); background: none; border: 1px solid var(--rule); border-radius: 999px; padding: .35rem .95rem; cursor: pointer; }
+.expand-all:hover { border-color: var(--indigo-soft); }
+main h1[id], main h2[id] { scroll-margin-top: 1.5rem; }
+/* contents: collapsed above the text on narrow screens, sticky in the left margin on wide ones */
+.toc { margin: 0 0 2.25rem; border: 1px solid var(--rule); border-radius: 12px; background: var(--tint); font-size: .86rem; line-height: 1.4; }
+.toc summary { cursor: pointer; padding: .75rem 1rem; font-family: var(--display); font-weight: 600; font-size: .9rem; color: var(--indigo); }
+.toc ol { list-style: none; margin: 0; padding: 0 1rem 1rem; }
+.toc ol ol { padding: 0 0 .2rem .8rem; }
+.toc li { margin: 0; }
+.toc a { display: block; padding: .3rem 0 .3rem .75rem; border-left: 2px solid var(--rule); color: var(--ink); text-decoration: none; }
+.toc ol ol a { color: var(--ink-soft); }
+.toc a:hover { color: var(--indigo-soft); }
+.toc a[aria-current="location"] { color: var(--indigo); border-left-color: var(--indigo); font-weight: 600; }
+@media (min-width: 80rem) {
+  main .in > .sec { grid-column: 2 / -1; }
+  .sec > * { margin-inline: 0; }
+  main .in > .toc { grid-column: 1; grid-row: 1 / span 200; align-self: start; position: sticky; top: 1.5rem; max-height: calc(100vh - 3rem); overflow-y: auto; margin: 0 2rem 0 0; border: 0; border-radius: 0; background: none; }
+  .toc summary { display: none; }
+  .toc ol { padding: 0; }
+}
+:focus-visible { outline: 3px solid var(--indigo-soft); outline-offset: 2px; }
+
+/* Site style, November 2026: Manrope headings, darker secondary text */
+:root { --display: "Manrope", system-ui, sans-serif; --ink-soft: #46465F; }
+h1 { font-weight: 800; letter-spacing: -.03em; }
+h2, h3 { font-weight: 700; }
+/* compact menu on phones */
+.menu-toggle { display: none; margin-left: auto; font: inherit; font-family: var(--display); font-weight: 600; font-size: .95rem; color: var(--indigo); background: none; border: 1.5px solid var(--rule); border-radius: 999px; padding: .45rem 1rem; cursor: pointer; }
+.menu-toggle::after { content: ""; display: inline-block; width: .45rem; height: .45rem; margin-left: .55rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-25%) rotate(45deg); }
+.nav.open .menu-toggle::after { transform: translateY(15%) rotate(-135deg); }
+@media (max-width: 56rem) {
+  .menu-toggle { display: inline-flex; align-items: center; }
+  .nav .in > .btn { display: none; }
+  .nav menu { display: none; flex-basis: 100%; flex-direction: column; gap: 0; margin: .5rem 0 0; }
+  .nav.open menu { display: flex; }
+  .nav menu li a { display: block; padding: .7rem 0; border-top: 1px solid var(--rule); font-size: 1.05rem; }
+}
+
+/* livelier challenge page: parameters as cards, steps, checklists, diagrams */
+.glance { background: #F6F4FC; }
+.facts { grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: .9rem; }
+.facts > div { display: block !important; padding: 1rem 1.1rem !important; background: #fff; border: 1px solid var(--rule) !important; border-radius: 14px; }
+.facts dt { display: block !important; margin-bottom: .3rem; font-family: var(--display); font-size: .78rem !important; letter-spacing: .1em; text-transform: uppercase; color: var(--indigo) !important; }
+.facts dt::after { content: none !important; }
+.facts dd { display: block !important; color: var(--ink) !important; font-size: .98rem; line-height: 1.5; }
+.start { margin: 0 0 1.25rem; }
+.start h2 { font-family: var(--display); font-size: 1.15rem; font-weight: 700; color: var(--indigo); margin: 0 0 1rem; }
+.start-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: .8rem; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); counter-reset: none; }
+.start-steps li { position: relative; display: flex; gap: .8rem; align-items: flex-start; padding: 1rem 1.1rem; background: #fff; border: 1px solid var(--rule); border-radius: 14px; box-shadow: 0 2px 10px rgba(43,27,116,.04); }
+.start-steps p { margin: 0; font-size: .98rem; line-height: 1.45; }
+.sn { flex: none; width: 2rem; height: 2rem; border-radius: 50%; display: grid; place-items: center; background: var(--amber); color: #231306; font-family: var(--display); font-weight: 800; }
+.needs, .risks { display: grid; gap: .9rem; margin: .5rem 0 1.5rem; }
+.needs, .risks { gap: .7rem; }
+.need, .risk { position: relative; padding: 1.1rem 1.15rem 1.1rem 3.3rem; background: #fff; border: 1px solid var(--rule); border-radius: 14px; }
+.need p, .risk p { margin: 0 0 .5rem; font-size: .98rem; }
+.need p:last-child, .risk p:last-child { margin-bottom: 0; }
+.need ul { margin: .2rem 0 0; padding-left: 1.1rem; font-size: .95rem; }
+.need ul p { margin: 0 0 .25rem; }
+.need strong, .risk strong { display: block; margin-bottom: .2rem; font-family: var(--display); font-size: 1.02rem; color: var(--indigo); }
+.need::before, .risk::before { content: ""; position: absolute; left: 1.05rem; top: 1.15rem; width: 1.5rem; height: 1.5rem; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: .9rem; line-height: 1.5rem; text-align: center; }
+.need::before { content: "\2713"; background: #E3F5EC; color: #0E6B47; }
+.risk { border-color: #F3D2BC; background: #FFFBF7; }
+.risk::before { content: "!"; background: #FBE1D0; color: #B5442E; }
+.classes { display: grid; gap: .8rem; margin: .5rem 0 1.5rem; }
+.cls { display: grid; gap: .5rem 1.25rem; align-items: center; padding: 1rem 1.1rem; background: #fff; border: 1px solid var(--rule); border-radius: 14px; }
+@media (min-width: 46rem) { .cls { grid-template-columns: 17rem minmax(0, 1fr); } }
+.cls-dia { background: #FAF9FE; border-radius: 10px; padding: .25rem .5rem; }
+.dia { display: block; width: 100%; height: auto; max-width: 300px; margin: 0 auto; }
+.dia-q { display: grid; place-items: center; height: 80px; font-family: var(--display); font-weight: 800; font-size: 2rem; color: var(--indigo-soft); }
+.cls h3 { display: flex; align-items: center; gap: .55rem; margin: 0 0 .3rem; font-size: 1.05rem; color: var(--indigo); }
+.cls-n { width: 1.7rem; height: 1.7rem; border-radius: 8px; display: grid; place-items: center; background: var(--indigo); color: #fff; font-size: .9rem; }
+.cls p { margin: 0; font-size: .97rem; }
+.dia-key { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .6rem; margin: .2rem 0 0; font-size: .88rem; color: var(--ink-soft); }
+.dia-key span { display: inline-block; width: 1.1rem; height: .8rem; border-radius: 3px; margin-left: .6rem; }
+.dia-key span:first-child { margin-left: 0; }
+.k-real { background: #EEEBFA; border: 1.5px solid #4A35A8; }
+.k-sur { background: #FFF4EA; border: 1.5px dashed #E08A3C; }
+.k-alt { height: 0 !important; border-top: 2px dashed #B5442E; }
+.start-steps p { overflow-wrap: break-word; }
+@media (min-width: 46rem) { .start-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 72rem) { .facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } .facts > div:nth-last-child(-n+2) { grid-column: span 2; } }
+.needs, .risks { align-items: start; }
+
+/* tabs: one part of the page at a time */
+.tabs { position: sticky; top: 0; z-index: 5; background: rgba(255,255,255,.96); backdrop-filter: blur(6px); border-bottom: 1px solid var(--rule); margin-top: 1.5rem; }
+.tabs .in { display: flex; gap: .25rem; overflow-x: auto; scrollbar-width: none; }
+.tab { flex: none; padding: .95rem 1rem .8rem; font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--ink-soft); text-decoration: none; border-bottom: 3px solid transparent; }
+.tab:hover { color: var(--indigo); }
+.tab[aria-current="page"] { color: var(--indigo); border-bottom-color: var(--amber); }
+header.page { padding-bottom: 0 !important; }
+main { padding-top: 2.25rem; }
+.tabpanel > .tsec { margin-bottom: 2.5rem; }
+main .in > .tabpanel { grid-column: 2; min-width: 0; }
+.tabpanel .glance { margin-top: 0; }
+.tsec > h1 { margin-top: 0 !important; padding-top: 0 !important; border-top: 0 !important; }
+.tabpanel .tsec + .tsec > h1, .tabpanel .start + .glance-note + .tsec > h1 { margin-top: 2.5rem !important; padding-top: 2rem !important; border-top: 2px solid var(--rule) !important; }
+@media print { .tabs { display: none; } .tabpanel[hidden] { display: block !important; } }
+/* the parameters, short */
+.kfacts { display: grid; gap: .5rem; }
+@media (min-width: 46rem) { .kfacts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.kf { background: #fff; border: 1px solid var(--rule); border-radius: 12px; }
+.kf summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .1rem 1rem; padding: .75rem 1rem; }
+.kf summary::-webkit-details-marker { display: none; }
+.kf summary::after { content: ""; grid-row: 1 / span 2; grid-column: 2; align-self: center; width: .45rem; height: .45rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg); }
+.kf[open] summary::after { transform: rotate(-135deg); }
+.kf .k { font-family: var(--display); font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--indigo-soft); }
+.kf .v { font-weight: 600; color: var(--ink); font-size: 1rem; line-height: 1.35; }
+.kf p { margin: 0; padding: 0 1rem .9rem; font-size: .95rem; color: var(--ink); border-top: 1px solid var(--rule); padding-top: .7rem; }
+.kf-hint { margin: .8rem 0 0; font-size: .88rem; color: var(--ink-soft); }
+/* sober lists for what is needed and the five scenarios */
+.need, .risk { background: none !important; border: 0 !important; border-bottom: 1px solid var(--rule) !important; border-radius: 0 !important; padding: .9rem 0 .9rem 2.4rem !important; }
+.need::before, .risk::before { left: 0 !important; top: .95rem !important; }
+.needs, .risks { gap: 0 !important; }
+.need:last-child, .risk:last-child { border-bottom: 0 !important; }
+main [id], .tabpanel { scroll-margin-top: 4.75rem; }
+
+/* illustrations and colour in the tabs */
+.acts { list-style: none; padding: 0; margin: .5rem 0 1.25rem; display: grid; gap: .7rem; grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr)); }
+.acts li { display: flex; flex-direction: column; gap: .6rem; padding: 1rem; background: #fff; border: 1px solid var(--rule); border-radius: 14px; }
+.acts li p { margin: 0; font-size: .95rem; line-height: 1.45; }
+.ai { width: 2.4rem; height: 2.4rem; border-radius: 12px; display: grid; place-items: center; background: #F1EFF9; color: var(--indigo-soft); }
+.acts li:nth-child(2) .ai { background: #FFF1E4; color: #C0611B; } .acts li:nth-child(3) .ai { background: #E3F5EC; color: #0E6B47; } .acts li:nth-child(4) .ai { background: #E8F0FB; color: #2B5EA8; }
+.ai svg { width: 1.35rem; height: 1.35rem; }
+.xl { margin: 1rem 0 1.75rem; }
+.xl-grid { display: grid; grid-template-columns: 2.2rem 1.5fr 1fr 1.2fr .8fr .9fr 1.6fr; border: 1px solid #CFCBE3; border-radius: 10px 10px 0 0; overflow: hidden; font-size: .84rem; background: #fff; }
+.xl-c { padding: .45rem .55rem; border-right: 1px solid #E7E4F2; border-bottom: 1px solid #E7E4F2; min-height: 2.1rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.xl-n { background: #F4F3F9; color: var(--ink-soft); text-align: center; font-weight: 600; }
+.xl-h { font-weight: 700; }
+.xl-head { background: #EDEAF8; font-weight: 700; color: var(--indigo); }
+.xl-hyp { background: #2B1B74; color: #fff; font-weight: 600; white-space: normal; }
+.xl-paper { background: #FFF1E4; } .xl-find { background: #EAF6F0; } .xl-id { font-weight: 800; font-family: var(--display); }
+.xl-tabs { display: flex; gap: 2px; padding: 0 .4rem; background: #F4F3F9; border: 1px solid #CFCBE3; border-top: 0; border-radius: 0 0 10px 10px; font-size: .8rem; }
+.xl-tabs span { padding: .35rem .8rem; color: var(--ink-soft); }
+.xl-tabs span.on { background: #fff; color: var(--indigo); font-weight: 700; border-bottom: 2px solid var(--mint); }
+.xl figcaption, .fam { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .9rem; margin: .6rem 0 0; font-size: .86rem; color: var(--ink-soft); }
+.lg { display: inline-block; width: .9rem; height: .9rem; border-radius: 3px; margin-right: -.45rem; }
+.lg-hyp { background: #2B1B74; } .lg-paper { background: #FFE0C4; } .lg-find { background: #CDEBDC; }
+@media (max-width: 40rem) { .xl-grid { grid-template-columns: 1.6rem 1fr .9fr 0 0 .8fr 1.2fr; font-size: .72rem; } .xl-grid > :nth-child(7n+4), .xl-grid > :nth-child(7n+5) { padding: 0; border: 0; } }
+.fam { margin: 0 0 .8rem; } .fam span { padding: .2rem .65rem; border-radius: 999px; font-weight: 600; font-size: .82rem; }
+.g-hyp > td:first-child, .fam .g-hyp { box-shadow: inset 4px 0 0 #2B1B74; } .fam .g-hyp { background: #E6E2F7; color: #2B1B74; box-shadow: none; }
+tr.g-hyp > td:first-child { box-shadow: inset 4px 0 0 #2B1B74; } tr.g-paper > td:first-child { box-shadow: inset 4px 0 0 #E08A3C; } tr.g-find > td:first-child { box-shadow: inset 4px 0 0 #16A06A; } tr.g-stat > td:first-child { box-shadow: inset 4px 0 0 #2B7FD1; } tr.g-dir > td:first-child { box-shadow: inset 4px 0 0 #8A4FD0; }
+tr[class*="g-"] > td:first-child { padding-left: .9rem !important; font-weight: 600; }
+.fam .g-paper { background: #FFEBD9; color: #9A4A10; } .fam .g-find { background: #DDF2E7; color: #0E6B47; } .fam .g-stat { background: #E1EDFA; color: #1F5A99; } .fam .g-dir { background: #EEE3FA; color: #6A37A8; }
+code.pv { padding: .2rem .55rem; border-radius: 999px; font-size: .84rem; font-weight: 600; background: none; }
+.pv-ok { background: #DDF2E7 !important; color: #0E6B47; } .pv-fig { background: #FFEBD9 !important; color: #9A4A10; } .pv-no { background: #ECECF2 !important; color: #4A4A60; }
+.pv-key span { padding: .2rem .65rem; border-radius: 999px; font-weight: 600; font-size: .82rem; }
+ol.crit { list-style: none; counter-reset: c; padding: 0; display: grid; gap: .7rem; }
+ol.crit li { counter-increment: c; position: relative; padding: .9rem 1rem .9rem 3.4rem; background: #fff; border: 1px solid var(--rule); border-radius: 14px; }
+ol.crit li::before { content: counter(c); position: absolute; left: 1rem; top: .9rem; width: 1.7rem; height: 1.7rem; border-radius: 8px; display: grid; place-items: center; background: var(--indigo); color: #fff; font-family: var(--display); font-weight: 800; font-size: .9rem; }
+ol.crit li:nth-child(2)::before { background: #2B7FD1; } ol.crit li:nth-child(3)::before { background: #8A4FD0; } ol.crit li:nth-child(4)::before { background: #16A06A; } ol.crit li:nth-child(5)::before { background: #E08A3C; }
+ol.crit li p { margin: 0; }
+.tl2 { margin: .75rem 0 1.5rem; padding: 1.1rem 1.2rem 1rem; background: #F6F4FC; border: 1px solid var(--rule); border-radius: 14px; }
+.tl2-bar { position: relative; height: 8px; border-radius: 99px; background: #E3E0F0; margin: .4rem .5rem 0; }
+.tl2-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; max-width: 75%; border-radius: 99px; background: var(--mint); }
+.tl2-stops { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: .7rem; font-size: .85rem; color: var(--ink-soft); }
+.tl2-stops b { display: block; font-family: var(--display); font-size: 1rem; color: var(--indigo); }
+.tl2-stops .go b { color: #0E6B47; } .tl2-stops .now b { color: #0E6B47; } .tl2-stops .later b { color: var(--ink-soft); }
+.tl2-stops > div:nth-child(2), .tl2-stops > div:nth-child(3) { text-align: center; } .tl2-stops > div:last-child { text-align: right; }
+.acc { display: inline-flex; align-items: center; gap: .9rem; margin: .5rem 0 1.25rem; padding: .9rem 1.2rem; background: #EAF6F0; border: 1px solid #BFE5D2; border-radius: 14px; }
+.acc-tick { width: 2rem; height: 2rem; border-radius: 50%; display: grid; place-items: center; background: var(--mint); color: #fff; font-weight: 800; }
+.acc-l { display: block; font-size: .85rem; color: #0E6B47; }
+.acc code { font-size: 1.05rem; font-weight: 700; background: none; padding: 0; color: var(--ink); letter-spacing: .03em; }
+.acc-ex { margin-left: .6rem; font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); }
+
+/* delimitation and colour for the long texts */
+.blk { margin: 1.4rem 0; padding: 1.3rem 1.4rem 1.2rem; background: #fff; border: 1px solid var(--rule); border-top: 4px solid var(--bc); border-radius: 16px; box-shadow: 0 2px 12px rgba(43,27,116,.04); }
+.blk > h2 { margin-top: 0 !important; color: var(--indigo) !important; }
+.blk > h2::before { content: ""; display: inline-block; width: .7rem; height: .7rem; margin-right: .55rem; border-radius: 3px; background: var(--bc); vertical-align: .08em; }
+.tsec > h1 { font-size: clamp(1.5rem,1.25rem + 1vw,2rem) !important; }
+strong.lead { color: var(--indigo); font-weight: 700; }
+.co { position: relative; margin: 1rem 0 !important; padding: .85rem 1rem .85rem 3.1rem; border-radius: 12px; font-size: .98rem; }
+.co::before { position: absolute; left: .9rem; top: .85rem; min-width: 1.45rem; height: 1.45rem; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: .85rem; line-height: 1.45rem; text-align: center; }
+.co-key { background: #EEEBFA; border: 1px solid #D9D3F3; } .co-key::before { content: "A2"; padding: 0 .3rem; border-radius: 6px; background: var(--indigo); color: #fff; font-size: .72rem; }
+.co-num { background: #FFF4EA; border: 1px solid #F6D3B4; font-weight: 600; } .co-num::before { content: "50"; padding: 0 .3rem; border-radius: 6px; background: var(--amber); color: #231306; font-size: .72rem; }
+.co-ask { background: #E8F0FB; border: 1px solid #C9DAF2; } .co-ask::before { content: "?"; background: #2B7FD1; color: #fff; }
+.co-info { background: #F1EFF9; border: 1px solid #DFDAF2; } .co-info::before { content: "i"; background: var(--indigo-soft); color: #fff; }
+.co-warn { background: #FFF1EC; border: 1px solid #F4C7B6; } .co-warn::before { content: "!"; background: #B5442E; color: #fff; }
+.rules3 { display: grid; gap: .7rem; margin: 1rem 0; }
+@media (min-width: 52rem) { .rules3 { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+.rule3 { margin: 0 !important; padding: .9rem 1rem; background: #F6F1FD; border: 1px solid #E4D8F6; border-radius: 12px; font-size: .93rem; line-height: 1.5; }
+.jumps { display: flex; flex-wrap: wrap; gap: .5rem; margin: .25rem 0 1.25rem; }
+.jumps a { padding: .4rem .9rem; border-radius: 999px; background: #FFF1E4; color: #9A4A10; font-weight: 700; font-size: .9rem; text-decoration: none; border: 1px solid #F6D3B4; }
+.jumps a:hover { background: #FFE4CC; }
+h3.fh { margin: 1.75rem 0 .6rem; font-size: 1.15rem; color: #9A4A10; }
+tr.band td { padding: .45rem .9rem !important; font-family: var(--display); font-weight: 800; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; border: 0 !important; }
+tr.band.g-paper td { background: #FFEBD9; color: #9A4A10; } tr.band.g-find td { background: #DDF2E7; color: #0E6B47; } tr.band.g-stat td { background: #E1EDFA; color: #1F5A99; } tr.band.g-dir td { background: #EEE3FA; color: #6A37A8; }
+.msheet { margin: 1rem 0 1.5rem; }
+.ms-grid { display: grid; grid-template-columns: 2rem minmax(8rem, .8fr) minmax(0, 2.2fr); border: 1px solid #CFCBE3; border-radius: 10px 10px 0 0; overflow: hidden; background: #fff; font-size: .9rem; }
+.ms-c { padding: .55rem .7rem; border-right: 1px solid #E7E4F2; border-bottom: 1px solid #E7E4F2; }
+.ms-n { background: #F4F3F9; color: var(--ink-soft); font-weight: 600; font-size: .8rem; }
+.ms-label { background: #EDEAF8; font-weight: 700; color: var(--indigo); }
+.ms-val { line-height: 1.45; }
+ol.six { list-style: none; counter-reset: s; padding: 0; display: grid; gap: .6rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); margin: .75rem 0 1rem; }
+ol.six li { counter-increment: s; position: relative; padding: .8rem .9rem .8rem 2.9rem; background: #FFF8F1; border: 1px solid #F6D3B4; border-radius: 12px; }
+ol.six li::before { content: counter(s); position: absolute; left: .8rem; top: .8rem; width: 1.5rem; height: 1.5rem; border-radius: 50%; display: grid; place-items: center; background: var(--amber); color: #231306; font-weight: 800; font-size: .82rem; }
+ol.six li p { margin: 0; font-size: .93rem; }
+details.more { background: #FAF9FE; border: 1px solid var(--rule) !important; border-radius: 12px; padding: 0 1rem; }
+
+/* one width for the whole site, the home page's */
+.in { max-width: 76rem !important; }
+
+/* challenge specifics: the tabs on the left, the essentials on the right */
+main .in { grid-template-columns: minmax(0, 1fr) !important; column-gap: 3rem; }
+main .in > .tabpanel { grid-column: 1 !important; }
+@media (min-width: 64rem) {
+  main .in { grid-template-columns: minmax(0, 1fr) 17.5rem !important; }
+  main .in > .side { grid-column: 2; grid-row: 1 / span 10; display: block; }
+}
+.side { display: none; align-self: start; position: sticky; top: 4.75rem; }
+.side-card { background: #F6F4FC; border: 1px solid var(--rule); border-radius: 16px; padding: 1.1rem 1.15rem; margin-bottom: 1rem; }
+.side-k { margin: 0; font-family: var(--display); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.side-v { margin: .2rem 0 0; font-family: var(--display); font-weight: 800; font-size: 1.15rem; color: var(--indigo); }
+.side-n { margin: .1rem 0 0; font-size: .85rem; color: var(--ink-soft); }
+.side-left { display: inline-flex; align-items: center; gap: .45rem; margin: .75rem 0 0; padding: .3rem .75rem; border-radius: 999px; background: #E3F5EC; color: #0E6B47; font-weight: 700; font-size: .9rem; }
+.side-left i { width: .5rem; height: .5rem; border-radius: 50%; background: var(--mint); }
+.side-links { list-style: none; margin: .5rem 0 0; padding: 0; }
+.side-links li { margin: 0; border-top: 1px solid var(--rule); }
+.side-links li:first-child { border-top: 0; }
+.side-links a { display: flex; justify-content: space-between; gap: .5rem; padding: .6rem 0; color: var(--ink); text-decoration: none; font-weight: 600; font-size: .95rem; }
+.side-links a::after { content: "\2192"; color: var(--indigo-soft); }
+.side-links a:hover { color: var(--indigo-soft); }
+.side-cta { display: block; text-align: center; margin-top: .25rem; padding: .7rem 1rem; border-radius: 999px; background: var(--amber); color: #231306; font-family: var(--display); font-weight: 800; text-decoration: none; }
+.tabs .in { max-width: 76rem !important; }
+
+/* the submission page, one click away from every page */
+.nav .nav-cta { background: var(--amber); color: #231306; }
+.menu-submit { display: none; }
+@media (max-width: 56rem) { .menu-submit { display: list-item; } .nav menu li.menu-submit a { color: #B45412; font-weight: 700; } }
+.submit-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem 1.5rem; margin: 1.5rem 0; padding: 1.1rem 1.3rem; background: #FFF6EE; border: 1px solid #F6D3B4; border-radius: 16px; }
+.submit-cta p { margin: 0; font-weight: 600; color: var(--ink); }
+.submit-cta a { display: inline-flex; align-items: center; padding: .65rem 1.3rem; border-radius: 999px; background: var(--amber); color: #231306; font-family: var(--display); font-weight: 800; text-decoration: none; white-space: nowrap; }
+.tabs { top: var(--navh) !important; }
+.side { top: calc(var(--navh) + 4.25rem) !important; }
+main [id], .tabpanel { scroll-margin-top: calc(var(--navh) + 4.75rem) !important; }
+
+/* the menu bar stays at the top while scrolling */
+:root { --navh: 88px; }
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.97); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+html { scroll-padding-top: var(--navh); }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="in">
+    <a class="logo" href="index.html"><img src="MecCog_logo_transparent.png" alt=""> MecCog</a>
+    <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <menu id="site-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="hypotheses.html">Hypotheses</a></li>
+      <li><a href="rules.html">Challenge specifics</a></li>
+      <li><a href="official-rules.html">Official rules</a></li>
+      <li><a href="resources.html">Shared resources</a></li>
+      <li><a href="#the-directness-class">Directness</a></li>
+      <li class="menu-submit"><a href="https://meccog-meccogchallenge.hf.space/">Register &amp; submit</a></li>
+    </menu>
+    <a class="btn btn-fill nav-cta" href="https://meccog-meccogchallenge.hf.space/">Register &amp; submit</a>
+  </div>
+</nav>
+
+<header class="page">
+  <div class="in">
+    <p class="eyebrow">Papers and Findings &middot; Step 1</p>
+    <h1>Challenge specifics</h1>
+
+  </div>
+</header>
+<nav class="tabs" aria-label="Sections of this page"><div class="in">
+  <a class="tab" href="#tab-overview" data-tab="overview">Overview</a>
+  <a class="tab" href="#tab-requirements" data-tab="requirements">Requirements</a>
+  <a class="tab" href="#tab-format" data-tab="format">Format</a>
+  <a class="tab" href="#tab-directness" data-tab="directness">Directness</a>
+  <a class="tab" href="#tab-evaluation" data-tab="evaluation">Evaluation</a>
+</div></nav>
+
+
+<main>
+  <div class="in">
+<aside class="side" aria-label="At a glance">
+<div class="side-card">
+<p class="side-k">Submission deadline</p>
+<p class="side-v">January 15th, 2027</p>
+<p class="side-n">end of the day, anywhere on Earth</p>
+<p class="side-left"><i></i><span id="side-left">Opens November 17th</span></p>
+</div>
+<div class="side-card">
+<p class="side-k">Quick links</p>
+<ul class="side-links">
+<li><a href="hypotheses.html">The five hypotheses</a></li>
+<li><a href="resources.html">Template and validator</a></li>
+<li><a href="resources/Directness_of_evidence_v02.docx">Directness of evidence</a></li>
+<li><a href="official-rules.html">Official rules</a></li>
+<li><a href="https://huggingface.co/spaces/MecCog/meccog-challenge/discussions/new" target="_blank" rel="noopener">Questions</a></li>
+<li><a href="https://discord.gg/C5KRB7bEj" target="_blank" rel="noopener">Discord</a></li>
+</ul>
+</div>
+<a class="side-cta" href="https://meccog-meccogchallenge.hf.space/">Register and submit</a>
+</aside>
+<section class="tabpanel" id="tab-overview" data-tab="overview" aria-label="Overview">
+    <section class="glance" aria-labelledby="parameters">
+      <div class="blk" style="--bc:#4A35A8"><h2 id="parameters">Challenge Parameters</h2>
+      <dl class="when">
+        <div><dt>Opens</dt><dd class="go">November 17th, 2026<span class="when-note">00:00 UTC</span></dd></div>
+        <div><dt>Submission deadline</dt><dd>January 15th, 2027<span class="when-note">end of the day, anywhere on Earth</span></dd></div>
+        <div><dt>You have</dt><dd>8 weeks</dd></div>
+      </dl>
+      <div class="kfacts">
+        <details class="kf"><summary><span class="k">What you do</span><span class="v">Work on the hypotheses provided: find the papers, extract the findings</span></summary><p>Work on the five APOE4 endosome mechanism hypotheses provided. Find the relevant papers, and extract the relevant experimental findings.</p></details>
+        <details class="kf"><summary><span class="k">What you submit</span><span class="v">One spreadsheet per hypothesis, passing the validator</span></summary><p>One spreadsheet per hypothesis, using the template provided (19 columns). Spreadsheets must pass the validator. A submission that fails validation cannot be uploaded.</p></details>
+        <details class="kf"><summary><span class="k">What you must provide</span><span class="v">A spreadsheet containing your work and the method you used</span></summary><p>The method URL must contain a detailed description of your method. In order for other participants and the project to benefit the most from your submission, please also include a full github-like code base. If you are a company or have another reason to withhold your code, please email us to obtain an exemption.</p></details>
+        <details class="kf"><summary><span class="k">How many</span><span class="v">One live submission per hypothesis, replaceable until the deadline</span></summary><p>One live submission per hypothesis, which a team may replace as often as it likes until the deadline. The last one before the deadline is the one assessed. You may submit for as many of the five hypotheses as you like.</p></details>
+        <details class="kf"><summary><span class="k">Limits per submission</span><span class="v">Up to 50 papers can be selected</span></summary><p>Up to 50 papers can be selected.</p></details>
+        <details class="kf"><summary><span class="k">Who can take part</span><span class="v">Anyone, after registering</span></summary><p>Anyone. Register once with your Hugging Face account, then create a team or join one with its invitation code. A team of one is fine. Every team names a leader, who submits for the team.</p></details>
+        <details class="kf"><summary><span class="k">Team membership</span><span class="v">Submissions are made by teams</span></summary><p>Each participant must be a member of a team. A team has one or more members. Submissions are made by teams, not individuals. Every team has a leader.</p></details>
+        <details class="kf"><summary><span class="k">Human, agent, or agent collab</span><span class="v">Any of these, stated in your README</span></summary><p>Your README must include a statement about the type of submission.</p></details>
+        <details class="kf"><summary><span class="k">Challenge products</span><span class="v">An open-source pipeline, a paper, authorship</span></summary><p>The overall goal of the challenge is to produce an open-source pipeline that can be used to find and extract experimental findings from the literature for any mechanism hypothesis. Results will be published in a scientific journal, and all participants in good standing may participate in authorship.</p></details>
+        <details class="kf"><summary><span class="k">Time scale to release of results</span><span class="v">Assessment takes time after the challenge closes</span></summary><p>Following closure of the challenge, members of the MecCog group will work on assessing the results. This is a new type of challenge, and we anticipate this process may take some time.</p></details>
+        <details class="kf"><summary><span class="k">What matters most</span><span class="v">Accuracy and relevance over volume</span></summary><p>Accuracy and relevance over volume. A shorter submission containing only relevant material will score better than one padded with general Alzheimer's literature. Do not exclude findings that provide evidence against the hypothesis.</p></details>
+      </div>
+      <p class="kf-hint">Select a line for the full rule.</p>
+    </div>
+</section>
+    <section class="start" aria-labelledby="how-to-get-started">
+      <div class="blk" style="--bc:#4A35A8"><h2 id="how-to-get-started">How to Get Started</h2>
+      <ol class="start-steps">
+        <li><span class="sn">1</span><p>Read the <a href="hypotheses.html">hypotheses page</a></p></li>
+        <li><span class="sn">2</span><p>Register on the <a href="https://meccog-meccogchallenge.hf.space/">submission page</a> with your Hugging Face account, then create a team or join one with its invitation code</p></li>
+        <li><span class="sn">3</span><p>Download submission_template.xlsx and method_README_template.md
+from <a href="resources.html">shared resources</a></p></li>
+        <li><span class="sn">4</span><p>Search for papers</p></li>
+        <li><span class="sn">5</span><p>Extract findings and fill the spreadsheet as you go, provenance
+codes and directness included</p></li>
+        <li><span class="sn">6</span><p>Validate</p></li>
+        <li><span class="sn">7</span><p>Publish your method README, fill in the Method sheet, then the team leader uploads
+the spreadsheet and keep your acceptance number</p></li>
+      </ol>
+      <div class="submit-cta"><p>Ready? Register, form or join a team, and submit on the submission page.</p><a href="https://meccog-meccogchallenge.hf.space/">Register &amp; submit &rarr;</a></div>
+    </div>
+</section>
+    <p class="glance-note">The <a href="official-rules.html">official rules</a> apply to every MecCog challenge, and registering or submitting accepts them. Questions go on the <a href="https://huggingface.co/spaces/MecCog/meccog-challenge/discussions/new" target="_blank" rel="noopener">Community tab</a> of this Space.</p>
+<section class="tsec">
+<h1 id="about-this-challenge">About This Challenge</h1>
+<p>Welcome to the MecCog Challenges, a collaborative project to critically assess proposed mechanisms by which the APOE4 genetic variant increases the risk of Alzheimer’s disease. This is Step 1 of a multi-phase challenge series. Later phases will ask you to assess evidence, estimate mechanism confidence, and propose discriminatory experiments. For now we focus on finding and documenting what is in the literature.</p>
+<div class="blk" style="--bc:#4A35A8"><h2 id="what-youll-do">What You’ll Do</h2>
+<p>For each hypothesis, you will:</p>
+<ul class="acts">
+<li><span class="ai"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span><p>Search the scientific literature (PubMed, preprints, databases,
+web sources)</p></li>
+<li><span class="ai"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l5 5v13H6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h7M9 17h7" stroke="currentColor" stroke-width="2" fill="none"/></svg></span><p>Identify papers that bear on that mechanism</p></li>
+<li><span class="ai"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 1.8 3h10.4A2 2 0 0 0 19 18l-5-9V3" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M7.5 15h9" stroke="currentColor" stroke-width="2"/></svg></span><p>Extract experimental findings from those papers (measurements,
+effects, experimental conditions and so on)</p></li>
+<li><span class="ai"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M3 14h18M9 4v16" stroke="currentColor" stroke-width="2"/></svg></span><p>Record everything in a structured spreadsheet.</p></li>
+</ul>
+</div>
+<div class="blk" style="--bc:#4A35A8"><h2 id="the-hypotheses">The Hypotheses</h2>
+<p>Hypotheses are released in batches, starting November 17th, 2026. The current batch is listed on the <a href="hypotheses.html">hypotheses page</a>.</p>
+<p>Work on the hypotheses provided. Do not catalog Alzheimer’s mechanisms in general. The goal is to discover findings that directly test or inform a hypothesis.</p>
+<p>The hypotheses are precisely worded and the qualifying clauses are part of them. That does not mean a finding has to match them exactly to belong in your submission. Most experiments are unavoidably done in model systems rather than in living human brain, and those findings are very much relevant. Record the experimental system as precisely as the paper allows and let the specifics speak. Weighing how far an experimental condition sits from the hypothesis is the work of a later challenge, not this one.</p>
+</div>
+</section>
+<section class="tsec">
+<h1 id="teams">Teams</h1>
+<p><strong>Register first.</strong> Sign in on the submission page with your Hugging Face account and register once for the challenge. Registration asks for an institutional or company email address. When your Hugging Face account has verified such an address, you are approved at once. If you do not have one, describe in a sentence or two who you are and what you do, and an organizer reviews it before approving you. This is asked so that the organizers know who produced each submission, not in order to publish it.</p>
+<p><strong>Teams.</strong> Every submission belongs to a team. After registering, you may work alone as a team of one, create a team, or join an existing one. Creating a team makes you its leader and gives you an invitation code, and anyone joining your team enters that code. There is no maximum team size, and each member of a team must be a registered participant.</p>
+<p><strong>The team leader.</strong> Every team names a team leader, who is the point of contact for the organizers and is responsible for the team’s submissions. Only the team leader submits, signed in with the account that created the team, and the Team row of the Method sheet carries the team’s name.</p>
+<p>You may belong to more than one team, but creating a second team requires a written explanation, for example that your group has two genuinely different methods and wants both assessed. Creating several teams to multiply your submissions is not allowed.</p>
+</section>
+</section>
+<section class="tabpanel" id="tab-requirements" data-tab="requirements" aria-label="Requirements">
+<section class="tsec">
+<h1 id="challenge-requirements">Challenge Requirements</h1>
+<div class="blk" style="--bc:#16A06A"><h2 id="what-is-needed">What is Needed</h2>
+<div class="needs">
+<div class="need"><p><strong>Search widely.</strong> PubMed, the preprint servers, Google
+Scholar, databases, and anything else you think bears on the hypothesis.
+It is better to look at a source you end up setting aside than to miss
+one that mattered.</p></div>
+<div class="need"><p><strong>Extract findings precisely.</strong> Each one needs:</p>
+<ul>
+<li><p>A one-sentence description of what was done and what was
+observed</p></li>
+<li><p>A direct quote from the paper, or N/A if none is
+available</p></li>
+<li><p>The experimental system, described as precisely as the paper
+allows. Not just “astrocytes” but the source of the cells; not just
+“mouse” but the strain</p></li>
+<li><p>Where in the paper the finding appears, at panel level. Fig 4C,
+not Fig 4</p></li>
+<li><p>The statistics, with their provenance (see below)</p></li>
+<li><p>The directness class, saying how the experiment lines up with the
+hypothesis, and the strength of that link</p></li>
+</ul></div>
+<div class="need"><p><strong>Keep the findings that argue against the hypothesis.</strong>
+A result that contradicts the hypothesis, or that shows no effect, is
+evidence, and is needed as much as the supporting ones. Record it like
+any other finding, with the same care over the quote and the
+statistics.</p></div>
+<div class="need"><p><strong>Leave no cell empty.</strong> Every cell carries either a
+value or the literal N/A. A blank says nothing, and cannot be told apart
+from an oversight.</p></div>
+<div class="need"><p><strong>Get the metadata right.</strong> DOI, PubMed ID where the
+source has one, and source type, for every paper.</p></div>
+<div class="need"><p><strong>Validate before you submit.</strong> Use the Validate button
+on the submission page, or run the validator yourself beforehand; the
+download link is on the <a href="resources.html">shared resources page</a>. A submission that fails
+validation cannot be uploaded, so it is worth running early rather than
+on the deadline.</p></div>
+<div class="need"><p><strong>Publish your method.</strong> Name a public repository or
+archive holding a README that describes how your submission was
+produced, and the commit it was built from. Both go on the Method sheet
+of the spreadsheet, described below. A list of findings without a method
+is a result without a protocol, which is why a submission without them
+does not validate.</p></div>
+</div>
+</div>
+<div class="blk" style="--bc:#16A06A"><h2 id="five-scenarios">Five scenarios of how submissions can score badly</h2>
+<div class="risks">
+<div class="risk"><p><strong>Padding the sheet.</strong> Include only the papers and
+findings that genuinely bear on a hypothesis. A submission swollen
+with general Alzheimer’s literature scores worse than a short, focused
+one. This is not a license to drop a finding that argues against the
+hypothesis: relevance is about the subject, not the direction of the
+result. One submission carries at most 50 papers, and the validator enforces it, so order them by relevance from the start and keep the ones that earn their place.</p></div>
+<div class="risk"><p><strong>Fabrication.</strong> Every finding must exist in the paper
+at the location you cite.</p></div>
+<div class="risk"><p><strong>An estimate presented as a reported value.</strong> Where it
+is only available that way, you should estimate an effect size off a bar
+chart, or count the plotted points to get a sample size. A P value should
+not be estimated. Any estimate has to be identified by a leading ~ on the
+value and the provenance code estimated_from_figure. An estimate recorded
+as though the paper printed it is a fabrication.</p></div>
+<div class="risk"><p><strong>Invented identifiers.</strong> DOIs and PubMed IDs must
+correspond to real, published sources.</p></div>
+<div class="risk"><p><strong>Working ahead.</strong> This is Step 1 only. Assessing
+confidence, designing experiments and building mechanism schemas all
+come later.</p></div>
+</div>
+</div>
+</section>
+</section>
+<section class="tabpanel" id="tab-format" data-tab="format" aria-label="Format">
+<section class="tsec">
+<h1 id="submission-format">Submission Format</h1>
+<p class="jumps"><a href="#format-structure">Structure</a><a href="#format-columns">Columns</a><a href="#providing-your-method">Method</a><a href="#recording-what-the-paper-does-not-report">Provenance</a></p>
+<p>One spreadsheet per hypothesis. Download the official template from
+the <a href="resources.html">shared resources page</a>.</p>
+<p class="co co-ask">If something in the format is unclear, ask on the <a href="https://huggingface.co/spaces/MecCog/meccog-challenge/discussions/new" target="_blank" rel="noopener">Community tab</a>. Format questions are usually everyone’s.</p>
+<p class="co co-num">Each submission is limited to 50 papers.</p>
+<p class="co co-key">Use the hypothesis statement exactly as published, including its
+qualifying clauses, and copy it verbatim into cell A2 of the Submission
+sheet.</p>
+<h3 class="fh" id="format-structure">Structure</h3>
+<p>The template has two sheets that the validator reads,
+<strong>Submission</strong> and <strong>Method</strong>, already named.
+Do not rename them. A third sheet, How to fill this in, comes last and
+is there for you; the validator ignores it.</p>
+<p>The Submission sheet:</p>
+<ul>
+<li><p>Row 1: column labels, provided in the template. All of them must
+be present, in the template’s order</p></li>
+<li><p>Row 2: the hypothesis in column A. The rest of row 2 stays empty</p></li>
+<li><p>Row 3 onward: one block per paper, a paper row followed by one
+row per finding from that paper</p></li>
+</ul>
+<p>The Method sheet holds your team, who leads it and how to reach them, and the link to your method, seven labelled rows described under Providing your method.</p>
+<figure class="xl" aria-label="How the Submission sheet is laid out">
+<div class="xl-grid">
+<div class="xl-c xl-h xl-n"></div><div class="xl-c xl-h xl-n">A</div><div class="xl-c xl-h xl-n">B</div><div class="xl-c xl-h xl-n">C</div><div class="xl-c xl-h xl-n">D</div><div class="xl-c xl-h xl-n">E</div><div class="xl-c xl-h xl-n">F &hellip; S</div>
+<div class="xl-c xl-n">1</div><div class="xl-c xl-head">Hypothesis</div><div class="xl-c xl-head">DOI</div><div class="xl-c xl-head">Paper/source type</div><div class="xl-c xl-head">PubMed ID</div><div class="xl-c xl-head">Paper/Finding ID</div><div class="xl-c xl-head">Finding description &hellip;</div>
+<div class="xl-c xl-n">2</div><div class="xl-c xl-hyp" style="grid-column: span 6">The hypothesis statement, copied verbatim</div>
+<div class="xl-c xl-n">3</div><div class="xl-c"></div><div class="xl-c xl-paper">10.xxxx/&hellip;</div><div class="xl-c xl-paper">PubMed published</div><div class="xl-c xl-paper">digits</div><div class="xl-c xl-paper xl-id">P1</div><div class="xl-c xl-paper"></div>
+<div class="xl-c xl-n">4</div><div class="xl-c"></div><div class="xl-c"></div><div class="xl-c"></div><div class="xl-c"></div><div class="xl-c xl-find xl-id">P1.F1</div><div class="xl-c xl-find">a finding from P1</div>
+<div class="xl-c xl-n">5</div><div class="xl-c"></div><div class="xl-c"></div><div class="xl-c"></div><div class="xl-c"></div><div class="xl-c xl-find xl-id">P1.F2</div><div class="xl-c xl-find">another finding from P1</div>
+<div class="xl-c xl-n">6</div><div class="xl-c"></div><div class="xl-c xl-paper">10.xxxx/&hellip;</div><div class="xl-c xl-paper">PubMed preprint</div><div class="xl-c xl-paper">digits</div><div class="xl-c xl-paper xl-id">P2</div><div class="xl-c xl-paper"></div>
+<div class="xl-c xl-n">7</div><div class="xl-c"></div><div class="xl-c"></div><div class="xl-c"></div><div class="xl-c"></div><div class="xl-c xl-find xl-id">P2.F1</div><div class="xl-c xl-find">a finding from P2</div>
+</div>
+<div class="xl-tabs"><span class="on">Submission</span><span>Method</span><span>How to fill this in</span></div>
+<figcaption><span class="lg lg-hyp"></span>the hypothesis <span class="lg lg-paper"></span>a paper row <span class="lg lg-find"></span>its finding rows</figcaption>
+</figure>
+<h3 class="fh" id="format-columns">The columns of the Submission sheet</h3>
+<div class="tablewrap"><table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Column</th>
+<th style="text-align: left;">Content</th>
+<th style="text-align: left;">Accepted values</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd g-hyp">
+<td style="text-align: left;">Hypothesis</td>
+<td style="text-align: left;">The hypothesis you selected. Row 2
+only</td>
+<td style="text-align: left;">The statement copied verbatim from the
+<a href="hypotheses.html">hypotheses page</a>. Empty on every other row</td>
+</tr>
+<tr class="band g-paper"><td colspan="3">The paper</td></tr>
+<tr class="even g-paper">
+<td style="text-align: left;">DOI</td>
+<td style="text-align: left;">The source’s DOI</td>
+<td style="text-align: left;">A DOI, or N/A for a source that has
+none</td>
+</tr>
+<tr class="odd g-paper">
+<td style="text-align: left;">Paper/source type</td>
+<td style="text-align: left;">What kind of source it is</td>
+<td style="text-align: left;">Exactly one of PubMed published, PubMed
+preprint, Web article, Database, Other</td>
+</tr>
+<tr class="even g-paper">
+<td style="text-align: left;">PubMed ID</td>
+<td style="text-align: left;">Required for any source cataloged in
+PubMed</td>
+<td style="text-align: left;">Digits only, or N/A</td>
+</tr>
+<tr class="odd g-paper">
+<td style="text-align: left;">Paper/Finding ID</td>
+<td style="text-align: left;">What the row is: a paper or one of its
+findings</td>
+<td style="text-align: left;">P1, P2 and so on for papers, in order of
+relevance, P1 holding the findings most relevant to the hypothesis.
+P1.F1, P1.F2 and so on for the findings of P1</td>
+</tr>
+<tr class="band g-find"><td colspan="3">The finding</td></tr>
+<tr class="even g-find">
+<td style="text-align: left;">Finding description</td>
+<td style="text-align: left;">Plain English, one sentence</td>
+<td style="text-align: left;">Free text</td>
+</tr>
+<tr class="odd g-find">
+<td style="text-align: left;">Finding quote</td>
+<td style="text-align: left;">The exact text from the paper</td>
+<td style="text-align: left;">Free text, or N/A</td>
+</tr>
+<tr class="even g-find">
+<td style="text-align: left;">Finding summary</td>
+<td style="text-align: left;">Structured notation, used to match
+findings across submissions</td>
+<td style="text-align: left;">For example (APOE3 -&gt; APOE4) -&gt;
+(less ABCA1), or N/A where the form does not fit</td>
+</tr>
+<tr class="odd g-find">
+<td style="text-align: left;">Finding relevance</td>
+<td style="text-align: left;">How relevant the finding is to the
+hypothesis</td>
+<td style="text-align: left;">A number from 0 to 1</td>
+</tr>
+<tr class="even g-find">
+<td style="text-align: left;">Experimental system</td>
+<td style="text-align: left;">The system and the conditions</td>
+<td style="text-align: left;">Free text, as precise as the paper
+allows</td>
+</tr>
+<tr class="odd g-find">
+<td style="text-align: left;">Data location</td>
+<td style="text-align: left;">Where the data are</td>
+<td style="text-align: left;">Fig 4C, Table 2, Supplementary Fig 3, or
+an exact quoted sentence</td>
+</tr>
+<tr class="band g-stat"><td colspan="3">Statistics and provenance</td></tr>
+<tr class="even g-stat">
+<td style="text-align: left;">Effect size</td>
+<td style="text-align: left;">The size of the change</td>
+<td style="text-align: left;">A percentage (40%, 300%), a fold change
+(2.5x), a standardized effect size as the paper gives it (d=3.7,
+r=0.58), any of these with a leading ~ where you estimated it from a
+figure (~40%), the word qualitative where the paper shows a direction
+you cannot put a number on, or N/A</td>
+</tr>
+<tr class="odd g-stat">
+<td style="text-align: left;">Effect size provenance</td>
+<td style="text-align: left;">Where that value came from, or why there
+is none</td>
+<td style="text-align: left;">One of the codes below</td>
+</tr>
+<tr class="even g-stat">
+<td style="text-align: left;">P value</td>
+<td style="text-align: left;">The reported significance</td>
+<td style="text-align: left;">A number (0.03), an inequality (&lt;0.001,
+&gt;0.05), or N/A</td>
+</tr>
+<tr class="odd g-stat">
+<td style="text-align: left;">P value provenance</td>
+<td style="text-align: left;">Where that value came from, or why there
+is none</td>
+<td style="text-align: left;">One of the codes below</td>
+</tr>
+<tr class="even g-stat">
+<td style="text-align: left;">Sample size</td>
+<td style="text-align: left;">The number of samples</td>
+<td style="text-align: left;">A whole number (12), a range as the paper
+gives it (8-12), either with a leading ~ where you counted plotted
+points instead of reading a stated number (~12), or N/A</td>
+</tr>
+<tr class="odd g-stat">
+<td style="text-align: left;">Sample size provenance</td>
+<td style="text-align: left;">Where that value came from, or why there
+is none</td>
+<td style="text-align: left;">One of the codes below</td>
+</tr>
+<tr class="band g-dir"><td colspan="3">Directness</td></tr>
+<tr class="even g-dir">
+<td style="text-align: left;">Directness class</td>
+<td style="text-align: left;">How directly the finding bears on the
+hypothesis</td>
+<td style="text-align: left;">A number from 1 to 5, on finding rows
+only</td>
+</tr>
+<tr class="odd g-dir">
+<td style="text-align: left;">Directness strength</td>
+<td style="text-align: left;">How strong that link is</td>
+<td style="text-align: left;">A number from 1 to 5 where 1 is the
+strongest, or the number with its word (2 strong), on finding rows
+only</td>
+</tr>
+</tbody>
+</table></div>
+<div class="blk" style="--bc:#E08A3C"><h2 id="providing-your-method">Providing your method</h2>
+<p>A list of findings without a method is a result without a protocol.
+This challenge is as much about how the literature was read as about
+what was found, so the method has to be public and it has to be
+findable.</p>
+<p><strong class="lead">What to publish.</strong> A public repository or archive with a README.md at
+its root holding six sections:</p>
+<ol type="1" class="six">
+<li><p>Who did the work: a person, an agent, a person and an agent, or
+several agents working together</p></li>
+<li><p>Model and version, if any was used</p></li>
+<li><p>How papers were found: sources and queries</p></li>
+<li><p>How full text was obtained</p></li>
+<li><p>What a human checked, and on what proportion of the
+findings</p></li>
+<li><p>Anything else worth knowing</p></li>
+</ol>
+<p>Copy method_README_template.md from the <a href="resources.html">shared resources page</a>. For
+work done entirely by hand, six short paragraphs are enough; nobody
+expects code that does not exist.</p>
+<p><strong class="lead">What goes in the spreadsheet.</strong> The Method sheet carries seven labelled rows. Fill the cell to the right of each label:</p>
+<figure class="msheet" aria-label="The Method sheet"><div class="ms-grid">
+<div class="ms-c ms-n"></div><div class="ms-c ms-n">A &middot; Label</div><div class="ms-c ms-n">B &middot; Content</div>
+<div class="ms-c ms-n">1</div><div class="ms-c ms-label">Team</div><div class="ms-c ms-val">Your team’s name, as created on the submission page. The same on every submission you make, across all hypotheses</div>
+<div class="ms-c ms-n">2</div><div class="ms-c ms-label">Team leader</div><div class="ms-c ms-val">The person the organizers contact about this submission. A team of one names themselves</div>
+<div class="ms-c ms-n">3</div><div class="ms-c ms-label">Team leader email</div><div class="ms-c ms-val">Where the organizers write about this submission. An institutional or company address where you have one</div>
+<div class="ms-c ms-n">4</div><div class="ms-c ms-label">Method URL</div><div class="ms-c ms-val">The public repository or archive holding your README</div>
+<div class="ms-c ms-n">5</div><div class="ms-c ms-label">Commit SHA</div><div class="ms-c ms-val">The commit your submission was built from, or N/A for an archive with a DOI</div>
+<div class="ms-c ms-n">6</div><div class="ms-c ms-label">Who did the work</div><div class="ms-c ms-val">Exactly one of person, agent, both, collab</div>
+<div class="ms-c ms-n">7</div><div class="ms-c ms-label">Model and version</div><div class="ms-c ms-val">The exact version, one per agent where several were involved. For work done without a model, none or N/A</div>
+</div><div class="xl-tabs"><span>Submission</span><span class="on">Method</span><span>How to fill this in</span></div></figure>
+<p>The four values for who did the work: <strong>person</strong> for a
+human working alone, <strong>agent</strong> for a single agent,
+<strong>both</strong> for a human and an agent, <strong>collab</strong>
+for several agents working together. For collab, list every model in
+Model and version, one per agent, and say in section 1 of your README
+which agent did which step and whether a person was involved as
+well.</p>
+<p>The two cells have to agree. A submission made entirely by hand is
+person, and its Model and version is none, or N/A if you prefer the
+convention used everywhere else in the format. Anything other than
+person means a model was used, so the model and its version are
+required. The validator checks the pair in both directions.</p>
+<p><strong class="lead">Where to publish it.</strong> Any public host: GitHub, GitLab, Codeberg, or an
+archive with a DOI such as Zenodo or OSF. A private repository does not
+count, and neither does a link that needs an account to open.</p>
+<p><strong class="lead">Why the commit SHA.</strong> A repository can be rewritten, emptied or made
+private after the deadline, so a bare link is not a record of what
+produced the submission. The SHA pins it. Run git rev-parse HEAD and put
+the result in the Commit SHA cell of the Method sheet. An archive with a
+DOI is already immutable, so it takes N/A instead.</p>
+</div>
+<div class="blk" style="--bc:#E08A3C"><h2 id="recording-what-the-paper-does-not-report">Recording what the
+paper does not report</h2>
+<p>A missing number can mean two opposite things. Either the paper never
+reported it, which is a fact about the literature and one of the things
+this challenge exists to measure. Or it was reported and the submission
+did not find it, which is a fact about the submission. Writing N/A for
+both makes them indistinguishable.</p>
+<p>So every statistic carries a provenance code alongside it. Use
+exactly one of:</p>
+<p class="fam pv-key"><span class="pv-ok">a value was found</span><span class="pv-fig">read from a figure</span><span class="pv-no">no usable value</span></p>
+<div class="tablewrap"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Code</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code class="pv pv-ok">printed_in_text</code></td>
+<td style="text-align: left;">The value is printed in the text, a table
+or a figure legend, and you took it from there</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code class="pv pv-fig">visual_only</code></td>
+<td style="text-align: left;">The paper shows it graphically or as
+significance stars, with no printed number, and you recorded what it
+shows without estimating a value</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code class="pv pv-fig">estimated_from_figure</code></td>
+<td style="text-align: left;">There is no printed number and you
+measured one off the figure, by bar height, axis position or by counting
+plotted points. The value carries a leading ~</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code class="pv pv-ok">supplement_only</code></td>
+<td style="text-align: left;">The value is in the supplementary
+material, and you took it from there</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code class="pv pv-no">not_found_in_source</code></td>
+<td style="text-align: left;">The paper does not report it anywhere you
+could find</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code class="pv pv-no">full_text_unavailable</code></td>
+<td style="text-align: left;">You could not reach the full text, so you
+cannot say whether it is reported</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code class="pv pv-no">ambiguous_panel</code></td>
+<td style="text-align: left;">The panel you cite reports several
+comparisons and it is not clear which one the value belongs to</td>
+</tr>
+</tbody>
+</table></div>
+<details class="more">
+<summary>Conventions: effect sizes, estimates, P values, significance stars, paywalls, ranges</summary>
+<p><strong class="lead">Report the effect as the paper reports it.</strong> A percentage, a fold
+change and a standardized effect size are all acceptable, and the one to
+use is the one the authors used. Converting a Cohen’s d into a
+percentage, or a fold change into a percentage, introduces an assumption
+that is yours and not theirs. Where the paper gives several, give the
+one that belongs to the comparison your finding is about.</p>
+<p><strong class="lead">Estimates are welcome, as long as they say so.</strong> Where a figure carries
+the information but no number is printed, measure it: an effect size
+from the bars, a sample size by counting the plotted points. Write the
+value with a leading ~ and use estimated_from_figure. This is better
+than N/A, because a marked estimate can be used or discarded at will
+while a blank cannot be recovered. Where you cannot put a defensible
+number on what the figure shows, use qualitative with visual_only rather
+than inventing a precision you do not have.</p>
+<p class="co co-warn"><strong class="lead">Never estimate a P value.</strong> An effect size and a sample size are
+quantities the figure displays, so measuring them is reading, with an
+error you have declared by writing the ~. A P value is not displayed.
+The figure shows the data a test was run on; the test itself happened
+elsewhere, and its result is either stated or it is not.</p>
+<p>So a figure gives you a P value only where the panel or its legend
+states one. If the panel carries stars, record what the legend says they
+mean. If it carries nothing, the value is N/A with not_found_in_source.
+The validator rejects estimated_from_figure on a P value.</p>
+<p><strong class="lead">Significance stars.</strong> Record the inequality the paper’s own legend
+gives them, with provenance visual_only. The usual convention is * for
+p&lt;0.05, ** for p&lt;0.01 and *** for p&lt;0.001, but that is only the
+usual one and it is an example, not the rule: some papers start at **
+for p&lt;0.01, some add **** for p&lt;0.0001, and some use the stars for
+an adjusted P value. Read the legend of the figure you are citing and follow it. Where you can read the key, record the inequality, with provenance visual_only, and do not add a ~: the inequality is what the paper asserts, not something you measured. Where the figure gives no key at all, there is no inequality to record, so the value is N/A with provenance ambiguous_panel. Where you can read the key, N/A would lose what the paper tells you.</p>
+<p><strong class="lead">Paywalls.</strong> full_text_unavailable means the full text was genuinely out
+of reach. Before using it, try the DOI directly, the publisher’s own
+page, Europe PMC, PMC, and Unpaywall. “My tool could not fetch it” is
+not the same as “it is not available”, and the difference matters when
+submissions are compared.</p>
+<p><strong class="lead">Ranges and per-group values.</strong> Where a paper gives a range (8-12 mice
+per group), record the range. Do not pick one end of it: a single number
+that is not in the paper is less faithful than the range that is.</p>
+</details>
+</div>
+</section>
+</section>
+<section class="tabpanel" id="tab-directness" data-tab="directness" aria-label="Directness">
+<section class="tsec">
+<div class="blk" style="--bc:#8A4FD0"><h2 id="the-directness-class">The directness class</h2>
+<p>Every hypothesis in this challenge has the same form: A change in one system variable A causes a change in another system variable B.</p>
+<p>ABCA1 is used on this page and in the <a href="resources/submission_example.xlsx" download>example sheet</a> only as a worked example. It is not one of the five challenge hypotheses.</p>
+<p>The directness class says how the experiment behind your finding lines up with that shape. It describes what the experiment did, not what the evidence is worth. Use one of:</p>
+<div class="classes">
+<div class="cls"><div class="cls-dia"><svg class="dia" viewBox="0 0 300 96" role="img" aria-label="Diagram: ΔA to ΔB"><defs><marker id="ah1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2B1B74"/></marker><marker id="ad1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#B5442E"/></marker></defs><line x1="118.0" y1="66.0" x2="179.0" y2="66.0" stroke="#2B1B74" stroke-width="2" marker-end="url(#ah1)"/><rect x="64.0" y="50" width="54" height="32" rx="7" fill="#EEEBFA" stroke="#4A35A8" stroke-width="1.6"/><text x="91.0" y="71.5" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="700" font-size="16" fill="#1E1252">ΔA</text><rect x="182.0" y="50" width="54" height="32" rx="7" fill="#EEEBFA" stroke="#4A35A8" stroke-width="1.6"/><text x="209.0" y="71.5" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="700" font-size="16" fill="#1E1252">ΔB</text></svg></div><div class="cls-text"><h3><span class="cls-n">1</span>Direct</h3><p>A itself was perturbed, or varies naturally, and B itself was measured</p></div></div>
+<div class="cls"><div class="cls-dia"><svg class="dia" viewBox="0 0 300 96" role="img" aria-label="Diagram: ΔA' to ΔA to ΔB"><defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2B1B74"/></marker><marker id="ad2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#B5442E"/></marker></defs><line x1="88.5" y1="66.0" x2="120.0" y2="66.0" stroke="#2B1B74" stroke-width="2" marker-end="url(#ah2)"/><line x1="177.0" y1="66.0" x2="208.5" y2="66.0" stroke="#2B1B74" stroke-width="2" marker-end="url(#ah2)"/><path d="M61.5,50 C61.5,20 238.5,20 238.5,46" fill="none" stroke="#B5442E" stroke-width="1.6" stroke-dasharray="4 4" marker-end="url(#ad2)"/><rect x="34.5" y="50" width="54" height="32" rx="7" fill="#FFF4EA" stroke="#E08A3C" stroke-width="1.6" stroke-dasharray="4 3"/><text x="61.5" y="71.5" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="700" font-size="16" fill="#1E1252">ΔA′</text><rect x="123.0" y="50" width="54" height="32" rx="7" fill="#EEEBFA" stroke="#4A35A8" stroke-width="1.6"/><text x="150.0" y="71.5" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="700" font-size="16" fill="#1E1252">ΔA</text><rect x="211.5" y="50" width="54" height="32" rx="7" fill="#EEEBFA" stroke="#4A35A8" stroke-width="1.6"/><text x="238.5" y="71.5" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="700" font-size="16" fill="#1E1252">ΔB</text></svg></div><div class="cls-text"><h3><span class="cls-n">2</span>Indirect input</h3><p>A perturbation in A is assumed to have been introduced by a perturbation in surrogate variable A’. For example, a microRNA (A’) is introduced that alters the expression of a protein (A). B itself was measured.</p></div></div>
+<div class="cls"><div class="cls-dia"><svg class="dia" viewBox="0 0 300 96" role="img" aria-label="Diagram: ΔA to ΔB to ΔB'"><defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2B1B74"/></marker><marker id="ad3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#B5442E"/></marker></defs><line x1="88.5" y1="66.0" x2="120.0" y2="66.0" stroke="#2B1B74" stroke-width="2" marker-end="url(#ah3)"/><line x1="177.0" y1="66.0" x2="208.5" y2="66.0" stroke="#2B1B74" stroke-width="2" marker-end="url(#ah3)"/><path d="M61.5,50 C61.5,20 238.5,20 238.5,46" fill="none" stroke="#B5442E" stroke-width="1.6" stroke-dasharray="4 4" marker-end="url(#ad3)"/><rect x="34.5" y="50" width="54" height="32" rx="7" fill="#EEEBFA" stroke="#4A35A8" stroke-width="1.6"/><text x="61.5" y="71.5" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="700" font-size="16" fill="#1E1252">ΔA</text><rect x="123.0" y="50" width="54" height="32" rx="7" fill="#EEEBFA" stroke="#4A35A8" stroke-width="1.6"/><text x="150.0" y="71.5" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="700" font-size="16" fill="#1E1252">ΔB</text><rect x="211.5" y="50" width="54" height="32" rx="7" fill="#FFF4EA" stroke="#E08A3C" stroke-width="1.6" stroke-dasharray="4 3"/><text x="238.5" y="71.5" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="700" font-size="16" fill="#1E1252">ΔB′</text></svg></div><div class="cls-text"><h3><span class="cls-n">3</span>Indirect output</h3><p>A itself was perturbed, and B was inferred from measuring a change in a surrogate variable B’ expected to be affected by a change in B. For example, the change in the amount of cholesterol exported from cells (B’) is measured, and assumed to indicate the change in the abundance of a cholesterol exporter protein (B).</p></div></div>
+<div class="cls"><div class="cls-dia"><svg class="dia" viewBox="0 0 300 96" role="img" aria-label="Diagram: ΔA' to ΔA to ΔB to ΔB'"><defs><marker id="ah4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2B1B74"/></marker><marker id="ad4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#B5442E"/></marker></defs><line x1="70.8" y1="66.0" x2="84.6" y2="66.0" stroke="#2B1B74" stroke-width="2" marker-end="url(#ah4)"/><line x1="141.6" y1="66.0" x2="155.4" y2="66.0" stroke="#2B1B74" stroke-width="2" marker-end="url(#ah4)"/><line x1="212.4" y1="66.0" x2="226.2" y2="66.0" stroke="#2B1B74" stroke-width="2" marker-end="url(#ah4)"/><path d="M43.8,50 C43.8,20 256.2,20 256.2,46" fill="none" stroke="#B5442E" stroke-width="1.6" stroke-dasharray="4 4" marker-end="url(#ad4)"/><path d="M114.6,50 C114.6,10 256.2,10 256.2,46" fill="none" stroke="#B5442E" stroke-width="1.6" stroke-dasharray="4 4" marker-end="url(#ad4)"/><rect x="16.8" y="50" width="54" height="32" rx="7" fill="#FFF4EA" stroke="#E08A3C" stroke-width="1.6" stroke-dasharray="4 3"/><text x="43.8" y="71.5" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="700" font-size="16" fill="#1E1252">ΔA′</text><rect x="87.6" y="50" width="54" height="32" rx="7" fill="#EEEBFA" stroke="#4A35A8" stroke-width="1.6"/><text x="114.6" y="71.5" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="700" font-size="16" fill="#1E1252">ΔA</text><rect x="158.4" y="50" width="54" height="32" rx="7" fill="#EEEBFA" stroke="#4A35A8" stroke-width="1.6"/><text x="185.4" y="71.5" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="700" font-size="16" fill="#1E1252">ΔB</text><rect x="229.2" y="50" width="54" height="32" rx="7" fill="#FFF4EA" stroke="#E08A3C" stroke-width="1.6" stroke-dasharray="4 3"/><text x="256.2" y="71.5" text-anchor="middle" font-family="Manrope, system-ui, sans-serif" font-weight="700" font-size="16" fill="#1E1252">ΔB′</text></svg></div><div class="cls-text"><h3><span class="cls-n">4</span>Indirect input and output</h3><p>There is a perturbation of surrogate variable for A and measurement of a surrogate variable for B.</p></div></div>
+<div class="cls"><div class="cls-dia"><div class="dia dia-q" aria-hidden="true">?</div></div><div class="cls-text"><h3><span class="cls-n">5</span>Other</h3><p>None of the classes above fit. Say why in the <a href="#format-columns">Finding description</a>.</p></div></div>
+<p class="dia-key"><span class="k-real"></span>the variable itself <span class="k-sur"></span>a surrogate <span class="k-alt"></span>another route the perturbation could take</p>
+</div>
+<div class="rules3">
+<p class="rule3">A perturbation does not have to be introduced by the experimenter. Natural variation counts: for example, comparing APOE4 carriers with APOE3 carriers is considered a perturbation of A, the APOE genotype. Do not drop a finding to a lower class because the experiment observed A rather than manipulated it.</p>
+<p class="rule3">The class belongs to the finding, not to the paper. One paper can hold findings of several classes, so the cell is filled on finding rows and left empty on paper rows. The validator rejects a class on a paper row.</p>
+<p class="rule3">The class is relative to the hypothesis you selected. The same experiment may take a different class against a different hypothesis, so do not carry your classes from one hypothesis to another.</p>
+</div>
+<p><strong>The strength of the link.</strong> The class describes the form of the experiment. An <a href="resources/Directness_of_evidence_v02.docx">additional parameter, d</a>, is required, describing strength of the link between that experiment and the hypothesis, on a scale of 1 to 5. <strong>1 is the strongest link and 5 the weakest</strong>, so a low number always means the experiment is closer to the hypothesis. The template offers the number with its word, 1 very strong through 5 very weak, and a bare number is accepted too.</p>
+<p>‘d’ can be regarded as a measure of how misleading the use of surrogate variables might be. For example, for a class 2 experiment where A’ is measured, how likely is it that A’ might affect the value of B by some other mechanism than causing a perturbation of A. Similarly, for a class 3 experiment, where a change in B’ is measured rather than the change in B, how likely is it that the perturbation of A could cause a perturbation of B’ by some other mechanism than as a consequence of a change in B.</p>
+<div class="tablewrap"><table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Strength</th>
+<th style="text-align: left;">When</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1 very strong</td>
+<td style="text-align: left;">Usually for a Class 1 experiment, where changes in A and B are directly measured.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2 strong</td>
+<td style="text-align: left;">One or both measurements are of surrogate variables, but there is no plausible way by which the observations could be made other than by a change in A causing a change in B.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3 moderate</td>
+<td style="text-align: left;">A possible alternative route exists but it is unlikely to invalidate the hypothesis that the A change causes the B change.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4 weak</td>
+<td style="text-align: left;">There is a known mechanism by which the surrogate variable(s) changes could be related other than because A causes a change in B.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5 very weak</td>
+<td style="text-align: left;">There are several such alternative mechanisms, or one or both surrogates are weakly coupled to the A and B variables.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Class 4 has a surrogate variable at both ends, so there are two places an alternative mechanism could be involved, and d is unlikely to be lower than 3. A class 5 finding is judged on the same question and explained in <a href="#format-columns">Finding description</a>.</p>
+<p class="co co-info">The validator checks the pair for the one error that is easy to make. A class 1 finding with a strength of 4 or 5 is flagged, because class 1 has no stand-in at either end, so that combination usually means the scale was read upside down.</p>
+</div>
+</section>
+</section>
+<section class="tabpanel" id="tab-evaluation" data-tab="evaluation" aria-label="Evaluation">
+<section class="tsec">
+<h1 id="how-youll-be-evaluated">How You’ll Be Evaluated</h1>
+<p>Unlike most community challenges to date, this one has no ground truth
+against which to assess the results. Thus, the performance assessment
+methods break new ground and may evolve as the project progresses.
+Community challenges differ in the extent to which they predefine
+assessment criteria. Some, such as those run by Kaggle, predefine a single
+metric that will be used for ranking. Others, such as CASP, predefine a
+subset of criteria, but encourage independent assessors to introduce new
+ones, once the results are in hand. This challenge sets out a set of
+initial considerations (below), without an explicit ranking formula. These
+may be modified and added to once the results are analyzed.</p>
+<p>Initial assessment will be as follows:</p>
+<ol type="1" class="crit">
+<li><p>Cross-evaluation by participants to find the subset of strongest
+performing groups (each participant provides subjective scores for the
+methods and results submitted by ten other participants, with comments,
+generating ten assessments per group). Necessary only if there are a
+large number of submissions.</p></li>
+<li><p>Comparison of results across groups: which papers were included,
+which experiments were extracted from those papers. This does not imply
+that findings reported by one or a few groups will be considered
+incorrect. Rather, it will help identify ‘easy’ results.</p></li>
+<li><p>Evaluation of each finding’s relevance using the evidence
+directness criteria.</p></li>
+<li><p>Checking of each Finding’s specifics (effect size, P value,
+experimental system) against the source paper. (Experience with the
+Hugging Face collab showed that providing these specifics is hard for
+current methods)</p></li>
+<li><p>Where necessary, manual inspection.</p></li>
+</ol>
+</section>
+<section class="tsec">
+<h1 id="submitting">Submitting</h1>
+<div class="acc" aria-hidden="true"><span class="acc-tick">&#10003;</span><div><span class="acc-l">Accepted. Your acceptance number is</span><code>MC-20261110-7F3A91C2</code><span class="acc-ex">example</span></div></div>
+<p>Accepted submissions are given an acceptance number, shown on screen. Keep it, and quote it in
+any question about the submission.</p>
+<p>Each team has one live submission per hypothesis. Submitting again for the same hypothesis
+replaces it, as often as you like until the deadline, and the last one before the deadline is
+the one assessed. Only the team leader submits, and replaces, the team’s submissions.</p>
+</section>
+<section class="tsec">
+<h1 id="timeline-and-questions">Timeline and Questions</h1>
+<div class="tl2" aria-hidden="true">
+<div class="tl2-bar"><span class="tl2-fill" id="tl2-fill"></span></div>
+<div class="tl2-stops"><div class="go"><b>Nov 17</b>Opens</div><div class="now"><b id="tl2-left">Opens November 17th</b>today</div><div class="end"><b>Jan 15</b>Deadline</div><div class="later"><b>Later</b>Next steps</div></div>
+</div>
+<ul>
+<li><p>Step 1 opens: 00:00 UTC on November 17th, 2026</p></li>
+<li><p>First batch of hypotheses released: November 17th, 2026</p></li>
+<li><p>Step 1 submission deadline: the end of January 15th, 2027, anywhere on Earth</p></li>
+<li><p>Later phases, evidence assessment and experimental design: dates to be announced</p></li>
+</ul>
+<p>Questions go to the <a href="https://huggingface.co/spaces/MecCog/meccog-challenge/discussions/new" target="_blank" rel="noopener">Community tab</a> first, then to the organizers. Organizers
+and the community are here to help.</p>
+<p>Thank you for contributing to MecCog. Together we are building a map
+of APOE4 mechanisms.</p>
+</section>
+</section>
+  </div>
+</main>
+
+<footer><div class="in" style="padding-block:2.5rem"><p><strong>Questions.</strong> The <a href="https://huggingface.co/spaces/MecCog/meccog-challenge/discussions/new" target="_blank" rel="noopener">Community tab</a> of this Space is where questions get asked and answered, and it is usually the fastest route, since someone has often been there before you. You can also join the conversation on <a href="https://discord.gg/C5KRB7bEj" target="_blank" rel="noopener">Discord</a>. For anything else, write to the organizers at <a href="mailto:e4admin@tunc.org">e4admin@tunc.org</a>.</p><p><a href="index.html">Back to the main page</a>.</p></div></footer>
+<script>
+(function () {
+  var tabs = [].slice.call(document.querySelectorAll(".tab")), panels = [].slice.call(document.querySelectorAll(".tabpanel"));
+  if (!tabs.length) return;
+  document.documentElement.classList.add("tabs-on");
+  // after a switch, start the new tab at its top, just under the tab bar, not at the old scroll depth
+  function toPanelTop() {
+    var bar = document.querySelector(".tabs"), main = document.querySelector("main");
+    var target = main.getBoundingClientRect().top + window.scrollY - bar.offsetHeight - document.querySelector(".nav").offsetHeight;
+    if (window.scrollY > target) window.scrollTo(0, target);
+  }
+  function show(k, scrollTo) {
+    panels.forEach(function (p) { p.hidden = p.getAttribute("data-tab") !== k; });
+    tabs.forEach(function (a) { if (a.getAttribute("data-tab") === k) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    if (scrollTo) scrollTo.scrollIntoView();
+  }
+  // a link to any heading on this page opens the tab that holds it
+  function fromHash() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    var p = el && (el.classList.contains("tabpanel") ? el : el.closest(".tabpanel"));
+    if (!p) { show("overview"); return; }
+    var k = p.getAttribute("data-tab");
+    show(k, el === p ? null : el);
+    var kd = el.closest && el.closest("details"); if (kd) kd.open = true;
+  }
+  tabs.forEach(function (a) { a.addEventListener("click", function (e) { e.preventDefault(); var k = a.getAttribute("data-tab"); history.replaceState(null, "", "#tab-" + k); show(k); toPanelTop(); }); });
+  window.addEventListener("hashchange", fromHash);
+  window.addEventListener("beforeprint", function () { panels.forEach(function (p) { p.hidden = false; }); document.querySelectorAll("details").forEach(function (d) { d.open = true; }); });
+  fromHash();
+})();
+</script>
+<script>
+(function () {
+  var nav = document.querySelector(".nav"), b = nav && nav.querySelector(".menu-toggle");
+  if (!b) return;
+  b.addEventListener("click", function () { var o = nav.classList.toggle("open"); b.setAttribute("aria-expanded", o ? "true" : "false"); });
+  nav.querySelectorAll("menu a").forEach(function (a) { a.addEventListener("click", function () { nav.classList.remove("open"); b.setAttribute("aria-expanded", "false"); }); });
+})();
+</script>
+<script>
+(function () {
+  var open = Date.UTC(2026, 10, 17), close = Date.UTC(2027, 0, 16, 12), now = Date.now(), f = document.getElementById("tl2-fill"), l = document.getElementById("tl2-left");
+  if (!f) return;
+  f.style.width = Math.max(0, Math.min(1, (now - open) / (close - open))) * 75 + "%";
+  if (now < open) l.textContent = (function (n) { return n + (n === 1 ? " day" : " days"); })(Math.ceil((open - now) / 864e5)) + " to go";
+  else if (now < close) l.textContent = (function (n) { return n + (n === 1 ? " day" : " days"); })(Math.ceil((close - now) / 864e5)) + " left";
+  else l.textContent = "Closed";
+})();
+</script>
+<script>
+(function () {
+  var close = Date.UTC(2027, 0, 16, 12), now = Date.now(), el = document.getElementById("side-left");
+  if (!el) return;
+  if (now < Date.UTC(2026, 10, 17)) el.textContent = "Opens November 17th";
+  else if (now < close) el.textContent = "Open now, " + (function (n) { return n + (n === 1 ? " day" : " days"); })(Math.ceil((close - now) / 864e5)) + " left";
+  else el.textContent = "Closed";
+})();
+</script>
+<script>
+(function () {
+  // The menu's real height, so what sticks below it (tabs, side column) and every
+  // anchor lands just under it, on any screen.
+  var n = document.querySelector(".nav");
+  if (!n) return;
+  function set() { if (!n.classList.contains("open")) document.documentElement.style.setProperty("--navh", n.offsetHeight + "px"); }
+  set(); window.addEventListener("load", set); window.addEventListener("resize", set);
+})();
+</script>
+</body>
+</html>

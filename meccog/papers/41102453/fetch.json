@@ -1,0 +1,19 @@
+{
+  "pmid": "41102453",
+  "routes": [
+    {
+      "route": "idconv",
+      "ok": true,
+      "pmcid": "PMC12638250"
+    },
+    {
+      "route": "pubmed_efetch",
+      "ok": true
+    },
+    {
+      "route": "pmc_efetch",
+      "ok": true
+    }
+  ],
+  "full_text": "pmc_jats"
+}

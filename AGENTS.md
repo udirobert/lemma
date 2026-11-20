@@ -38,6 +38,33 @@ The `lemma` wrapper runs `python -m agent.cli`. Each stage is idempotent:
 re-running a stage that already has outputs under `papers/<id>/` reuses them
 (claims.json, results/audit_report.json) rather than redoing work.
 
+## Incoming capability: MecCog open-science challenge
+
+The **MecCog "Papers and Findings" entry** (plan of record: `MECCOG.md`):
+find papers bearing on five APOE4→endosome hypotheses and extract
+experimental findings into the official workbook — verbatim quote, panel-level
+location, per-stat provenance codes, directness class/strength — then pass
+the vendored `validate_submission.py`. Deadline 2027-01-15.
+
+Layout: `meccog/resources/` (vendored validator/template/hypotheses),
+`meccog/papers/<pmid>/` (full text + `fetch.json` route log),
+`meccog/discovery/<H>.json` (LLM-screened candidate lists),
+`meccog/findings/<H>__<pmid>.json` (per-paper extracted rows, quotes
+machine-verified verbatim), `meccog/submissions/` (built xlsx + validator
+reports). Drivers: `scripts/meccog_fetch.py` (PMC/JATS-first via curl —
+python urllib hits TLS-interception on this machine), `meccog_find.py`
+(Europe PMC + OpenAlex snowball + LLM screen), `meccog_extract.py`
+(`--chunk-chars`/`--only-chunks` for refusal-prone papers;
+`FALLBACK_ENDPOINTS` tries the `LEMMA_*` OpenAI-compatible endpoints),
+`meccog_build_sheet.py` (xlsx + validator + logged normalizations).
+
+Honesty rules that must not regress: never ship a non-verbatim quote; stats
+the model can't point at in `fulltext.txt` become `N/A` + REVIEW, not an
+invented provenance; supplements were not fetched → `not_found_in_source`,
+never claimed `supplement_only`. Kytos (`~/Dev/kytos`, `docs/meccog.md`) is
+the domain counterpart for surrogate-assay/directness judgement only —
+pipeline code lives here.
+
 ## Incoming capability: protein-binder design
 
 Lemma is expanding from auditing papers to designing proteins with the same

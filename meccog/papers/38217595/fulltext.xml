@@ -1,0 +1,1665 @@
+<?xml version="1.0"  ?><!DOCTYPE pmc-articleset PUBLIC "-//NLM//DTD ARTICLE SET 2.0//EN" "https://dtd.nlm.nih.gov/ncbi/pmc/articleset/nlm-articleset-2.0.dtd"><pmc-articleset><article xml:lang="en" article-type="research-article" dtd-version="1.4"><processing-meta base-tagset="archiving" mathml-version="3.0" table-model="xhtml" tagset-family="jats"><restricted-by>pmc</restricted-by></processing-meta><front><journal-meta><journal-id journal-id-type="nlm-ta">J Alzheimers Dis</journal-id><journal-id journal-id-type="iso-abbrev">J Alzheimers Dis</journal-id><journal-id journal-id-type="pmc-domain-id">2983</journal-id><journal-id journal-id-type="pmc-domain">iospressopenlib</journal-id><journal-id journal-id-type="nlm-id">9814863</journal-id><journal-id journal-id-type="publisher-id">JAD</journal-id><journal-title-group><journal-title>Journal of Alzheimer's Disease</journal-title></journal-title-group><issn pub-type="ppub">1387-2877</issn><issn pub-type="epub">1875-8908</issn><issn-l>1387-2877</issn-l><custom-meta-group><custom-meta><meta-name>pmc-is-collection-domain</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-collection-title</meta-name><meta-value>IOS Press Open Library</meta-value></custom-meta></custom-meta-group></journal-meta><article-meta><article-id pub-id-type="pmcid">PMC10894586</article-id><article-id pub-id-type="pmcid-ver">PMC10894586.1</article-id><article-id pub-id-type="pmcaid">10894586</article-id><article-id pub-id-type="pmcaiid">10894586</article-id><article-id pub-id-type="pmid">38217595</article-id><article-id pub-id-type="doi">10.3233/JAD-230514</article-id><article-id pub-id-type="publisher-id">JAD230514</article-id><article-version article-version-type="pmc-version">1</article-version><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group></article-categories><title-group><article-title>The Role of Impaired Receptor Trafficking in Mediating the Pathological Effects of <italic toggle="yes">APOE4</italic> in Alzheimer’s Disease</article-title><alt-title alt-title-type="left-running-head">M. Safieh et al.</alt-title><alt-title alt-title-type="right-running-head">APOE4 and Membrane Receptor Trafficking in AD]</alt-title></title-group><contrib-group><contrib contrib-type="author"><name name-style="western"><surname>Safieh</surname><given-names initials="M">Mirna</given-names></name><xref rid="aff1" ref-type="aff"/></contrib><contrib contrib-type="author"><name name-style="western"><surname>Liraz</surname><given-names initials="O">Ori</given-names></name><xref rid="aff1" ref-type="aff"/></contrib><contrib contrib-type="author"><name name-style="western"><surname>Ovadia</surname><given-names initials="M">Maayan</given-names></name><xref rid="aff1" ref-type="aff"/></contrib><contrib contrib-type="author"><name name-style="western"><surname>Michaelson</surname><given-names initials="D">Danny</given-names></name><xref rid="aff1" ref-type="aff"/><xref rid="cor1" ref-type="corresp">*</xref></contrib><aff id="aff1">Department of Neurobiology, Sagol School of Neurosciences, The George S. Wise Faculty of Life Sciences, <institution>Tel Aviv University</institution>, Ramat Aviv, Tel Aviv, <country>Israel</country>
+</aff></contrib-group><author-notes><corresp id="cor1">
+<label>*</label>Correspondence to: Danny Michaelson, Department of Neurobiology, Sagol School of Neurosciences, The George S. Wise Faculty of Life Sciences, Room 705, Tel Aviv University, Ramat Aviv, 6997801, Tel Aviv, Israel. Tel.: +972 03 6426102; E-mail: <email>DannyM@tauex.tau.ac.il</email>.
+</corresp></author-notes><pub-date date-type="preprint" publication-format="electronic"><day>5</day><month>1</month><year>2024</year></pub-date><pub-date date-type="pub" publication-format="electronic"><day>16</day><month>1</month><year>2024</year></pub-date><pub-date date-type="collection" publication-format="electronic"><year>2024</year></pub-date><volume>97</volume><issue>2</issue><issue-id pub-id-type="pmc-issue-id">456497</issue-id><fpage>753</fpage><lpage>775</lpage><history><date date-type="accepted"><day>06</day><month>11</month><year>2023</year></date></history><pub-history><event event-type="pmc-release"><date><day>25</day><month>02</month><year>2024</year></date></event><event event-type="pmc-live"><date><day>26</day><month>02</month><year>2024</year></date></event><event event-type="pmc-last-change"><date iso-8601-date="2025-10-12 14:25:35.077"><day>12</day><month>10</month><year>2025</year></date></event></pub-history><permissions><copyright-statement>© 2024 – The authors. Published by IOS Press</copyright-statement><copyright-year>2024</copyright-year><license><ali:license_ref xmlns:ali="http://www.niso.org/schemas/ali/1.0/" specific-use="textmining" content-type="ccbynclicense">https://creativecommons.org/licenses/by-nc/4.0/</ali:license_ref><license-p>This is an open access article distributed under the terms of the <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="uri" xlink:href="https://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution Non-Commercial (CC BY-NC 4.0) License</ext-link>, which permits unrestricted non-commercial use, distribution, and reproduction in any medium, provided the original work is properly cited.</license-p></license></permissions><self-uri xmlns:xlink="http://www.w3.org/1999/xlink" content-type="pmc-pdf" xlink:href="jad-97-jad230514.pdf"/><abstract><sec specific-use="heading-level-1"><title>Background:</title><p>
+Apolipoprotein E4 (<italic toggle="yes">APOE4</italic>) is the most prevalent genetic risk factor of Alzheimer’s disease. Several studies suggest that <italic toggle="yes">APOE4</italic> binding to its receptors is associated with their internalization and accumulation in intracellular compartments. Importantly, this phenomenon also occurs with other, non-ApoE receptors. Based on these observations, we hypothesized that <italic toggle="yes">APOE4</italic> pathological effects are mediated by impairment in the life cycle of distinct receptors (APOER2, LRP1, IR, VEGFR).</p></sec><sec specific-use="heading-level-1"><title>Objective:</title><p>
+To examine the effects of <italic toggle="yes">APOE</italic> genotype on receptors protein levels and compartmentalization.</p></sec><sec specific-use="heading-level-1"><title>Methods:</title><p>
+Primary mouse neurons were prepared from <italic toggle="yes">APOE3</italic> or <italic toggle="yes">APOE4</italic> targeted replacement mice, or <italic toggle="yes">APOE</italic>-KO mice. Specific receptors protein levels were evaluated in these neurons, utilizing immunofluorescent staining. Additionally, surface membrane protein levels of those receptors were assessed by cell surface biotinylation assay and ELISA. Receptors’ colocalization with intracellular compartments was assessed by double staining and confocal microscopy, followed by colocalization analysis. Finally, LRP1 or APOER2 were knocked-down with CRISPR/Cas9 system to examine their role in mediating <italic toggle="yes">APOE4</italic> effects on the receptors.</p></sec><sec specific-use="heading-level-1"><title>Results:</title><p>
+Our results revealed lower receptors’ levels in <italic toggle="yes">APOE4</italic>, specifically on the membrane surface. Additionally, <italic toggle="yes">APOE4</italic> affects the compartmentation of these receptors in two patterns: the first was observed with LRP1 and was associated with decreased receptor levels in numerous intracellular compartments. The second was obtained with the other receptors and was associated with their accumulation in early endosomes and their decrease in the late endosomes.</p></sec><sec specific-use="heading-level-1"><title>Conclusions:</title><p>
+These results provide a unifying mechanism, in which <italic toggle="yes">APOE4</italic> drives the down regulation of various receptors, which plays important roles in distinct <italic toggle="yes">APOE4</italic> related pathological processes.</p></sec></abstract><kwd-group><label>Keywords</label><kwd>ABCA1</kwd><kwd>Alzheimer’s disease</kwd><kwd><italic toggle="yes">APOE4</italic> pathology</kwd><kwd>APOER2</kwd><kwd>Apolipoprotein E4</kwd><kwd>insulin receptors</kwd><kwd>LRP1</kwd><kwd>lipidation</kwd><kwd>receptor recycling</kwd><kwd>VEGFR</kwd></kwd-group><custom-meta-group><custom-meta><meta-name>pmc-status-qastatus</meta-name><meta-value>0</meta-value></custom-meta><custom-meta><meta-name>pmc-status-live</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-status-embargo</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-status-released</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-open-access</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-olf</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-manuscript</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-legally-suppressed</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-has-pdf</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-has-supplement</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-pdf-only</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-suppress-copyright</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-is-real-version</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-is-scanned-article</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-preprint</meta-name><meta-value>no</meta-value></custom-meta><custom-meta><meta-name>pmc-prop-in-epmc</meta-name><meta-value>yes</meta-value></custom-meta><custom-meta><meta-name>pmc-license-ref</meta-name><meta-value>CC BY-NC</meta-value></custom-meta></custom-meta-group></article-meta></front><body><sec id="sec0005"><title>INTRODUCTION</title><p>Many brain disorders lead to cognitive decline and dementia, among which Alzheimer’s disease (AD) is the most prevalent [<xref rid="ref001" ref-type="bibr">1</xref>]. Studies exploring genetic risk factors for AD, revealed an association with several genes [<xref rid="ref002" ref-type="bibr">2–7</xref>], the most important of which is the apolipoprotein E gene on chromosome 17 (<italic toggle="yes">APOE</italic> gene, ApoE protein).</p><p>The involvement of <italic toggle="yes">APOE</italic> in AD was first suggested by Strittmatter and Roses [<xref rid="ref008" ref-type="bibr">8</xref>], who showed that of the three polymorphic forms of <italic toggle="yes">APOE</italic>, namely <italic toggle="yes">APOE2</italic>, <italic toggle="yes">APOE3</italic>, and <italic toggle="yes">APOE4</italic>, carriers of <italic toggle="yes">APOE4</italic> are more likely to develop AD. Furthermore, the cognitive changes in <italic toggle="yes">APOE4</italic> carriers were shown to occur several years earlier, with a dose-dependent effect [<xref rid="ref009" ref-type="bibr">9</xref>].</p><p>Although the ApoE protein is synthesized primary in the liver, it is also produced in the brain and functions there in many capacities, some of which may be relevant to AD. One of the major roles of ApoE in the brain, which is similar to its effects in the rest of the body, is related to lipid transport and cholesterol homeostasis, a function that was shown to be genotype dependent [<xref rid="ref010" ref-type="bibr">10–12</xref>]. Specifically, <italic toggle="yes">APOE4</italic> was shown to be hypolipidated relative to the AD benign lipoprotein ApoE3, and less effective than <italic toggle="yes">APOE3</italic> in inducing cholesterol efflux [<xref rid="ref013" ref-type="bibr">13</xref>]. Taken together, this suggests that the pathological effects of <italic toggle="yes">APOE4</italic> may be related to lipid metabolism, and distribution.</p><p>Additionally, <italic toggle="yes">APOE4</italic> is associated with numerous AD-related biochemical abnormalities including Aβ metabolism [<xref rid="ref014" ref-type="bibr">14–18</xref>], tau phosphorylation and metabolism [<xref rid="ref019" ref-type="bibr">19–21</xref>], disruption of mitochondrial function [<xref rid="ref022" ref-type="bibr">22–24</xref>], neuroinflammation [<xref rid="ref025" ref-type="bibr">25–28</xref>], disruption of vascular integrity [<xref rid="ref012" ref-type="bibr">12, 29–31</xref>], and dysfunctional insulin and VEGF signaling [<xref rid="ref032" ref-type="bibr">32–36</xref>] (for review, see Safieh et al. [<xref rid="ref001" ref-type="bibr">1</xref>]). The plethora of phenotypes associated with <italic toggle="yes">APOE4</italic> raises the possibility of them being driven by a common fundamental upstream biochemical mechanism which, by affecting different cellular systems, results in a large spectrum of varied responses.</p><p>Key physiological effects of <italic toggle="yes">APOE4</italic> are mediated by ApoE-receptors: the low-density lipoprotein receptor family, which includes LRP1, APOER2, LDLR, and VLDLR, as key players [<xref rid="ref037" ref-type="bibr">37, 38</xref>]. These receptors have an NPXY motif at their cytoplasmic domain and have been implicated in endocytosis [<xref rid="ref037" ref-type="bibr">37, 39, 40</xref>], which results in the trafficking of the receptors between the cell surface and intracellular compartments [<xref rid="ref041" ref-type="bibr">41, 42</xref>]. Specifically, the endocytosis of LRP1 [<xref rid="ref043" ref-type="bibr">43–45</xref>] and APOER2 [<xref rid="ref037" ref-type="bibr">37, 42</xref>] triggers the internalization of The N-methyl-D-aspartate receptor (NMDA) and α-amino-3-hydroxy-5-methyl-4-isoxazolepropionic acid receptor (AMPA) receptors which are the key players of synaptic excitatory transmission. Importantly, <italic toggle="yes">APOE4</italic> modulates the effects of APOER2 on NMDA and AMPA receptors such that it reduces the surface expression of APOER2 in primary cultured neurons and in targeted replacement (TR) <italic toggle="yes">APOE4</italic> mice [<xref rid="ref046" ref-type="bibr">46–49</xref>]. This then, leads to inactivation and decreased phosphorylation of NMDA and AMPA receptors [<xref rid="ref046" ref-type="bibr">46</xref>], and to the reduction of their levels in the plasma membrane as well as to their sequestering in intracellular compartments [<xref rid="ref046" ref-type="bibr">46</xref>], leading to impaired glutamate signaling, and excitatory activity. Similar effects of <italic toggle="yes">APOE4</italic> on LRP1 have been observed in neuronal cultures [<xref rid="ref050" ref-type="bibr">50, 51</xref>].</p><p>Diabetes and impaired insulin signaling, including low levels of brain insulin, and insulin receptors, are linked to the pathogenesis of AD [<xref rid="ref018" ref-type="bibr">18, 52–54</xref>], which inspired the study of the effects of <italic toggle="yes">APOE</italic> genotype on the levels of insulin receptors in mice and corresponding cellular cultures. This revealed that brain insulin metabolism in AD is differentially affected by the various <italic toggle="yes">APOE</italic> isoforms [<xref rid="ref055" ref-type="bibr">55</xref>], and that <italic toggle="yes">APOE4</italic> results in lower surface expression of insulin receptors (IR) and impairs its trafficking by trapping it in the early endosomes [<xref rid="ref056" ref-type="bibr">56</xref>]. Furthermore, this phenomenon was shown to be LRP1 dependent, such that LRP1 deficiency in LRP1 knock out mice neurons lead to an impairment of brain insulin signaling and glucose metabolism [<xref rid="ref018" ref-type="bibr">18, 57</xref>].</p><p>Additional studies revealed that other growth factor receptors are also affected by <italic toggle="yes">APOE4</italic>. Accordingly, the levels of the vascular endothelial growth factor receptor 2 (VEGFR2), a tyrosine kinase receptor which plays important roles in regulating vascular development, angiogenesis, and neuronal plasticity [<xref rid="ref058" ref-type="bibr">58–60</xref>], are significantly lower in the hippocampus of <italic toggle="yes">APOE4</italic> TR mice compared to the corresponding <italic toggle="yes">APOE3</italic> mice [<xref rid="ref036" ref-type="bibr">36</xref>]. The mechanisms underlying this <italic toggle="yes">APOE4</italic>-driven effect, and the involvement of the ApoE receptors in these processes calls for further investigation.</p><p>All in all, these findings suggest that <italic toggle="yes">APOE4</italic> has important effects on the levels and trafficking of several classes of receptors, including ApoE receptors, and growth factor receptors, each of which can result in varied phenotypes (e.g., vascular pathology, and impaired neuronal signaling in the case of the VEGFR, and insulin-related impairments in the case of the IR).</p><p>This study examines the impact of <italic toggle="yes">APOE4</italic> on the levels and trafficking of ApoE receptors, specifically LRP1 and APOER2, as well as growth factor receptors VEGFR and IR. Additionally, it investigates the mechanisms underlying these effects. This was done utilizing <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> primary neuronal cultures prepared from <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> TR mice. The research focuses first on the characterization of the effect of ApoE3 and <italic toggle="yes">APOE4</italic> on the plasma membrane levels and on intracellular trafficking of these receptors. The current paper includes measurements of the localization of the receptors in early and late endosomes as well as in recycling endosomes and lysosomes. it also assesses the extent to which these receptors are affected by similar or different pathways. furthermore, it examines the role of interactions between <italic toggle="yes">APOE4</italic> and the ApoE receptors, APOER2 and LRP1, in mediating the pathological effects of <italic toggle="yes">APOE4</italic> on the growth factor receptors IR and VEGFR.</p></sec><sec id="sec0010"><title>MATERIALS AND METHODS</title><sec id="sec0015"><title>Primary neuronal cultures</title><p>Primary mouse neurons were prepared from 1–3 days old pups of either <italic toggle="yes">APOE3</italic> or <italic toggle="yes">APOE4</italic> TR mice or <italic toggle="yes">APOE</italic>-KO mice, these mice were on α-syn-/- background. previous study in our laboratory showed that α -syn-/- does not affect the upstream lipidation impairment of <italic toggle="yes">APOE4</italic>, and importantly, it acts as a “second hit” enhancer of the subsequent <italic toggle="yes">APOE4</italic>-driven pathologies [<xref rid="ref061" ref-type="bibr">61, 62</xref>]. The protocol was performed as follows, the mice brains were excised and incubated with Hanks’ Balanced Salt Solution buffer (HBSS- Gibco 14175-053), after which the neuronal cells were separated from the rest of the mix utilizing the protocol described in Katzenell et al. (2017) [<xref rid="ref063" ref-type="bibr">63</xref>]. Briefly, mice brains were incubated for 20 min with dissociation solution (HBSS-HEPES with 2.5 mM CaCl<sub>2</sub> and 0.83 mM EDTA) containing L-cysteine, DNAse (Sigma- D5025-150KU) and 100 units of papain. After which, the buffer was removed by centrifugation and the tissue was resuspended with plating medium: Neurobasal A medium (Gibco 10888022) containing 2% B-27 supplement (Gibco 17504044), 1% GlutaMAX (Gibco 35050061), 0.5% Penicillin-Streptomycin (Gibco 15140122), and 5% Fetal Bovine Serum (FBS- Gibco A4736301). After waiting a few seconds, a gradient appeared in the tubes and only cells below the surface and above the large tissue pieces were extracted, filtered, and plated.</p><p>Each culture was created using 2-3 pups pooled together to ensure enough cells for the experiments. Neuronal enriched cultures were seeded at a density of 120,000 cells per well in 12-well plates in the plating medium. The next day, the medium was removed and replaced with serum-free growth medium. At day 3, the cells were treated with FUDR (25.0 mg 5-fluro-2-deoxyuridine, 62.5 mg uridine in 12.5 ml neurobasal-A medium) to inhibit astrocytic and glia cells proliferation, thereby rendering the culture neuronal rich. The cultures were incubated at 37°C with pH of 7.2 to 7.5 and a relative humidity of about 95%, and the growth medium was replaced every 3 days. Experiments were performed on day 21 of the culture. We repeated each experiment at least three times to ensure statistical reliability, each repetition is referred to as ‘cohort’ in the results section and it indicated a different pups’ sacrifice. The specific number of cohorts used in each experiment is indicated in the relevant results section.</p></sec><sec id="sec0020"><title>Immunofluorescent labeling</title><p>Following the indicated treatments, primary cultures were fixed in Dulbecco’s Phosphate Buffered Saline (DPBS, Biological industries, 02-020-1A) containing 4% paraformaldehyde (PFA) at room temperature for 10 min and then permeabilized with 0.3% PBST (1X Phosphate-Buffered Saline, 0.1% Tween) for 10 min. After blocking in PBST containing 3% bovine serum albumin (BSA) and 3% donkey serum for 30 min at room temperature, the cells were incubated with primary antibodies (Abs) for 1 h (Details of Abs used are presented in <xref rid="jad-97-jad230514-t001" ref-type="table">Table 1</xref>). Afterwards, they were washed with 0.1% PBST three times and incubated with the appropriate secondary Abs for 1 h at room temperature (Details of Abs used are presented in <xref rid="jad-97-jad230514-t001" ref-type="table">Table 1</xref>). Co-labelling was done by using two separate primary Abs originating from different species. Utilizing distinct secondary Abs, which were attached to two different fluorophores, we were able to analyze the extent of colocalization of different proteins. Control experiment utilizing one of the two Abs revealed that there was no leakage of the staining of one of the parameters to the channel of the other parameter. Following immunostaining, the cells were washed three times in 0.1% PBST and mounted in ProLong Gold Antifade mounting medium (Molecular probes, <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="pmc:entrez-protein" xlink:href="P36931">P36931</ext-link>). Images were taken with confocal microscopy (Leica sp8) at X63 magnification followed by zoom X3 and quantified using Image Pro 10 image processing program (Media Cybernetics).</p><table-wrap position="float" id="jad-97-jad230514-t001" orientation="portrait"><label>Table 1</label><caption><p>A list of the primary and secondary antibodies (Abs) used in this study, as well as of the concentration used and their commercial source</p></caption><table frame="hsides" rules="groups"><colgroup span="1"><col align="left" span="1"/><col align="justify" span="1"/><col align="justify" span="1"/><col align="left" span="1"/><col align="left" span="1"/><col align="justify" span="1"/><col align="left" span="1"/></colgroup><thead valign="top"><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1">Ab</td><td rowspan="1" colspan="1">Host</td><td rowspan="1" colspan="1">Dilution Ratio</td><td rowspan="1" colspan="1">Company</td><td rowspan="1" colspan="1">Cat. Number</td></tr></thead><tbody><tr><td rowspan="1" colspan="1">Primary Abs</td><td rowspan="1" colspan="1">Receptors</td><td rowspan="1" colspan="1">APOER2</td><td rowspan="1" colspan="1">Rabbit</td><td rowspan="1" colspan="1">1 : 500</td><td rowspan="1" colspan="1">Santa Cruz Biotechnology</td><td rowspan="1" colspan="1">sc-20746</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1">IR</td><td rowspan="1" colspan="1">Rabbit</td><td rowspan="1" colspan="1">1 : 500</td><td rowspan="1" colspan="1">Abcam</td><td rowspan="1" colspan="1">ab137747</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1">VEGFR-2</td><td rowspan="1" colspan="1">Rabbit</td><td rowspan="1" colspan="1">1 : 500</td><td rowspan="1" colspan="1">Cell Signalling</td><td rowspan="1" colspan="1">55B11</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1">LRP1</td><td rowspan="1" colspan="1">Rabbit</td><td rowspan="1" colspan="1">1 : 500</td><td rowspan="1" colspan="1">Abcam</td><td rowspan="1" colspan="1">ab92544</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1">Intracellular compartment</td><td rowspan="1" colspan="1">Rab5 (early endosomes)</td><td rowspan="1" colspan="1">Goat</td><td rowspan="1" colspan="1">1 : 1000</td><td rowspan="1" colspan="1">MyBioSource</td><td rowspan="1" colspan="1">MBS249664</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1">Rab7 (late endosomes)</td><td rowspan="1" colspan="1">Goat</td><td rowspan="1" colspan="1">1 : 1000</td><td rowspan="1" colspan="1">MyBioSource</td><td rowspan="1" colspan="1">MBS448054</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1">CatD (lysosomes)</td><td rowspan="1" colspan="1">Goat</td><td rowspan="1" colspan="1">1 : 1000</td><td rowspan="1" colspan="1">Santa Cruz Biotechnology</td><td rowspan="1" colspan="1">Sc-6486</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1">Rab11 (recycling endosomes)</td><td rowspan="1" colspan="1">Rat</td><td rowspan="1" colspan="1">1 : 500</td><td rowspan="1" colspan="1">Abcam</td><td rowspan="1" colspan="1">ab95375</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1">Others</td><td rowspan="1" colspan="1">GFAP</td><td rowspan="1" colspan="1">Goat</td><td rowspan="1" colspan="1">1 : 1000</td><td rowspan="1" colspan="1">Sigma</td><td rowspan="1" colspan="1">G9269</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1">NeuN</td><td rowspan="1" colspan="1">Goat</td><td rowspan="1" colspan="1">1 : 1000</td><td rowspan="1" colspan="1">Abcam</td><td rowspan="1" colspan="1">ab177487</td></tr><tr><td rowspan="1" colspan="1">Secondary Abs</td><td rowspan="1" colspan="1"/><td colspan="2" align="left" rowspan="1">Donkey anti rabbit Alexa fluor 488nm</td><td rowspan="1" colspan="1">1 : 1000</td><td rowspan="1" colspan="1">Thermo Fisher Scientific</td><td rowspan="1" colspan="1">A11055</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1"/><td colspan="2" align="left" rowspan="1">Donkey anti goat Alexa fluor 647nm</td><td rowspan="1" colspan="1">1 : 1000</td><td rowspan="1" colspan="1">Thermo Fisher Scientific</td><td rowspan="1" colspan="1">A21206</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1"/><td colspan="2" align="left" rowspan="1">Donkey anti rat Alexa fluor 488nm</td><td rowspan="1" colspan="1">1 : 1000</td><td rowspan="1" colspan="1">Abcam</td><td rowspan="1" colspan="1">ab150155</td></tr></tbody></table></table-wrap></sec><sec id="sec0025"><title>Image analysis</title><p>Neuronal cultures were co-stained with two Abs simultaneously: an anti-receptor antibody and an anti-intracellular compartment antibody, which were coupled with a fluorophore labelled secondary Abs of different wavelength (488 nm and 633 nm for example). The capturing of each label (channel) was done separately using confocal microscopy. It is important to note that we selected neurons for the analysis by morphological distinction. The method we used for cell selection was that in each culture, we randomly selected 10 fields that were in a specific radius from the slide center, and in each field, we distinguished the neurons from other cell types morphologically and captured the neurons for analysis. We analyzed each neuron separately, and in each cohort, we captured at least 10 neurons for statistical analysis. The quantification of the results was done by averaging the values of all captured neurons. Using image processing program- Image Pro-10, the analysis of the images was then performed at the following two levels:<list list-type="simple" id="list0005"><list-item id="listitem0005"><label>1.</label><p>Each channel by itself:<list list-type="simple" id="list0010"><list-item id="listitem0015"><label>a.</label><p>For the receptors we chose to use Integrated Optical Density (IOD) which is equivalent to the pixels area times mean intensity. This value represents the number of receptors present in the region of interest.</p></list-item><list-item id="listitem0020"><label>b.</label><p>For the compartments we choose to use the parameter “% area” to evaluate the total area of the compartments out of the region of interest.</p></list-item></list></p></list-item><list-item id="listitem0010"><label>2.</label><p>The extent of colocalization:</p></list-item></list></p><p>This was measured utilizing the “M1” parameter which addresses the question: “How much of the receptor of interest is colocalized with the compartment of interest?”. M1 calculates the ratio of the receptors’ intensity that is colocalized with the compartment (S1<sub>icoloc</sub>), out of the total intensity of the receptor (S1<sub>i</sub>), as mathematically described below [<xref rid="ref064" ref-type="bibr">64, 65</xref>]: This ratio is indicative of the percentage of the receptor which is colocalized to a specific compartment.</p><p>
+<disp-formula id="eq1">
+<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" id="math1001" overflow="scroll"><mml:msub><mml:mi>M</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mo>∑</mml:mo><mml:mi>i</mml:mi></mml:msub><mml:mi>S</mml:mi><mml:msub><mml:mn>1</mml:mn><mml:mi>i</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:mi mathvariant="italic">coloc</mml:mi></mml:mrow><mml:mrow><mml:msub><mml:mo>∑</mml:mo><mml:mi>i</mml:mi></mml:msub><mml:mi>S</mml:mi><mml:msub><mml:mn>1</mml:mn><mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:mfrac></mml:math>
+</disp-formula></p></sec><sec id="sec0030"><title>Cell surface biotinylation</title><p>To further investigate the receptors’ localization, we determined how much of the receptors are located on the external surface and is thus potentially active. For that end, we used cell surface biotinylation technique. This was done utilizing a commercially available kit (Pierce A44390) and performed according to the kit’s protocol. Specifically, neurons were washed with PBS once, and then incubated in PBS containing 0.5 mg/mL sulfo-NHS-SS-biotin (Pierce cell surface protein biotinylation and isolation kit- A44390) for 30 min at 4°C with shaking. Excess reagent was quenched by rinsing in cold PBS containing 50 mM glycine. These cells were then lysed with RIPA buffer (Sigma- 89900) containing protease inhibitor cocktail for 20 min at 4°C. After which, the cell lysate was centrifuged at 10,000 g for 10 min, and the supernatant was collected. After protein quantification with BCA kit (Pierce- 23225), cell lysates with the same amount of protein were incubated with 100uL of NeutrAvidin agarose kit- A44390) for 30 min. Agarose beads were washed three times in PBS containing protease inhibitor cocktail and the labeled proteins were eluted using the elusion buffer supplied in the kit. The levels of biotinylated surface proteins and total proteins were analyzed by ELISA.</p></sec><sec id="sec0035"><title>ELISA</title><p>Levels of LRP1, APOER2, IR, and VEGFR were determined by ELISA according to the manufacturer instructions (LSBio Mouse APOER2/LRP8 kit- LS-<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="pmc:entrez-nucleotide" xlink:href="F15529">F15529</ext-link>, LSBio Mouse LRP1/CD91 kit- LS-<ext-link xmlns:xlink="http://www.w3.org/1999/xlink" ext-link-type="pmc:entrez-nucleotide" xlink:href="F33153">F33153</ext-link>, LSBio Mouse INSR/Insulin Receptor kit- LS-F9939 and LSBio Mouse KDR/VEFGR2/FLK1 kit- LS-F2595). In brief, plates pre-coated by the manufacture with capture antibodies specific to each of the receptors were used. The corresponding receptors which bound to the plates were then reacted with a biotin-conjugated detection antibody directed specifically at the receptor. The second anti-receptor antibody which bound to the corresponding receptor were than visualized by Avidin-Horseradish peroxidase (HPR) which results in color formation. A sulfuric acid stop solution was added to terminate the reaction followed by measurements of optical density at 450 nm. The amount of receptor thus bound to the plates was calculated utilizing a standard curve (provided with the kit).</p></sec><sec id="sec0040"><title>Western blotting</title><p>Conditioned media from neuronal cultures were collected at day 21 of the culture and were aliquoted and stored at –70°C. The samples were mixed with sample buffer and boiled for 10 min prior to gel electrophoresis, after which the electrophoresis and immunoblot assays were performed utilizing anti-ApoE antibody 1 : 10,000 (goat anti-ApoE, Santa Cruz, sc-6384). A scale for quantitative results of ApoE levels was prepared of known quantities of recombinant ApoE. The immunoblot bands were visualized utilizing the ECL chemiluminescent substrate (Pierce), after which the bands were imaged using Bio Rad chemidoc touch imaging system and quantified utilizing image j, image processing software.</p></sec><sec id="sec0045"><title>CRISPR/CAS9</title><p>To elucidate the involvement of specific ApoE receptors, we knocked them down by genome editing as previously described [<xref rid="ref066" ref-type="bibr">66, 67</xref>] with the following modifications. Guide RNA (gRNA) sequences, directed at either APOER2 or LRP1, were designed and cloned into Adeno-associated virus (AAv) by VectorBuilder company. The viruses cloned with the gRNAs and the Cas9 were introduced to the neurons at a ratio of 1 : 1 on day 3 of the culture for an overnight incubation at 37°C. This was performed by diluting 10<sup>5</sup> gene copies from the vials supplied by the company in neuronal media and applying it directly on the prewashed cells. On the following day, the virus-containing media was removed and replaced with fresh growth medium. The cells were collected for immunofluorescent labeling after 10 days. Details regarding the AAvs from the VectorBuilder company are presented in <xref rid="jad-97-jad230514-t002" ref-type="table">Table 2</xref> below.</p><table-wrap position="float" id="jad-97-jad230514-t002" orientation="portrait"><label>Table 2</label><caption><p>Details of the designed AAvs containing either gRNA directed at APOER2, gRNA directed at LRP1, or Cas9</p></caption><table frame="hsides" rules="groups"><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="justify" span="1"/></colgroup><thead valign="top"><tr><td rowspan="1" colspan="1">Target</td><td rowspan="1" colspan="1">Cat. Number</td><td rowspan="1" colspan="1">Description</td></tr></thead><tbody><tr><td rowspan="1" colspan="1">APOER2</td><td rowspan="1" colspan="1">AAV9 S (VB200212-1070wfu)</td><td rowspan="1" colspan="1">pAAV[2gRNA]-U6 &gt; mLrp8[gRNA#1]-U6 &gt; mLrp8[gRNA#2]-CMV mKate2: WPRE (Vector ID:VB200212-1070wfu) Custom single-gRNA AAV9 virus (no Cas9) (&gt;10<sup>11</sup> GC/ml, 10x 25μl, PBS buffer)</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1">EGFP control AAV9 virus (&gt;10<sup>11</sup> GC/ml, 100μl, PBS buffer), made from vector: VB190926- 1395dab</td></tr><tr><td rowspan="1" colspan="1">LRP1</td><td rowspan="1" colspan="1">AAV9 S (VB200511-1421qaq)</td><td rowspan="1" colspan="1">pAAV[2gRNA]-U6 &gt; mLrp1[gRNA#1]-U6 &gt; mLrp1[gRNA#2]-CMV&gt;mKate2: WPRE (Vector ID:VB200511-1421qaq) Custom single-gRNA AAV9 virus (no Cas9) (typical titer:&gt;10<sup>12</sup> GC/ml, minimum titer:&gt;2x10<sup>11</sup> GC/ml, 10x25μl, PBS buffer)</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1">EGFP control AAV9 virus (&gt;2x10<sup>11</sup> GC/ml, 1000μl, PBS buffer), made from vector: VB190926- 1395dab</td></tr><tr><td rowspan="1" colspan="1">Cas9</td><td rowspan="1" colspan="1">AAV9M (VB200212-1013fen)</td><td rowspan="1" colspan="1">pAAV[Exp]-SYN1 &gt; SaCas9(Vector ID:VB200212- 1013fen) Custom gene expression AAV9 virus (&gt;10<sup>11</sup> GC/ml, 10x 100μl, PBS buffer)</td></tr><tr><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1"/><td rowspan="1" colspan="1">EGFP control AAV9 virus (&gt;10<sup>11</sup> GC/ml, 2x 100μl, PBS buffer), made from vector: VB190926- 1395dab</td></tr></tbody></table></table-wrap><p>To determine the working concentration, neurons were transduced at a multiplicity of infections ranging between 10<sup>4</sup> to 10<sup>6</sup> genome copies, as recommended by the VectorBuilder company. The first step was to calibrate the system to reach optimal genome copies. This yielded a desired working concentration that is equal to 10<sup>5</sup> genome copies per well. The transfection of the cells was evaluated daily using microscopy since the vectors themselves were florescent, we choose this concentration as it achieved maximum transfection while maintaining maximal cell viability. Additionally, it is important to note that the analysis of the cells was based on their transfection, meaning that only positively transfected cells were further analyzed in the experiments.</p></sec><sec id="sec0050"><title>Statistical analysis</title><p>Statistically significance was analyzed utilizing the GraphPad Prism software (Version 9.5.1). Experiments that contained two groups were analyzed using Student’s <italic toggle="yes">T</italic>-test, whereas experiments with more than two groups were analyzed using ANOVA, followed by further post hoc Bonferroni analysis to test for individual effects, and these findings are depicted in the figures. A p value of &lt; 0.05 was considered statistically significant.</p><p>It is important to note that in the immunofluorescent experiments, a minimum of two cohorts were used for each condition (<italic toggle="yes">APOE3</italic>, <italic toggle="yes">APOE4</italic>, APOE-KO, with and without treatment); each group contained at least 10 neurons that were captured and analyzed. as previously mentioned, (‘image analysis’ subsection in ‘materials and methods’), the analysis variable chosen for the receptors was IOD, which shows the area labeled multiplied by the intensity of the labeling, thus giving us the best metric for the quantity of the protein in a specific area. For the compartments, we choose % Area, which is a variable that calculate the percentage of the area labeled by the Abs, to the total area, thus showing the exact area of the compartment, with no regard to the levels of the marker used to identify the compartment. For the colocalization between each receptor and compartment we choose the variable M1 (see detailed explanation in the image analysis section above).</p><p>The biochemical results that were obtained by biotinylation, ELISA or blots, were performed on three cohorts with each cohort containing a pool of neurons of at least two mice, and they are presented jointly after normalization of each of the experiments relative to the <italic toggle="yes">APOE3</italic> control group. Similar results were obtained when the cohorts were analyzed separately, and thus no covariance was conducted.</p></sec></sec><sec id="sec0055"><title>RESULTS</title><p>Primary cultures were prepared as detailed in the materials and methods section. To assess their neuronal specificity, we evaluated the neuronal/astrocytic ratio by staining them for both NeuN (a neuronal marker) and GFAP (an astrocytic marker). Utilizing confocal microscopy, 20 stacks (Z-stacks) were captured (1μm apart), and each section was analyzed individually. The stacks included the whole volume of the cultures. Analysis of the images revealed that GFAP staining was present only in the lower sections (close to the plate), and that NeuN staining was present in more sections, specifically, in the upper sections. Additionally, further staining of the cultures were analyzed for each cell individually, and those cells had the structure and shape of neurons. Based on this data, we can determine that the culture used was primarily neuronal, and the neurons were surrounded by astrocytic extensions. Representative images are shown in <xref rid="jad-97-jad230514-g001" ref-type="fig">Fig. 1</xref>.</p><fig position="float" id="jad-97-jad230514-g001" orientation="portrait"><label>Fig. 1</label><caption><p>Neurons/astrocytes ratio in primary cultures. Primary cultures were stained for both NeuN (marked in red in A) and GFAP (marked in yellow in B). DAPI staining for cells’ nucleus is marked in blue. As can be seen, the levels of NeuN were much higher than those of GFAP, and together with the DAPI staining indicate that the culture is mostly neuronal, as expected.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="jad-97-jad230514-g001.jpg"/></fig><sec id="sec0060"><title>The effects of APOE genotype on the levels and surface distribution of ApoE and growth factor receptors</title><sec id="sec0065"><title>The effect of APOE genotype on the levels of LRP1 and APOER2</title><p>These experiments investigated the effects of the different APOE genotypes on the levels of the neuronal ApoE-receptors; LRP1 and APOER2. This was performed utilizing immunofluorescent staining of the primary <italic toggle="yes">APOE4</italic> and <italic toggle="yes">APOE3</italic> cultures with anti-LRP1 and anti-APOER2 antibodies. Utilizing an image processing program, the integrated optical density (IOD) of each parameter was evaluated. This analysis revealed significant decrease in the levels of both LRP1 (<xref rid="jad-97-jad230514-g002" ref-type="fig">Fig. 2A</xref>) (32.05% reduction, <italic toggle="yes">p</italic> &lt; 0.05) and APOER2 (<xref rid="jad-97-jad230514-g002" ref-type="fig">Fig. 2B</xref>) (39.26% reduction, <italic toggle="yes">p</italic> &lt; 0.0001) in the <italic toggle="yes">APOE4</italic> neurons, in comparison to <italic toggle="yes">APOE3</italic> neurons.</p><fig position="float" id="jad-97-jad230514-g002" orientation="portrait"><label>Fig. 2</label><caption><p>The effects of APOE genotypes on the total levels of APOER2 and LRP1 in <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> primary neurons. <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> primary neurons were stained for LRP1 (A) and APOER2 (B). Representative images are shown on the left, whereas quantifications of the results are shown on the right. The results show a significant downregulation, in <italic toggle="yes">APOE4</italic> neurons, of the levels of both LRP1 (<italic toggle="yes">APOE3</italic> = 1.00±0.11, <italic toggle="yes">APOE4</italic> = 0.68±0.086, <italic toggle="yes">p</italic> &lt; 0.05, <italic toggle="yes">N</italic> = 53–58 cells from 4 different preparations) and APOER2 (<italic toggle="yes">APOE3</italic> = 1.00±0.071, <italic toggle="yes">APOE4</italic> = 0.60±0.040, <italic toggle="yes">p</italic> &lt; 0.0001, <italic toggle="yes">N</italic> = 86–101 cells from 6 different preparations). The scalebar on the images indicate 10μm. *indicates <italic toggle="yes">p</italic> &lt; 0.05, ***indicates&lt;0.001.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="jad-97-jad230514-g002.jpg"/></fig></sec><sec id="sec0070"><title>The effects of APOE genotype on growth factor receptors, IR and VEGFR</title><p>The effects of APOE genotype on the levels of IR and VEGFR were evaluated using immunofluorescent staining. The results thus obtained are presented in <xref rid="jad-97-jad230514-g003" ref-type="fig">Fig. 3</xref>. These results indicate that the levels of both IR and VEGFR are lower in <italic toggle="yes">APOE4</italic> neurons when compared to <italic toggle="yes">APOE3</italic> neurons (IR: 40% decrease, <italic toggle="yes">p</italic> &lt; 0.05. VEGFR:30.73% decrease, <italic toggle="yes">p</italic> &lt; 0.05).</p><fig position="float" id="jad-97-jad230514-g003" orientation="portrait"><label>Fig. 3</label><caption><p>The effects of APOE genotype on the total levels of IR and VEGFR. <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> primary neurons were stained for IR (A) and VEGFR (B). Representative images are shown on the left, whereas quantifications of the results are shown on the right. The results show that both IR (<italic toggle="yes">APOE3</italic> = 1.00±0.12, <italic toggle="yes">APOE4</italic> = 0.59±0.08, <italic toggle="yes">p</italic> &lt; 0.05, <italic toggle="yes">N</italic> = 48–68 cells from 4 different preparations), and VEGFR (<italic toggle="yes">APOE3</italic> = 1.00±0.11, <italic toggle="yes">APOE4</italic> = 0.69±0.04, <italic toggle="yes">p</italic> &lt; 0.05, <italic toggle="yes">N</italic> = 41–46 cells from 4 different preparations) are downregulated in <italic toggle="yes">APOE4</italic> primary neurons. The scalebar on the images indicate 10μm. *<italic toggle="yes">p</italic> &lt; 0.05.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="jad-97-jad230514-g003.jpg"/></fig></sec><sec id="sec0075"><title>The effect of APOE genotype on the external membranal expression of the receptors</title><p>To measure the percentage of the receptors which are localized on the external surface of the plasma membrane, we used the surface biotinylation assay. The corresponding total levels were obtained using lysates of corresponding cultures. Total and biotinylated levels of the receptors were then obtained by ELISA. The resulting surface/total ratios of the different receptors are presented in <xref rid="jad-97-jad230514-g004" ref-type="fig">Fig. 4</xref>. The results obtained show that the ratio of the externally oriented receptors to the total, was significantly lower in <italic toggle="yes">APOE4</italic> neurons of APOER2 (<xref rid="jad-97-jad230514-g004" ref-type="fig">Fig. 4A</xref>, 53% reduction, <italic toggle="yes">p</italic> &lt; 0.05) and LRP1 (<xref rid="jad-97-jad230514-g004" ref-type="fig">Fig. 4B</xref>, 48.03% reduction, <italic toggle="yes">p</italic> &lt; 0.05) than those of the corresponding <italic toggle="yes">APOE3</italic> cells. Similar, though less prominent, pattern was evident in IR (<xref rid="jad-97-jad230514-g004" ref-type="fig">Fig. 4 C</xref>, 28.77% reduction, <italic toggle="yes">p</italic> = 0.07), and VEGFR (<xref rid="jad-97-jad230514-g004" ref-type="fig">Fig. 4D</xref>, 9.90% reduction, <italic toggle="yes">p</italic> = 0.15).</p><fig position="float" id="jad-97-jad230514-g004" orientation="portrait"><label>Fig. 4</label><caption><p>The APOE genotype’s effects on the surface-to-total ratio of APOER2, LRP1, IR, and VEGFR. External membranal proteins were labelled using a biotinylating kit. Subsequently, using commercial ELISA kits directed at the specific receptors investigated, both the biotinylated extract and the total lysates were evaluated and the surface to total ratio was calculated. The results obtained show that <italic toggle="yes">APOE3</italic> cells whose levels were set as 100%, while <italic toggle="yes">APOE4</italic> cells had significantly lower surface levels of APOER2 (<italic toggle="yes">APOE3</italic> = 100% ±11.08, <italic toggle="yes">APOE4</italic> = 47.02% ±8.54, <italic toggle="yes">p</italic> &lt; 0.05, <italic toggle="yes">N</italic> = 3) and LRP1 (<italic toggle="yes">APOE3</italic> = 100% ±4.88, <italic toggle="yes">APOE4</italic> = 51.97% ±15.50, <italic toggle="yes">p</italic> &lt; 0.05, <italic toggle="yes">N</italic> = 3). A similar trend was seen in IR (<italic toggle="yes">APOE3</italic> = 100% ±8.26, <italic toggle="yes">APOE4</italic> = 71.23% ±13.75, <italic toggle="yes">p</italic> &lt; 0.05, <italic toggle="yes">N</italic> = 3, <italic toggle="yes">p</italic> = 0.07, <italic toggle="yes">N</italic> = 3), and VEGFR (<italic toggle="yes">APOE3</italic> = 100% ±1.34, <italic toggle="yes">APOE4</italic> = 91.10% ±2.82, <italic toggle="yes">p</italic> &lt; 0.05, <italic toggle="yes">N</italic> = 3, <italic toggle="yes">p</italic> = 0.15, <italic toggle="yes">N</italic> = 3). *<italic toggle="yes">p</italic> &lt; 0.05.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="jad-97-jad230514-g004.jpg"/></fig><p>These results indicate that in addition to the decrease in the total levels of APOER2, LRP1, IR and VEGFR in <italic toggle="yes">APOE4</italic> neurons, their relative presentation on the external membrane, is also decreased.</p></sec></sec><sec id="sec0080"><title>The effects of APOE genotype on the intracellular compartmentation of the receptors</title><p>Next, we investigated the extent to which the surface reduction of the four receptors is associated with changes in their intracellular compartmentation. Accordingly, neuronal cultures were stained simultaneously with two labels; an anti-receptor antibody and an anti-intracellular compartment antibody, and then analyzed by confocal microscopy. The images were analyzed as described in the materials and methods section, for each label separately, as well as for the colocalization of the labels.</p><p>In the following section, the results of the colocalization analysis of all four receptors with early endosome (marked by Rab5), late endosomes (marked by Rab7), lysosomes (marked by CatD) and recycling endosomes (marked by Rab11) are presented.</p><sec id="sec0085"><title>Colocalization of ApoE receptors with early endosomes</title><p>
+<xref rid="jad-97-jad230514-g005" ref-type="fig">Figure 5</xref> presents the effects of the APOE genotype on the levels of LRP1 and APOER2 in early endosomes, as well as their colocalization. This experiment revealed that the levels of the ApoE receptors in <italic toggle="yes">APOE4</italic> neurons was lower than those of <italic toggle="yes">APOE3</italic> neurons, a result that is consistent with the results shown in <xref rid="jad-97-jad230514-g002" ref-type="fig">Fig. 2</xref>. On the other hand, the APOE genotype had no significant effect on the levels of Rab5, which is a marker for early endosomes (see <xref rid="jad-97-jad230514-g007" ref-type="fig">Fig. 7</xref> for the quantification of the early endosomes area).</p><fig position="float" id="jad-97-jad230514-g005" orientation="portrait"><label>Fig. 5</label><caption><p>Colocalization of ApoE receptors with early endosomes. The total levels of both LRP1 and APOER2 were downregulated in <italic toggle="yes">APOE4</italic> neurons when compared to <italic toggle="yes">APOE3</italic> neurons (see representative figures on the left and in <xref rid="jad-97-jad230514-g002" ref-type="fig">Fig. 2</xref>) In contrast, the area covered by the early endosomes staining was not affected by the APOE genotype (see <xref rid="jad-97-jad230514-g007" ref-type="fig">Fig. 7</xref>). The extent of colocalization of LRP1 (A) and APOER2 (B) with the early endosomes were determined utilizing double staining and confocal microscopy, followed by M1 colocalization analysis. Representative images, shown on the left side of the figure whereas the quantified results are shown on the right. The results revealed that LRP1 was significantly more localized to the early endosomes in <italic toggle="yes">APOE3</italic> neurons (0.24±0.02) than the <italic toggle="yes">APOE4</italic> neurons (0.11±0.01, <italic toggle="yes">p</italic> &lt; 0.001), while APOER2 showed an opposite effect where the receptors were significantly more localized with the early endosomes in <italic toggle="yes">APOE4</italic> (0.50±0.04) than the <italic toggle="yes">APOE3</italic> neurons (0.37±0.037, <italic toggle="yes">p</italic> &lt; 0.05). The scalebar on the images indicate 10μm. *<italic toggle="yes">p</italic> &lt; 0.05, ***<italic toggle="yes">p</italic> &lt; 0.001.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="jad-97-jad230514-g005.jpg"/></fig><p>Evaluation of the extent of colocalization of the ApoE receptors with the early endosomes (marked in yellow pixels in <xref rid="jad-97-jad230514-g005" ref-type="fig">Fig. 5</xref>) revealed that there is a greater localization of LRP1 in early endosomes in <italic toggle="yes">APOE3</italic> neurons (0.24±0.02, <italic toggle="yes">N</italic> = 21 from 2 different preparations) compared to <italic toggle="yes">APOE4</italic> (0.11±0.016, <italic toggle="yes">N</italic> = 27 from 2 different preparations). This difference between the <italic toggle="yes">APOE4</italic> and the <italic toggle="yes">APOE3</italic> cells is highly significant (<italic toggle="yes">p</italic> &lt; 0.001). Similar analysis of the effect of the APOE genotype on the colocalization of APOER2 with the early endosomes revealed an opposite effect to that seen with LRP1; Accordingly, more APOER2 is localized in the early endosomes in <italic toggle="yes">APOE4</italic> cells as indicated by the M1 colocalization variable described in the material and methods section (0.50±0.03, <italic toggle="yes">N</italic> = 31 from 3 different preparations) than in the <italic toggle="yes">APOE3</italic> cells (0.37±0.04, <italic toggle="yes">N</italic> = 20 from 3 different preparations) neurons (<italic toggle="yes">p</italic> &lt; 0.05). Taken together these results show that localization of the ApoE receptors to the early endosome is dependent on APOE genotype, and that this effect differs between LRP1 and APOER2.</p></sec><sec id="sec0090"><title>Evaluating the extent of colocalization of growth factor receptors with early endosomes</title><p>The extent of colocalization of the growth factor receptors, IR and VRGFR, with early endosomes were next determined. similar to the results previously presented in <xref rid="jad-97-jad230514-g003" ref-type="fig">Fig. 3</xref>, the levels of IR and VEGFR were found to be downregulated in <italic toggle="yes">APOE4</italic> neurons in these experiments as well, whereas the levels of early endosomes showed no significant difference between the genotypes (see <xref rid="jad-97-jad230514-g007" ref-type="fig">Fig. 7</xref> for the quantification). The extent of colocalization of these receptors with the early endosomes was affected by the APOE genotype and was higher in the <italic toggle="yes">APOE4</italic> cells. Quantification of these results revealed that the colocalization of IR with early endosomes was significantly higher in <italic toggle="yes">APOE4</italic> neurons (0.36±0.02, <italic toggle="yes">N</italic> = 34 from 4 different preparations) than in the <italic toggle="yes">APOE3</italic> neurons (0.28±0.02, <italic toggle="yes">N</italic> = 48, from 4 different preparations, <italic toggle="yes">p</italic> &lt; 0.05), as was the colocalization of VEGFR with early endosomes which was higher in <italic toggle="yes">APOE4</italic> neurons (0.39±0.03, <italic toggle="yes">N</italic> = 19 from 2 different preparations) than and in <italic toggle="yes">APOE3</italic> neurons (0.24±0.02, <italic toggle="yes">N</italic> = 20, from 2 different preparations, <italic toggle="yes">p</italic> &lt; 0.01).</p><p>These results, when combined with previously presented results, indicate that in APOER2, VEGFR and IR, the downregulation of both the externally oriented and total levels of the receptors is accompanied with their accumulation in the early endosomes. In contrast for LRP1, who’s total and surface areas levels are also downregulated in the <italic toggle="yes">APOE4</italic> cells, the extent of their colocalization with early endosomes is lower in the <italic toggle="yes">APOE4</italic> than the <italic toggle="yes">APOE3</italic> neurons.</p></sec><sec id="sec0095"><title>The effects of APOE genotype on distinct endosomal and lysosomal compartments</title><p>The following experiments examined the effects of APOE genotype on the intracellular compartments: early endosomes, late endosomes, lysosomes, and recycling endosomes.</p><p>The results show that the area of the early endosomes (as indicated by the staining of Rab5) and the recycling endosomes (Rab11) were similar in both <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> neurons. On the other hand, the area of late endosomes (Rab7) and lysosomes (catD) were reduced in the <italic toggle="yes">APOE4</italic> relative to the <italic toggle="yes">APOE3</italic> neurons. Quantifications of the results revealed that, <italic toggle="yes">APOE4</italic> neurons present a significant decrease in the areas of both the late endosomes (13% decrease, <italic toggle="yes">p</italic> &lt; 0.05, <italic toggle="yes">N</italic> = 69 from 7 different preparations) and lysosomes (23.6% decrease, <italic toggle="yes">p</italic> &lt; 0.0001, <italic toggle="yes">N</italic> = 62 from 6 different preparations), while no significant differences were obtained with the early and recycling endosomes (<italic toggle="yes">N</italic> = 65–86 from 6 to 8 different preparations).</p></sec><sec id="sec0100"><title>Colocalization of the receptors with distinct endosomal compartments and with lysosomes</title><p>These experiments focused on assessment of the colocalization of the different receptors with early, late, and recycling endosomes, as well as with lysosomes (<xref rid="jad-97-jad230514-g008" ref-type="fig">Fig. 8</xref>). The analysis of these experiments revealed two main patterns of intracellular distributions of the receptors were observed. The first pattern which was observed with LRP1, shows that lower levels of colocalization of this receptor in the early endosomes in <italic toggle="yes">APOE4</italic> neurons (seen also in <xref rid="jad-97-jad230514-g005" ref-type="fig">Fig. 5</xref>) was accompanied by lower levels of their colocalization with late endosomes (46.7% decrease, <italic toggle="yes">p</italic> &lt; 0.01) and lysosomes (20.2% decrease, <italic toggle="yes">p</italic> &lt; 0.05), while no difference between the genotypes was seen in the corresponding recycling endosomes.</p><p>A different colocalization pattern was seen in APOER2, IR, and VEGFR, where the accumulation of these receptors in the early endosomes in <italic toggle="yes">APOE4</italic> neurons (see also Figs. 5 and 6) is accompanied with lower levels of colocalization in late endosomes relative to those obtained with <italic toggle="yes">APOE3</italic> cells. This decrease in late endosomes was significant for both IR and VEGFR with a similar trend observed in APOER2 (IR: 25.80% decrease, <italic toggle="yes">p</italic> &lt; 0.05; VEGFR: 47.74% decrease, <italic toggle="yes">p</italic> &lt; 0.05; APOER2 : 22.09% decrease, <italic toggle="yes">p</italic> = 0.156).</p><fig position="float" id="jad-97-jad230514-g006" orientation="portrait"><label>Fig. 6</label><caption><p>Colocalization of growth factor receptors with early endosomes. The levels of IR (A) and VEGFR (B) that are localized with the early endosomes were evaluated utilizing double staining and confocal microscopy, followed by M1 colocalization analysis. The representative images presented on the left show that the intensity of both IR and VEGFR is lower in <italic toggle="yes">APOE4</italic> neurons when compared to <italic toggle="yes">APOE3</italic> neurons, and no significant effects of APOE genotype is evident in the staining areas of the early endosomes. On the other hand, the extent of colocalization of these receptors (marked with yellow pixels) was higher in <italic toggle="yes">APOE4</italic> neurons in both IR and VEGFR. Quantification of the results show that <italic toggle="yes">APOE4</italic> neurons exhibit significantly higher colocalization than <italic toggle="yes">APOE3</italic> in both IR (<italic toggle="yes">APOE3</italic> = 0.28±0.02, <italic toggle="yes">APOE4</italic> = 0.36±0.02, <italic toggle="yes">p</italic> &lt; 0.05) and VEGFR (<italic toggle="yes">APOE3</italic> = 0.24±0.02, <italic toggle="yes">APOE4</italic> = 0.39±0.03, <italic toggle="yes">p</italic> &lt; 0.001). The scalebar on the images indicate 10μm. *<italic toggle="yes">p</italic> &lt; 0.05, **<italic toggle="yes">p</italic> &lt; 0.001.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="jad-97-jad230514-g006.jpg"/></fig><p>Additionally, there was also a decrease in the colocalization of the receptors with the lysosomes in <italic toggle="yes">APOE4</italic> neurons that was significant in APOER2 and VEGFR but not in the IR (APOER2 : 35.89% decrease, <italic toggle="yes">p</italic> &lt; 0.0001; VEGFR: 31.30% decrease, <italic toggle="yes">p</italic> &lt; 0.05), and in the recycling endosomes in all three receptors (APOER2 : 11.16% decrease, <italic toggle="yes">p</italic> = 0.5154; IR: 30.88% decrease, <italic toggle="yes">p</italic> &lt; 0.05; VEGFR: 29.02% decrease, <italic toggle="yes">p</italic> &lt; 0.05) when compared to <italic toggle="yes">APOE3</italic> neurons.</p></sec></sec><sec id="sec0105"><title>The role of ApoE levels in mediating the effects of APOE genotype on the receptors</title><p>The extent to which the observed effects of <italic toggle="yes">APOE4</italic> on the levels and intracellular distribution of the receptors, is due to differences in the intrinsic properties of <italic toggle="yes">APOE4</italic> and <italic toggle="yes">APOE3</italic> or to differences in the concentration of the different APOE isoforms was next examined.</p><p>The levels of secreted ApoE in the primary neuronal culture were measured by western blot analysis. Representative blots thus obtained are presented in <xref rid="jad-97-jad230514-g009" ref-type="fig">Fig. 9A</xref>. The blots show that <italic toggle="yes">APOE4</italic> cultures are associated with significantly lower levels of ApoE. Quantification of the blots (<xref rid="jad-97-jad230514-g009" ref-type="fig">Fig. 9B</xref>) show that in the <italic toggle="yes">APOE4</italic> primary neuronal cultures the levels of ApoE are significantly lower than those of the <italic toggle="yes">APOE3</italic> cultures (52.1% decrease, <italic toggle="yes">p</italic> &lt; 0.05, <italic toggle="yes">N</italic> = 3).</p><p>To assess the extent to which the presently observed effects of <italic toggle="yes">APOE4</italic> are due to its lower levels, we turned to primary neurons prepared from APOE-deficient mice and studied the effects of the addition of similar levels of exogenous <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> on the receptors. The levels of the LRP1, APOER2, VEGFR, and the IR in APOE deficient neurons in the presence and absence of 100 nM of recombinant <italic toggle="yes">APOE3</italic> or <italic toggle="yes">APOE4</italic>, are presented in <xref rid="jad-97-jad230514-g010" ref-type="fig">Fig. 10</xref>. This concentration was chosen following a thorough literature review and based on the study conducted by Zhao et al. (2017) [<xref rid="ref056" ref-type="bibr">56</xref>].</p><p>This revealed that the levels of LRP1 were higher in <italic toggle="yes">APOE3</italic> treated neurons when compared to control, in the absence of exogenous ApoE (45.8% increase when compared to control, <italic toggle="yes">p</italic> &lt; 0.05), with no change in the levels of LRP1 in <italic toggle="yes">APOE4</italic> treated neurons. Similarly, APOER2 and VEGFR showed an increase in <italic toggle="yes">APOE3</italic> treated neurons (108.5%, <italic toggle="yes">p</italic> &lt; 0.01 and 29.9%, <italic toggle="yes">p</italic> = 0.09 respectively) relative to control, while no difference was seen in <italic toggle="yes">APOE4</italic> treated neurons. On the other hand, in IR, both <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> treated neurons expressed lower levels of the receptor compared to control (37.5% decrease in <italic toggle="yes">APOE3</italic> treated neurons and 55.2% decrease in the <italic toggle="yes">APOE4</italic> treated neurons relative to control in the absence of exogenous ApoE).</p><p>Although APOE deficient neuronal cultures in the presence of exogenous <italic toggle="yes">APOE4</italic> or <italic toggle="yes">APOE3</italic> may not be identical to corresponding cultures prepared from <italic toggle="yes">APOE4</italic> and <italic toggle="yes">APOE3</italic> mice, the data presented support the suggestion that the observed effects of <italic toggle="yes">APOE4</italic> on the receptors in the <italic toggle="yes">APOE4</italic> and <italic toggle="yes">APOE3</italic> cultures is not due to the lower levels of <italic toggle="yes">APOE4</italic> but rather to intrinsic differences between the two isoforms.</p></sec><sec id="sec0110"><title>Unraveling the role of LRP1 and APOER2 in mediating the genotype specific effects of ApoE on the receptors</title><p>We next examined the extent to which the ApoE receptors might mediate the effects of <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> on other receptors. This was determined by treating <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> primary cultures with CRISPR/Cas9 system directed at knocking down the expression of either LRP1 or APOER2 and examining the effects of the resulting knock-down of these receptors, on the levels of IR and VEGFR, as well as on the colocalization of these receptors with the early endosomes. We chose to focus on the compartmentation of IR and VEGFR with the early endosomes due to the interesting pattern we established previously; trapping of APOER2, IR and VEGFR in <italic toggle="yes">APOE4</italic> neurons on one hand, and low levels of LRP1 on the other hand (as detailed in <xref rid="jad-97-jad230514-g008" ref-type="fig">Fig. 8</xref>).</p><fig position="float" id="jad-97-jad230514-g007" orientation="portrait"><label>Fig. 7</label><caption><p>The effects of APOE genotype on distinct endosomal and lysosomal compartments. <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> primary neurons were stained for markers of early endosomes (Rab5; A), late endosomes (Rab7; B), lysosomes (CatD; C), and recycling endosomes (RAb11; D). The intracellular areas of these compartments were then analyzed as described in the Materials and Methods. This revealed that the areas of both late endosomes (<italic toggle="yes">APOE3</italic> = 1.00±0.03, <italic toggle="yes">APOE4</italic> = 0.87±0.05, p≤0.05) and lysosome (<italic toggle="yes">APOE3</italic> = 1.00±0.04, <italic toggle="yes">APOE4</italic> = 0.76±0.03, <italic toggle="yes">p</italic> &lt; 0.0001) are downregulated in <italic toggle="yes">APOE4</italic> primary neurons. In contrast, the levels of the early endosomes (<italic toggle="yes">APOE3</italic> = 1.00±0.03, <italic toggle="yes">APOE4</italic> = 1.1±0.05, <italic toggle="yes">p</italic> = 0.30) and recycling endosomes (<italic toggle="yes">APOE3</italic> = 1.00±0.06, <italic toggle="yes">APOE4</italic> = 0.94±0.07, <italic toggle="yes">p</italic> = 0.56) were not affected by <italic toggle="yes">APOE4</italic>. *<italic toggle="yes">p</italic> &lt; 0.05, ***<italic toggle="yes">p</italic> &lt; 0.0001.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="jad-97-jad230514-g007.jpg"/></fig><fig position="float" id="jad-97-jad230514-g008" orientation="portrait"><label>Fig. 8</label><caption><p>Intracellular distribution of the receptors. The extent of colocalization of LRP1 (A), APOER2 (B), IR (C), and VEGFR (D) with early, late, and recycling endosomes, as well as with lysosomes, was determined by double staining confocal microscopy, as described in the Materials and Methods. The results shown correspond to 25–37 cells from 2-3 different preparations for each of the receptors and compartment colocalization. The results obtained revealed two patterns: The first, exemplified by LRP1, shows that the levels of this receptor in <italic toggle="yes">APOE4</italic> neurons are lower in the early and late endosomes and unchanged in lysosomes and recycling endosomes. (Early endosomes: <italic toggle="yes">APOE3</italic> = 0.22±0.022, <italic toggle="yes">APOE4</italic> = 0.16±0.015, <italic toggle="yes">p</italic> &lt; 0.001. Late endosomes: <italic toggle="yes">APOE3</italic> = 0.24±0.023, <italic toggle="yes">APOE4</italic> = 0.127±0.031, <italic toggle="yes">p</italic> &lt; 0.001. Lysosomes: <italic toggle="yes">APOE3</italic> = 0.36±0.031, <italic toggle="yes">APOE4</italic> = 0.29±0.027, <italic toggle="yes">p</italic> &lt; 0.05. Recycling endosomes: <italic toggle="yes">APOE3</italic> = 0.12±0.024, <italic toggle="yes">APOE4</italic> = 0.12±0.023). The second pattern is common to the APOER2, IR, and VEGFR where the elevation in the colocalization in the early endosomes in <italic toggle="yes">APOE4</italic> was accompanied by a decrease in localization to the other compartments, mainly, late endosome (APOER2- early endosomes: <italic toggle="yes">APOE3</italic> = 0.37±0.044, <italic toggle="yes">APOE4</italic> = 0.51±0.037, <italic toggle="yes">p</italic> &lt; 0.05. Late endosomes: <italic toggle="yes">APOE3</italic> = 0.49±0.024, <italic toggle="yes">APOE4</italic> = 0.38±0.059, <italic toggle="yes">p</italic> = 0.15. Lysosomes: <italic toggle="yes">APOE3</italic> = 0.41±0.024, <italic toggle="yes">APOE4</italic> = 0.26±0.019, <italic toggle="yes">p</italic> &lt; 0.0001. Recycling endosomes: <italic toggle="yes">APOE3</italic> = 0.17±0.025, <italic toggle="yes">APOE4</italic> = 0.15±0.017, <italic toggle="yes">p</italic> = 0.51. IR- early endosomes: <italic toggle="yes">APOE3</italic> = 0.28±0.02, <italic toggle="yes">APOE4</italic> = 0.36±0.02, <italic toggle="yes">p</italic> &lt; 0.05. Late endosomes: <italic toggle="yes">APOE3</italic> = 0.41±0.042, <italic toggle="yes">APOE4</italic> = 0.31±0.028, <italic toggle="yes">p</italic> &lt; 0.05. Lysosomes: <italic toggle="yes">APOE3</italic> = 0.33±0.017, <italic toggle="yes">APOE4</italic> = 0.33±0.034, <italic toggle="yes">p</italic> = 0.19. Recycling endosomes: <italic toggle="yes">APOE3</italic> = 0.18±0.015, <italic toggle="yes">APOE4</italic> = 0.13±0.022, <italic toggle="yes">p</italic> &lt; 0.05. VEGFR- early endosomes: <italic toggle="yes">APOE3</italic> = 0.22±0.03, <italic toggle="yes">APOE4</italic> = 0.36±0.04, <italic toggle="yes">p</italic> &lt; 0.05. Late endosomes: <italic toggle="yes">APOE3</italic> = 0.29±0.04, <italic toggle="yes">APOE4</italic> = 0.15±0.03, <italic toggle="yes">p</italic> &lt; 0.05. Lysosomes: <italic toggle="yes">APOE3</italic> = 0.20±0.02, <italic toggle="yes">APOE4</italic> = 0.14±0.01, <italic toggle="yes">p</italic> &lt; 0.05. Recycling endosomes: <italic toggle="yes">APOE3</italic> = 0.27±0.02, <italic toggle="yes">APOE4</italic> = 0.19±0.02, <italic toggle="yes">p</italic> &lt; 0.05).</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="jad-97-jad230514-g008.jpg"/></fig><fig position="float" id="jad-97-jad230514-g009" orientation="portrait"><label>Fig. 9</label><caption><p>ApoE levels in conditioned media of <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> primary neurons. The levels of ApoE in conditioned media of <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> neuronal cultures were determined by western blot analysis as described in the Materials and Methods. Representative image of the blot is presented in A; whereas, quantification of the blots is shown in B. The results show that the levels of ApoE in the <italic toggle="yes">APOE4</italic> cultures, were significantly lower than those of the <italic toggle="yes">APOE3</italic> cultures (<italic toggle="yes">APOE3</italic> = 1.00±0.14, <italic toggle="yes">APOE4</italic> = 0.40±0.12, <italic toggle="yes">p</italic> &lt; 0.05, <italic toggle="yes">N</italic> = 4). *<italic toggle="yes">p</italic> &lt; 0.05.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="jad-97-jad230514-g009.jpg"/></fig><fig position="float" id="jad-97-jad230514-g010" orientation="portrait"><label>Fig. 10</label><caption><p>The effects of recombinant <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> on the levels of the receptors in APOE-KO derived primary neurons. APOE-KO neurons were prepared as described in the Materials and Methods section. On day 14 of the cultures, the neurons were treated with 100 nM of either recombinant <italic toggle="yes">APOE3</italic> or <italic toggle="yes">APOE4</italic> for 2 h. Following treatment, the neurons were stained for LRP1, APOER2, VEGFR, or IR, after which the images were captured and analyzed. Quantification of the results show that <italic toggle="yes">APOE3</italic> induced an elevation in LRP1 (Control = 1.00±0.13, recombinant <italic toggle="yes">APOE3</italic> = 1.45±0.18, recombinant <italic toggle="yes">APOE4</italic> = 0.76±0.10, p-value recombinant3/control&lt;0.05, p-value recombinant4/recombinant3 &lt; 0.01, <italic toggle="yes">N</italic> = 28–31 from 3 different preparations), APOER2 (Control = 1.00±0.09, recombinant <italic toggle="yes">APOE3</italic> = 2.08±0.27, recombinant <italic toggle="yes">APOE4</italic> = 0.1.16±0.15, <italic toggle="yes">p</italic> &lt; 0.01 when comparing recombinant3 with both control and recombinant4, <italic toggle="yes">N</italic> = 20 from 2 different preparations) and VEGFR (Control = 1.00±0.09, recombinant <italic toggle="yes">APOE3</italic> = 1.30±0.16, recombinant <italic toggle="yes">APOE4</italic> = 0.85±0.08, p-value recombinant3/control=0.09, p-value recombinant4/ recombinant3 &lt; 0.01, <italic toggle="yes">N</italic> = 15–20 from 2 different preparations) when compared to control and <italic toggle="yes">APOE4</italic>. On the other hand, both recombinant <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> resulted in lower levels of IR when compared to control, more so in <italic toggle="yes">APOE4</italic> treated neurons (Control = 1.00±0.08, recombinant <italic toggle="yes">APOE3</italic> = 0.59±0.05, recombinant <italic toggle="yes">APOE4</italic> = 0.43±0.04, p-value recombinant3/control&lt;0.001, p-value recombinant4/recombinant4 &lt; 0.05, <italic toggle="yes">N</italic> = 15–20 from 2 different preparations). *<italic toggle="yes">p</italic> &lt; 0.05, **<italic toggle="yes">p</italic> &lt; 0.001.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="jad-97-jad230514-g010.jpg"/></fig><sec id="sec0115"><title>Validation of the CRISPR/Cas9 system</title><p>As shown in <xref rid="jad-97-jad230514-g011" ref-type="fig">Fig. 11A.</xref>, CRISPR/cas9 treatment directed at LRP1 decreased the levels of LRP1 in both <italic toggle="yes">APOE3</italic> (41.4% decrease compared to <italic toggle="yes">APOE3</italic> control) and <italic toggle="yes">APOE4</italic> (33.6% decrease compared to <italic toggle="yes">APOE4</italic> control) neurons and rendered them similar. Similar results were obtained in APOER2 (<xref rid="jad-97-jad230514-g011" ref-type="fig">Fig. 11B</xref>), where corresponding CRISPR/Cas9 treatment, resulted in lower levels of APOER2 in both <italic toggle="yes">APOE3</italic> (42.9% decrease compared to <italic toggle="yes">APOE3</italic> control) and <italic toggle="yes">APOE4</italic> (36.8% decrease compared to <italic toggle="yes">APOE4</italic> control) resulting in similar levels.</p><fig position="float" id="jad-97-jad230514-g011" orientation="portrait"><label>Fig. 11</label><caption><p>Knock-down of LRP1 and APOER2 in the <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> neuronal cultures by CRISPR/Cas9. The <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> neuronal primary cultures were treated by CRISPR/Cas9 system directed at either LRP1 (A) or APOER2 (B); Following this treatment, each culture was stained for the corresponding ApoE receptor, and the extent to which this treatment knocked down the targeted receptor was determined. A) CRISPR/Cas9 system directed at LRP1 resulted in the downregulation of LRP1 in both <italic toggle="yes">APOE3</italic> neurons (<italic toggle="yes">APOE3</italic> control = 1.00±0.06, <italic toggle="yes">APOE3</italic>- LRP1 AAv = 0.58±0.04, <italic toggle="yes">p</italic> &lt; 0.0001, <italic toggle="yes">N</italic> = 83–89 from 9 different preparations) and <italic toggle="yes">APOE4</italic> neurons (<italic toggle="yes">APOE4</italic> control = 0.84±0.04, <italic toggle="yes">APOE4</italic>- LRP1 AAv = 0.56±0.05, <italic toggle="yes">p</italic> &lt; 0.05, <italic toggle="yes">N</italic> = 84–89 from 9 different preparations). B) CRISPR/Cas9 system directed at APOER2 resulted in the downregulation of APOER2 in both <italic toggle="yes">APOE3</italic> (<italic toggle="yes">APOE3</italic> control = 1.00±0.08, <italic toggle="yes">APOE3</italic>- APOER2 AAv = 0.57±0.04, <italic toggle="yes">p</italic> &lt; 0.0001, <italic toggle="yes">N</italic> = 60–105 from 7-8 different preparations) and <italic toggle="yes">APOE4</italic> neurons (<italic toggle="yes">APOE4</italic> control = 0.71±0.04, <italic toggle="yes">APOE4</italic>- APOER2 AAv = 0.45±0.04, <italic toggle="yes">p</italic> &lt; 0.0001, <italic toggle="yes">N</italic> = 79–125 from 8-9 different preparations). *<italic toggle="yes">p</italic> &lt; 0.05, ***<italic toggle="yes">p</italic> &lt; 0.0001.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="jad-97-jad230514-g011.jpg"/></fig></sec><sec id="sec0120"><title>The role of LRP1 in mediating the effects of APOE genotypes on the receptors’ levels and compartmentation</title><p>The effects of downregulating LRP1 by CRISPR/Cas9, on the levels of APOER2, IR, and VEGFR, and their colocalization with the early endosomes were measured, and the results are presented in <xref rid="jad-97-jad230514-g012" ref-type="fig">Fig. 12</xref>. As can be seen, the downregulation of LRP1 had no significant effects on the total levels of the receptors, had no effect on the size of early endosomes (not shown), but did abolish the excess colocalization of these receptors with early endosomes in <italic toggle="yes">APOE4</italic> neurons (the percent of reduction when compared to <italic toggle="yes">APOE4</italic> control equals to 38.8% in APOER2, 48.9% in IR, and 64.1% in VEGFR). Whereas in <italic toggle="yes">APOE3</italic> neurons, the knock-down of LRP1 resulted only in a small, but significant downregulation of the colocalization of VEGFR with the early endosomes (21.6% reduction), but it had no effect on the colocalization of IR.</p><fig position="float" id="jad-97-jad230514-g012" orientation="portrait"><label>Fig. 12</label><caption><p>The effects of LRP1 knock-down on the receptors’ levels and their colocalization with early endosomes. <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> primary neurons were treated with CRISPR/Cas9 system utilizing guide RNA directed at LRP1. The results show that the downregulation of LRP1 (presented in <xref rid="jad-97-jad230514-g011" ref-type="fig">Fig. 11</xref>) had no effect on the levels of the rest of the receptors APOER2, VEGFR, and IR (A) but it was, however, accompanied by downregulation in the levels of colocalization of the receptors with early endosomes in <italic toggle="yes">APOE4</italic> neurons (B) (APOER2- <italic toggle="yes">APOE4</italic> control = 0.44±0.02, <italic toggle="yes">APOE4</italic>-LRP1 AAv = 0.20±0.02, <italic toggle="yes">p</italic> &lt; 0.0001, <italic toggle="yes">N</italic> = 50–53 from 5 different preparations. IR- <italic toggle="yes">APOE4</italic> control = 0.53±0.03, <italic toggle="yes">APOE4</italic>-LRP1 AAv = 0.27±0.03, <italic toggle="yes">p</italic> &lt; 0.0001, <italic toggle="yes">N</italic> = 34–40 from 4 different preparations. VEGFR- <italic toggle="yes">APOE4</italic> control = 0.45±0.03, <italic toggle="yes">APOE4</italic>-LRP1 AAv = 0.16±0.02, <italic toggle="yes">p</italic> &lt; 0.0001, <italic toggle="yes">N</italic> = 23–27 from 3 different preparations) LRP1 downregulation also resulted in reduction in the colocalization of VEGFR in the early endosomes of <italic toggle="yes">APOE3</italic> neurons (<italic toggle="yes">APOE3</italic> control = 0.35±0.03, <italic toggle="yes">APOE3</italic>-LRP1 AAv = 0.28±0.04, <italic toggle="yes">p</italic> &lt; 0.05, <italic toggle="yes">N</italic> = 28–39 from 4 different preparations). *<italic toggle="yes">p</italic> &lt; 0.05, ***<italic toggle="yes">p</italic> &lt; 0.0001.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="jad-97-jad230514-g012.jpg"/></fig></sec><sec id="sec0125"><title>The role of APOER2 in mediating the effects of APOE genotypes on the receptors’ levels and compartmentation</title><p>The effect of APOER2 knock-down on the levels of the receptors (A) and of their colocalization with early endosomes (B) are presented in <xref rid="jad-97-jad230514-g013" ref-type="fig">Fig. 13</xref>. Treatment with CRISPR/Cas9 directed at APOER2 resulted in the following pattern: it decreased the levels of LRP1 receptors in <italic toggle="yes">APOE3</italic> neurons (32.1% reduction relative to <italic toggle="yes">APOE3</italic> control) but had no effect on the levels of LRP1 in <italic toggle="yes">APOE4</italic> neurons. Additionally, knock-down of APOER2 did not affect the intracellular localization of LRP1.</p><fig position="float" id="jad-97-jad230514-g013" orientation="portrait"><label>Fig. 13</label><caption><p>The effect of APOER2 knock-down on the receptor’s levels and colocalization with early endosomes. <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic> primary neurons were treated with CRISPR/Cas9 directed at APOER2, after which the levels and the extent of colocalization of the receptors with early endosomes were evaluated. The results show that knock-down of APOER2 results in lower levels of LRP1 in <italic toggle="yes">APOE3</italic> neurons (<italic toggle="yes">APOE3</italic> control = 1.00±0.06, <italic toggle="yes">APOE3</italic>- APOER2 AAv = 0.67±0.05, <italic toggle="yes">p</italic> &lt; 0.001, <italic toggle="yes">N</italic> = 78–89 from 8 different preparations) while not affecting the levels in <italic toggle="yes">APOE4</italic> neurons nor the extent of colocalization of LRP1 with early endosomes. On the other hand, knock-down of APOER2 resulted in elevated levels of IR and VEGFR in <italic toggle="yes">APOE4</italic> neurons (IR- <italic toggle="yes">APOE4</italic> control = 0.54±0.04, <italic toggle="yes">APOE4</italic>- APOER2 AAv = 0.82±0.11, <italic toggle="yes">p</italic> &lt; 0.05, <italic toggle="yes">N</italic> = 32-35 from 3 different preparations. VEGFR- <italic toggle="yes">APOE4</italic> control = 0.64±0.05, <italic toggle="yes">APOE4</italic>- APOER2 Aav = 0.79±0.11, <italic toggle="yes">p</italic> = 0.24, <italic toggle="yes">N</italic> = 27–29 from 3 different preparations) and in lower levels of colocalization of those receptors with early endosomes (IR- <italic toggle="yes">APOE4</italic> control = 0.53±0.03, <italic toggle="yes">APOE4</italic>- APOER2 Aav = 0.24±0.04, <italic toggle="yes">p</italic> &lt; 0.0001, <italic toggle="yes">N</italic> = 34–38 from 3 different preparations. VEGFR- <italic toggle="yes">APOE4</italic> control = 0.45±0.03 <italic toggle="yes">APOE4</italic>- APOER2 Aav = 0.20±0.02, <italic toggle="yes">p</italic> &lt; 0.0001, <italic toggle="yes">N</italic> = 24–28 from 3 different preparations), with no evident effect in <italic toggle="yes">APOE3</italic> neurons. *<italic toggle="yes">p</italic> &lt; 0.05, **<italic toggle="yes">p</italic> &lt; 0.001, ***<italic toggle="yes">p</italic> &lt; 0.0001.</p></caption><graphic xmlns:xlink="http://www.w3.org/1999/xlink" position="float" orientation="portrait" xlink:href="jad-97-jad230514-g013.jpg"/></fig><p>A different pattern was observed with the growth factor receptors IR and VEGFR, where knocking down APOER2 increased the levels of IR (50.9% increase relative to <italic toggle="yes">APOE4</italic> control) and VEGFR (21.3% increase relative to <italic toggle="yes">APOE4</italic> control) in <italic toggle="yes">APOE4</italic> neurons and decreased their colocalization with early endosomes (IR: 55.1% reduction, and VEGFR: 52.6% reduction relative to <italic toggle="yes">APOE4</italic> control). In contrast, both the levels and the colocalization of IR and VEGFR in <italic toggle="yes">APOE3</italic> neurons were not affected by APOER2 knock down.</p><p>Altogether, these findings suggest that the levels of all three receptors (APOER2, IR, and VEGFR) in both the <italic toggle="yes">APOE4</italic> and <italic toggle="yes">APOE3</italic> cells are not affected by LRP1 knock down whereas their colocalization with early endosomes decreases specifically in <italic toggle="yes">APOE4</italic> neurons. Additionally, when APOER2 is knocked down, there’s an increase in the levels of VEGF and IR receptors and decrease in their colocalization with early endosomes. These findings suggest that the interaction between APOER2 and <italic toggle="yes">APOE4</italic> plays a significant role in downregulating IR and VEGFR in <italic toggle="yes">APOE4</italic> neurons. Knocking down APOER2 counteracts these effects. Additionally, these results indicate that both LRP1 and APOER2 are crucial for the accumulation of these receptors in early endosomes.</p></sec></sec></sec><sec id="sec0130"><title>DISCUSSION</title><p>This study investigated the effects of <italic toggle="yes">APOE4</italic> on the levels and cellular compartmentation of ApoE receptors: LRP1 and APOER2, as well as growth factor receptors: IR and VEGFR, in primary neuronal cultures. The results obtained revealed APOE-isoform-dependent differences in receptors’ levels, such that <italic toggle="yes">APOE4</italic> was associated with lower levels of the four receptors when compared to <italic toggle="yes">APOE3</italic>. Additionally, the results show that <italic toggle="yes">APOE4</italic> is associated with a decrease in the levels of the active, externally oriented membranal LRP1 and APOER2, and with a similar trend in IR and VEGFR. When examining intracellular compartments, our results showed that <italic toggle="yes">APOE4</italic> does not affect the size of the early endosomes nor the recycling endosomes, yet it significantly decreases the late endosomes and the lysosomes when compared to <italic toggle="yes">APOE3</italic>. This could indicate that <italic toggle="yes">APOE4</italic>s’ effects on intracellular trafficking are mediated by interfering with the degradation pathway rather than the recycling pathway.</p><p><italic toggle="yes">APOE4</italic> also affected the trafficking and intracellular compartmentation of these receptors. Two general patterns were observed; the first, which includes APOER2, VEGFR, and the IR, is associated with increased localization of these receptors to early endosomes, and with a parallel decrease in their colocalization with late endosomes. APOER2 and VEGFR but not the IR were also associated with decreased colocalization to lysosomes. The second pattern was observed with LRP1, which showed lower colocalization with early endosome, as well as with late endosomes and with lysosomes in the <italic toggle="yes">APOE4</italic> neurons.</p><p>The observed effects of <italic toggle="yes">APOE4</italic> on these receptors were accompanied by lower levels of ApoE in <italic toggle="yes">APOE4</italic> neurons when compared to the <italic toggle="yes">APOE3</italic> neurons (<xref rid="jad-97-jad230514-g009" ref-type="fig">Fig. 9</xref>), bringing forward the possibility that the observed effects of <italic toggle="yes">APOE4</italic> on the receptors, are driven by the lower levels of the ApoE protein, and not by differential properties of <italic toggle="yes">APOE4</italic> and <italic toggle="yes">APOE3</italic>. It is important to note that the source of ApoE in our cultures was not determined directly. Since ApoE is mostly produced in astrocytes, we believe that the main source of ApoE in our cultures is astrocytic. However, since our culture consists of a majority of neurons, and we know that ApoE can also be produced in neurons in specific conditions [<xref rid="ref068" ref-type="bibr">68</xref>], it is possible that neurons also contribute significantly to the secreted ApoE. This differentiation is known to be important [<xref rid="ref069" ref-type="bibr">69, 70</xref>], and differences in the effects of neuronal ApoE and astrocytic ApoE on various systems have been thoroughly studied [<xref rid="ref068" ref-type="bibr">68–71</xref>]. The extent to which ApoE from astrocyte or from neurons may differ in their activity and effects on the receptors is beyond the scope of this article and it merits further investigation.</p><p>Regardless of the source, examination of whether the quantity or the intrinsic qualities of the different APOE genotypes was examined utilizing APOE deficient primary neuronal cultures treated with the same levels of recombinant <italic toggle="yes">APOE4</italic> or <italic toggle="yes">APOE3</italic>, revealed that the effects of <italic toggle="yes">APOE4</italic> were also apparent under these conditions (<xref rid="jad-97-jad230514-g010" ref-type="fig">Fig. 10</xref>), suggesting that the effects observed on the receptors, are due to intrinsic differences between the genotypes, and not to differences in the levels of <italic toggle="yes">APOE3</italic> and <italic toggle="yes">APOE4</italic>. These APOE knockout experiments also revealed that the isoform specific effects of APOE on the levels of LRP1, APOER2, and VEGFR, are driven by an <italic toggle="yes">APOE3</italic> gain of function relative to APOE deficiency, whereas the corresponding effect on the IR was associated with loss of function, which was more pronounced in the <italic toggle="yes">APOE4</italic> treated samples (<xref rid="jad-97-jad230514-g010" ref-type="fig">Fig. 10</xref>). This is important, specifically for the development of novel ApoE related anti-AD treatments, since it suggests that to correct for <italic toggle="yes">APOE4</italic>, you need to have more of it, or to change it to a more <italic toggle="yes">APOE3</italic>-like activity, and not to block it.</p><p>Our results are consistent with, and further extends previous <italic toggle="yes">in vivo</italic> and <italic toggle="yes">in vitro</italic> studies which showed that neuronal <italic toggle="yes">APOE4</italic> is associated with decreased levels of APOER2 [<xref rid="ref047" ref-type="bibr">47, 49</xref>] and IR [<xref rid="ref056" ref-type="bibr">56, 72</xref>] and with their increased localization to early endosomes [<xref rid="ref037" ref-type="bibr">37, 48</xref>]. The present results are also in accordance with previous findings that the levels of LRP1 [<xref rid="ref073" ref-type="bibr">73</xref>] and VEGFR [<xref rid="ref036" ref-type="bibr">36, 74</xref>] are down regulated by <italic toggle="yes">APOE4</italic>. However, the effects of <italic toggle="yes">APOE4</italic> on the intracellular localization of these receptors in different intracellular compartments is novel and has not been previously investigated. These findings are essential to unraveling the molecular basis of the pathological features of <italic toggle="yes">APOE4</italic>, and their underlying mechanisms. It should be noted that the current study measured colocalization of the receptors with intracellular compartments, and the findings suggest a dysfunction in intracellular trafficking in <italic toggle="yes">APOE4</italic> neurons when compared to <italic toggle="yes">APOE3</italic> neurons. However, further kinetic studies are necessary to fully unravel the molecular mechanism by which ApoE affects intracellular trafficking.</p><p><italic toggle="yes">APOE4</italic> is known to be structurally labile and undergoes transformation to a molten globule state at low pH values, while <italic toggle="yes">APOE3</italic> is far more resistant to low pH unfolding [<xref rid="ref074" ref-type="bibr">74</xref>]. Accordingly, since the isoelectric point of <italic toggle="yes">APOE4</italic> is 6.4, which is similar to the pH of the early endosomes [<xref rid="ref075" ref-type="bibr">75</xref>], it was hypothesized that the structural lability of <italic toggle="yes">APOE4</italic>, the tendency of proteins to aggregate at their isoelectric pH, and the binding of <italic toggle="yes">APOE4</italic> to APOER2, provide the driving force for the observed decreased levels of APOER2 and its recycling block in early endosomes [<xref rid="ref046" ref-type="bibr">46, 48</xref>]. The observed decreased level of APOER2 in late endosomes of the <italic toggle="yes">APOE4</italic> neurons is most likely due to their trafficking block in early endosome. Since <italic toggle="yes">APOE4</italic> can bind to IR [<xref rid="ref076" ref-type="bibr">76</xref>], it is tempting to suggest that the effects of <italic toggle="yes">APOE4</italic> on the total levels of IR and their colocalization with early and late endosomes are mediated by a mechanism that is similar to that observed with APOER2. Although direct binding of <italic toggle="yes">APOE4</italic> to VEGFR has not been reported, it has been previously suggested that VEGFR binds to APOER2 [<xref rid="ref047" ref-type="bibr">47, 77</xref>]. It is thus possible that the effects of <italic toggle="yes">APOE4</italic> on the levels and intracellular trafficking of VEGFR are mediated via a tertiary complex which includes VEGFR and <italic toggle="yes">APOE4</italic> bound to APOER2.</p><p>Whereas APOER2, like other ApoE receptors, contains the endocytotic motif NpxY, LRP1 also contains the motive YxxL [<xref rid="ref078" ref-type="bibr">78</xref>]. This renders LRP1 as a very fast endocytotic receptor and could be the reason why, unlike the other receptors, <italic toggle="yes">APOE4</italic> does not affect LRP1, and its trafficking to specific compartments. Alternatively, since LRP1 has a very large number of ligands [<xref rid="ref079" ref-type="bibr">79</xref>], it is possible that other ligands mask the pathological effects of <italic toggle="yes">APOE4</italic> on LRP1, by their interactions with it. Interestingly, studies of LRP1 in astrocytes revealed that unlike in neurons, LRP1 is trapped in endosomes following acidification of the endosomal compartments [<xref rid="ref080" ref-type="bibr">80</xref>], suggesting that additional cell-specific mechanism may affect the rate and extent of intracellular trafficking of LRP1.</p><p>To further unveil the mechanisms underlying the effects of <italic toggle="yes">APOE4</italic> on the receptors, we wanted to examine the involvement of APOER2 and LRP1 in the <italic toggle="yes">APOE4</italic> derived effects on the receptors’ levels and localization, by knocking them down utilizing CRISPR/Cas9. Knock-down of the LRP1 receptor utilizing CRISPR/Cas9 methodology revealed no effects on the total levels of APOER2, VEGFR and IR, but resulted in reduction of their colocalization with early endosomes. This suggests that LRP1 plays a role in the trapping of the receptors in early endosomes, which is lost following downregulation of LRP1, and do not take part in controlling receptors’ levels. In contrast, downregulation of APOER2, resulted in reversal of the <italic toggle="yes">APOE4</italic> driven decrease in the levels of IR and VEGFR, as well as in their decreased colocalization with early endosomes. Neither the level of LRP1, nor their colocalization with early endosomes were affected by the knock-down of APOER2. Taken together, these findings show that APOER2 plays an important role in the <italic toggle="yes">APOE4</italic> driven down regulation and endosomal trapping of IR and VEGFR and have no effect on the levels and extent of endosomal localization of LRP1, suggesting that LRP1 is upstream to APOER2, and that its effects are limited to receptors’ localization, while APOER2 is affecting the other receptors in both their levels, and their localization. Taken together, the CRISPR/Cas9 experiments showed that LRP1 and APOER2 are not only affected by <italic toggle="yes">APOE4</italic> pathology, but also serve as enhancers and collaborators in inducing these <italic toggle="yes">APOE4</italic> related pathologies. It has previously been shown that the internalization of APOER2 results in the sequestration of NMDA and AMPA receptors in intracellular compartments, and that this effect is driven by reduction in APOER2 driven phosphorylation of the glutamate receptors [<xref rid="ref046" ref-type="bibr">46</xref>]. This effect can induce robust effects on neuronal and excitatory synaptic activity and might be involved in various synaptic and neuronal deficits in <italic toggle="yes">APOE4</italic> positive brains, as well as the cognitive deficits, and the development of AD. The extent to which such phosphorylation mediates the <italic toggle="yes">APOE4</italic>-driven APOER2-mediated effects on IR and VEGFR, or the possibility that these effects are mediated by a different mechanism remains to be determined. The observation that neither LRP1, nor APOER2 are markedly affected by knock-down of the other receptor, suggest that these receptors are internalized and colocalized intracellularly by different routes. This is also supported by the finding that APOER2, but bot LRP1, accumulate specifically in early endosomes of <italic toggle="yes">APOE4</italic> neurons.</p><p><italic toggle="yes">APOE4</italic> is associated with increased diabetic phenotype [<xref rid="ref056" ref-type="bibr">56, 81, 82</xref>], with increased vascular pathology [<xref rid="ref036" ref-type="bibr">36, 83–85</xref>], and impaired plasticity and synaptic transmission [<xref rid="ref046" ref-type="bibr">46, 86, 87</xref>]. The present findings, that <italic toggle="yes">APOE4</italic> is associated with downregulation of IR and VEGFR, together with the previous observation that glutamatergic receptors are downregulated by <italic toggle="yes">APOE4</italic> [<xref rid="ref046" ref-type="bibr">46, 48</xref>] suggest that these varying <italic toggle="yes">APOE4</italic> phenotypes are driven by a single mechanism, whereby <italic toggle="yes">APOE4</italic> decreases the levels of these externally oriented receptors and affects their intracellular trafficking, thus leading to a large and varied spectrum of <italic toggle="yes">APOE4</italic> driven pathologies. These findings have important therapeutic implications, it suggests that instead of focusing on a given <italic toggle="yes">APOE4</italic> phenotype (e.g., vascular, diabetic, and synaptic pathology), therapy should be directed upstream at correcting the <italic toggle="yes">APOE4</italic>-APOER2 interaction, which is expected to correct for all the other, downstream pathological effects of <italic toggle="yes">APOE4</italic>. One way of achieving this goal is to focus on structural differences between <italic toggle="yes">APOE4</italic> and <italic toggle="yes">APOE3</italic>, such as correction of the impaired lipidation of <italic toggle="yes">APOE4</italic> which has recently been shown to reverse the <italic toggle="yes">APOE4</italic>-driven downregulation of APOER2 [<xref rid="ref088" ref-type="bibr">88, 89</xref>].</p><p>In conclusion, this study unraveled a general mechanism via which <italic toggle="yes">APOE4</italic> decreases the levels of ApoE receptors, as well as growth factor receptors, and impairs their intracellular trafficking, which are crucial for their activity. The ApoE receptors APOER2 and LRP1 play an important role in these effects with APOER2 affecting mainly the levels of the receptors, and LRP1 their intracellular localization and trafficking. These finding provide a unifying mechanisms whereby different pathological effects of <italic toggle="yes">APOE4</italic> are driven by a similar converging mechanism, in which <italic toggle="yes">APOE4</italic> down regulates many distinct receptors, each of which plays important roles in triggering different metabolic pathways. This mechanism can serve both in the study of <italic toggle="yes">APOE4</italic> and its pathology, and as a potential novel target for the development of anti-<italic toggle="yes">APOE4</italic> treatments, which will abolish its pathological features (compared to <italic toggle="yes">APOE3</italic>), which render it more involved in various diseases, with AD as the most devastating of which.</p></sec></body><back><ack><title>ACKNOWLEDGMENTS</title><p>The authors have no acknowledgments to report.</p></ack><sec id="sec0135"><title>FUNDING</title><p>This work was supported in part by grants from the Israel Science Foundation (grant No. 794/17), from the Joseph Sagol Foundation, from the Harold Eleanore Foonberg Foundation, and from the Joseph K. and Inez Eichenbaum Foundation.</p></sec><sec sec-type="COI-statement" id="sec0140"><title>CONFLICT OF INTEREST</title><p>The authors have no conflict of interest to report.</p></sec><sec sec-type="data-availability" id="sec0145"><title>DATA AVAILABILITY</title><p>All the data supporting the findings of this study are available within the article.</p></sec><ref-list><title>REFERENCES</title><ref id="ref001"><label>[1]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Safieh</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Korczyn</surname>
+<given-names>AD</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Michaelson</surname>
+<given-names>DM</given-names>
+</string-name> (<year>2019</year>) <article-title>APOE4: An emerging therapeutic target for Alzheimer’s disease</article-title>. <source>BMC Med</source>
+<volume>17</volume>, <fpage>64</fpage>.<pub-id pub-id-type="pmid">30890171</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1186/s12916-019-1299-4</pub-id><pub-id pub-id-type="pmcid">PMC6425600</pub-id></mixed-citation></ref><ref id="ref002"><label>[2]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Balin</surname>
+<given-names>BJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hudson</surname>
+<given-names>AP</given-names>
+</string-name> (<year>2014</year>) <article-title>Etiology and pathogenesis of late-onset Alzheimer’s disease</article-title>. <source>Curr Allergy Asthma Rep</source>
+<volume>14</volume>, <fpage>1</fpage>–<lpage>10</lpage>.<pub-id pub-id-type="doi" assigning-authority="pmc">10.1007/s11882-013-0417-1</pub-id><pub-id pub-id-type="pmid">24429902</pub-id></mixed-citation></ref><ref id="ref003"><label>[3]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Bertram</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tanzi</surname>
+<given-names>RE</given-names>
+</string-name> (<year>2012</year>) <article-title>The genetics of Alzheimer’s disease</article-title>. <source>Prog Mol Biol Transl Sci</source>
+<volume>107</volume>, <fpage>79</fpage>–<lpage>100</lpage>.<pub-id pub-id-type="pmid">22482448</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/B978-0-12-385883-2.00008-4</pub-id></mixed-citation></ref><ref id="ref004"><label>[4]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Naj</surname>
+<given-names>AC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Schellenberg</surname>
+<given-names>GD</given-names>
+</string-name>
+<collab>; Alzheimer’s Disease Genetics Consortium (ADGC)</collab>
+(<year>2017</year>) <article-title>Genomic variants, genes, and pathways of Alzheimer’s disease: An overview</article-title>. <source>Am J Med Genet B Neuropsychiatr Genet</source>
+<volume>174</volume>, <fpage>5</fpage>–<lpage>26</lpage>.<pub-id pub-id-type="pmid">27943641</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1002/ajmg.b.32499</pub-id><pub-id pub-id-type="pmcid">PMC6179157</pub-id></mixed-citation></ref><ref id="ref005"><label>[5]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Nikolac Perkovic</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Pivac</surname>
+<given-names>N</given-names>
+</string-name> (<year>2019</year>) <article-title>Genetic markers of Alzheimer’s disease</article-title>. <source>Adv Exp Med Biol</source>
+<volume>1192</volume>, <fpage>27</fpage>–<lpage>52</lpage>.<pub-id pub-id-type="pmid">31705489</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1007/978-981-32-9721-0_3</pub-id></mixed-citation></ref><ref id="ref006"><label>[6]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Ridge</surname>
+<given-names>PG</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ebbert</surname>
+<given-names>MTW</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kauwe</surname>
+<given-names>JSK</given-names>
+</string-name> (<year>2013</year>) <article-title>Genetics of Alzheimer’s disease</article-title>. <source>Biomed Res Int</source>
+<volume>2013</volume>, <fpage>254954</fpage>.<pub-id pub-id-type="pmid">23984328</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1155/2013/254954</pub-id><pub-id pub-id-type="pmcid">PMC3741956</pub-id></mixed-citation></ref><ref id="ref007"><label>[7]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Rossor</surname>
+<given-names>MN</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Iversen</surname>
+<given-names>LL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Reynolds</surname>
+<given-names>GP</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Mountjoy</surname>
+<given-names>CQ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Roth</surname>
+<given-names>M</given-names>
+</string-name> (<year>1984</year>) <article-title>Neurochemical characteristics of early and late onset types of Alzheimer’s disease</article-title>. <source>Br Med J (Clin Res Ed)</source>
+<volume>288</volume>, <fpage>961</fpage>–<lpage>964</lpage>.<pub-id pub-id-type="doi" assigning-authority="pmc">10.1136/bmj.288.6422.961</pub-id><pub-id pub-id-type="pmcid">PMC1442520</pub-id><pub-id pub-id-type="pmid">6142750</pub-id></mixed-citation></ref><ref id="ref008"><label>[8]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Strittmatter</surname>
+<given-names>WJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Roses</surname>
+<given-names>AD</given-names>
+</string-name> (<year>1996</year>) <article-title>Apolipoprotein E and Alzheimer’s disease</article-title>. <source>Ann Rev Neurosci</source>
+<volume>19</volume>, <fpage>53</fpage>–<lpage>77</lpage>.<pub-id pub-id-type="pmid">8833436</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1146/annurev.ne.19.030196.000413</pub-id></mixed-citation></ref><ref id="ref009"><label>[9]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Roses</surname>
+<given-names>AD</given-names>
+</string-name> (<year>1994</year>) <article-title>Apolipoprotein E affects the rate of Alzheimer disease expression: Beta-amyloid burden is a secondary consequence dependent on APOE genotype and duration of disease</article-title>. <source>J Neuropathol Exp Neurol</source>
+<volume>53</volume>, <fpage>429</fpage>–<lpage>437</lpage>.<pub-id pub-id-type="pmid">8083686</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1097/00005072-199409000-00002</pub-id></mixed-citation></ref><ref id="ref010"><label>[10]</label><mixed-citation publication-type="other">
+<string-name name-style="western">
+<surname>Feingold</surname>
+<given-names>KR</given-names>
+</string-name>(2021) Introduction to lipids and lipoproteins. In Endotext [Internet], Feingold KR, Anawalt B, Blackman MR, Boyce A, Chrousos G, Corpas E, de HerderWW, Dhatariya K, Dungan K, Hofland J, Kalra S, Kaltsas G, Kapoor N, Koch C, Kopp P, Korbonits M, Kovacs CS, Kuohung W, Laferr`ere B, Levy M, McGee EA, McLachlan R, New M, Purnell J, Sahay R, Shah AS, Singer F, Sperling MA, Stratakis CA, Trence DL, Wilson DP, eds. MDText.com, Inc., South Dartmouth, MA.</mixed-citation></ref><ref id="ref011"><label>[11]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Getz</surname>
+<given-names>GS</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Reardon</surname>
+<given-names>CA</given-names>
+</string-name> (<year>2018</year>) <article-title>Apoprotein E and reverse cholesterol transport</article-title>. <source>Int J Mol Sci</source>
+<volume>19</volume>, <fpage>3479</fpage>.<pub-id pub-id-type="pmid">30404132</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.3390/ijms19113479</pub-id><pub-id pub-id-type="pmcid">PMC6275009</pub-id></mixed-citation></ref><ref id="ref012"><label>[12]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Mahley</surname>
+<given-names>RW</given-names>
+</string-name> (<year>2016</year>) <article-title>Central nervous system lipoproteins: ApoE and regulation of cholesterol metabolism</article-title>. <source>Arterioscler Thromb Vasc Biol</source>
+<volume>36</volume>, <fpage>1305</fpage>–<lpage>1315</lpage>.<pub-id pub-id-type="pmid">27174096</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1161/ATVBAHA.116.307023</pub-id><pub-id pub-id-type="pmcid">PMC4942259</pub-id></mixed-citation></ref><ref id="ref013"><label>[13]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Rebeck</surname>
+<given-names>GW</given-names>
+</string-name> (<year>2004</year>) <article-title>Cholesterol efflux as a critical component of Alzheimer’s disease pathogenesis</article-title>. <source>J Mol Neurosci</source>
+<volume>23</volume>, <fpage>219</fpage>–<lpage>224</lpage>.<pub-id pub-id-type="pmid">15181250</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1385/JMN:23:3:219</pub-id></mixed-citation></ref><ref id="ref014"><label>[14]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Kanekiyo</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xu</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bu</surname>
+<given-names>G</given-names>
+</string-name> (<year>2014</year>) <article-title>ApoE and Aβ in Alzheimer’s disease: Accidental encounters or partners?</article-title>
+<source>Neuron</source>
+<volume>81</volume>, <fpage>740</fpage>–<lpage>754</lpage>.<pub-id pub-id-type="pmid">24559670</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/j.neuron.2014.01.045</pub-id><pub-id pub-id-type="pmcid">PMC3983361</pub-id></mixed-citation></ref><ref id="ref015"><label>[15]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Kim</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yoon</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Basak</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kim</surname>
+<given-names>J</given-names>
+</string-name> (<year>2014</year>) <article-title>Apolipoprotein E in synaptic plasticity and Alzheimer’s disease: Potential cellular and molecular mechanisms</article-title>. <source>Mol Cells</source>
+<volume>37</volume>, <fpage>767</fpage>–<lpage>776</lpage>.<pub-id pub-id-type="pmid">25358504</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.14348/molcells.2014.0248</pub-id><pub-id pub-id-type="pmcid">PMC4255096</pub-id></mixed-citation></ref><ref id="ref016"><label>[16]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Liao</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yoon</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kim</surname>
+<given-names>J</given-names>
+</string-name> (<year>2017</year>) <article-title>Apolipoprotein E metabolism and functions in brain and its role in Alzheimer’s disease</article-title>. <source>Curr Opin Lipidol</source>
+<volume>28</volume>, <fpage>60</fpage>–<lpage>67</lpage>.<pub-id pub-id-type="pmid">27922847</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1097/MOL.0000000000000383</pub-id><pub-id pub-id-type="pmcid">PMC5213812</pub-id></mixed-citation></ref><ref id="ref017"><label>[17]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Poirier</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Miron</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Picard</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gormley</surname>
+<given-names>P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Theroux</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Breitner</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dea</surname>
+<given-names>D</given-names>
+</string-name> (<year>2014</year>) <article-title>Apolipoprotein E and lipid homeostasis in the etiology and treatment of sporadic Alzheimer’s disease</article-title>. <source>Neurobiol Aging</source>
+<volume>35 Suppl 2</volume>, <fpage>S3</fpage>–<lpage>10</lpage>.<pub-id pub-id-type="pmid">24973118</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/j.neurobiolaging.2014.03.037</pub-id><pub-id pub-id-type="pmcid">PMC5140289</pub-id></mixed-citation></ref><ref id="ref018"><label>[18]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Yamazaki</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhao</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Caulfield</surname>
+<given-names>TR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>CC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bu</surname>
+<given-names>G</given-names>
+</string-name> (<year>2019</year>) <article-title>Apolipoprotein E and Alzheimer disease: Pathobiology and targeting strategies</article-title>. <source>Nat Rev Neurol</source>
+<volume>15</volume>, <fpage>501</fpage>–<lpage>518</lpage>.<pub-id pub-id-type="pmid">31367008</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1038/s41582-019-0228-7</pub-id><pub-id pub-id-type="pmcid">PMC7055192</pub-id></mixed-citation></ref><ref id="ref019"><label>[19]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Hampel</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Blennow</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shaw</surname>
+<given-names>LM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hoessler</surname>
+<given-names>YC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zetterberg</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Trojanowski</surname>
+<given-names>JQ</given-names>
+</string-name> (<year>2010</year>) <article-title>Total and phosphorylated tau protein as biological markers of Alzheimer’s disease</article-title>. <source>Exp Gerontol</source>
+<volume>45</volume>, <fpage>30</fpage>–<lpage>40</lpage>.<pub-id pub-id-type="pmid">19853650</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/j.exger.2009.10.010</pub-id><pub-id pub-id-type="pmcid">PMC2815003</pub-id></mixed-citation></ref><ref id="ref020"><label>[20]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Koch</surname>
+<given-names>G</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Di Lorenzo</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Loizzo</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Motta</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Travaglione</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Baiula</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rimondini</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ponzo</surname>
+<given-names>V</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bonnì</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Toniolo</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sallustio</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bozzali</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Caltagirone</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Campana</surname>
+<given-names>G</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Martorana</surname>
+<given-names>A</given-names>
+</string-name> (<year>2017</year>) <article-title>CSF tau is associated with impaired cortical plasticity, cognitive decline and astrocyte survival only in-positive Alzheimer’s disease</article-title>. <source>Sci Rep</source>
+<volume>7</volume>, <fpage>13728</fpage>.<pub-id pub-id-type="pmid">29062035</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1038/s41598-017-14204-3</pub-id><pub-id pub-id-type="pmcid">PMC5653826</pub-id></mixed-citation></ref><ref id="ref021"><label>[21]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Leoni</surname>
+<given-names>V</given-names>
+</string-name> (<year>2011</year>) <article-title>The effect of apolipoprotein E (ApoE) genotype on biomarkers of amyloidogenesis, tau pathology and neurodegeneration in Alzheimer’s disease</article-title>. <source>Clin Chem Lab Med</source>
+<volume>49</volume>, <fpage>375</fpage>–<lpage>383</lpage>.<pub-id pub-id-type="pmid">21388338</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1515/CCLM.2011.088</pub-id></mixed-citation></ref><ref id="ref022"><label>[22]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Friedland-Leuner</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Stockburger</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Denzer</surname>
+<given-names>I</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Eckert</surname>
+<given-names>GP</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Müller</surname>
+<given-names>WE</given-names>
+</string-name> (<year>2014</year>) <article-title>Mitochondrial dysfunction: Cause and consequence of Alzheimer’s disease</article-title>. <source>Prog Mol Biol Transl Sci</source>
+<volume>127</volume>, <fpage>183</fpage>–<lpage>210</lpage>.<pub-id pub-id-type="pmid">25149218</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/B978-0-12-394625-6.00007-6</pub-id></mixed-citation></ref><ref id="ref023"><label>[23]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Liraz</surname>
+<given-names>O</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Boehm-Cagan</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Michaelson</surname>
+<given-names>DM</given-names>
+</string-name> (<year>2013</year>) <article-title>induces Aβ42, tau, and neuronal pathology in the hippocampus of young targeted replacementmice</article-title>. <source>Mol Neurodegener</source>
+<volume>8</volume>, <fpage>16</fpage>.<pub-id pub-id-type="pmid">23684315</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1186/1750-1326-8-16</pub-id><pub-id pub-id-type="pmcid">PMC3659080</pub-id></mixed-citation></ref><ref id="ref024"><label>[24]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Zhou</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Huang</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Collins</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shen</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dai</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xiao</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wu</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wei</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>York</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lin</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhu</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>LaDu</surname>
+<given-names>MJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chen</surname>
+<given-names>X</given-names>
+</string-name> (<year>2016</year>) <article-title>induces site-specific tau phosphorylation through calpain-CDK5 signaling pathway in EFAD-Tg mice</article-title>. <source>Curr Alzheimer Res</source>
+<volume>13</volume>, <fpage>1048</fpage>–<lpage>1055</lpage>.<pub-id pub-id-type="pmid">27087442</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.2174/1567205013666160415154550</pub-id></mixed-citation></ref><ref id="ref025"><label>[25]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Cash</surname>
+<given-names>JG</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kuhel</surname>
+<given-names>DG</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Basford</surname>
+<given-names>JE</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jaeschke</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chatterjee</surname>
+<given-names>TK</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Weintraub</surname>
+<given-names>NL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hui</surname>
+<given-names>DY</given-names>
+</string-name> (<year>2012</year>) <article-title>Apolipoprotein E4 impairs macrophage efferocytosis and potentiates apoptosis by accelerating endoplasmic reticulum stress</article-title>. <source>JBiol Chem</source>
+<volume>287</volume>, <fpage>27876</fpage>–<lpage>27884</lpage>.<pub-id pub-id-type="pmid">22730380</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1074/jbc.M112.377549</pub-id><pub-id pub-id-type="pmcid">PMC3431692</pub-id></mixed-citation></ref><ref id="ref026"><label>[26]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Dorey</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chang</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>QY</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yang</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>W</given-names>
+</string-name> (<year>2014</year>) <article-title>Apolipoprotein E, amyloid-beta, and neuroinflammation in Alzheimer’s disease</article-title>. <source>Neurosci Bull</source>
+<volume>30</volume>, <fpage>317</fpage>–<lpage>330</lpage>.<pub-id pub-id-type="pmid">24652457</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1007/s12264-013-1422-z</pub-id><pub-id pub-id-type="pmcid">PMC5562666</pub-id></mixed-citation></ref><ref id="ref027"><label>[27]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Du</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jia</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhao</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xu</surname>
+<given-names>W</given-names>
+</string-name> (<year>2015</year>) <article-title>Effects of three hydrogen-rich liquids on hemorrhagic shock in rats</article-title>. <source>J Surg Res</source>
+<volume>193</volume>, <fpage>377</fpage>–<lpage>382</lpage>.<pub-id pub-id-type="pmid">25130773</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/j.jss.2014.06.051</pub-id></mixed-citation></ref><ref id="ref028"><label>[28]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Ophir</surname>
+<given-names>G</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Amariglio</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jacob-Hirsch</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Elkon</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rechavi</surname>
+<given-names>G</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Michaelson</surname>
+<given-names>DM</given-names>
+</string-name> (<year>2005</year>) <article-title>Apolipoprotein E4 enhances brain inflammation by modulation of the NF-kappaB signaling cascade</article-title>. <source>Neurobiol Dis</source>
+<volume>20</volume>, <fpage>709</fpage>–<lpage>718</lpage>.<pub-id pub-id-type="pmid">15979312</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/j.nbd.2005.05.002</pub-id></mixed-citation></ref><ref id="ref029"><label>[29]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Liehn</surname>
+<given-names>EA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ponomariov</surname>
+<given-names>V</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Diaconu</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Streata</surname>
+<given-names>I</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ioana</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Crespo-Avilan</surname>
+<given-names>GE</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hernéndez-Resendiz</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cabrera-Fuentes</surname>
+<given-names>HA</given-names>
+</string-name> (<year>2018</year>) <article-title>Apolipoprotein E in cardiovascular diseases: Novel aspects ofan old-fashioned enigma</article-title>. <source>Arch Med Res</source>
+<volume>49</volume>, <fpage>522</fpage>–<lpage>529</lpage>.<pub-id pub-id-type="pmid">30213474</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/j.arcmed.2018.08.008</pub-id></mixed-citation></ref><ref id="ref030"><label>[30]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Raffai</surname>
+<given-names>RL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Weisgraber</surname>
+<given-names>KH</given-names>
+</string-name> (<year>2003</year>) <article-title>Cholesterol: From heart attacks to Alzheimer’s disease</article-title>. <source>J Lipid Res</source>
+<volume>44</volume>, <fpage>1423</fpage>–<lpage>1430</lpage>.<pub-id pub-id-type="pmid">12837845</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1194/jlr.R300007-JLR200</pub-id></mixed-citation></ref><ref id="ref031"><label>[31]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Rannikmae</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kalaria</surname>
+<given-names>RN</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Greenberg</surname>
+<given-names>SM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chui</surname>
+<given-names>HC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Schmitt</surname>
+<given-names>FA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Samarasekera</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Al-Shahi Salman</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sudlow</surname>
+<given-names>CLM</given-names>
+</string-name> (<year>2014</year>) <article-title>APOE associations with severe CAA-associated vasculopathic changes: Collaborative meta-analysis</article-title>. <source>J Neurol Neurosurg Psychiatry</source>
+<volume>85</volume>, <fpage>300</fpage>–<lpage>305</lpage>.<pub-id pub-id-type="pmid">24163429</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1136/jnnp-2013-306485</pub-id><pub-id pub-id-type="pmcid">PMC4018226</pub-id></mixed-citation></ref><ref id="ref032"><label>[32]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Steen</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Terry</surname>
+<given-names>BM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rivera</surname>
+<given-names>EJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cannon</surname>
+<given-names>JL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Neely</surname>
+<given-names>TR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tavares</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xu</surname>
+<given-names>XJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wands</surname>
+<given-names>JR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>de la Monte</surname>
+<given-names>SM</given-names>
+</string-name> (<year>2005</year>) <article-title>Impaired insulin and insulin-like growth factor expression and signaling mechanisms in Alzheimer’s disease–is this type 3 diabetes? </article-title>. <source>J Alzheimers Dis</source>
+<volume>7</volume>, <fpage>63</fpage>–<lpage>80</lpage>.<pub-id pub-id-type="pmid">15750215</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.3233/jad-2005-7107</pub-id></mixed-citation></ref><ref id="ref033"><label>[33]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Yarchoan</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Toledo</surname>
+<given-names>JB</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lee</surname>
+<given-names>EB</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Arvanitakis</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kazi</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Han</surname>
+<given-names>L-Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Louneva</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lee</surname>
+<given-names>VM-Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kim</surname>
+<given-names>SF</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Trojanowski</surname>
+<given-names>JQ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Arnold</surname>
+<given-names>SE</given-names>
+</string-name> (<year>2014</year>) <article-title>Abnormal serine phosphorylation of insulin receptor substrate 1 is associated with tau pathology in Alzheimer’s disease and tauopathies</article-title>. <source>Acta Neuropathol</source>
+<volume>128</volume>, <fpage>679</fpage>–<lpage>689</lpage>.<pub-id pub-id-type="pmid">25107476</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1007/s00401-014-1328-5</pub-id><pub-id pub-id-type="pmcid">PMC4304658</pub-id></mixed-citation></ref><ref id="ref034"><label>[34]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Moloney</surname>
+<given-names>AM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Griffin</surname>
+<given-names>RJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Timmons</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>O’Connor</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ravid</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>O’Neill</surname>
+<given-names>C</given-names>
+</string-name> (<year>2010</year>) <article-title>Defects in IGF-1 receptor, insulin receptor and IRS-1/2 in Alzheimer’s disease indicate possible resistance to IGF-1 and insulin signalling</article-title>. <source>Neurobiol Aging</source>
+<volume>31</volume>, <fpage>224</fpage>–<lpage>243</lpage>.<pub-id pub-id-type="pmid">18479783</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/j.neurobiolaging.2008.04.002</pub-id></mixed-citation></ref><ref id="ref035"><label>[35]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Mateo</surname>
+<given-names>I</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Llorca</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Infante</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rodríguez-Rodríguez</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Fernéndez-Viadero</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Peña</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Berciano</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Combarros</surname>
+<given-names>O</given-names>
+</string-name> (<year>2007</year>) <article-title>Low serum VEGF levels are associated with Alzheimer’s disease</article-title>. <source>Acta Neurol Scand</source>
+<volume>116</volume>, <fpage>56</fpage>–<lpage>58</lpage>.<pub-id pub-id-type="pmid">17587256</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1111/j.1600-0404.2006.00775.x</pub-id></mixed-citation></ref><ref id="ref036"><label>[36]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Salomon-Zimri</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Glat</surname>
+<given-names>MJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Barhum</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Luz</surname>
+<given-names>I</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Boehm-Cagan</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liraz</surname>
+<given-names>O</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ben-Zur</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Offen</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Michaelson</surname>
+<given-names>DM</given-names>
+</string-name> (<year>2016</year>) <article-title>Reversal of-driven brain pathology by vascular endothelial growth factor treatment</article-title>. <source>J Alzheimers Dis</source>
+<volume>53</volume>, <fpage>1443</fpage>–<lpage>1458</lpage>.<pub-id pub-id-type="pmid">27372644</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.3233/JAD-160182</pub-id></mixed-citation></ref><ref id="ref037"><label>[37]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Lane-Donovan</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Herz</surname>
+<given-names>J</given-names>
+</string-name> (<year>2017</year>) <article-title>The ApoE receptors Vldlr and Apoer2 in central nervous system function and disease</article-title>. <source>J Lipid Res</source>
+<volume>58</volume>, <fpage>1036</fpage>–<lpage>1043</lpage>.<pub-id pub-id-type="pmid">28292942</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1194/jlr.R075507</pub-id><pub-id pub-id-type="pmcid">PMC5454520</pub-id></mixed-citation></ref><ref id="ref038"><label>[38]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Zhao</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>C-C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Qiao</surname>
+<given-names>W</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bu</surname>
+<given-names>G</given-names>
+</string-name> (<year>2018</year>) <article-title>Apolipoprotein E, receptors, and modulation of Alzheimer’s disease</article-title>. <source>Biol Psychiatry</source>
+<volume>83</volume>, <fpage>347</fpage>–<lpage>357</lpage>.<pub-id pub-id-type="pmid">28434655</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/j.biopsych.2017.03.003</pub-id><pub-id pub-id-type="pmcid">PMC5599322</pub-id></mixed-citation></ref><ref id="ref039"><label>[39]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Bu</surname>
+<given-names>G</given-names>
+</string-name> (<year>2009</year>) <article-title>Apolipoprotein E and its receptors in Alzheimer’s disease: Pathways, pathogenesis and therapy</article-title>. <source>Nat Rev Neurosci</source>
+<volume>10</volume>, <fpage>333</fpage>–<lpage>344</lpage>.<pub-id pub-id-type="pmid">19339974</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1038/nrn2620</pub-id><pub-id pub-id-type="pmcid">PMC2908393</pub-id></mixed-citation></ref><ref id="ref040"><label>[40]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Holtzman</surname>
+<given-names>DM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Herz</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bu</surname>
+<given-names>G</given-names>
+</string-name> (<year>2012</year>) <article-title>Apolipoprotein E and apolipoprotein E receptors: Normal biology and roles in Alzheimer disease</article-title>. <source>Cold Spring Harb Perspect Med</source>
+<volume>2</volume>, <fpage>a006312</fpage>.<pub-id pub-id-type="pmid">22393530</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1101/cshperspect.a006312</pub-id><pub-id pub-id-type="pmcid">PMC3282491</pub-id></mixed-citation></ref><ref id="ref041"><label>[41]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Cam</surname>
+<given-names>JA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zerbinatti</surname>
+<given-names>CV</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bu</surname>
+<given-names>G</given-names>
+</string-name> (<year>2005</year>) <article-title>Rapid endocytosis of the low density lipoprotein receptor-related protein modulates cell surface distribution and processing of the beta-amyloid precursor protein</article-title>. <source>J Biol Chem</source>
+<volume>280</volume>, <fpage>15464</fpage>–<lpage>15470</lpage>.<pub-id pub-id-type="pmid">15705569</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1074/jbc.M500613200</pub-id></mixed-citation></ref><ref id="ref042"><label>[42]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Dlugosz</surname>
+<given-names>P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Nimpf</surname>
+<given-names>J</given-names>
+</string-name> (<year>2018</year>) <article-title>The Reelin receptors Apolipoprotein E receptor 2 (ApoER2) and VLDL receptor</article-title>. <source>Int J Mol Sci</source>
+<volume>19</volume>, <fpage>3090</fpage>.<pub-id pub-id-type="pmid">30304853</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.3390/ijms19103090</pub-id><pub-id pub-id-type="pmcid">PMC6213145</pub-id></mixed-citation></ref><ref id="ref043"><label>[43]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Nakajima</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kulik</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Frotscher</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Herz</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Schäfer</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bock</surname>
+<given-names>HH</given-names>
+</string-name>, <string-name name-style="western">
+<surname>May</surname>
+<given-names>P</given-names>
+</string-name> (<year>2013</year>) <article-title>Low density lipoprotein receptor-related protein 1 (LRP1) modulates N-methyl-D-aspartate (NMDA) receptor-dependent intracellular signaling and NMDA-induced regulation of postsynaptic protein complexes</article-title>. <source>J Biol Chem</source>
+<volume>288</volume>, <fpage>21909</fpage>–<lpage>21923</lpage>.<pub-id pub-id-type="pmid">23760271</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1074/jbc.M112.444364</pub-id><pub-id pub-id-type="pmcid">PMC3724646</pub-id></mixed-citation></ref><ref id="ref044"><label>[44]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Muratoglu</surname>
+<given-names>SC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Mikhailenko</surname>
+<given-names>I</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Newton</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Migliorini</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Strickland</surname>
+<given-names>DK</given-names>
+</string-name> (<year>2010</year>) <article-title>Low density lipoprotein receptor-related protein 1 (LRP1) forms a signaling complex with platelet-derived growth factor receptor-beta in endosomes and regulates activation of the MAPK pathway</article-title>. <source>J Biol Chem</source>
+<volume>285</volume>, <fpage>14308</fpage>–<lpage>14317</lpage>.<pub-id pub-id-type="pmid">20220145</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1074/jbc.M109.046672</pub-id><pub-id pub-id-type="pmcid">PMC2863204</pub-id></mixed-citation></ref><ref id="ref045"><label>[45]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Gan</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jiang</surname>
+<given-names>P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>McLean</surname>
+<given-names>P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kanekiyo</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bu</surname>
+<given-names>G</given-names>
+</string-name> (<year>2014</year>) <article-title>Low-density lipoprotein receptor-related protein 1 (LRP1) regulates the stability and function of GluA1 α-amino-3-hydroxy-5-methyl-4-isoxazole propionic acid (AMPA) receptor in neurons</article-title>. <source>PLoS One</source>
+<volume>9</volume>, <fpage>e113237</fpage>.<pub-id pub-id-type="pmid">25500815</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1371/journal.pone.0113237</pub-id><pub-id pub-id-type="pmcid">PMC4264746</pub-id></mixed-citation></ref><ref id="ref046"><label>[46]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Chen</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Durakoglugil</surname>
+<given-names>MS</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xian</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Herz</surname>
+<given-names>J</given-names>
+</string-name> (<year>2010</year>) <article-title>reduces glutamate receptor function and synaptic plasticity by selectively impairing ApoE receptor recycling</article-title>. <source>Proc Natl Acad Sci U S A</source>
+<volume>107</volume>, <fpage>12011</fpage>–<lpage>12016</lpage>.<pub-id pub-id-type="pmid">20547867</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1073/pnas.0914984107</pub-id><pub-id pub-id-type="pmcid">PMC2900641</pub-id></mixed-citation></ref><ref id="ref047"><label>[47]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Feng</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cui</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shi</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xiang</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bian</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ma</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xia</surname>
+<given-names>W</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wei</surname>
+<given-names>G</given-names>
+</string-name> (<year>2020</year>) <article-title>Carnosic acid reverses the inhibition ofon cell surface level of ApoER2 and Reelin signaling pathway</article-title>. <source>J Alzheimers Dis</source>
+<volume>73</volume>, <fpage>517</fpage>–<lpage>528</lpage>.<pub-id pub-id-type="pmid">31796678</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.3233/JAD-190914</pub-id></mixed-citation></ref><ref id="ref048"><label>[48]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Xian</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Pohlkamp</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Durakoglugil</surname>
+<given-names>MS</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Beck</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lane-donovan</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Plattner</surname>
+<given-names>F</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wong</surname>
+<given-names>CH</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Herz</surname>
+<given-names>J</given-names>
+</string-name> (<year>2018</year>) <article-title>Reversal of-induced recycling block as a novel prevention approach for Alzheimer’s disease</article-title>. <source>Elife</source>
+<volume>7</volume>, <fpage>e40048</fpage>.<pub-id pub-id-type="pmid">30375977</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.7554/eLife.40048</pub-id><pub-id pub-id-type="pmcid">PMC6261251</pub-id></mixed-citation></ref><ref id="ref049"><label>[49]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Gilat-Frenkel</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Boehm-Cagan</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liraz</surname>
+<given-names>O</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xian</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Herz</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Michaelson</surname>
+<given-names>DM</given-names>
+</string-name> (<year>2014</year>) <article-title>Involvement of the Apoer2 and Lrp1 receptors in mediating the pathological effects of APOE4 <italic toggle="yes">in vivo</italic></article-title>. <source>Curr Alzheimer Res</source>
+<volume>11</volume>, <fpage>549</fpage>–<lpage>557</lpage>.<pub-id pub-id-type="pmid">24251389</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.2174/1567205010666131119232444</pub-id><pub-id pub-id-type="pmcid">PMC4065855</pub-id></mixed-citation></ref><ref id="ref050"><label>[50]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Laatsch</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Panteli</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sornsakrin</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hoffzimmer</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Grewal</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Heeren</surname>
+<given-names>J</given-names>
+</string-name> (<year>2012</year>) <article-title>Low density lipoprotein receptor-related protein 1 dependent endosomal trapping and recycling of Apolipoprotein E</article-title>. <source>PLoS One</source>
+<volume>7</volume>, <fpage>e29385</fpage>.<pub-id pub-id-type="pmid">22238606</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1371/journal.pone.0029385</pub-id><pub-id pub-id-type="pmcid">PMC3251589</pub-id></mixed-citation></ref><ref id="ref051"><label>[51]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Kanekiyo</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bu</surname>
+<given-names>G</given-names>
+</string-name> (<year>2014</year>) <article-title>The low-density lipoprotein receptor-related protein 1 and amyloid-β clearance in Alzheimer’s disease</article-title>. <source>Front Aging Neurosci</source>
+<volume>6</volume>, <fpage>93</fpage>.<pub-id pub-id-type="pmid">24904407</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.3389/fnagi.2014.00093</pub-id><pub-id pub-id-type="pmcid">PMC4033011</pub-id></mixed-citation></ref><ref id="ref052"><label>[52]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Biessels</surname>
+<given-names>GJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Staekenborg</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Brunner</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Brayne</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Scheltens</surname>
+<given-names>P</given-names>
+</string-name> (<year>2006</year>) <article-title>Risk of dementia in diabetes mellitus: A systematic review</article-title>. <source>Lancet Neurol</source>
+<volume>5</volume>, <fpage>64</fpage>–<lpage>74</lpage>.<pub-id pub-id-type="pmid">16361024</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/S1474-4422(05)70284-2</pub-id></mixed-citation></ref><ref id="ref053"><label>[53]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Bomfim</surname>
+<given-names>TR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Forny-Germano</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sathler</surname>
+<given-names>LB</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Brito-Moreira</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Houzel</surname>
+<given-names>J-C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Decker</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Silverman</surname>
+<given-names>MA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kazi</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Melo</surname>
+<given-names>HM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>McClean</surname>
+<given-names>PL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Holscher</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Arnold</surname>
+<given-names>SE</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Talbot</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Klein</surname>
+<given-names>WL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Munoz</surname>
+<given-names>DP</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ferreira</surname>
+<given-names>ST</given-names>
+</string-name>, <string-name name-style="western">
+<surname>De Felice</surname>
+<given-names>FG</given-names>
+</string-name> (<year>2012</year>) <article-title>An anti-diabetes agent protects the mouse brain from defective insulin signaling caused by Alzheimer’s disease- associated Aβ oligomers</article-title>. <source>J Clin Invest</source>
+<volume>122</volume>, <fpage>1339</fpage>–<lpage>1353</lpage>.<pub-id pub-id-type="pmid">22476196</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1172/JCI57256</pub-id><pub-id pub-id-type="pmcid">PMC3314445</pub-id></mixed-citation></ref><ref id="ref054"><label>[54]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Talbot</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wang</surname>
+<given-names>HY</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kazi</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Han</surname>
+<given-names>LY</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bakshi</surname>
+<given-names>KP</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Stucky</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Fuino</surname>
+<given-names>RL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kawaguchi</surname>
+<given-names>KR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Samoyedny</surname>
+<given-names>AJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wilson</surname>
+<given-names>RS</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Arvanitakis</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Schneider</surname>
+<given-names>JA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wolf</surname>
+<given-names>BA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bennett</surname>
+<given-names>DA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Trojanowski</surname>
+<given-names>JQ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Arnold</surname>
+<given-names>SE</given-names>
+</string-name> (<year>2012</year>) <article-title>Demonstrated brain insulin resistance in Alzheimer’s disease patients is associated with IGF-1 resistance, IRS-1 dysregulation, and cognitive decline</article-title>. <source>J Clin Invest</source>
+<volume>122</volume>, <fpage>1316</fpage>–<lpage>1338</lpage>.<pub-id pub-id-type="pmid">22476197</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1172/JCI59903</pub-id><pub-id pub-id-type="pmcid">PMC3314463</pub-id></mixed-citation></ref><ref id="ref055"><label>[55]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Keeney</surname>
+<given-names>JT-R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ibrahimi</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhao</surname>
+<given-names>L</given-names>
+</string-name> (<year>2015</year>) <article-title>Human ApoE isoforms differentially modulate glucose and amyloid metabolic pathways in female brain: Evidence of the mechanism of neuroprotection by ApoE2 and implications for Alzheimer’s disease prevention and early intervention</article-title>. <source>Alzheimers Dis</source>
+<volume>48</volume>, <fpage>411</fpage>–<lpage>424</lpage>.<pub-id pub-id-type="doi" assigning-authority="pmc">10.3233/JAD-150348</pub-id><pub-id pub-id-type="pmcid">PMC5485924</pub-id><pub-id pub-id-type="pmid">26402005</pub-id></mixed-citation></ref><ref id="ref056"><label>[56]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Zhao</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>C-C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Van Ingelgom</surname>
+<given-names>AJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Martens</surname>
+<given-names>YA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Linares</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Knight</surname>
+<given-names>JA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Painter</surname>
+<given-names>MM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sullivan</surname>
+<given-names>PM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bu</surname>
+<given-names>G</given-names>
+</string-name> (<year>2017</year>) <article-title>Apolipoprotein E4 impairs neuronal insulin signaling by trapping insulin receptor in the endosomes</article-title>. <source>Neuron</source>
+<volume>96</volume>, <fpage>115</fpage>–<lpage>129.e115</lpage>.<pub-id pub-id-type="pmid">28957663</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/j.neuron.2017.09.003</pub-id><pub-id pub-id-type="pmcid">PMC5621659</pub-id></mixed-citation></ref><ref id="ref057"><label>[57]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Liu</surname>
+<given-names>CC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hu</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tsai</surname>
+<given-names>CW</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yue</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Melrose</surname>
+<given-names>HL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kanekiyo</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bu</surname>
+<given-names>G</given-names>
+</string-name> (<year>2015</year>) <article-title>Neuronal LRP1 regulates glucose metabolism and insulin signaling in the brain</article-title>. <source>J Neurosci</source>
+<volume>35</volume>, <fpage>5851</fpage>–<lpage>5859</lpage>.<pub-id pub-id-type="pmid">25855193</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1523/JNEUROSCI.5180-14.2015</pub-id><pub-id pub-id-type="pmcid">PMC4388937</pub-id></mixed-citation></ref><ref id="ref058"><label>[58]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Simons</surname>
+<given-names>M</given-names>
+</string-name> (<year>2012</year>) <article-title>An inside view: VEGF receptor trafficking and signaling</article-title>. <source>Physiology (Bethesda)</source>
+<volume>27</volume>, <fpage>213</fpage>–<lpage>222</lpage>.<pub-id pub-id-type="pmid">22875452</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1152/physiol.00016.2012</pub-id><pub-id pub-id-type="pmcid">PMC4037811</pub-id></mixed-citation></ref><ref id="ref059"><label>[59]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Licht</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Keshet</surname>
+<given-names>E</given-names>
+</string-name> (<year>2013</year>) <article-title>Delineating multiple functions of VEGF-A in the adult brain</article-title>. <source>Cell Mol Life Sci</source>
+<volume>70</volume>, <fpage>1727</fpage>–<lpage>1737</lpage>.<pub-id pub-id-type="pmid">23475068</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1007/s00018-013-1280-x</pub-id><pub-id pub-id-type="pmcid">PMC11113886</pub-id></mixed-citation></ref><ref id="ref060"><label>[60]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Jopling</surname>
+<given-names>HM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Odell</surname>
+<given-names>AF</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Pellet-Many</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Latham</surname>
+<given-names>AM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Frankel</surname>
+<given-names>P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sivaprasadarao</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Walker</surname>
+<given-names>JH</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zachary</surname>
+<given-names>IC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ponnambalam</surname>
+<given-names>S</given-names>
+</string-name> (<year>2014</year>) <article-title>Endosome-to-plasma membrane recycling of VEGFR2 receptor tyrosine kinase regulates endothelial function and blood vessel formation</article-title>. <source>Cells</source>
+<volume>3</volume>, <fpage>363</fpage>–<lpage>385</lpage>.<pub-id pub-id-type="pmid">24785348</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.3390/cells3020363</pub-id><pub-id pub-id-type="pmcid">PMC4092869</pub-id></mixed-citation></ref><ref id="ref061"><label>[61]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Belinson</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lev</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Masliah</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Michaelson</surname>
+<given-names>DM</given-names>
+</string-name> (<year>2008</year>) <article-title>Activation of the amyloid cascade in apolipoprotein E4 transgenic mice induces lysosomal activation and neurodegeneration resulting in marked cognitive deficits</article-title>. <source>J Neurosci</source>
+<volume>28</volume>, <fpage>4690</fpage>–<lpage>4701</lpage>.<pub-id pub-id-type="pmid">18448646</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1523/JNEUROSCI.5633-07.2008</pub-id><pub-id pub-id-type="pmcid">PMC3844816</pub-id></mixed-citation></ref><ref id="ref062"><label>[62]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Bar</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Boehm-Cagan</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Luz</surname>
+<given-names>I</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kleper-Wall</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Michaelson</surname>
+<given-names>DM</given-names>
+</string-name> (<year>2017</year>) <article-title>The effects of apolipoprotein E genotype, α-synuclein deficiency, and sex on brain synaptic and Alzheimer’s disease-related pathology</article-title>. <source>Alzheimers Dement (Amst)</source>
+<volume>10</volume>, <fpage>1</fpage>–<lpage>11</lpage>.<pub-id pub-id-type="pmid">29159264</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/j.dadm.2017.08.003</pub-id><pub-id pub-id-type="pmcid">PMC5678739</pub-id></mixed-citation></ref><ref id="ref063"><label>[63]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Katzenell</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cabrera</surname>
+<given-names>JR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>North</surname>
+<given-names>BJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Leib</surname>
+<given-names>DA</given-names>
+</string-name> (<year>2017</year>) <article-title>Isolation, purification, and culture of primary murine sensory neurons</article-title>. <source>Methods Mol Biol</source>
+<volume>1656</volume>, <fpage>229</fpage>–<lpage>251</lpage>.<pub-id pub-id-type="pmid">28808974</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1007/978-1-4939-7237-1_15</pub-id><pub-id pub-id-type="pmcid">PMC5613752</pub-id></mixed-citation></ref><ref id="ref064"><label>[64]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Zinchuk</surname>
+<given-names>V</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zinchuk</surname>
+<given-names>O</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Okada</surname>
+<given-names>T</given-names>
+</string-name> (<year>2007</year>) <article-title>Quantitative colocalization analysis of multicolor confocal immunofluorescence microscopy images: Pushing pixels to explore biological phenomena</article-title>. <source>Acta Histochem Cytochem</source>
+<volume>40</volume>, <fpage>101</fpage>–<lpage>111</lpage>.<pub-id pub-id-type="pmid">17898874</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1267/ahc.07002</pub-id><pub-id pub-id-type="pmcid">PMC1993886</pub-id></mixed-citation></ref><ref id="ref065"><label>[65]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Adler</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Parmryd</surname>
+<given-names>I</given-names>
+</string-name> (<year>2010</year>) <article-title>Quantifying colocalization by correlation: The pearson correlation coefficient is superior to the Mander’s overlap coefficient</article-title>. <source>Cytometry A</source>
+<volume>77</volume>, <fpage>733</fpage>–<lpage>742</lpage>.<pub-id pub-id-type="pmid">20653013</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1002/cyto.a.20896</pub-id></mixed-citation></ref><ref id="ref066"><label>[66]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Doudna</surname>
+<given-names>JA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Charpentier</surname>
+<given-names>E</given-names>
+</string-name> (<year>2014</year>) <article-title>Genome editing. The new frontier of genome engineering with CRISPR-Cas9</article-title>. <source>Science</source>
+<volume>346</volume>, <fpage>1258096</fpage>.<pub-id pub-id-type="pmid">25430774</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1126/science.1258096</pub-id></mixed-citation></ref><ref id="ref067"><label>[67]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Hanlon</surname>
+<given-names>KS</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kleinstiver</surname>
+<given-names>BP</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Garcia</surname>
+<given-names>SP</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zaborowski</surname>
+<given-names>MP</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Volak</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Spirig</surname>
+<given-names>SE</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Muller</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Sousa</surname>
+<given-names>AA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Tsai</surname>
+<given-names>SQ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bengtsson</surname>
+<given-names>NE</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lööv</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ingelsson</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chamberlain</surname>
+<given-names>JS</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Corey</surname>
+<given-names>DP</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Aryee</surname>
+<given-names>MJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Joung</surname>
+<given-names>JK</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Breakefield</surname>
+<given-names>XO</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Maguire</surname>
+<given-names>CA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>György</surname>
+<given-names>B</given-names>
+</string-name> (<year>2019</year>) <article-title>High levels of AAV vector integration into CRISPR-induced DNA breaks</article-title>. <source>Nat Commun</source>
+<volume>10</volume>, <fpage>4439</fpage>.<pub-id pub-id-type="pmid">31570731</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1038/s41467-019-12449-2</pub-id><pub-id pub-id-type="pmcid">PMC6769011</pub-id></mixed-citation></ref><ref id="ref068"><label>[68]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Mahley</surname>
+<given-names>RW</given-names>
+</string-name> (<year>2016</year>) <article-title>Central nervous system lipoproteins</article-title>. <source>Arterioscler Thromb Vasc Biol</source>
+<volume>36</volume>, <fpage>1305</fpage>–<lpage>1315</lpage>.<pub-id pub-id-type="pmid">27174096</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1161/ATVBAHA.116.307023</pub-id><pub-id pub-id-type="pmcid">PMC4942259</pub-id></mixed-citation></ref><ref id="ref069"><label>[69]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Li</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Li</surname>
+<given-names>D</given-names>
+</string-name>, <string-name name-style="western">
+<surname>He</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>He</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xue</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wan</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liu</surname>
+<given-names>Q</given-names>
+</string-name> (<year>2021</year>) <article-title>Astrocytic ApoE reprograms neuronal cholesterol metabolism and histone-acetylation-mediated memory</article-title>. <source>Neuron</source>
+<volume>109</volume>, <fpage>957</fpage>–<lpage>970.e958</lpage>.<pub-id pub-id-type="pmid">33503410</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/j.neuron.2021.01.005</pub-id></mixed-citation></ref><ref id="ref070"><label>[70]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Konings</surname>
+<given-names>SC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Torres-Garcia</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Martinsson</surname>
+<given-names>I</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gouras</surname>
+<given-names>GK</given-names>
+</string-name> (<year>2021</year>) <article-title>Astrocytic and neuronal apolipoprotein E isoforms differentially affect neuronal excitability</article-title>. <source>Front Neurosci</source>
+<volume>15</volume>, <fpage>734001</fpage>.<pub-id pub-id-type="pmid">34621153</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.3389/fnins.2021.734001</pub-id><pub-id pub-id-type="pmcid">PMC8490647</pub-id></mixed-citation></ref><ref id="ref071"><label>[71]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Huang</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Zhang</surname>
+<given-names>Z</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cao</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yu</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Pei</surname>
+<given-names>G</given-names>
+</string-name> (<year>2022</year>) <article-title>Chimeric cerebral organoids reveal the essentials of neuronal and astrocyticfor Alzheimer’s tau pathology</article-title>. <source>Signal Transduct Target Ther</source>
+<volume>7</volume>, <fpage>176</fpage>.<pub-id pub-id-type="pmid">35691989</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1038/s41392-022-01006-x</pub-id><pub-id pub-id-type="pmcid">PMC9189105</pub-id></mixed-citation></ref><ref id="ref072"><label>[72]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Chan</surname>
+<given-names>ES</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chen</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Soong</surname>
+<given-names>TW</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wong</surname>
+<given-names>BS</given-names>
+</string-name> (<year>2018</year>) <article-title>Differential binding of human ApoE isoforms to insulin receptor is associated with aberrant insulin signaling in AD brain samples</article-title>. <source>Neuromol Med</source>
+<volume>20</volume>, <fpage>124</fpage>–<lpage>132</lpage>.<pub-id pub-id-type="doi" assigning-authority="pmc">10.1007/s12017-018-8480-3</pub-id><pub-id pub-id-type="pmid">29450841</pub-id></mixed-citation></ref><ref id="ref073"><label>[73]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Rapp</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Gmeiner</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hüttinger</surname>
+<given-names>M</given-names>
+</string-name> (<year>2006</year>) <article-title>Implication of apoE isoforms in cholesterol metabolism by primary rat hippocampal neurons and astrocytes</article-title>. <source>Biochimie</source>
+<volume>88</volume>, <fpage>473</fpage>–<lpage>483</lpage>.<pub-id pub-id-type="pmid">16376010</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/j.biochi.2005.10.007</pub-id></mixed-citation></ref><ref id="ref074"><label>[74]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Morrow</surname>
+<given-names>JA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hatters</surname>
+<given-names>DM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lu</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Höchtl</surname>
+<given-names>P</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Oberg</surname>
+<given-names>KA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rupp</surname>
+<given-names>B</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Weisgraber</surname>
+<given-names>KH</given-names>
+</string-name> (<year>2002</year>) <article-title>Apolipoprotein E4 forms a molten globule: A potential basis for its association with disease</article-title>. <source>J Biol Chem</source>
+<volume>277</volume>, <fpage>50380</fpage>–<lpage>50385</lpage>.<pub-id pub-id-type="pmid">12393895</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1074/jbc.M204898200</pub-id></mixed-citation></ref><ref id="ref075"><label>[75]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Pohlkamp</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Xian</surname>
+<given-names>X</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wong</surname>
+<given-names>CH</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Durakoglugil</surname>
+<given-names>MS</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Werthmann</surname>
+<given-names>GC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Saido</surname>
+<given-names>TC</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Evers</surname>
+<given-names>BM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>White</surname>
+<given-names>CL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Connor</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hammer</surname>
+<given-names>RE</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Herz</surname>
+<given-names>J</given-names>
+</string-name> (<year>2021</year>) <article-title>NHE6 depletion corrects-mediated synaptic impairments and reduces amyloid plaque load</article-title>. <source>eLife</source>
+<volume>10</volume>, <fpage>e72034</fpage>.<pub-id pub-id-type="pmid">34617884</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.7554/eLife.72034</pub-id><pub-id pub-id-type="pmcid">PMC8547963</pub-id></mixed-citation></ref><ref id="ref076"><label>[76]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Chan</surname>
+<given-names>ES</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chen</surname>
+<given-names>C</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cole</surname>
+<given-names>GM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Wong</surname>
+<given-names>B-S</given-names>
+</string-name> (<year>2015</year>) <article-title>Differential interaction of Apolipoprotein-E isoforms with insulin receptors modulates brain insulin signaling in mutant human amyloid precursor protein transgenic mice</article-title>. <source>Sci Rep</source>
+<volume>5</volume>, <fpage>13842</fpage>.<pub-id pub-id-type="pmid">26346625</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1038/srep13842</pub-id><pub-id pub-id-type="pmcid">PMC4561911</pub-id></mixed-citation></ref><ref id="ref077"><label>[77]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Howell</surname>
+<given-names>KR</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hoda</surname>
+<given-names>MN</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Pillai</surname>
+<given-names>A</given-names>
+</string-name> (<year>2013</year>) <article-title>VEGF activates NR2B phosphorylation through Dab1 pathway</article-title>. <source>Neurosci Lett</source>
+<volume>552</volume>, <fpage>30</fpage>–<lpage>34</lpage>.<pub-id pub-id-type="pmid">23916658</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1016/j.neulet.2013.07.032</pub-id><pub-id pub-id-type="pmcid">PMC3881540</pub-id></mixed-citation></ref><ref id="ref078"><label>[78]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Roebroek</surname>
+<given-names>AJM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Reekmans</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lauwers</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Feyaerts</surname>
+<given-names>N</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Smeijers</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Hartmann</surname>
+<given-names>D</given-names>
+</string-name> (<year>2006</year>) <article-title>Mutant Lrp1 knock-in mice generated by recombinase-mediated cassette exchange reveal differential importance of the NPXY motifs in the intracellular domain of LRP1 for normal Fetal development</article-title>. <source>Mol Cell Biol</source>
+<volume>26</volume>, <fpage>605</fpage>.<pub-id pub-id-type="pmid">16382151</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1128/MCB.26.2.605-616.2006</pub-id><pub-id pub-id-type="pmcid">PMC1346909</pub-id></mixed-citation></ref><ref id="ref079"><label>[79]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>LHerz</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Strickland</surname>
+<given-names>DK</given-names>
+</string-name> (<year>2001</year>) <article-title>LRP: A multifunctional scavenger and signaling receptor</article-title>. <source>J Clin Invest</source>
+<volume>108</volume>, <fpage>779</fpage>–<lpage>784</lpage>.<pub-id pub-id-type="pmid">11560943</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1172/JCI13992</pub-id><pub-id pub-id-type="pmcid">PMC200939</pub-id></mixed-citation></ref><ref id="ref080"><label>[80]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Prasad</surname>
+<given-names>H</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Rao</surname>
+<given-names>R</given-names>
+</string-name> (<year>2018</year>) <article-title>Amyloid clearance defect inastrocytes is reversed by epigenetic correction of endosomal pH. , </article-title>. <source>Proc Natl Acad Sci U S A</source>
+<volume>115</volume>, <fpage>E6640</fpage>–<lpage>E6649</lpage>.<pub-id pub-id-type="pmid">29946028</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1073/pnas.1801612115</pub-id><pub-id pub-id-type="pmcid">PMC6048470</pub-id></mixed-citation></ref><ref id="ref081"><label>[81]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Koren-Iton</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Salomon-Zimri</surname>
+<given-names>S</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Smolar</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Shavit-Stein</surname>
+<given-names>E</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Dori</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Chapman</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Michaelson</surname>
+<given-names>DM</given-names>
+</string-name> (<year>2020</year>) <article-title>Central and peripheral mechanisms in-driven diabetic pathology</article-title>. <source>Int J Mol Sci</source>
+<volume>21</volume>, <fpage>1289</fpage>.<pub-id pub-id-type="pmid">32075060</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.3390/ijms21041289</pub-id><pub-id pub-id-type="pmcid">PMC7072920</pub-id></mixed-citation></ref><ref id="ref082"><label>[82]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Li</surname>
+<given-names>L</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Cavuoto</surname>
+<given-names>M</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Biddiscombe</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Pike</surname>
+<given-names>KE</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ravona-Springer</surname>
+<given-names>R</given-names>
+</string-name> (<year>2020</year>) <article-title>Diabetes mellitus increases risk of incident dementia inAPOEɛ4 carriers: A meta-analysis</article-title>. <source>J AlzheimersDis</source>
+<volume>74</volume>, <fpage>1295</fpage>–<lpage>1308</lpage>.<pub-id pub-id-type="doi" assigning-authority="pmc">10.3233/JAD-191068</pub-id><pub-id pub-id-type="pmid">32250298</pub-id></mixed-citation></ref><ref id="ref083"><label>[83]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Tai</surname>
+<given-names>LM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Thomas</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Marottoli</surname>
+<given-names>FM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Koster</surname>
+<given-names>KP</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kanekiyo</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Morris</surname>
+<given-names>AWJ</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bu</surname>
+<given-names>G</given-names>
+</string-name> (<year>2016</year>) <article-title>The role of APOE in cerebrovascular dysfunction</article-title>. <source>Acta Neuropathol</source>
+<volume>131</volume>, <fpage>709</fpage>–<lpage>723</lpage>.<pub-id pub-id-type="pmid">26884068</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1007/s00401-016-1547-z</pub-id><pub-id pub-id-type="pmcid">PMC4837016</pub-id></mixed-citation></ref><ref id="ref084"><label>[84]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Zlokovic</surname>
+<given-names>BV</given-names>
+</string-name> (<year>2013</year>) <article-title>Cerebrovascular effects of apolipoprotein E: Implications for Alzheimer disease</article-title>. <source>JAMA Neurol</source>
+<volume>70</volume>, <fpage>440</fpage>–<lpage>444</lpage>.<pub-id pub-id-type="pmid">23400708</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1001/jamaneurol.2013.2152</pub-id><pub-id pub-id-type="pmcid">PMC4414030</pub-id></mixed-citation></ref><ref id="ref085"><label>[85]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Rohn</surname>
+<given-names>TT</given-names>
+</string-name> (<year>2014</year>) <article-title>Is apolipoprotein E4 an important risk factor for vascular dementia? </article-title>. <source>Int J Clin Exp Pathol</source>
+<volume>7</volume>, <fpage>3504</fpage>–<lpage>3511</lpage>.<pub-id pub-id-type="pmid">25120729</pub-id>
+<pub-id pub-id-type="pmcid">PMC4128964</pub-id></mixed-citation></ref><ref id="ref086"><label>[86]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Kerr</surname>
+<given-names>ME</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kamboh</surname>
+<given-names>MI</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yookyung</surname>
+<given-names>K</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kraus</surname>
+<given-names>MF</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Puccio</surname>
+<given-names>AM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>DeKosky</surname>
+<given-names>ST</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Marion</surname>
+<given-names>DW</given-names>
+</string-name> (<year>2003</year>) <article-title>Relationship betweenallele and excitatory amino acid levels after traumatic brain injury</article-title>. <source>Crit Care Med</source>
+<volume>31</volume>, <fpage>2371</fpage>–<lpage>2379</lpage>.<pub-id pub-id-type="pmid">14501969</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1097/01.CCM.0000080484.72004.C4</pub-id></mixed-citation></ref><ref id="ref087"><label>[87]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Sweet</surname>
+<given-names>RA</given-names>
+</string-name>, <string-name name-style="western">
+<surname>MacDonald</surname>
+<given-names>ML</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kirkwood</surname>
+<given-names>CM</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ding</surname>
+<given-names>Y</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Schempf</surname>
+<given-names>T</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Jones-Laughner</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Kofler</surname>
+<given-names>J</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Ikonomovic</surname>
+<given-names>MD</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Lopez</surname>
+<given-names>OL</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Garver</surname>
+<given-names>ME</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Fitz</surname>
+<given-names>NF</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Koldamova</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Yates</surname>
+<given-names>NA</given-names>
+</string-name> (<year>2016</year>) <article-title>Apolipoprotein E*4 (APOE*4) genotype is associated with altered levels of glutamate signaling proteins and synaptic coexpression networks in the prefrontal cortex in mild to moderate Alzheimer disease</article-title>. <source>Mol Cell Proteomics</source>
+<volume>15</volume>, <fpage>2252</fpage>–<lpage>2262</lpage>.<pub-id pub-id-type="pmid">27103636</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1074/mcp.M115.056580</pub-id><pub-id pub-id-type="pmcid">PMC4937502</pub-id></mixed-citation></ref><ref id="ref088"><label>[88]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Boehm-Cagan</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Michaelson</surname>
+<given-names>DM</given-names>
+</string-name> (<year>2014</year>) <article-title>Reversal of-driven brain pathology and behavioral deficits by bexarotene</article-title>. <source>J Neurosci</source>
+<volume>34</volume>, <fpage>7293</fpage>–<lpage>7301</lpage>.<pub-id pub-id-type="pmid">24849361</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.1523/JNEUROSCI.5198-13.2014</pub-id><pub-id pub-id-type="pmcid">PMC6608187</pub-id></mixed-citation></ref><ref id="ref089"><label>[89]</label><mixed-citation publication-type="journal">
+<string-name name-style="western">
+<surname>Boehm-Cagan</surname>
+<given-names>A</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bar</surname>
+<given-names>R</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Liraz</surname>
+<given-names>O</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Bielicki</surname>
+<given-names>JK</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Johansson</surname>
+<given-names>JO</given-names>
+</string-name>, <string-name name-style="western">
+<surname>Michaelson</surname>
+<given-names>DM</given-names>
+</string-name> (<year>2016</year>) <article-title>ABCA1 agonist reverses the-driven cognitive and brain pathologies</article-title>. <source>J Alzheimers Dis</source>
+<volume>54</volume>, <fpage>1219</fpage>–<lpage>1233</lpage>.<pub-id pub-id-type="pmid">27567858</pub-id>
+<pub-id pub-id-type="doi" assigning-authority="pmc">10.3233/JAD-160467</pub-id></mixed-citation></ref></ref-list></back></article></pmc-articleset>

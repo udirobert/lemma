@@ -1,0 +1,594 @@
+ARTICLEVolume 42, Issue 10113183October 31, 2023Open Access
+Download Full Issue
+ApoE4-dependent lysosomal cholesterol accumulation impairs mitochondrial homeostasis and oxidative phosphorylation in human astrocytes
+Hyein Lee1,9 ∙ Sukhee Cho1,9 ∙ Mi-Jin Kim2 ∙ … ∙ Younghoon Go6 Send email to gotra827@kiom.re.kr ∙ In-Kyu Lee2,3,4 Send email to leei@knu.ac.kr ∙ Jinsoo Seo1,10 Send email to jsseo@dgist.ac.kr … Show more
+Affiliations & Notes
+Article Info
+Download PDF
+Cite
+Share
+Set Alert
+Get Rights
+Reprints
+Download Full Issue
+Previous article
+Next article
+Show Outline
+Highlights
+•	
+Human ApoE4 astrocytes display increased glycolytic activity and reduced OXPHOS
+•	
+ApoE4 induces defective autophagy and mitochondrial dysfunction in human astrocytes
+•	
+Mitigating cholesterol burden restores mitochondrial respiration in ApoE4 astrocytes
+Summary
+Recent developments in genome sequencing have expanded the knowledge of genetic factors associated with late-onset Alzheimer’s disease (AD). Among them, genetic variant ε4 of the APOE gene (APOE4) confers the greatest disease risk. Dysregulated glucose metabolism is an early pathological feature of AD. Using isogenic ApoE3 and ApoE4 astrocytes derived from human induced pluripotent stem cells, we find that ApoE4 increases glycolytic activity but impairs mitochondrial respiration in astrocytes. Ultrastructural and autophagy flux analyses show that ApoE4-induced cholesterol accumulation impairs lysosome-dependent removal of damaged mitochondria. Acute treatment with cholesterol-depleting agents restores autophagic activity, mitochondrial dynamics, and associated proteomes, and extended treatment rescues mitochondrial respiration in ApoE4 astrocytes. Taken together, our study provides a direct link between ApoE4-induced lysosomal cholesterol accumulation and abnormal oxidative phosphorylation.
+Graphical abstract
+Keywords
+ApoE4
+human astrocytes
+mitophagy
+glucose metabolism
+lysosomal cholesterol accumulation
+Research topic(s)
+CP: Metabolism
+CP: Cell biology
+Introduction
+Abnormal glucose metabolism is one of the major pathological features of Alzheimer’s disease (AD) and is observed in the early phase of disease progression.1 Apolipoprotein E (ApoE4) is a subtype of apolipoprotein that forms a lipoprotein complex with various lipids, including cholesterol. Of the three isoforms (ε2, ε3, and ε4), ε4 (APOE4) is well known as one of the strongest genetic risk factors for AD. Altered brain metabolism, especially increased aerobic glycolysis and impaired oxygen consumption in the brains of ApoE4 carriers, is suggested in studies from human plasma and humanized mouse models.2,3,4 However, the causal relationship between ApoE4 and altered glucose metabolism, its underlying mechanisms, and its contribution to AD pathogenesis remains elusive.
+Abnormalities in cholesterol homeostasis have gained much attention in ApoE4 research regarding its contribution to the onset of AD. Recent studies on human induced pluripotent stem cells (iPSCs) with the APOE4 variant showed altered transcriptomic and metabolomic profiles toward the accumulation of cholesterol in glia, such as astrocytes and oligodendrocytes.5,6,7 This phenotypic abnormality is especially intriguing because the accumulation of cholesterol in cells disrupts the function of intracellular membranous compartments, including lysosomes, which are important for the homeostasis of mitochondria, essential organelles for energy metabolism.
+Here, we asked whether human astrocytes, a major source of ApoE, display altered glucose metabolism in the presence of APOE4, and its underlying mechanisms using APOE4-carrying AD patient-derived iPSCs and isogenic cells harboring APOE3 alleles. We found significantly increased glycolysis and reduced mitochondrial respiration in ApoE4 astrocytes. Increased levels of mitochondrial reactive oxygen species (ROS), accumulation of circular mitochondria, and impaired lysosomal activity suggest impaired mitophagy and subsequent accumulation of dysfunctional mitochondria in ApoE4 astrocytes. We further showed that mitigating lysosomal cholesterol accumulation is sufficient to resolve these abnormalities. Together, our study elucidates the impact of ApoE4 on mitochondrial homeostasis and metabolic phenotypes in human astrocytes, which contributes to a better understanding of the pathogenesis of AD.
+Results
+Generation of isogenic APOE hiPSCs-derived astrocytes
+To precisely investigate the effects of ApoE4-induced cholesterol accumulation in human astrocytes, we utilized AD patient-derived iPSCs and isogenic cells, in which the sequence for ApoE4 in the APOE gene was converted to ApoE3 by CRISPR-Cas9 genome editing5 (Figure S1A). These iPSCs were subjected to differentiation into astrocytes, as previously described,8 followed by fluorescence-activated cell sorting (FACS) based on glutamate-aspartate transporter (GLAST) expression (Figure S1B). The identity of human iPSC (hiPSC)-derived astrocytes was confirmed by immunostaining based on the expression profiles of astrocyte-specific proteins (AQP4, ALDH1L1, S100β, and GFAP) (Figures S1C and S1E). Fetal bovine serum (FBS) was only included in astrocyte culture media to expand cells and was withdrawn at least 4 days before the experiments (Figure S1D). Consistent with previous observations, ApoE4 astrocytes displayed reduced levels of ApoE and impaired Aβ clearance compared with ApoE3 astrocytes5 (Figures S1F and S1G). These data show the successful generation of human ApoE3 and ApoE4 astrocytes.
+Altered glucose metabolism toward enhanced aerobic glycolysis in ApoE4 astrocytes
+To determine whether the APOE4 variant affects glucose metabolic profiles in human astrocytes, we performed a Seahorse metabolic analysis. We first measured the extracellular acidification rate (ECAR) in ApoE3 and ApoE4 hiPSC-derived astrocytes to determine their glycolytic activity. Consistent with previous data from mouse models and humanized mouse cell lines,4,9 we observed an increase in ECAR upon glucose treatment in ApoE4 astrocytes compared with that in ApoE3 astrocytes, suggesting enhanced glycolysis (Figures 1A and 1B). Glycolytic capacity and glycolytic reserve, measured by sequential treatment with oligomycin and 2-deoxy-D-glucose (2-DG), were also shown to be increased in ApoE4 astrocytes (Figures 1A, 1C, and 1D). An additional bioluminescent assay (Lactate-Glo) was performed to quantify lactate levels by assessing NADH production in the presence of lactate dehydrogenase (LDH), and the results confirmed an increase in lactate release from ApoE4 astrocytes compared with their isogenic cells (Figure 1E). We further investigated the effects of ApoE4 on the metabolic flux in hiPSC-derived astrocytes by tracing 13C-labeled glucose (Figure 1F). We observed an increased fraction of m+3 lactate in ApoE4 astrocytes compared with that in ApoE3 astrocytes, indicating enhanced aerobic glycolysis in these cells (Figure 1G). We did not observe any change in the fractions of pyruvate and glycose-3-phosphate between ApoE3 and ApoE4 astrocytes (Figures 1H and 1I), but the m+5 and m+6 fractions of glucose-6-phosphate (Figure 1J) and fructose-6-phosphate (Figure S2A) were significantly reduced in ApoE4 astrocytes, suggesting the possibility of impaired glucose uptake. Although ApoE4 did not show altered fractional enrichment of TCA cycle intermediates, glutamate and aspartate synthesis from the TCA cycle was affected (Figures S2B–S2H). Taken together, these data suggest that ApoE4 alters glucose metabolism toward enhanced aerobic glycolysis.
+Figure 1 Enhanced aerobic glycolysis in ApoE4 hiPSC-derived astrocytes
+Show full captionFigure viewer
+Impaired mitochondrial respiration with increased ROS in ApoE4 astrocytes
+Although aerobic glycolysis is required for acute activity-dependent energy demands in the brain, mitochondrial respiration is a more sustainable and efficient glucose-utilizing energy production process. The oxygen consumption rate assay showed a significantly reduced basal respiration rate in ApoE4 astrocytes compared with that in ApoE3 astrocytes (Figures 2A and 2B). Maximal respiration by FCCP-induced inner mitochondrial membrane depolarization was also decreased in ApoE4 astrocytes, suggesting inefficient energy generation. A significant reduction in ATP-linked respiration indicated that basal respiration was not efficiently coupled with ATP synthesis in ApoE4 astrocytes. The reserve capacity was also significantly reduced in these cells (Figures 2A and 2C–2E). Taken together, these data indicate that ApoE4 impairs mitochondrial oxidative phosphorylation (OXPHOS) in human astrocytes. Mitochondrial dysfunction is often associated with increased mitochondrial ROS levels. Indeed, a higher intensity of MitoSOX signals, indicating an increased level of ROS in mitochondria (Figures 2F–2H), was observed in ApoE4 astrocytes compared with that in isogenic ApoE3 cells. Increased ROS levels induced by ApoE4 were also detected in another isogenic pair derived from a healthy individual with the APOE3 genotype (Figures S3A and S3B). To associate the changes in transcriptome profiles by ApoE4 with glucose metabolic alterations in astrocytes, we analyzed RNA sequencing (RNA-seq) data previously generated from the same cell lines used in this study5 and determined differential expression patterns of genes related to glycolysis or OXPHOS provided by gene set enrichment analysis (GSEA).10,11 We found that many genes associated with glycolysis and OXPHOS were regulated by ApoE4 (highlighted in green in Figure 2I). While a relatively equal number of genes involved in glycolysis were being either up- or downregulated, the transcripts of most of the genes associated with OXPHOS were downregulated (Figure 2J). These data suggest the contribution of transcriptional regulation in glucose metabolism in ApoE4 astrocytes.
+Figure 2 Impaired mitochondrial respiration with increased ROS in ApoE4 astrocytes
+Show full captionFigure viewer
+To validate the ApoE4-dependent elevation in glycolysis and impaired OXPHOS in astrocytes, we subjected KOLF2.1J iPSCs recently claimed as a reference hiPSC line12 and its isogenic ApoE4 iPSCs generated from the Jackson Laboratory to Seahorse metabolic analysis and MitoSOX staining. Consistently, we observed an ApoE4-dependent increase in glycolytic activity and reduced OXPHOS along with enhanced levels of MitoSOX in this isogenic pair (Figures S4A–S4I).
+Impacts of altered glycolytic activity by ApoE4 in astrocytes
+We next asked whether altered glycolytic activity by ApoE4 affects stimuli-induced glycolysis in astrocytes using the fluorescence resonance energy transfer (FRET)-based lactate sensor Laconic13 (Figure S5A). Lactate is known to be produced by glycolysis of astrocytes upon neuronal activation and then transferred to and used by neurons for their high energy requirement. We observed a transient increase in lactate levels in both ApoE3 and ApoE4 astrocytes upon glutamate treatment, which mimics neuronal activation (Figure S5B). Although we did not find the difference in the effect of APOE genotype on total levels of lactate synthesis, a statistically significant interaction effect between time and genotypes (two-way ANOVA, time × genotype interaction: p < 0.05) was observed due to a relatively sharp transient increase followed by the slow decay of lactate synthesis upon glutamate stimulation in ApoE4 astrocytes (Figure S5C). A recent study reported metabolic reprogramming toward an increase in glycolysis in microglia upon Aβ treatment accompanied by inflammatory responses.14 We found that Aβ also induces an increase in glycolytic activity in hiPSC-derived astrocytes (Figure S5D). Unlike glutamate treatment, Aβ-induced lactate synthesis tends to increase with time. We did not observe the difference in Aβ-induced lactate synthetic activity in ApoE4 astrocytes compared with in ApoE3 astrocytes and the interaction effect between time and genotypes (Figures S5D and S5E). These data suggest a potential alteration in glycolysis of ApoE4 astrocytes in response to glutamate, the major excitatory neurotransmitter.
+Impaired autophagy flux in ApoE4 astrocytes
+Damaged mitochondria with increased ROS levels are eliminated through an autophagy-mediated mitochondrial degradation process called mitophagy. The abnormal accumulation of high-ROS mitochondria allowed us to investigate autophagic activity in ApoE4 astrocytes. First, we examined the colocalization of lysosomes and mitochondria by staining with LysoTracker and MitoTracker. We repeatedly observed an increased lysosomal area, although the mitochondrial area was indistinguishable in ApoE4 astrocytes compared with ApoE3 cells (Figures 3A–3C). The significantly increased colocalization of lysosomes and mitochondria found in ApoE4 astrocytes was likely due to lysosomal dysfunction, suggesting impaired lysosome-dependent mitochondrial degradation in these cells (Figures 3A and 3D). To further address whether ApoE4 induces lysosomal abnormalities in hiPSC-derived astrocytes, we measured the size and activity of lysosomes in ApoE3 and ApoE4 hiPSC-derived astrocytes. We observed an increase in the size of lysosomes in ApoE4 astrocytes (Figures 3E and 3F). We also observed that ApoE4 increased the intensity of LysoTracker, which is positively associated with lysosomal activity (Figure 3G). To further investigate lysosomal dysregulation, we measured the activity of cathepsin B, a lysosomal protease. Consistent with LysoTracker staining, ApoE4 astrocytes displayed an approximately 50% increase in cathepsin B activity compared with ApoE3 astrocytes (Figure 3H). These data indicated ApoE4-dependent dysregulation of lysosomes in hiPSC-derived astrocytes. We then determined autophagic activity in ApoE3 and ApoE4 hiPSC-derived astrocytes by staining with p62, an autophagy substrate, and LC3, a component of autophagosomes widely used as markers to measure autophagic activity. We observed that both p62 and LC3 levels were significantly increased in ApoE4 astrocytes compared with those in ApoE3 astrocytes (Figures 3I–3K), suggesting abnormal accumulation of autophagosomes (increased LC3 levels) by impaired autolysosomal degradation (increased p62 levels) in ApoE4 astrocytes. RFP-GFP-tandem fluorescent LC3 was expressed in hiPSC-derived astrocytes to directly confirm the altered autophagic activity. We observed increased autophagosomes (RFP and GFP) and decreased autolysosomes (RFP only) in ApoE4 astrocytes compared with ApoE3 astrocytes, indicating impaired autophagy flux (Figures 3L–3O).
+Figure 3 Lysosomal dysfunction and impaired autophagic activity in ApoE4 astrocytes
+Show full captionFigure viewer
+ApoE4-dependent lysosomal cholesterol accumulation impairs autophagic activity and mitochondrial homeostasis in human astrocytes
+Cholesterol accumulation in lysosomes has been shown to impair lysosomal functions, including autophagy-mediated mitochondrial degradation, in various pathological conditions, including Niemann-Pick disease type C.15,16 Therefore, we assessed cholesterol accumulation in the lysosomes of ApoE4 hiPSC-derived astrocytes using the autofluorescent cholesterol-binding compound filipin III along with LysoTracker to label lysosomes. As previously reported,5,17 we found a significant accumulation of cholesterol in ApoE4 astrocytes compared with ApoE3 astrocytes (Figures 4A and 4B), which was predominantly observed in lysosomes (Figures 4A and 4C). We next investigated whether the rescue of lysosomal cholesterol levels could attenuate the autophagic activity deficit. We were able to mitigate lysosomal cholesterol accumulation in ApoE4 hiPSC-derived astrocytes with a 4-day treatment of 100 μM methyl-β-cyclodextrin (MβCD), the cholesterol chelating agent known to be effective in reducing lysosomal cholesterol (Figures 4D and 4E).18,19 MβCD-treated ApoE4 astrocytes also displayed a reduced LysoTracker area in cells comparable to that in ApoE3 astrocytes without disrupting the integrity of the lipids on the plasma membrane measured by time-of-flight secondary ion mass spectrometry (ToF-SIMS) (Figures S6B–S6E). We further observed restoration of lysosomal activity, as indicated by the mitigated intensity of LysoTracker after lysosomal cholesterol depletion (Figures 4D and 4F). Simvastatin treatment also normalized ApoE4-dependent increases in lysosomal cholesterol accumulation and LysoTracker-positive areas in astrocytes (Figures 4G–4I). We then determined the autophagy flux of ApoE4 astrocytes treated with MβCD. We observed the restoration of autolysosomes and autophagosome areas in ApoE4 astrocytes with MβCD treatment, suggesting normalized autophagy flux (Figures 5A–5D). To further confirm this observation, we utilized another ApoE3/ApoE4 isogenic astrocytes. As shown in Figures 3L–3O, ApoE4 astrocytes displayed impaired autophagy flux compared with their isogenic ApoE3 cells, and this effect was attenuated by MβCD treatment (Figures S6F–S6I). To determine whether impaired autophagic activity alters mitochondrial homeostasis in ApoE4 astrocytes, we performed electron microscopy for ultrastructural analysis of the mitochondria (Figure 5E). We were able to determine that the area of individual mitochondria was significantly increased in ApoE4 astrocytes (Figure 5F). Furthermore, mitochondria in ApoE4 astrocytes were more circular and less complex, although there was no difference in perimeter compared with those in ApoE3 astrocytes (Figures 5G–5J). We then examined the effect of cholesterol depletion by MβCD on the mitochondrial structure of ApoE4 hiPSC-derived astrocytes. All mitochondrial structural abnormalities observed in ApoE4 astrocytes were completely restored by MβCD treatment (Figures 5E–5J).
+Figure 4 ApoE4-dependent lysosomal cholesterol accumulation impairs autophagic activity and mitochondrial homeostasis in human astrocytes
+Show full captionFigure viewer
+Figure 5 Mitigating lysosomal cholesterol accumulation restores autophagy flux and mitochondrial abnormality in ApoE4 hiPSC-derived astrocytes
+Show full captionFigure viewer
+Abnormal mitochondrial respiration, but not glycolytic activity, was restored by lysosomal cholesterol depletion in ApoE4 astrocytes
+We then asked whether lysosomal cholesterol depletion and autophagic activity restoration are sufficient to normalize glucose metabolism in ApoE4 astrocytes. We treated ApoE4 astrocytes with MβCD (4 days), and cells were subjected to Seahorse extracellular analysis for ECAR and oxygen consumption rate (OCR) measurement. We found that 4 days of MβCD treatment was insufficient to restore both glycolytic activity and OXPHOS in ApoE4 astrocytes (Figures S6J and S6K). The half-life of mitochondria is known to be a couple of weeks in several cell types,20,21,22 although their half-life in astrocytes is unknown. Therefore, we tested whether extended treatment of MβCD is required to restore metabolic abnormalities in ApoE4 astrocytes. Indeed, we observed that 14 days of MβCD treatment restored mitochondrial respiration. However, the extended treatment failed to normalize glycolytic activity in ApoE4 astrocytes (Figures 5K–5O), suggesting that ApoE4-induced enhancement of glycolytic activity might be cholesterol independent.
+Proteomic analysis confirmed the effects of cholesterol accumulation on mitophagy activity in ApoE4 astrocytes
+To determine the impact of cholesterol mitigation in ApoE4 astrocytes on proteome levels, we performed proteomic analysis of ApoE3, ApoE4, and short-term MβCD-treated ApoE4 astrocytes. We found that 254 proteins were downregulated and 238 proteins were upregulated in ApoE4 astrocytes compared with those in ApoE3 astrocytes. Moreover, a statistically significant number of proteins in the list were restored by MβCD treatment (16 out of 254 downregulated, p = 1.3−14, 34 out of 238 upregulated, p = 6.01−36) (Figure 6A; Table S1). Pathway analysis predicted abnormalities in various signaling pathways in ApoE4 astrocytes. Many of these pathways, including those related to autophagy and protein degradation, were normalized by MβCD treatment (Figure 6B). But consistent with the Seahourse analysis (Figures S6J and S6K), an alteration in glucose metabolism-associated pathways was not restored by short-term MβCD treatment (Figure S6L). The analysis of differentially expressed proteins further confirmed the rescue of a subset of proteins related to “mitophagy” and “metabolic pathways” (Figure 6D).
+Figure 6 Proteomic analysis confirmed the effects of cholesterol accumulation on mitophagy activity in ApoE4 astrocytes
+Show full captionFigure viewer
+Discussion
+In this study, we found that ApoE4, which greatly increases the risk of AD and lowers the age of onset, leads to abnormal glucose metabolism toward enhanced glycolysis and reduces mitochondrial respiration in human astrocytes. ApoE4 astrocytes display lysosomal dysfunction and impaired autophagic activity, leading to the accumulation of damaged and high-ROS mitochondria. Several previous studies reported4,9,23 altered glucose metabolism, dysregulated lipid homeostasis, and lysosomal/autophagosomal impairments by ApoE4 in various cell types, including neurons and astrocytes. However, none of these studies attempted to provide the causality among these pathological features and to restore the defects by ApoE4, especially in human astrocytes. Here, by mitigating the intracellular accumulation of cholesterol, especially in lysosomes, we restore autophagic activity and mitochondrial homeostasis in ApoE4 astrocytes. Thus, we provide strong evidence associating cholesterol dysregulation and autophagic defects causing the accumulation of dysfunctional mitochondria in astrocytes by ApoE4.
+In the human brain, aerobic glycolysis is associated with the neuronal developmental stage, which gradually decreases with age, whereas glucose usage for mitochondrial OXPHOS is relatively sustained.24 Thus, the detrimental effects of impaired mitochondrial respiration in ApoE4 astrocytes could be magnified in the later stages of life when the transition of metabolic dependency of the brain from aerobic glycolysis to mitochondrial respiration occurs. This transition can trigger the development of pathology by ApoE4 in astrocytes due to impaired mitochondrial function, limited metabolic supply, and accumulation of oxidative stress. Indeed, human studies have shown that impaired cognitive performance in ApoE4 carriers is prominent after middle age.25,26 Pathological changes in AD brains precede the onset of clinical symptoms, and one of the first alterations, along with Aβ accumulation, is dysfunctional glucose metabolism.1,27,28 Therefore, understanding how brain metabolism becomes dysfunctional in AD pathogenesis will open a window of opportunity for drug targeting and early diagnosis, and our data identify a possible contribution of ApoE4 to this process.
+Accumulating data suggest an association between glycolysis and AD. Lactate levels in the interstitial fluid were higher in patients than those in unaffected individuals.29 Proteomics of AD brains revealed strong upregulation of glial proteins associated with glucose metabolism.30 Further studies are needed to determine the effect of upregulated aerobic glycolysis on the onset of AD and whether it precedes other AD-related pathologies. Increased levels of lactate have also been shown to be correlated with neuronal network activity, as the astrocyte-neuron lactate shuttle is known to regulate neuronal activity.31 High lactate levels were detected in the brain area, the so-called default network, a set of brain areas spontaneously coactivated across time in the resting state, and showed a strong correlation with the Aβ deposit area in AD brains.32,33 Young ApoE4 carriers showed increased brain activity in default network regions, as well as in the hippocampus and the temporal lobe, possibly due to increased aerobic glycolysis.34,35 It is also important to note that increased acidification was shown to trigger Aβ aggregation,36 suggesting an additional contribution of extracellular acidification by enhanced glycolytic activity in ApoE4 astrocytes to Aβ accumulation in the brain.
+By measuring lactate synthesis in real time using the FRET-based lactate sensor Laconic, we provide evidence that ApoE4 may impair the physiological functions of astrocytes, especially those associated with glycolytic activity. Astrocytes transport lactate to neurons, and it is converted to pyruvate and subsequently oxidized to produce energy in response to neuronal activity. Inhibition of astrocyte-specific glycolysis or astrocyte-neuron lactate shuttles was shown to impair long-term memory formation in mice.37 Another study reported that inhibiting lactate transfer from astrocytes to neurons abolished hippocampal and cortical synaptic plasticity under stress conditions in mice.38 As we observed a slow decay of glutamate-induced lactate synthesis in ApoE4 astrocytes, further studies are required to determine whether activity-induced lactate supply to neurons and associated cognitive behavior are affected by ApoE4 astrocytes in vivo. Similar to previous observations in microglia,14 we found that Aβ also induces lactate synthesis in astrocytes. As increased glycolytic activity in microglia upon Aβ stimulation was shown to be associated with their inflammatory functions, it would be necessary to address whether increased Aβ-dependent lactate synthesis by ApoE4 alters immune response in astrocytes.
+Taken together, our study demonstrating the detrimental effects of astrocyte ApoE4 in glucose metabolism and mitochondria fitness suggests contributions of ApoE4 in AD pathogenesis and provides an explanation of the impact of ApoE4 on later stages of life.
+Limitations of the study
+First, as including serum in astrocyte culture media is critical for the proliferation of cells after differentiation from hiPSCs, we cultured cells in the presence of serum. Before each experiment, astrocytes were serum deprived for 4 days to minimize the undesirable effect on cells. Although every batch of hiPSC-derived astrocytes was subjected to the validation of their resting state by the treatment of immune stimuli such as polyinosinic-polycytidylic acid after serum deprivation, it is still possible that early exposure of astrocytes to serum induces the changes in the transcriptome, morphology, and function compared with those from cells that never encountered serum. Second, by mitigating cholesterol accumulation, we could rescue autophagic activity and resolve abnormal accumulation of dysfunctional mitochondria in ApoE4 astrocytes; however, enhanced glycolytic activity was not fully restored even after long-term restoration of lysosomal cholesterol accumulation in ApoE4 astrocytes (Figure 5K). Increased cholesterol levels can be caused by enhanced glycolysis and the subsequent synthesis of acetyl-CoA, a source of cholesterol synthesis,39 which could lead to lysosomal dysfunction and impaired mitochondrial homeostasis (Figure 5K). Whether ApoE4-induced enhancement in glycolytic activity precedes and leads to cholesterol accumulation or whether this abnormality is cholesterol independent is to be addressed by future studies. Lastly, although this study suggests that cholesterol-dependent mitophagy impairment causes mitochondrial dysfunction, it is possible that other adverse effects of disrupted lysosomal function by cholesterol could indirectly lead to mitochondrial dysfunction. Finally, while increased circular forms of mitochondria in ApoE4 astrocytes observed by electron microscopy suggested accumulation of dysfunctional mitochondria, it did not provide direct evidence of ApoE4-induced perturbation of mitochondrial biogenesis or turnover and its causal relationship with metabolic abnormality.
+STAR★Methods
+Key resources table
+REAGENT or RESOURCE	SOURCE	IDENTIFIER
+Antibodies
+Anti-AQP4 antibody	Sigma-Aldrich	Cat#SAB5200112
+Anti-ALDH1L1 antibody (YY8)	Santa Cruz Biotechnology	Cat#sc-100497, RRID:AB_2224180
+Anti-S100β antibody	Abcam	Cat#ab868, RRID:AB_306716
+Anti-GFAP antibody	Abcam	Cat#ab53554, RRID:AB_880202
+Anti-ApoE antibody	Abcam	Cat#ab52607, RRID:AB_867704
+Anti-p62 antibody	Abcam	Cat#ab56416, RRID:AB_945626
+Anti-LC3B antibody	Novus	Cat#NB100-2220, RRID:AB_10003146
+Chemicals, peptides, and recombinant proteins
+mTeSR1	STEMCELL Technologies	Cat#85850
+hESC-qualified matrigel	Corning	Cat#356277
+Astrocyte Medium	ScienCell	Cat#1801
+DPBS	Biowest	Cat#L0615-500
+Donkey serum	Merck	Cat#S30-100ML
+Fluorescence Mounting Medium	DAKO	Cat#S3025
+Amyloid-beta (1–42) Human	AnaSpec	Cat#AS-20276-5
+AEBSF	Thermo Fisher Scientific	Cat#78431
+XFe96 cell culture plate	Agilent Technologies	Cat#4103794-100
+XF DMEM medium	Agilent Technologies	Cat#103575-100
+Seahorse XF Glucose Solution	Agilent Technologies	Cat#103577-100
+Seahorse XF Pyruvate Solution	Agilent Technologies	Cat#103578-100
+Seahorse XF Glutamine Solution	Agilent Technologies	Cat#103579-100
+Oligomycin	Sigma-Aldrich	Cat#75351
+2-Deoxy-D-glucose	Sigma-Aldrich	Cat#8375
+FCCP [carbonyl cyanide 4-(trifluoromethoxy)-phenylhydrazone]	Sigma-Aldrich	Cat#C2920
+Rotenone	Sigma-Aldrich	Cat#R8875
+[U-13C6] glucose	Sigma-Aldrich	Cat#660663
+MitoSOX	Invitrogen	Cat#M36008
+LysoTracker red DND-99	Thermo Fisher Scientific	Cat#L7528
+MitoTracker Green FM	Thermo Fisher Scientific	Cat#M7514
+ProteaseMAX	Promega	Cat#V2071
+Trypsin Lys-C mixture	Promega	Cat#V5071
+Trifluoroacetic acid	Thermo Fisher Scientific	Cat#28904
+C18 spin column	Thermo Fisher Scientific	Cat#89870
+Critical commercial assays
+Amyloid-beta 42 Human ELISA kit	Thermo Fisher Scientific	Cat#KHB3442
+Lactate-Glo assay kit	Promega	Cat#J5021
+Lysosomal activity assay (Cathepsin B)	BioVision	Cat#K140-100
+Cholesterol staining kit (Filipin III)	BioVision	Cat#K587
+Deposited data
+RNA-seq data from hiPSC-derived astrocytes	Lin et al.5	GEO: GSE102956
+Proteome from ApoE3 astrocytes, ApoE4 astrocytes and MβCD-treated ApoE4 astrocytes	In this study	PRIDE repository: PXD045298
+Experimental models: Cell lines
+Human iPSC line from a healthy control (APOE3)	Coriell	Cat# AG09173
+APOE4 isogenic line from #AG09173	Tsai Laboratory (Lin et al.)5	N/A
+Human iPSC line from a sAD patient (APOE4)	Coriell	Cat# AG10788
+APOE3 isogenic line from #AG10788	Tsai Laboratory (Lin et al.)5	N/A
+Human iPSC line from a healthy control (APOE3)	The Jackson Laboratory	Cat#JIPC1000
+APOE4 isogenic line from #JIPC1000	The Jackson Laboratory	Cat#JIPC1150
+Recombinant DNA
+ptfLC3	Addgene	Cat#21074, RRID:Addgene_21074
+Laconic/pcDNA3.1(−)	Addgene	Cat#44238, RRID:Addgene_44238
+Software and algorithms
+Proteome Discoverer	Thermo Fisher Scientific	RRID:SCR_014477
+Prism 9	GraphPad	RRID:SCR_002798
+Seahorse Wave	Agilent Technologies	RRID:SCR_014526
+DAVID	LHRI	RRID:SCR_001881
+Open table in a new tab
+Resource availability
+Lead contact
+Further requests for the resources and reagents should be directed to and will be fulfilled by the lead contact, Jinsoo Seo (jsseo@dgist.ac.kr).
+Materials availability
+All unique materials and reagents will be available from the lead contact with a completed materials transfer agreement upon reasonable request.
+Experimental model and study participant details
+iPSCs lines
+Three ApoE3 and ApoE4 isogenic iPSCs pairs were used to determine the effect of APOE4 genotype without inter-donor variability.5,12,40 Specifically, the sporadic AD iPSC carrying the APOE4 allele was obtained from the Coriell Institute (#AG10788, female, age 87), and the ApoE3 isogenic iPSC line was generated by the CRISPR/Cas9 genome editing 5. Another isogenic pair was generated from the Coriell Institute’s fibroblast line derived from a healthy individual (#AG09173, female, age 75) by Dr. Yankner’s Laboratory at Harvard Medical School.5,40 We also utilized ‘a reference hiPSC line (KOLF2.1J_#JIPC1000)’ selected by the iPSC Neurodegenerative Disease Initiative (iNDI) from the NIH’s Center for Alzheimer’s and Related Dementias (CARD) and distributed by the Jackson Laboratory,12 and isogenic ApoE4 line (#JIPC1150).
+Method details
+Astrocyte differentiation from iPSCs
+iPSCs were cultured on hESC-qualified matrigel (Corning) in mTeSR1 media (Stemcell) until they reached 100% confluence, then differentiated into neural progenitor cells (NPCs) with neural induction media as previously described.5 After validating the identity of NPCs by immunostaining with anti-SOX-2 and Nestin antibodies, they were further differentiated into astrocytes with Astrocyte Medium (ScienCell) as described previously.8 Because having FBS in astrocyte culture media was known to make astrocytes more proliferative, we only included FBS in astrocyte culture media for expanding cells after the differentiation process and withdrew at least 4 days before the experiments.
+Immunocytochemistry
+Astrocytes were plated on glass coverslips, and experiments were performed after at least 24 h recovery. Cells were rinsed three times with DPBS and incubated in 4% paraformaldehyde for 10 min for fixation. Following washing three times with DPBS, astrocytes were incubated with a blocking solution (0.1% Triton X-100, 10% donkey serum, 2% BSA, and 1M glycine in PBS) for 1 h at room temperature. Primary antibodies were diluted in a blocking solution to incubate for 1–2 h at room temperature. After washing cells three times with 0.1% Triton X-100 in DPBS for 5 min, appropriate secondary antibodies that are conjugated with fluorophore were diluted in a blocking solution and incubated for 1 h at room temperature. Coverslips were mounted with DAKO mounting media (Agilent) after washing three times with 0.1% Triton X-100 in DBPS. Images were acquired with the LSM 800 confocal microscope (Zeiss).
+Aβ clearance assay
+Astrocytes were seeded on 96-well plates at a density of 1 × 104 cells/well. The day after plating cells, the medium was replaced with a fresh medium containing 250 ng/mL oligomeric amyloid-beta 1–42 (AnaSpec) in each well (including an empty well as a control one). Following incubation for 48 h, the medium was collected, and AEBSF was added to each sample to stabilize Aβ at a final concentration of 1 mM. Aβ42 levels in the medium were analyzed using an Amyloid-beta 42 Human ELISA kit (Invitrogen) according to the manufacturer’s instructions. The absorbance of each well was detected with SpectroMax plus 384 (Molecular Devices) at 450 nm wavelength, and the uptake level was calculated by subtracting from the value of blank control.
+Seahorse extracellular analysis
+Astrocytes were plated on XFe96 cell culture plates (Agilent Technologies) the day before analysis. On the day of the experiment, the media was changed to XF assay medium (XF DMEM medium (Agilent Technologies) supplemented with 10 mM glucose (Agilent Technologies), 1 mM pyruvate (Agilent Technologies), and 2 mM glutamine (Agilent Technologies) for cell mito stress test; XF DMEM medium supplemented with 2mM glutamine for glycolysis stress test) and incubated in a non-CO2 incubator for 30 min. After preparing reagents for the assay, plates were loaded in the XFe96 Extracellular Flux Analyzer (Agilent Technologies) to measure the extracellular acidification rate (ECAR) and oxygen consumption rate (OCR). Baseline measurements were collected 3 times, and ECAR or OCR was recorded as drugs were injected sequentially [ECAR: glucose (10 mM, Sigma-Aldrich), oligomycin (1 μM, Sigma-Aldrich), 2DG (2-Deoxy-D-glucose) (50 mM, Sigma-Aldrich)], [OCR: oligomycin (1 μM, Sigma-Aldrich), FCCP (carbonyl cyanide 4-(trifluoromethoxy)-phenylhydrazone) (1 μM, Sigma-Aldrich), and rotenone (1 μM, Sigma-Aldrich)]. Glycolytic and OXPHOS parameters were calculated using Seahorse software as described in the following. ECAR: glycolysis = (maximum rate measurement before oligomycin injection) − (last rate measurement before glucose injection), glycolytic capacity = (maximum rate measurement after oligomycin injection) − (last rate measurement before glucose injection), glycolytic reserve = (glycolytic capacity) − (glycolysis); OCR: basal respiration = (last rate measurement before first injection) − (non-mitochondrial respiration rate), maximal respiration = (maximum rate measurement after FCCP injection) − (non-mitochondrial respiration), ATP-linked respiration = (last rate measurement before oligomycin injection) − (minimum rate measurement after oligomycin injection), reserve capacity = (maximal respiration) − (basal respiration). At the end of the experiment, cell number was measured with DAPI staining to normalize the value using ImageXpress Micro Confocal (Molecular Devices).
+Lactate-glo assay
+To directly measure secreted lactate levels from astrocytes, the Lactate-Glo assay kit (Promega) was used according to the manufacturer’s instructions. In brief, astrocytes were seeded at a density of 1 × 104 cells/well in 96-well plates. After changing the medium for fresh, the conditioned media were harvested at each time point and diluted 1:100 in DPBS. Luminescence detection was performed using microplate reader SpectroMax plus 384 (Molecular Devices).
+Metabolic flux analysis
+Astrocytes were washed glucose-free astrocyte medium (ScienCell). Then they incubated with the tracer, 5.5 mM [U-13C6] glucose (Sigma-Aldrich), astrocyte medium for 4 h. The cells were washed with 3 mL ice-cold 0.9% NaCl twice and then collected in Eppendorf tubes and were resuspended in 200 μL of ice-cold metabolite extraction solution (chloroform:methanol:water 1:3:1, v/v) and then sonicated. After incubation on ice for 30 min, the samples were collected by centrifugation at 13,000 rpm for 20 min. All the samples were lyophilized and re-suspended in 200 μL of water containing 0.1% formic acid prior to LC-MS/MS analysis.41 All metabolic samples were acquired and analyzed by LCMS-8060 (Shimadzu).
+MitoSOX staining
+Cells were stained with 5 μM MitoSOX (Invitrogen) for 10 min in an incubator, followed by washing with AM media twice. Live imaging was performed with the LSM 800 confocal microscope.
+RNA-seq data analysis
+Previously generated RNA-seq data from isogenic astrocytes used in this study5 were analyzed to compare genes associated with glycolysis or OXPHOS [200 genes for both glycolysis ‘HALLMARK_GLYCOLYSIS’ and OXPHOS ‘HALLMARK_OXIDATIVE PHOSPHORYLATION’ based on ‘Gene Set Enrichment Analysis’ provided by UCSD and the Broad Institute (https://www.gsea-msigbd.org/gsea/index.jsp)] and differential expressed genes between ApoE3 and ApoE4 astrocytes.
+Förster resonance energy transfer (FRET)-based laconic activity measurement
+Laconic, an FRET-based lactate sensor13 (Addgene #44238) was transfected 1 day before the analysis. FRET between mTFP and Venus fused to LldR was measured by a photomultiplier tube (PMT)-based photometry system (Till Photonics GmbH). Regular pulses of indigo light (438 ± 12 nm) from a homemade LED-based monochromator excited the fluorescent proteins. Simultaneously, the emission, which passed through a 40×, NA 0.95 dry immersion objective lens (I×71; Olympus), was split into short (480 ± 40 nm) and long (535 ± 15 nm) wavelengths by a dichroic mirror (505DCLP) and band-pass filters (D480-40 for short wavelengths and ET535-30 for long wavelengths; Chroma Technology) and detected by two PMTs connected with an FDU-2 fluorescence detection unit (Till Photonics GmbH). The analog outputs were digitized by the data acquisition board (PCI-6221; National Instruments) at a sampling rate of 10 kHz and averaged. Then, FRETr was calculated by the following equation: FRETr = (VenusC − cFactor × mTFPC)/mTFPC.42 The numerator is the voltage output of the long-wavelength PMT minus calculated bleed-through from the donor, indicating excitation of acceptor by FRET, and the denominator is the voltage output of the short-wavelength PMT, indicating direct donor excitation by the light source. The bleed-through from mTFP to the long-band PMT was 0.45, and from Venus to short-band PMT, it was 0.02, which was ignored. Timing control, data acquisition, and real-time calculation of FRETr, including background compensation, were performed using an in-house program that also controlled the monochromator through the data acquisition interface. To calculate ΔFRETr in a time series, the average of 5-s points before drug (glutamate or Aβ) treatment was set to the initial value. Solution exchange for drug treatment was accomplished by a theta tube moved laterally by a step-driven motor (SF-77C; Warner Instruments) and was completed within 20 ms. The raw data were processed with Excel 2016 (Microsoft).
+Staining of live cell fluorescent organelle dyes
+Intracellular lysosomes and mitochondria were stained as previously described.43 Briefly, astrocytes were incubated with LysoTracker and MitoTracker (Thermo Fisher Scientific) in a final concentration (250 nM) for 30 min at 37°C. After removing dye-containing media, cells were washed with DPBS three times. Astrocytes were then fixed with 4% paraformaldehyde for 10 min and mounted on the coverslips with DAKO mounting media. Images were acquired with the LSM 800 confocal microscope immediately after fixation.
+Filipin III staining
+Astrocytes were fixed with 4% paraformaldehyde for 10 min and the cholesterol staining kit (BioVision) was used for filipin III staining as described previously.17 Briefly, cells were washed with assay buffer and incubated with filipin III staining solution for 1 h at room temperature. Images were acquired with the LSM 800 confocal microscope immediately after washing and mounting.
+Autophagy flux assay
+Transient transfection of ptfLC3 (plasmid encoding mRFP-GFP-MAP1LC3B, Addgene #21074) was performed with Lipofectamine Stem Transfection Reagent (Invitrogen) by following the manufacturer’s instruction. Transfected cells were fixed with 4% PFA after 24 h and imaged under the LSM 800 confocal microscope. The images were analyzed by quantifying the number of RFP puncta (autolysosome) and RFP/GFP colocalization puncta.
+Lysosomal activity assay (cathepsin B)
+The activity of cathepsin B in astrocytes was measured using a Fluorometric Assay kit (BioVision) according to the manufacturer’s protocol. Briefly, cells were dissociated with TrypLE and lysed on ice for 10 min. Supernatants were incubated with cathepsin B substrates (Ac-RR-AFC) at 37°C for 2 h and excitation/emission wavelength (400/505 nm) was measured using a fluorescent microplate reader.
+Time-of-flight secondary ion mass spectrometry (ToF-SIMS)
+All the sample preparation procedures were performed as described previously.43,44 After fixation with 10% formalin, cells were further fixed with 2% glutaraldehyde. Cells were washed twice with 150 mM ammonium acetate solution and then rinsed several times with distilled water. Then, cells were covered with graphene carefully and allowed to dry for 30 min. Using a plasma chamber (CUTE, Femto Science Inc.), air-plasma was treated to graphene-covered cells to remove graphene and organic impurities on the surface of samples at 1.1–1.3 Torr, 50 kHz, 100 W, and 70 sccm of air for 2 min. ToF-SIMS analysis was performed on a ToF-SIMS 5–100 instrument (ION-TOF) using a pulsed 30 keV Bi3+ primary ion beam in the delayed extraction mode with a primary ion dose of 3 × 1012 ions/cm2 for the positive ion ToF-SIMS images over a 500 × 500 μm2 area with 256 × 256 pixels. Internal mass calibration for all the ToF-SIMS spectra was conducted using the peaks of CH3+, Na+, C2H3+, C3H5+, and C27H45+ for the positive mode before further analysis. We acquired ToF-SIMS positive ion images of fragmented cholesterol a C7H11+ (m/z 95.10), phosphocholine at C5H15NPO4+ (m/z 184.09), sphingomyelin at C47H94N2O6P+ (m/z 86.13). The ion signal intensity was counted as the sum of the pixel number in the cropped area (207 × 207 μm2 area with 106 × 106 pixels).
+Electron microscopy
+Astrocytes were fixed in 2.5% glutaraldehyde and 2% paraformaldehyde in 0.15 M Sodium Cacodylate buffer pH 7.4. for 2 h at room temperature. Cells were washed three times with 0.15 M Sodium Cacodylate buffer for 5 min, and post-fixation was performed with 2% osmium tetroxide for 1 h at room temperature. Following washing three times with DH2O for 5 min, samples were dehydrated through ethanol series. Samples were infiltrated with ethanol:Epon812 (2:1) for 1 h at room temperature, then with ethanol:Epon812 (1:2) for 1hr. Samples were embedded with 100% Epon812 overnight at room temperature and were polymerized at 65°C the next day after two changes of fresh 100 resin for 1hr. Thin sections (60 nm) were placed on formvar-coated copper single slot grids (EMS) and stained with Lead citrate and Uranyl acetate. Sections were imaged with FEI Tecani G2 F20 TWIN TMP at 200 Kv accelerating voltage using Gatan TEM CCD camera at DGIST Hub of Ubiquitous Based intra-services.
+Proteomics
+Peptide generation via in-solution digestion
+For in-solution digestion, cells were dissolved in 0.2% ProteaseMAX (Promega) in 40 mM ammonium bicarbonate (NH4HCO3). After sonication at 30% amplitude for 3 s on, 10 s off, 10 times, the cell lysates were 4-fold diluted with 40 mM ABC. After 20 min incubation with 10 mM dithiothreitol (DTT) at 56°C, 20 mM iodoacetamide (IAA) was added and incubated for 20 min at room temperature in the dark. After estimation of protein amounts by the BCA protein assay, a 1:50 ratio of trypsin Lys-C mixture (Promega) was added to 100 μg of protein for 4 h at 50°C. After centrifugation at 16,000 × g for 10 s at 4°C, the supernatant was collected. The cells were treated with 0.5% trifluoroacetic acid (Thermo Fisher Scientific) for 5 min at 25°C to stop the reaction. After drying, the peptides were applied to C18 spin column (Thermo Fisher Scientific) and the eluents were dried.
+Mass analysis
+The peptides were analyzed using a Q Exactive Plus Hybrid Quadrupole–Orbitrap Mass Spectrometer interfaced with an EASY-Spray source (Thermo Fisher Scientific). Chromatographic separation of peptides was achieved using an UltiMate 3000 RSLCnano system (Thermo Fisher Scientific), equipped with an Acclaim PepMap 100 C18 HPLC Column (75 μm × 2 cm, 3 μm nanoviper; Thermo Fisher Scientific) as the loading column and an EASY-Spray PepMap RSLC C18 Column (75 μm × 50 cm, 2 μm; Thermo Fisher Scientific) as the separation column. Peptides were loaded from the RS auto-sampler and separated with a linear gradient of acetonitrile (ACN)/water, containing 0.1% formic acid, at a flow rate of 300 nL/min. The liquid chromatography eluent was electrosprayed directly from the analytical column, and a voltage of 2.0 kV was applied via the liquid junction of the nanospray source. Peptide mixtures were separated with a gradient of 10–50% ACN for 80 min. The analysis method consisted of a full MS scan with a range of 350–2000 m/z and data-dependent MS/MS on the ten most intense ions from the full MS scan. The mass spectrometer was programmed to the data-dependent acquisition mode. Mass spectrometer calibration was performed using the proposed calibration solution, according to the manufacturer’s instructions.
+Database searching
+To perform the database search, tandem mass spectra were processed using Proteome Discoverer software (Thermo Fisher Scientific) version 2.41. The spectral data were searched against the Human Uniprot database (release version 2022_06). All identified proteins had a false discovery rate of ≤1%, which was calculated at the peptide level. Search parameters allowed for a tryptic specificity of up to two missed cleavages, with methylthio-modifications of cysteine as a fixed modification and oxidation of methionine as a dynamic modification. The mass search parameters for +1, +2, and +3 ions included mass error tolerances of 20 ppm for precursor ions and 0.6 Da for fragment ions. To calculate quantitative changes in the identified proteins among experimental groups, we used LFQ analysis sequence of Proteome Discoverer.
+Bioinformatics
+DAVID bioinformatics resource 6.8 was used for GO-based function annotation. IPA was used for in-depth bioinformatics analysis. For the identified proteins, Uniprot protein accession numbers coupled with the value of normalized fold changes were uploaded to IPA in the protein expression criteria. We used the following criteria for quantitative pathway analysis: Z score cutoff = 0.5, –log (p value) > 1.3.
+Quantification and statistical analysis
+Prism 9 (GraphPad) was used for statistical analysis. Unpaired Student’s t-test or one-way ANOVA test with Dunnett’s post hoc analysis was used.
+Acknowledgments
+The authors would like to thank all members of the Seo lab for their advice and discussion. We also thank Dr. Tsai at MIT and Dr. Yankner at Harvard Medical School for sharing their iPSCs lines. This work was supported by the Korea Brain Research Institute (KBRI) basic research program through KBRI funded by the Ministry of Science and ICT of Korea (MSIT) (22-BR-02-03) to J.H.Y.; the Korea Institute of Oriental Medicine (KIOM) funded by MSIT (KSN2022230) to Y.G.; the National Research Foundation of Korea (NRF) grants funded by MSIT (2022R1A2B5B03001929) to I.-K.L.; and NRF grants (2018M3C7A1056275), the Korea Health Technology R&D Project through the Korea Health Industry Development Institute funded by the Ministry of Health and Welfare (HU21C0111), the KBRI basic research program (21-BR-03-02), and R&D programs of the Daegu Gyeongbuk Institute of Science & Technology (DGIST) (22-CoE-BT-01) funded by MSIT to J.S. The illustrations were created with BioRender.com.
+Author contributions
+H.L., S.C., Y.G., I.-K.L., and J.S. designed the research; H.L., S.C., M.-J.K., Y.J.P., E.C., Y.S.J., Y.-S.K., J.Y.L., T.T., S.-H.W., S.-I.L., and J.J. performed research; Y.-S.L., B.-C.S., and J.H.Y. contributed new reagents and analytic tools; H.L., S.C., M.-J.K., Y.-S.K., J.Y.L., S.-H.W., S.-I.L., Y.-S.L., B.-C.S., J.H.Y., Y.G., I.-K.L., and J.S. analyzed data; and H.L., S.C., and J.S. wrote the manuscript.
+Declaration of interests
+The authors declare no competing interests.
+Inclusion and diversity
+We support inclusive, diverse, and equitable conduct of research.
+Supplemental information (2)
+Download all
+PDF (1.44 MB)
+Document S1. Figures S1–S6 and Table S1
+PDF (7.06 MB)
+Document S2. Article plus supplemental information
+Data and code availability
+•	
+This paper analyzes existing, publicly available RNA-seq data deposited in the Gene Expression Omnibus (GEO) database. The MS proteomics data have been deposited at the ProteomeXchange Consortium via the PRIDE partner repository and are publicly available as of the date of publication. Accession numbers are listed in the Key resources table.
+•	
+This paper does not report the original code.
+•	
+Any additional information required to reanalyze the data reported in this paper is available from the lead contact upon request.
+References
+1.
+Gordon, B.A. ∙ Blazey, T.M. ∙ Su, Y. ...
+Spatial patterns of neuroimaging biomarker change in individuals from families with autosomal dominant Alzheimer disease: a longitudinal study
+Lancet Neurol. 2018; 17:241-250
+Full Text
+Full Text (PDF)
+Scopus (0)
+PubMed
+Google Scholar
+2.
+Ercoli, L. ∙ Siddarth, P. ∙ Huang, S.-C. ...
+Perceived Loss of Memory Ability and Cerebral Metabolic Decline in Persons With the Apolipoprotein E-IV Genetic Risk for Alzheimer Disease
+Arch Gen Psychiat. 2006; 63:442-448
+Crossref
+Scopus (27)
+PubMed
+Google Scholar
+3.
+Cho, S. ∙ Lee, H. ∙ Seo, J.
+Impact of Genetic Risk Factors for Alzheimer’s Disease on Brain Glucose Metabolism
+Mol. Neurobiol. 2021; 58:2608-2619
+Crossref
+Scopus (16)
+PubMed
+Google Scholar
+4.
+Farmer, B.C. ∙ Williams, H.C. ∙ Devanney, N.A. ...
+APOΕ4 lowers energy expenditure in females and impairs glucose oxidation by increasing flux through aerobic glycolysis
+Mol. Neurodegener. 2021; 16:62
+Crossref
+Scopus (35)
+PubMed
+Google Scholar
+5.
+Lin, Y.-T. ∙ Seo, J. ∙ Gao, F. ...
+APOE4 Causes Widespread Molecular and Cellular Alterations Associated with Alzheimer’s Disease Phenotypes in Human iPSC-Derived Brain Cell Types
+Neuron. 2018; 98:1141-1154.e7
+Full Text
+Full Text (PDF)
+Scopus (630)
+PubMed
+Google Scholar
+6.
+Victor, M.B. ∙ Leary, N. ∙ Luna, X. ...
+Lipid accumulation induced by APOE4 impairs microglial surveillance of neuronal-network activity
+Cell Stem Cell. 2022; 29:1197-1212.e8
+Full Text
+Full Text (PDF)
+Scopus (71)
+PubMed
+Google Scholar
+7.
+TCW, J. ∙ Qian, L. ∙ Pipalia, N.H. ...
+Cholesterol and matrisome pathways dysregulated in astrocytes and microglia
+Cell. 2022; 185:2213-2233.e25
+Full Text
+Full Text (PDF)
+Scopus (131)
+PubMed
+Google Scholar
+8.
+TCW, J. ∙ Wang, M. ∙ Pimenova, A.A. ...
+An Efficient Platform for Astrocyte Differentiation from Human Induced Pluripotent Stem Cells
+Stem Cell Rep. 2017; 9:600-614
+Full Text
+Full Text (PDF)
+Scopus (240)
+PubMed
+Google Scholar
+9.
+Qi, G. ∙ Mi, Y. ∙ Shi, X. ...
+ApoE4 Impairs Neuron-Astrocyte Coupling of Fatty Acid Metabolism
+Cell Rep. 2021; 34:108572
+Full Text
+Full Text (PDF)
+Scopus (138)
+PubMed
+Google Scholar
+10.
+Subramanian, A. ∙ Tamayo, P. ∙ Mootha, V.K. ...
+Gene set enrichment analysis: A knowledge-based approach for interpreting genome-wide expression profiles
+Proc. Natl. Acad. Sci. USA. 2005; 102:15545-15550
+Crossref
+Scopus (33572)
+PubMed
+Google Scholar
+11.
+Mootha, V.K. ∙ Lindgren, C.M. ∙ Eriksson, K.-F. ...
+PGC-1α-responsive genes involved in oxidative phosphorylation are coordinately downregulated in human diabetes
+Nat. Genet. 2003; 34:267-273
+Crossref
+Scopus (7207)
+PubMed
+Google Scholar
+12.
+Pantazis, C.B. ∙ Yang, A. ∙ Lara, E. ...
+A reference human induced pluripotent stem cell line for large-scale collaborative studies
+Cell Stem Cell. 2022; 29:1685-1702.e22
+Full Text
+Full Text (PDF)
+Scopus (46)
+PubMed
+Google Scholar
+13.
+San Martín, A. ∙ Ceballo, S. ∙ Ruminot, I. ...
+A Genetically Encoded FRET Lactate Sensor and Its Use To Detect the Warburg Effect in Single Cancer Cells
+PLoS One. 2013; 8, e57712
+Crossref
+Scopus (259)
+PubMed
+Google Scholar
+14.
+Baik, S.H. ∙ Kang, S. ∙ Lee, W. ...
+A Breakdown in Metabolic Reprogramming Causes Microglia Dysfunction in Alzheimer’s Disease
+Cell Metab. 2019; 30:493-507.e6
+Full Text
+Full Text (PDF)
+Scopus (400)
+PubMed
+Google Scholar
+15.
+Maetzel, D. ∙ Sarkar, S. ∙ Wang, H. ...
+Genetic and Chemical Correction of Cholesterol Accumulation and Impaired Autophagy in Hepatic and Neural Cells Derived from Niemann-Pick Type C Patient-Specific iPS Cells
+Stem Cell Rep. 2014; 2:866-880
+Full Text
+Full Text (PDF)
+Scopus (171)
+PubMed
+Google Scholar
+16.
+Davis, O.B. ∙ Shin, H.R. ∙ Lim, C.-Y. ...
+NPC1-mTORC1 Signaling Couples Cholesterol Sensing to Organelle Homeostasis and Is a Targetable Pathway in Niemann-Pick Type C
+Dev. Cell. 2021; 56:260-276.e7
+Full Text
+Full Text (PDF)
+Scopus (98)
+PubMed
+Google Scholar
+17.
+Lee, S.-I. ∙ Jeong, W. ∙ Lim, H. ...
+APOE4-carrying human astrocytes oversupply cholesterol to promote neuronal lipid raft expansion and Aβ generation
+Stem Cell Rep. 2021; 16:2128-2137
+Full Text
+Full Text (PDF)
+Scopus (52)
+PubMed
+Google Scholar
+18.
+Li, R. ∙ Hao, J. ∙ Fujiwara, H. ...
+Analytical Characterization of Methyl-β-Cyclodextrin for Pharmacological Activity to Reduce Lysosomal Cholesterol Accumulation in Niemann-Pick Disease Type C1 Cells
+Assay Drug Dev. Technol. 2017; 15:154-166
+Crossref
+Scopus (15)
+PubMed
+Google Scholar
+19.
+Swaroop, M. ∙ Thorne, N. ∙ Rao, M.S. ...
+Evaluation of Cholesterol Reduction Activity of Methyl-β-cyclodextrin Using Differentiated Human Neurons and Astrocytes
+J. Biomol. Screen. 2012; 17:1243-1251
+Full Text
+Full Text (PDF)
+Scopus (20)
+PubMed
+Google Scholar
+20.
+Krishna, S. ∙ Arrojo E Drigo, R. ∙ Capitanio, J.S. ...
+Identification of long-lived proteins in the mitochondria reveals increased stability of the electron transport chain
+Dev. Cell. 2021; 56:2952-2965.e9
+Full Text
+Full Text (PDF)
+Scopus (28)
+PubMed
+Google Scholar
+21.
+Facundo, H.d.T.F. ∙ Brainard, R.E. ∙ Caldas, F.R.d.L. ...
+Mitochondria and Cardiac Hypertrophy
+Adv. Exp. Med. Biol. 2017; 982:203-226
+Crossref
+Scopus (49)
+PubMed
+Google Scholar
+22.
+Menzies, R.A. ∙ Gold, P.H.
+The Turnover of Mitochondria in a Variety of Tissues of Young Adult and Aged Rats
+J. Biol. Chem. 1971; 246:2425-2429
+Abstract
+Full Text (PDF)
+PubMed
+Google Scholar
+23.
+Wu, L. ∙ Zhang, X. ∙ Zhao, L.
+Human ApoE Isoforms Differentially Modulate Brain Glucose and Ketone Body Metabolism: Implications for Alzheimer’s Disease Risk Reduction and Early Intervention
+J. Neurosci. 2018; 38:6665-6681
+Crossref
+Scopus (0)
+PubMed
+Google Scholar
+24.
+Goyal, M.S. ∙ Vlassenko, A.G. ∙ Blazey, T.M. ...
+Loss of Brain Aerobic Glycolysis in Normal Human Aging
+Cell Metab. 2017; 26:353-360.e3
+Full Text
+Full Text (PDF)
+Scopus (194)
+PubMed
+Google Scholar
+25.
+Evans, S. ∙ Dowell, N.G. ∙ Tabet, N. ...
+Cognitive and neural signatures of the APOE E4 allele in mid-aged adults
+NBA. 2014; 35:1615-1623
+Crossref
+Scopus (68)
+Google Scholar
+26.
+Rawle, M.J. ∙ Davis, D. ∙ Bendayan, R. ...
+Apolipoprotein-E (Apoe) ε4 and cognitive decline over the adult life course
+Transl Psychiat. 2018; 8:18
+Crossref
+Scopus (90)
+PubMed
+Google Scholar
+27.
+Weise, C.M. ∙ Chen, K. ∙ Chen, Y. ..., Alzheimer's Disease Neuroimaging Initiative
+Left lateralized cerebral glucose metabolism declines in amyloid-β positive persons with mild cognitive impairment
+Neuroimage. Clin. 2018; 20:286-296
+Crossref
+Scopus (62)
+PubMed
+Google Scholar
+28.
+Croteau, E. ∙ Castellano, C.A. ∙ Fortier, M. ...
+A cross-sectional comparison of brain glucose and ketone metabolism in cognitively healthy older adults, mild cognitive impairment and early Alzheimer’s disease
+Exp. Gerontol. 2018; 107:18-26
+Crossref
+Scopus (166)
+PubMed
+Google Scholar
+29.
+Carroll, C.M. ∙ Macauley, S.L.
+The Interaction Between Sleep and Metabolism in Alzheimer’s Disease: Cause or Consequence of Disease?
+Front. Aging Neurosci. 2019; 11:258
+Crossref
+Scopus (19)
+PubMed
+Google Scholar
+30.
+Johnson, L.A.
+APOE and metabolic dysfunction in Alzheimer’s disease
+Int. Rev. Neurobiol. 2020; 154:131-151
+Crossref
+Scopus (13)
+PubMed
+Google Scholar
+31.
+Suzuki, A. ∙ Stern, S.A. ∙ Bozdagi, O. ...
+Astrocyte-neuron lactate transport is required for long-term memory formation
+Cell. 2011; 144:810-823
+Full Text
+Full Text (PDF)
+Scopus (1196)
+PubMed
+Google Scholar
+32.
+Buckner, R.L. ∙ Snyder, A.Z. ∙ Shannon, B.J. ...
+Molecular, Structural, and Functional Characterization of Alzheimer’s Disease: Evidence for a Relationship between Default Activity, Amyloid, and Memory
+J. Neurosci. 2005; 25:7709-7717
+Crossref
+Scopus (0)
+PubMed
+Google Scholar
+33.
+van der Kant, R. ∙ Goldstein, L.S.B. ∙ Ossenkoppele, R.
+Amyloid-β-independent regulators of tau pathology in Alzheimer disease
+Nat. Rev. Neurosci. 2020; 21:21-35
+Crossref
+Scopus (347)
+PubMed
+Google Scholar
+34.
+Vlassenko, A.G. ∙ Vaishnavi, S.N. ∙ Couture, L. ...
+Spatial correlation between brain aerobic glycolysis and amyloid-β (Aβ ) deposition
+Proc. Natl. Acad. Sci. USA. 2010; 107:17763-17767
+Crossref
+Scopus (327)
+PubMed
+Google Scholar
+35.
+Filippini, N. ∙ MacIntosh, B.J. ∙ Hough, M.G. ...
+Distinct patterns of brain activity in young carriers of the APOE-epsilon4 allele
+Proc. Natl. Acad. Sci. USA. 2009; 106:7209-7214
+Crossref
+Scopus (1351)
+PubMed
+Google Scholar
+36.
+Su, Y. ∙ Chang, P.-T.
+Acidic pH promotes the formation of toxic fibrils from β-amyloid peptide
+Brain Res. 2001; 893:287-291
+Crossref
+Scopus (0)
+PubMed
+Google Scholar
+37.
+Mächler, P. ∙ Wyss, M.T. ∙ Elsayed, M. ...
+In Vivo Evidence for a Lactate Gradient from Astrocytes to Neurons
+Cell Metab. 2016; 23:94-102
+Full Text
+Full Text (PDF)
+Scopus (405)
+PubMed
+Google Scholar
+38.
+Murphy-Royal, C. ∙ Johnston, A.D. ∙ Boyce, A.K.J. ...
+Stress gates an astrocytic energy reservoir to impair synaptic plasticity
+Nat. Commun. 2020; 11:2014
+Crossref
+Scopus (90)
+PubMed
+Google Scholar
+39.
+Shi, Q. ∙ Chen, J. ∙ Zou, X. ...
+Intracellular Cholesterol Synthesis and Transport
+Front. Cell Dev. Biol. 2022; 10, 819281
+Crossref
+Scopus (23)
+Google Scholar
+40.
+Meyer, K. ∙ Feldman, H.M. ∙ Lu, T. ...
+REST and Neural Gene Network Dysregulation in iPSC Models of Alzheimer’s Disease
+Cell Rep. 2019; 26:1112-1127.e9
+Full Text
+Full Text (PDF)
+Scopus (139)
+PubMed
+Google Scholar
+41.
+Go, Y. ∙ Jeong, J.Y. ∙ Jeoung, N.H. ...
+Inhibition of Pyruvate Dehydrogenase Kinase 2 Protects Against Hepatic Steatosis Through Modulation of Tricarboxylic Acid Cycle Anaplerosis and Ketogenesis
+Diabetes. 2016; 65:2876-2887
+Crossref
+Scopus (56)
+PubMed
+Google Scholar
+42.
+Keum, D. ∙ Baek, C. ∙ Kim, D.-I. ...
+Voltage-dependent regulation of CaV2.2 channels by Gq-coupled receptor is facilitated by membrane-localized β subunit
+J. Gen. Physiol. 2014; 144:297-309
+Crossref
+Scopus (30)
+PubMed
+Google Scholar
+43.
+Cho, S. ∙ Lee, H. ∙ Jung, M. ...
+Neuromyelitis optica (NMO)-IgG-driven organelle reorganization in human iPSC-derived astrocytes
+FASEB J, Off. Publ. Fed. Am. Soc. Exp. Biol. 2021; 35, e21894
+Crossref
+Google Scholar
+44.
+Lim, H. ∙ Lee, S.Y. ∙ Moon, D.W. ...
+Preparation of cellular samples using graphene cover and air-plasma treatment for time-of-flight secondary ion mass spectrometry imaging
+RSC Adv. 2019; 9:28432-28438
+Crossref
+Scopus (7)
+PubMed
+Google Scholar
+Figures (6)
+Figure Viewer
+Show all figures
+Article metrics
+83
+Citations
+86
+Captures
+3
+Mentions
+View details
+opens in a new tab
+Supplemental information (2)
+Download all
+PDF (1.44 MB)
+Document S1. Figures S1–S6 and Table S1
+PDF (7.06 MB)
+Document S2. Article plus supplemental information
+Related Articles

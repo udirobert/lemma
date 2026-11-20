@@ -1,0 +1,26 @@
+{
+  "routes": [
+    {
+      "route": "idconv",
+      "ok": true,
+      "pmcid": null
+    },
+    {
+      "route": "pubmed_efetch",
+      "ok": true
+    },
+    {
+      "route": "europe_pmc_search",
+      "ok": true,
+      "note": "no full text record"
+    },
+    {
+      "route": "cell_com_headed_browser",
+      "ok": true,
+      "note": "agent-browser --headed passed CF; article innerText saved"
+    }
+  ],
+  "full_text": "publisher_html",
+  "pmid": "37777962",
+  "fetched_on": "2026-11-20"
+}

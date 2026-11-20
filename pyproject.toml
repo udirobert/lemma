@@ -2,7 +2,10 @@
 target-version = "py310"
 # notebooks, poster dirs, and results/ contain generated/downloaded artifacts,
 # not project source — the agent-written audit scripts live in papers/*/results/.
-extend-exclude = ["notebooks", ".venv", "venv", "papers/*/poster", "papers/*/results"]
+# meccog/resources is vendored challenge code (validator/template) — must not
+# diverge from the official files.
+extend-exclude = ["notebooks", ".venv", "venv", "papers/*/poster", "papers/*/results",
+                  "meccog/resources"]
 
 [tool.ruff.lint]
 select = [
@@ -31,6 +34,9 @@ ignore = [
 "scripts/gen_deck_art.py" = ["RUF001"]
 # figure labels use ν / ≈ / – deliberately (presentation text)
 "scripts/make_beam_figures.py" = ["RUF001"]
+# meccog scripts map curly quotes/dashes onto ASCII — the unicode is the point
+"scripts/meccog_extract.py" = ["RUF001"]
+"scripts/meccog_build_sheet.py" = ["RUF001", "RUF002", "RUF003"]
 
 [tool.ruff.format]
 quote-style = "double"

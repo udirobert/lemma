@@ -1,0 +1,24 @@
+{
+  "pmid": "31641056",
+  "routes": [
+    {
+      "route": "idconv",
+      "ok": true,
+      "pmcid": "PMC6880458"
+    },
+    {
+      "route": "pubmed_efetch",
+      "ok": true
+    },
+    {
+      "route": "pmc_efetch",
+      "ok": true
+    },
+    {
+      "route": "pmc_html_headed_browser",
+      "ok": true,
+      "note": "PMC6880458 efetch was metadata-only; PMC HTML via headed browser"
+    }
+  ],
+  "full_text": "pmc_html"
+}

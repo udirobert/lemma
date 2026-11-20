@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MecCog Official Rules</title>
+<link rel="icon" href="MecCog_logo_transparent.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<style>
+/* Same system as the main page: white ground, indigo ink, orange accent. */
+:root {
+  color-scheme: light;
+  --indigo: #2B1B74; --indigo-soft: #4A35A8;
+  --amber: #F0802B; --mint: #16A06A;
+  --page: #FFFFFF; --tint: #F6F5FB; --surface: #FFFFFF;
+  --ink: #15152B; --ink-soft: #5C5C78; --rule: #E6E5EF;
+  --display: "Poppins", system-ui, sans-serif;
+  --body: "DM Sans", system-ui, -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--page); color: var(--ink); font-family: var(--body); font-size: 1.0625rem; line-height: 1.7; }
+.in { max-width: 82rem; margin-inline: auto; padding-left: max(20px, env(safe-area-inset-left,0px)); padding-right: max(20px, env(safe-area-inset-right,0px)); }
+.nav { border-bottom: 1px solid var(--rule); }
+.nav .in { display: flex; align-items: center; gap: 1.5rem; padding-block: 1.1rem; flex-wrap: wrap; }
+.nav .logo { display: flex; align-items: center; gap: .65rem; color: var(--ink); text-decoration: none; font-family: var(--display); font-weight: 700; font-size: 1.3rem; }
+.nav .logo img { width: 54px; height: 54px; }
+.nav menu { display: flex; gap: 1.4rem; list-style: none; margin: 0 0 0 auto; padding: 0; flex-wrap: wrap; }
+.nav menu a { color: var(--ink-soft); text-decoration: none; font-size: 1.02rem; font-weight: 500; }
+.nav menu a:hover { color: var(--indigo-soft); }
+.btn { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--display); font-weight: 600; font-size: .88rem; padding: .55rem 1.15rem; border-radius: 999px; text-decoration: none; background: var(--amber); color: #231306; border: 2px solid transparent; }
+.btn:hover { filter: brightness(1.07); }
+
+header.page { padding-block: 3rem 1rem; }
+header.page .eyebrow { font-family: var(--display); font-size: .72rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--amber); margin: 0 0 .9rem; }
+header.page h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2.1rem,1.5rem + 2.6vw,3.2rem); letter-spacing: -0.025em; line-height: 1.12; margin: 0; color: var(--indigo); }
+header.page .lede { font-size: 1.15rem; color: var(--ink-soft); max-width: 44ch; margin: 1rem 0 0; }
+
+/* the decision panel */
+.glance { background: var(--tint); border: 1px solid var(--rule); border-radius: 18px; padding: clamp(1.4rem,1rem + 1.6vw,2.2rem); margin-block: 2.5rem 3.5rem; }
+.glance h2 { font-family: var(--display); font-size: 1.15rem; font-weight: 600; margin: 0 0 1.4rem; color: var(--indigo); }
+.when { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit,minmax(11rem,1fr)); margin-bottom: 1.8rem; }
+.when div { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 1rem 1.1rem; min-width: 0; }
+.when dt { font-family: var(--display); font-size: .68rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
+.when dd { margin: .35rem 0 0; font-family: var(--display); font-weight: 600; font-size: 1.15rem; color: var(--indigo); }
+.when dd.go { color: var(--mint); }
+.facts { display: grid; gap: .1rem; }
+.facts > div { display: grid; gap: .2rem 1.5rem; padding: .75rem 0; border-top: 1px solid var(--rule); }
+@media (min-width: 46rem) { .facts > div { grid-template-columns: 13rem 1fr; align-items: baseline; } }
+.facts dt { font-weight: 600; color: var(--ink); font-size: .95rem; }
+.facts dd { margin: 0; color: var(--ink-soft); font-size: .97rem; }
+
+main { padding-bottom: 4rem; }
+main .in { display: grid; grid-template-columns: 1fr min(54rem, 100%) 1fr; }
+main .in > * { grid-column: 2; }
+h1, h2, h3 { font-family: var(--display); line-height: 1.2; text-wrap: balance; }
+main h1 { font-size: clamp(1.5rem,1.25rem + 1.3vw,2.1rem); font-weight: 600; color: var(--indigo); margin: 3.25rem 0 1rem; padding-top: 1.75rem; border-top: 2px solid var(--rule); }
+main h1:first-child, main .in > .toc + h1 { margin-top: 0; border-top: 0; padding-top: 0; }
+main h2 { font-size: 1.25rem; font-weight: 600; margin: 2.25rem 0 .75rem; }
+main h3 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 .4rem; }
+p { margin: 0 0 1.1rem; }
+a { color: var(--indigo-soft); }
+strong { font-weight: 700; }
+ul, ol { padding-left: 1.3rem; }
+li { margin-bottom: .4rem; }
+code { font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: .88em; background: var(--tint); padding: .1rem .35rem; border-radius: 4px; }
+main p > strong:first-child { color: var(--indigo); font-family: var(--display); font-weight: 600; }
+.tablewrap, table { width: 100%; }
+.tablewrap { overflow-x: auto; margin-bottom: 1.5rem; }
+table { border-collapse: collapse; font-size: .93rem; min-width: 30rem; }
+th, td { padding: .6rem .8rem; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+th { font-family: var(--display); font-weight: 600; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); border-bottom-width: 2px; }
+tr:last-child td { border-bottom: 0; }
+footer { background: var(--tint); border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: .92rem; }
+footer a { color: var(--indigo-soft); }
+/* grid items do not collapse their margins, so restore the old rhythm */
+main .in > :is(ul, ol) { margin-top: 0; }
+main .in > h2 { margin-top: 1.15rem; }
+main h1[id], main h2[id] { scroll-margin-top: 1.5rem; }
+/* contents: collapsed above the text on narrow screens, sticky in the left margin on wide ones */
+.toc { margin: 0 0 2.25rem; border: 1px solid var(--rule); border-radius: 12px; background: var(--tint); font-size: .86rem; line-height: 1.4; }
+.toc summary { cursor: pointer; padding: .75rem 1rem; font-family: var(--display); font-weight: 600; font-size: .9rem; color: var(--indigo); }
+.toc ol { list-style: none; margin: 0; padding: 0 1rem 1rem; }
+.toc li { margin: 0; }
+.toc a { display: block; padding: .3rem 0 .3rem .75rem; border-left: 2px solid var(--rule); color: var(--ink); text-decoration: none; }
+.toc a:hover { color: var(--indigo-soft); }
+.toc a[aria-current="location"] { color: var(--indigo); border-left-color: var(--indigo); font-weight: 600; }
+@media (min-width: 80rem) {
+  main .in > .toc { grid-column: 1; grid-row: 1 / span 200; align-self: start; position: sticky; top: 1.5rem; max-height: calc(100vh - 3rem); overflow-y: auto; margin: 0 2rem 0 0; border: 0; border-radius: 0; background: none; }
+  .toc summary { display: none; }
+  .toc ol { padding: 0; }
+}
+:focus-visible { outline: 3px solid var(--indigo-soft); outline-offset: 2px; }
+
+/* Site style, November 2026: Manrope headings, darker secondary text */
+:root { --display: "Manrope", system-ui, sans-serif; --ink-soft: #46465F; }
+h1 { font-weight: 800; letter-spacing: -.03em; }
+h2, h3 { font-weight: 700; }
+/* compact menu on phones */
+.menu-toggle { display: none; margin-left: auto; font: inherit; font-family: var(--display); font-weight: 600; font-size: .95rem; color: var(--indigo); background: none; border: 1.5px solid var(--rule); border-radius: 999px; padding: .45rem 1rem; cursor: pointer; }
+.menu-toggle::after { content: ""; display: inline-block; width: .45rem; height: .45rem; margin-left: .55rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-25%) rotate(45deg); }
+.nav.open .menu-toggle::after { transform: translateY(15%) rotate(-135deg); }
+@media (max-width: 56rem) {
+  .menu-toggle { display: inline-flex; align-items: center; }
+  .nav .in > .btn { display: none; }
+  .nav menu { display: none; flex-basis: 100%; flex-direction: column; gap: 0; margin: .5rem 0 0; }
+  .nav.open menu { display: flex; }
+  .nav menu li a { display: block; padding: .7rem 0; border-top: 1px solid var(--rule); font-size: 1.05rem; }
+}
+
+/* one width for the whole site, the home page's */
+.in { max-width: 76rem !important; }
+
+/* official rules: contents on the left, the text beside it, in the same width as the rest */
+main .in { grid-template-columns: minmax(0, 1fr) !important; }
+main .in > * { grid-column: 1 !important; }
+@media (min-width: 64rem) {
+  main .in { grid-template-columns: 15rem minmax(0, 1fr) !important; column-gap: 3rem; }
+  main .in > * { grid-column: 2 !important; }
+  main .in > .toc { grid-column: 1 !important; grid-row: 1 / span 200; align-self: start; position: sticky; top: 1.5rem; max-height: calc(100vh - 3rem); overflow-y: auto; margin: 0; border: 0; border-radius: 0; background: none; }
+  .toc summary { display: none; }
+  .toc ol { padding: 0; }
+}
+main .in > p, main .in > ul, main .in > ol { max-width: 50rem; }
+
+/* the submission page, one click away from every page */
+.nav .nav-cta { background: var(--amber); color: #231306; }
+.menu-submit { display: none; }
+@media (max-width: 56rem) { .menu-submit { display: list-item; } .nav menu li.menu-submit a { color: #B45412; font-weight: 700; } }
+.submit-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem 1.5rem; margin: 1.5rem 0; padding: 1.1rem 1.3rem; background: #FFF6EE; border: 1px solid #F6D3B4; border-radius: 16px; }
+.submit-cta p { margin: 0; font-weight: 600; color: var(--ink); }
+.submit-cta a { display: inline-flex; align-items: center; padding: .65rem 1.3rem; border-radius: 999px; background: var(--amber); color: #231306; font-family: var(--display); font-weight: 800; text-decoration: none; white-space: nowrap; }
+@media (min-width: 64rem) { main .in > .toc { top: calc(var(--navh) + 1rem) !important; max-height: calc(100vh - var(--navh) - 2rem) !important; } }
+
+/* the menu bar stays at the top while scrolling */
+:root { --navh: 88px; }
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.97); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+html { scroll-padding-top: var(--navh); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="in">
+    <a class="logo" href="index.html"><img src="MecCog_logo_transparent.png" alt=""> MecCog</a>
+    <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <menu id="site-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="hypotheses.html">Hypotheses</a></li>
+      <li><a href="rules.html">Challenge specifics</a></li>
+      <li><a href="official-rules.html">Official rules</a></li>
+      <li><a href="resources.html">Shared resources</a></li>
+      <li><a href="rules.html#the-directness-class">Directness</a></li>
+      <li class="menu-submit"><a href="https://meccog-meccogchallenge.hf.space/">Register &amp; submit</a></li>
+    </menu>
+    <a class="btn btn-fill nav-cta" href="https://meccog-meccogchallenge.hf.space/">Register &amp; submit</a>
+  </div>
+</nav>
+
+<header class="page">
+  <div class="in">
+    <p class="eyebrow">The standing rule set</p>
+    <h1>Official rules</h1>
+    <p class="lede">These apply to every MecCog challenge. Submitting accepts them. What to submit and in what format is on the <a href="rules.html">challenge specifics</a> page.</p>
+
+  </div>
+</header>
+
+<main>
+  <div class="in">
+<details class="toc" open>
+<summary>On this page</summary>
+<nav aria-label="On this page">
+<ol>
+<li><a href="#terms-for-the-current-challenge">0. Terms for the current challenge</a></li>
+<li><a href="#participation">1. Participation</a></li>
+<li><a href="#eligibility">2. Eligibility</a></li>
+<li><a href="#registration">3. Registration</a></li>
+<li><a href="#teams">4. Teams</a></li>
+<li><a href="#use-of-other-data-and-tools">5. Use of other data and tools</a></li>
+<li><a href="#entries">6. Entries</a></li>
+<li><a href="#assessment">7. Assessment</a></li>
+<li><a href="#misconduct-and-disqualification">8. Misconduct and disqualification</a></li>
+<li><a href="#authorship">9. Authorship</a></li>
+<li><a href="#methods-code-and-intellectual-property">10. Methods, code, and intellectual property</a></li>
+<li><a href="#publicity">11. Publicity</a></li>
+<li><a href="#publishing-your-own-results-before-the-challenge-paper">12. Publishing your own results before the challenge paper</a></li>
+<li><a href="#what-is-public-and-anonymity">13. What is public, and anonymity</a></li>
+<li><a href="#your-warranties">14. Your warranties</a></li>
+<li><a href="#limitation-of-liability">15. Limitation of liability</a></li>
+<li><a href="#changes-to-these-rules">16. Changes to these rules</a></li>
+<li><a href="#resolving-a-dispute">17. Resolving a dispute</a></li>
+<li><a href="#platform-terms">18. Platform terms</a></li>
+</ol>
+</nav>
+</details>
+<h1 id="meccog-challenge-official-rules">MecCog Challenge Official
+Rules</h1>
+<p>Version 1, November 2026. Effective November 17th, 2026.</p>
+<p><strong>Please read these rules before registering.</strong> They are an agreement between you and the MecCog challenge organizers. By registering for a MecCog challenge you accept them.</p>
+<h2 id="terms-for-the-current-challenge">0. Terms for the current
+challenge</h2>
+<p>Everything in this section changes from one MecCog challenge to the
+next. Everything after it is the standing rule set and does not.</p>
+<div class="tablewrap"><table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Current challenge</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Challenge</td>
+<td>Papers and Findings, Step 1</td>
+</tr>
+<tr class="even">
+<td>Task</td>
+<td>Find papers bearing on an assigned mechanism hypothesis and extract
+the relevant experimental findings</td>
+</tr>
+<tr class="odd">
+<td>Hypotheses</td>
+<td>Five APOE4 endosome mechanism hypotheses, listed on the <a href="hypotheses.html">hypotheses
+page</a></td>
+</tr>
+<tr class="even">
+<td>Opens</td>
+<td>00:00 UTC on November 17th, 2026</td>
+</tr>
+<tr class="odd">
+<td>Submission deadline</td>
+<td>The end of January 15th, 2027, anywhere on Earth</td>
+</tr>
+<tr class="even">
+<td>Submissions per team</td>
+<td>One live submission per hypothesis, replaceable until the deadline</td>
+</tr>
+<tr class="odd">
+<td>Limits per submission</td>
+<td>Up to 50 papers can be selected.</td>
+</tr>
+<tr class="even">
+<td>Submission format</td>
+<td>One spreadsheet per hypothesis, in the official template, passing
+the validator</td>
+</tr>
+<tr class="even">
+<td>Platform</td>
+<td>Hugging Face</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="participation">1. Participation</h2>
+<p>Participating in a MecCog challenge means submitting one or more
+Entries to that challenge. An Entry is a submission in the format the
+<a href="rules.html">challenge page</a> specifies, made within the challenge period.</p>
+<h2 id="eligibility">2. Eligibility</h2>
+<p>MecCog aims to maximize eligibility. Anyone may take part, subject to
+the following.</p>
+<p>Individuals who have, or may have, access to privileged information
+about a challenge may not participate in it or advise other
+participants. This includes the challenge organizers, the members of the
+MecCog working group, and anyone providing scientific or technical
+advice to the organizers. Employees and trainees whose work is directly
+supervised by one of these individuals may submit Entries, but their
+Entries are not eligible for prizes where a challenge offers them. They
+remain eligible to be named on challenge publications.</p>
+<p>Where the organizers run their own systems on a challenge task, those
+results are published as a reference point and identified as such. They
+are not Entries and are not ranked against participants’ Entries.</p>
+<p>Individuals suspected of misconduct in a previous MecCog challenge,
+or banned from a MecCog challenge or from a platform needed to take
+part, are not eligible.</p>
+<p>Minors may participate, and by doing so represent that a parent or
+legal guardian has read and agreed to these rules.</p>
+<p>A challenge may add eligibility conditions of its own, which the
+<a href="rules.html">challenge page</a> will state.</p>
+<h2 id="registration">3. Registration</h2>
+<p>Register once per challenge. Registering more than once, holding more than one account, or having someone else register in order to submit on your behalf may lead to all of your Entries being disqualified.</p>
+<p>Registration asks for an institutional or company email address. If you do not have one, complete the short description of who you are and what you do, which the organizers may follow up by email before activating the account. We ask for this so that we know who produced each Entry, not in order to publish it: section 13 covers what is made public.</p>
+<p>By registering you confirm that your account information is accurate. An account with information that is incorrect or misleading may be terminated and its Entries disqualified.</p>
+<h2 id="teams">4. Teams</h2>
+<p>Every Entry belongs to a team. After registering, you may work alone as a team of one, create a team, or join an existing one. There is no maximum team size.</p>
+<p>Every team names a team leader, who is the point of contact for the organizers and is responsible for the team’s Entries. A team with no leader cannot submit.</p>
+<p>Each member of a team must be a registered participant. You may belong to more than one team, but creating a second team requires a written explanation, for example that your group has two genuinely different methods and wants both assessed. Creating several teams to multiply your submissions is not allowed.</p>
+<h2 id="use-of-other-data-and-tools">5. Use of other data and tools</h2>
+<p>You may use any literature source, database, model, tool or service
+you wish, including commercial ones, unless the <a href="rules.html">challenge page</a> says
+otherwise. The obligation that comes with this is in section 10: your
+method must be public and reproducible by others, so a tool nobody else
+can run limits what your Entry can be credited with.</p>
+<h2 id="entries">6. Entries</h2>
+<p>An Entry is submitted on the platform the <a href="rules.html">challenge page</a> names, in
+the format it specifies, and must pass the challenge validator. A
+submission that does not validate cannot be uploaded.</p>
+<p>Entries must arrive within the challenge period. An Entry submitted
+after the deadline may not be assessed. Once an Entry has been assessed
+it may not be altered without the organizers’ agreement, and altering an
+assessed Entry is treated as misconduct.</p>
+<p>A challenge sets a maximum number of Entries per team, stated in
+section 0.</p>
+<p>Every Entry names a public repository or archive holding a
+description of the method that produced it, and the commit or version it
+was built from. This is a condition of submission, not an optional
+extra, and an Entry without it does not validate. The method description must be detailed enough that another group could in principle reproduce it.</p>
+<p>Accepted Entries are given an acceptance number, shown on screen. Queries about an Entry must be accompanied by the corresponding acceptance number.</p>
+<p>All Entries are made public after the challenge results are
+announced, together with the associated methods. The team leader’s name and email address are removed from the Method sheet before an Entry is published. They are how the organizers reach the team, not part of what is published, and section 13 governs what is.</p>
+<h2 id="assessment">7. Assessment</h2>
+<p>This challenge has no ground truth. There is no withheld answer key,
+because what the literature contains is itself one of the things being
+measured. Assessment therefore differs from a challenge scored against
+held-out data, and the methods may develop as the project progresses.</p>
+<p>The initial assessment principles for each challenge are provided in advance, on the <a href="rules.html">challenge page</a>, without committing to a
+single ranking formula. Further considerations may be introduced once
+the results are in hand, as is the practice in CASP.</p>
+<p>The organizers’ assessment decisions are final.</p>
+<h2 id="misconduct-and-disqualification">8. Misconduct and
+disqualification</h2>
+<p>The following are treated as scientific misconduct, not as tactics,
+and the consequences are those set out below.</p>
+<p>Fabricating a finding, or attributing a finding to a paper or a
+location that does not contain it. Recording a value estimated from a
+figure as though the paper had printed it. Recording a value as absent
+from a paper that reports it. Removing findings that contradict the
+assigned hypothesis, or that show no effect, in order to produce a
+cleaner submission. Using false identities or multiple accounts to
+exceed the submission limit. Altering an assessed Entry. Misleading
+other participants.</p>
+<p>Cross-comparison between independent Entries makes most of these
+visible, which is part of why the comparison is done.</p>
+<p>Where the organizers conclude that misconduct has occurred, the Entry
+and the team are disqualified. Depending on the gravity, the individual
+or team may also be banned from future MecCog challenges.</p>
+<p>Participants agree not to disparage other participants, other teams,
+or the organizers. This does not prevent constructive criticism made in
+good faith and in a collegial manner.</p>
+<h2 id="authorship">9. Authorship</h2>
+<p>Publications arising from this and other MecCog Challenges will include participants as authors where appropriate. Where a participant earns authorship, the policy is as follows.</p>
+<p>An overview paper may be written for a challenge, or for a set of challenges together (not necessarily for each round). For these papers, every participating team in good standing in the challenges may be co-authors, listed under membership of the MecCog Challenge Consortium, on the understanding that they supply a description of their method for the appendix and answer a short survey about it.</p>
+<p>A team that does not wish to be named may decline, and in doing so grants permission for its method to be described in the paper.</p>
+<p>There may be additional invited author publications in journal special issues as the project proceeds.</p>
+<h2 id="methods-code-and-intellectual-property">10. Methods, code, and
+intellectual property</h2>
+<p>The organizers make no claim to ownership of your Entry or of any intellectual property associated with it. You keep the copyright in your code.</p>
+<p>Because the point of the project is to develop a working pipeline that the scientific community can use, an Entry must be in principle reproducible. Thus, the method used must be described in enough detail that another group could follow it, and will be made public, as section 6 requires. That is the condition of submission.</p>
+<p>Providing the code is encouraged and not required. A team that cannot release its code, because it is proprietary or for any other reason, may still submit and is assessed on the same footing, provided the method description meets the appropriate standard. If you are a company or have another reason to withhold your code, please email us at <a href="mailto:e4admin@tunc.org">e4admin@tunc.org</a> to obtain an exemption. Where a team does release code, it does so under an open source license of its choice that permits redistribution for research and development. Code released without a stated license is taken to be released under the MIT license, and by submitting without stating one you confirm that you are entitled to allow that.</p>
+<p>An Entry that depends on proprietary software or data that others cannot obtain may be submitted and assessed, and may be described in the challenge paper. What such an Entry cannot be credited with is reproducibility by others, and the challenge paper will say which Entries released their code and which did not.</p>
+<p>Participants who prefer not to release code may also make their system available for the organizers to run, where a challenge makes that practical.</p>
+<p>You are free to discuss your Entry with anyone and to contract with third parties, provided you do not enter into any obligation that conflicts with these rules.</p>
+<p>By submitting an Entry you grant the organizers the right to assess it, to have it assessed by people they designate, and to make it public after the challenge results are announced.</p>
+<h2 id="publicity">11. Publicity</h2>
+<p>Except where prohibited, taking part in a MecCog challenge is your
+consent to the organizers publishing the team name, the names of team
+members who have not declined under section 9, and the Entry itself, in
+connection with the challenge and its publications.</p>
+<h2 id="publishing-your-own-results-before-the-challenge-paper">12.
+Publishing your own results before the challenge paper</h2>
+<p>If your team posts a preprint or submits a paper about your
+participation before the challenge overview paper appears, restrict it
+to your own work: the method you developed and your own result. Do not
+report the overall challenge results or any analysis of them. These
+restrictions end when the overview paper is published.</p>
+<h2 id="what-is-public-and-anonymity">13. What is public, and
+anonymity</h2>
+<p>Team names and Entries are published after the results are announced,
+as section 6 states. The identity of the individuals on a team is known
+to the organizers through registration and is not published unless those
+individuals are named as authors under section 9.</p>
+<p>If you prefer that your performance not be publicly associated with
+you, register under your own identity and give your team a name that
+does not identify you. We understand that a poor result should not be
+usable against someone in a publication, a promotion, or a grant
+application, and participants are asked to respect that choice in
+others.</p>
+<p>The organizers make no other representation as to confidentiality. Do
+not include confidential or unpublished third-party information in an
+Entry.</p>
+<h2 id="your-warranties">14. Your warranties</h2>
+<p>By submitting an Entry you confirm, to the extent you are able, that
+the information in it is true and complete, that you are entitled to
+submit it on behalf of yourself or your team, and that the Entry:</p>
+<p>is your own work, or credits the work of others within it; contains
+no confidential information or trade secrets; infringes nobody’s
+intellectual property or other rights; contains no malicious code; and
+violates no applicable law.</p>
+<h2 id="limitation-of-liability">15. Limitation of liability</h2>
+<p>The organizers, their institutions, and the funders and data
+contributors of a MecCog challenge are not liable for loss or damage
+arising from your participation, to the extent the law permits.</p>
+<p>The organizers are not responsible for technical failures outside
+their control, including platform outages and lost or late Entries.</p>
+<p>The organizers may cancel, modify, or suspend a challenge where a
+technical problem or a cause beyond their control affects its
+integrity.</p>
+<h2 id="changes-to-these-rules">16. Changes to these rules</h2>
+<p>The organizers may amend these rules. If they are amended while a
+challenge is open, participants will be notified and given the amended
+rules together with a list of what changed. Continuing to participate
+accepts the amendment. A participant who does not wish to continue under
+the amended rules may stop submitting.</p>
+<h2 id="resolving-a-dispute">17. Resolving a dispute</h2>
+<p>If the organizers become aware of a possible violation of these
+rules, they will notify you.</p>
+<p>Discuss it with them within five working days of that notice, with
+the aim of resolving it within ten days. The organizers’ decision on
+whether a violation occurred is final.</p>
+<p>If the matter is not discussed within five working days, or is not
+resolved within ten days, the organizers may disqualify the Entry, or
+ban the individual or team from future MecCog challenges as section 8
+describes.</p>
+<h2 id="platform-terms">18. Platform terms</h2>
+<p>MecCog challenges run on the Hugging Face platform. Your Hugging Face
+account, the challenge Space, and anything you upload to it are governed
+by Hugging Face’s own terms of service and content policy, which you
+accept separately from these rules and which cover the relationship
+between you and the platform.</p>
+<p>These rules add the obligations above, which concern the challenge
+itself. They do not replace the platform terms. Where the two differ on
+a matter of platform use, the platform terms apply.</p>
+  </div>
+</main>
+
+<footer><div class="in" style="padding-block:2.5rem">
+<p><strong>Questions.</strong> The <a href="https://huggingface.co/spaces/MecCog/meccog-challenge/discussions/new" target="_blank" rel="noopener">Community tab</a> of this Space is where questions get asked and answered, and it is usually the fastest route, since someone has often been there before you. You can also join the conversation on <a href="https://discord.gg/C5KRB7bEj" target="_blank" rel="noopener">Discord</a>. For anything else, write to the organizers at <a href="mailto:e4admin@tunc.org">e4admin@tunc.org</a>.</p>
+<p><a href="index.html">Back to the main page</a></p>
+</div></footer>
+<script>
+(function () {
+  var toc = document.querySelector(".toc");
+  if (!toc) return;
+  var wide = window.matchMedia("(min-width: 80rem)");
+  function sync() { toc.open = wide.matches; }
+  sync();
+  if (wide.addEventListener) wide.addEventListener("change", sync);
+  var links = Array.prototype.slice.call(toc.querySelectorAll("a"));
+  var heads = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); });
+  var current = -1, queued = false;
+  function update() {
+    queued = false;
+    var line = window.innerHeight * 0.3, idx = 0;
+    for (var i = 0; i < heads.length; i++) { if (heads[i] && heads[i].getBoundingClientRect().top <= line) idx = i; }
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) idx = heads.length - 1;
+    if (idx === current) return;
+    current = idx;
+    links.forEach(function (a, i) { if (i === idx) a.setAttribute("aria-current", "location"); else a.removeAttribute("aria-current"); });
+  }
+  function queue() { if (!queued) { queued = true; requestAnimationFrame(update); } }
+  window.addEventListener("scroll", queue, { passive: true });
+  window.addEventListener("resize", queue);
+  window.addEventListener("hashchange", function () { setTimeout(function () { current = -1; update(); }, 0); });
+  links.forEach(function (a) { a.addEventListener("click", function () { if (!wide.matches) toc.open = false; }); });
+  update();
+})();
+</script>
+<script>
+(function () {
+  var nav = document.querySelector(".nav"), b = nav && nav.querySelector(".menu-toggle");
+  if (!b) return;
+  b.addEventListener("click", function () { var o = nav.classList.toggle("open"); b.setAttribute("aria-expanded", o ? "true" : "false"); });
+  nav.querySelectorAll("menu a").forEach(function (a) { a.addEventListener("click", function () { nav.classList.remove("open"); b.setAttribute("aria-expanded", "false"); }); });
+})();
+</script>
+<script>
+(function () {
+  // The menu's real height, so what sticks below it (tabs, side column) and every
+  // anchor lands just under it, on any screen.
+  var n = document.querySelector(".nav");
+  if (!n) return;
+  function set() { if (!n.classList.contains("open")) document.documentElement.style.setProperty("--navh", n.offsetHeight + "px"); }
+  set(); window.addEventListener("load", set); window.addEventListener("resize", set);
+})();
+</script>
+</body>
+</html>

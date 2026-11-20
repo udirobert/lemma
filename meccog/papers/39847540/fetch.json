@@ -1,0 +1,15 @@
+{
+  "pmid": "39847540",
+  "routes": [
+    {
+      "route": "idconv",
+      "ok": true,
+      "pmcid": null
+    },
+    {
+      "route": "pubmed_efetch",
+      "ok": true
+    }
+  ],
+  "full_text": "unavailable_via_pmc"
+}

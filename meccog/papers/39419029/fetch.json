@@ -1,0 +1,31 @@
+{
+  "routes": [
+    {
+      "route": "idconv",
+      "ok": true,
+      "pmcid": null
+    },
+    {
+      "route": "pubmed_efetch",
+      "ok": true
+    },
+    {
+      "route": "unpaywall+openalex",
+      "ok": true,
+      "note": "OA locations found; cell.com 403 to curl"
+    },
+    {
+      "route": "helmholtz_pdf",
+      "ok": true,
+      "note": "publisher.pdf 9.8MB incl supplements"
+    },
+    {
+      "route": "cell_com_headed_browser",
+      "ok": true,
+      "note": "agent-browser --headed passed CF; article innerText saved"
+    }
+  ],
+  "full_text": "publisher_html+publisher_pdf",
+  "pmid": "39419029",
+  "fetched_on": "2026-11-20"
+}

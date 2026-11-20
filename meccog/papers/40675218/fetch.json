@@ -1,0 +1,19 @@
+{
+  "pmid": "40675218",
+  "routes": [
+    {
+      "route": "idconv",
+      "ok": true,
+      "pmcid": "PMC12357307"
+    },
+    {
+      "route": "pubmed_efetch",
+      "ok": true
+    },
+    {
+      "route": "pmc_efetch",
+      "ok": true
+    }
+  ],
+  "full_text": "pmc_jats"
+}

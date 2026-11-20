@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MecCog Mechanism Example</title>
+<link rel="icon" href="MecCog_logo_transparent.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<style>
+/* Layout: deep indigo bands carrying a live neuron field, alternating with
+   light bands. Full-bleed throughout, nav bar on top, no narrow column. */
+:root {
+  --indigo: #2B1B74;
+  --indigo-deep: #1E1252;
+  --indigo-soft: #4A35A8;
+  --amber: #F0802B;
+  --mint: #16A06A;
+  --page: #FFFFFF;
+  --tint: #F6F5FB;
+  --surface: #FFFFFF;
+  --ink: #15152B;
+  --ink-soft: #5C5C78;
+  --rule: #E6E5EF;
+  --good: #2FA86A;
+  --mid: #D08A1E;
+  --weak: #D9553F;
+  color-scheme: light;
+  --display: "Poppins", system-ui, sans-serif;
+  --body: "DM Sans", system-ui, -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--page); color: var(--ink); font-family: var(--body); font-size: 1.0625rem; line-height: 1.65; -webkit-text-size-adjust: 100%; }
+.in { max-width: 82rem; margin-inline: auto; padding-left: max(20px, env(safe-area-inset-left,0px)); padding-right: max(20px, env(safe-area-inset-right,0px)); }
+h1,h2,h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0; font-weight: 600; }
+h1 { font-size: clamp(2.1rem,1.4rem + 2.4vw,3.3rem); font-weight: 700; letter-spacing: -0.025em; }
+h2 { font-size: clamp(1.6rem,1.25rem + 1.5vw,2.4rem); font-weight: 600; letter-spacing: -0.015em; }
+h3 { font-size: 1.05rem; font-weight: 600; }
+p { margin: 0 0 1.05rem; } p:last-child { margin-bottom: 0; }
+a { color: var(--indigo-soft); }
+.eyebrow { font-family: var(--display); font-size: .72rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; margin: 0 0 1rem; }
+
+/* nav */
+.nav { position: relative; z-index: 3; }
+.nav .in { display: flex; align-items: center; gap: 1.5rem; padding-block: 1.1rem; flex-wrap: wrap; }
+.nav { border-bottom: 1px solid var(--rule); }
+.nav .logo { display: flex; align-items: center; gap: .65rem; color: var(--ink); text-decoration: none; font-family: var(--display); font-weight: 700; font-size: 1.3rem; }
+.nav .logo img { width: 54px; height: 54px; }
+.nav menu { display: flex; gap: 1.4rem; list-style: none; margin: 0 0 0 auto; padding: 0; flex-wrap: wrap; }
+.nav menu a { color: var(--ink-soft); text-decoration: none; font-size: .92rem; font-weight: 500; }
+.nav menu a:hover { color: var(--indigo-soft); }
+.btn { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--display); font-weight: 600; font-size: .95rem; padding: .7rem 1.4rem; border-radius: 999px; text-decoration: none; border: 2px solid transparent; cursor: pointer; }
+.btn-fill { background: var(--amber); color: #231306; }
+.btn-fill:hover { filter: brightness(1.07); }
+.btn-ghost { border-color: var(--indigo-soft); color: var(--indigo-soft); }
+.btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+.nav .btn { padding: .55rem 1.15rem; font-size: .88rem; }
+
+/* hero */
+.hero { position: relative; background: var(--page); color: var(--ink); overflow: hidden; isolation: isolate; }
+#field { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: .9; }
+.hero::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(100deg, var(--page) 0%, var(--page) 38%, rgba(255,255,255,.55) 58%, rgba(255,255,255,0) 82%); }
+.hero .in { position: relative; z-index: 2; padding-block: clamp(2rem,1.5rem + 2.5vw,3.5rem); }
+.hero-copy { max-width: 42rem; }
+.hero .eyebrow { color: var(--amber); }
+.hero h1 { color: var(--indigo); }
+.hero p.sub { font-size: clamp(1.1rem,1rem + .65vw,1.4rem); color: var(--ink-soft); max-width: 40ch; margin: 1.3rem 0 0; }
+.cta { display: flex; gap: .85rem; flex-wrap: wrap; margin-top: 2.2rem; }
+.tag { display: inline-flex; align-items: center; gap: .55rem; margin-top: 2.4rem; font-size: .92rem; font-weight: 600; color: var(--mint); }
+.tag i { width: .55rem; height: .55rem; border-radius: 50%; background: var(--mint); display: block; box-shadow: 0 0 0 4px rgba(22,160,106,.18); }
+
+/* bands */
+section { padding-block: clamp(2.5rem,1.75rem + 2.5vw,4rem); }
+.band-light { background: var(--tint); }
+.band-indigo { background: var(--tint); border-block: 1px solid var(--rule); }
+.band-indigo h2 { color: var(--indigo); }
+.band-indigo .lead { color: var(--ink-soft); }
+.head-row { display: grid; gap: .75rem; margin-bottom: 1.75rem; max-width: 46rem; }
+.lead { color: var(--ink-soft); font-size: 1.1rem; margin: 0; }
+
+/* chain */
+#readout { margin-top: 1.75rem; background: var(--tint); color: var(--ink); border: 1px solid var(--rule); border-left: 5px solid var(--indigo-soft); border-radius: 16px; padding: 1.25rem 1.4rem; font-size: 1rem; min-height: 5rem; }
+#readout b { display: block; font-family: var(--display); font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--indigo-soft); margin-bottom: .35rem; }
+.key { display: flex; flex-wrap: wrap; gap: .5rem 1.4rem; margin-top: 1.1rem; font-size: .85rem; color: var(--ink-soft); }
+.key span { display: inline-flex; align-items: center; gap: .45rem; }
+.key i { width: .85rem; height: .85rem; border-radius: 4px; display: block; }
+
+/* numbers */
+.nums { display: grid; grid-template-columns: repeat(auto-fit,minmax(13rem,1fr)); gap: 2rem; margin: 0; }
+.nums div { min-width: 0; }
+.nums dt { font-family: var(--display); font-weight: 700; font-size: clamp(2.4rem,1.7rem + 2.4vw,3.8rem); line-height: 1; color: var(--amber); font-variant-numeric: tabular-nums; }
+.nums dd { margin: .6rem 0 0; font-size: .95rem; color: var(--ink-soft); }
+.punch { font-family: var(--display); font-weight: 600; font-size: clamp(1.3rem,1.05rem + 1vw,1.9rem); line-height: 1.35; margin-top: 2.75rem; max-width: 30ch; color: var(--indigo); }
+
+/* cards + tasks */
+.grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(16rem,1fr)); gap: 1rem; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 16px; padding: 1.4rem; display: flex; flex-direction: column; gap: .45rem; min-width: 0; }
+.card .n { font-family: var(--display); font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
+.card.live { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+.card.live h3 { color: #fff; }
+.card.live .n { color: #9ADFC1; }
+.card.live p { color: rgba(255,255,255,.82); }
+.card p { margin: 0; font-size: .95rem; color: var(--ink-soft); }
+.linklist { display: grid; gap: .7rem; }
+.linklist a { display: flex; justify-content: space-between; align-items: baseline; gap: 1.2rem; background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 1.05rem 1.3rem; text-decoration: none; color: var(--ink); font-weight: 500; }
+.linklist a[href]:hover { border-color: var(--amber); }
+.linklist a em { font-style: normal; font-size: .88rem; color: var(--ink-soft); text-align: right; font-weight: 400; }
+
+/* collapsible rows: the same pattern as the rules page */
+.sec { max-width: 64rem; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.sec + .sec { border-top: 0; }
+.sec > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.05rem 0; }
+.sec > summary::-webkit-details-marker { display: none; }
+.sec > summary::after { content: ""; flex: none; width: .55rem; height: .55rem; margin-right: .35rem; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: translateY(-25%) rotate(45deg); }
+.sec[open] > summary::after { transform: translateY(25%) rotate(-135deg); }
+.sec > summary:hover::after { border-color: var(--indigo-soft); }
+.sec > summary :is(h2, h3) { margin: 0; }
+.dbody { padding: 0 0 1.75rem; display: flex; flex-direction: column; gap: 1rem; max-width: 52rem; }
+.dbody figure { margin: .25rem 0; }
+.dbody figure img { display: block; max-width: 100%; height: auto; }
+.fig-card { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: .75rem; }
+.fig-card img { width: 100%; border-radius: 4px; }
+figcaption { font-size: .88rem; color: var(--ink-soft); margin-top: .6rem; }
+.two { display: grid; gap: 2.5rem; }
+@media (min-width: 60rem) { .two { grid-template-columns: 1fr 1fr; } }
+table { width: 100%; border-collapse: collapse; font-size: .97rem; }
+td { padding: .6rem 0; border-bottom: 1px solid var(--rule); vertical-align: baseline; }
+tr:last-child td { border-bottom: 0; }
+td.r { text-align: right; color: var(--ink-soft); font-size: .9rem; }
+ol.refs { font-size: .87rem; color: var(--ink-soft); padding-left: 1.3rem; display: grid; gap: .5rem; }
+footer { background: var(--tint); border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: .92rem; }
+footer a { color: var(--indigo-soft); }
+/* stacked sections: heading block on top, content below */
+.capped { max-width: 56rem; }
+.capped.wide { max-width: 64rem; }
+.prose-links { display: grid; gap: 2rem 3.5rem; }
+.prose-links .prose { max-width: 42rem; }
+@media (min-width: 60rem) { .prose-links { grid-template-columns: minmax(0, 42rem) minmax(0, 1fr); align-items: start; } }
+.people { list-style: none; margin: 0; padding: 0; column-gap: 3rem; }
+@media (min-width: 40rem) { .people { columns: 2; } }
+@media (min-width: 62rem) { .people { columns: 3; } }
+.people li { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .6rem 0; border-bottom: 1px solid var(--rule); break-inside: avoid; font-size: .97rem; }
+.people .r { color: var(--ink-soft); font-size: .9rem; text-align: right; }
+/* task cards: five across on wide screens, never four plus one */
+#tasks .grid { grid-template-columns: 1fr; }
+@media (min-width: 40rem) { #tasks .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 52rem) { #tasks .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 72rem) { #tasks .grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+/* first screen: the case on the left, everything needed to decide on the right */
+.hero-grid { display: grid; gap: 2rem 3.5rem; align-items: center; }
+@media (min-width: 62rem) { .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 33rem); } }
+.decide { background: var(--surface); border: 1px solid var(--rule); border-radius: 16px; padding: 1.15rem 1.25rem; box-shadow: 0 1px 0 var(--rule); }
+.decide dl { margin: 0; }
+.decide-dates { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding-bottom: .9rem; }
+.decide-dates dt { font-family: var(--display); font-size: .66rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
+.decide-dates dd { margin: .25rem 0 0; font-family: var(--display); font-weight: 600; font-size: 1.05rem; line-height: 1.25; color: var(--indigo); }
+.decide-dates dd.go { color: var(--mint); }
+.decide-dates span { display: block; margin-top: .15rem; font-family: var(--body); font-size: .78rem; font-weight: 500; color: var(--ink-soft); }
+.decide-facts > div { padding: .55rem 0; border-top: 1px solid var(--rule); font-size: .9rem; line-height: 1.45; }
+.decide-facts dt { display: inline; font-weight: 700; color: var(--ink); }
+.decide-facts dt::after { content: ". "; }
+.decide-facts dd { display: inline; margin: 0; color: var(--ink-soft); }
+/* the detail under each section's visible point */
+.fold { margin-top: 1.25rem; }
+.fold > summary { padding: .8rem 0; }
+.fold > summary h3 { font-size: 1rem; color: var(--indigo-soft); }
+.fold .dbody { padding-bottom: 1.25rem; }
+.fold .dbody p { margin: 0; }
+.fold-controls { display: flex; justify-content: flex-end; margin-bottom: .5rem; }
+.expand-all { font: inherit; font-size: .88rem; font-weight: 500; color: var(--indigo-soft); background: none; border: 1px solid var(--rule); border-radius: 999px; padding: .35rem .95rem; cursor: pointer; }
+.expand-all:hover { border-color: var(--indigo-soft); }
+.punch { margin-top: 1.75rem !important; max-width: none !important; }
+/* the chain: one spine, read downward. Steps are rectangles, links are text on arrows. */
+.mech { display: grid; gap: 1.5rem 3rem; align-items: start; }
+@media (min-width: 60rem) { .mech { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } .mech-side { position: sticky; top: 1rem; } }
+.spine .key { margin: 0 0 1.1rem; }
+.stage { position: relative; padding-left: 1.3rem; }
+.stage::before { content: ""; position: absolute; left: 0; top: .35rem; bottom: .35rem; width: .55rem; border: 2px solid var(--ink-soft); border-right: 0; border-radius: 3px 0 0 3px; opacity: .55; }
+.stage-name { margin: 0 0 .45rem; font-family: var(--display); font-size: .8rem; font-weight: 600; color: var(--ink-soft); }
+.node { display: grid; grid-template-columns: 1fr auto; gap: .1rem 1rem; width: 100%; padding: .55rem .85rem; text-align: left; font: inherit; color: var(--ink); cursor: pointer; background: var(--surface); border: 1.5px solid var(--c); border-left-width: 9px; border-radius: 4px; }
+.node.good { --c: var(--good); } .node.mid { --c: var(--mid); } .node.weak { --c: var(--weak); }
+.node:hover { background: var(--tint); }
+.node[aria-pressed="true"], .link[aria-pressed="true"] .link-text { outline: 3px solid var(--indigo-soft); outline-offset: 2px; }
+.node-id { font-family: var(--display); font-size: .74rem; font-weight: 600; color: var(--ink-soft); }
+.node-rate { display: inline-flex; align-items: center; gap: .35rem; justify-self: end; font-size: .8rem; color: var(--ink-soft); white-space: nowrap; }
+.node-rate i { width: .65rem; height: .65rem; border-radius: 2px; background: var(--c); }
+.node-title { grid-column: 1 / -1; font-family: var(--display); font-weight: 600; font-size: 1.02rem; line-height: 1.3; }
+.gloss { grid-column: 1 / -1; font-size: .92rem; line-height: 1.4; color: var(--ink-soft); }
+.link { display: flex; align-items: stretch; gap: .8rem; width: 100%; min-height: 2.7rem; margin: 0; padding: 0 0 0 1.5rem; background: none; border: 0; font: inherit; text-align: left; color: var(--ink-soft); cursor: pointer; }
+.spine > .link { padding-left: 2.8rem; }
+.arrow { position: relative; flex: none; width: 2px; background: var(--ink-soft); margin-bottom: 7px; }
+.arrow::after { content: ""; position: absolute; left: -5px; bottom: -7px; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 8px solid var(--ink-soft); }
+.link-text { align-self: center; font-style: italic; font-size: .95rem; line-height: 1.3; padding: .35rem 0; }
+.link:hover .link-text { color: var(--ink); text-decoration: underline; }
+.link.unknown .arrow { background: none; border-left: 2px dashed var(--ink); width: 0; }
+.link.unknown .arrow::after { left: -7px; border-top-color: var(--ink); }
+.link:not(.unknown) .link-text { font-style: normal; border: 1.5px solid var(--ink-soft); border-radius: 999px; padding: .25rem .8rem; background: #fff; }
+.link.unknown .link-text { font-style: normal; font-weight: 600; font-size: .88rem; color: #fff; background: var(--ink); border-radius: 999px; padding: .25rem .8rem; }
+#readout { margin-top: 0; }
+.spine #readout { margin: .5rem 0; font-size: .97rem; }
+.readout-rate { display: block; margin-top: .6rem; font-weight: 600; font-size: .92rem; color: var(--ink); }
+.mech-note { margin: 1rem 0 0; font-size: .95rem; color: var(--ink-soft); }
+/* the hero opener */
+.opener { margin: 1.1rem 0 0; font-size: 1.06rem; line-height: 1.55; color: var(--ink); }
+.opener-meccog { padding-left: .9rem; border-left: 3px solid var(--amber); }
+.hero-grid { align-items: start; }
+.hero .nav .in { padding-block: 1.1rem; }
+.hero .cta { margin-top: 1.5rem; }
+/* one reading width for text, one larger minimum type size */
+.in { max-width: 76rem; }
+.head-row, .sec, .capped { max-width: 50rem; }
+.dbody { max-width: none; }
+.prose-links .prose { max-width: 50rem; }
+@media (min-width: 60rem) { .prose-links { grid-template-columns: minmax(0, 50rem) minmax(0, 1fr); } }
+.linklist a { flex-direction: column; gap: .1rem; }
+.linklist a em { text-align: left; font-size: .92rem; }
+.eyebrow { font-size: .78rem; }
+.nav menu a { font-size: 1.02rem; }
+.key { font-size: .92rem; }
+.card p { font-size: 1rem; }
+.card .n { font-size: .75rem; }
+.nums dd { font-size: 1rem; }
+figcaption { font-size: .95rem; }
+ol.refs { font-size: .95rem; }
+.people li { font-size: 1rem; }
+.people .r { font-size: .95rem; }
+.decide-facts > div { font-size: .95rem; }
+td.r { font-size: .95rem; }
+/* two short text sections share a band on wide screens */
+.two-up > .in { display: grid; gap: 2.5rem 3.5rem; }
+@media (min-width: 62rem) { .two-up > .in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.two-col .head-row, .two-col .sec { max-width: none; }
+.two-col td { padding-right: .75rem; }
+:focus-visible { outline: 3px solid var(--indigo-soft); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+.mech-page { padding-block: clamp(2rem,1.5rem + 2vw,3.25rem) clamp(2.5rem,1.75rem + 2.5vw,4rem); }
+.mech-h1 { font-size: clamp(1.7rem,1.3rem + 1.6vw,2.5rem); color: var(--indigo); }
+
+/* Site style, November 2026: Manrope headings, darker secondary text */
+:root { --display: "Manrope", system-ui, sans-serif; --ink-soft: #46465F; }
+h1 { font-weight: 800; letter-spacing: -.03em; }
+h2, h3 { font-weight: 700; }
+/* compact menu on phones */
+.menu-toggle { display: none; margin-left: auto; font: inherit; font-family: var(--display); font-weight: 600; font-size: .95rem; color: var(--indigo); background: none; border: 1.5px solid var(--rule); border-radius: 999px; padding: .45rem 1rem; cursor: pointer; }
+.menu-toggle::after { content: ""; display: inline-block; width: .45rem; height: .45rem; margin-left: .55rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-25%) rotate(45deg); }
+.nav.open .menu-toggle::after { transform: translateY(15%) rotate(-135deg); }
+@media (max-width: 56rem) {
+  .menu-toggle { display: inline-flex; align-items: center; }
+  .nav .in > .btn { display: none; }
+  .nav menu { display: none; flex-basis: 100%; flex-direction: column; gap: 0; margin: .5rem 0 0; }
+  .nav.open menu { display: flex; }
+  .nav menu li a { display: block; padding: .7rem 0; border-top: 1px solid var(--rule); font-size: 1.05rem; }
+}
+
+/* the submission page, one click away from every page */
+.nav .nav-cta { background: var(--amber); color: #231306; }
+.menu-submit { display: none; }
+@media (max-width: 56rem) { .menu-submit { display: list-item; } .nav menu li.menu-submit a { color: #B45412; font-weight: 700; } }
+.submit-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem 1.5rem; margin: 1.5rem 0; padding: 1.1rem 1.3rem; background: #FFF6EE; border: 1px solid #F6D3B4; border-radius: 16px; }
+.submit-cta p { margin: 0; font-weight: 600; color: var(--ink); }
+.submit-cta a { display: inline-flex; align-items: center; padding: .65rem 1.3rem; border-radius: 999px; background: var(--amber); color: #231306; font-family: var(--display); font-weight: 800; text-decoration: none; white-space: nowrap; }
+
+/* the menu bar stays at the top while scrolling */
+:root { --navh: 88px; }
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.97); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+html { scroll-padding-top: var(--navh); }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="in">
+    <a class="logo" href="index.html"><img src="MecCog_logo_transparent.png" alt=""> MecCog</a>
+    <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <menu id="site-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="hypotheses.html">Hypotheses</a></li>
+      <li><a href="rules.html">Challenge specifics</a></li>
+      <li><a href="official-rules.html">Official rules</a></li>
+      <li><a href="resources.html">Shared resources</a></li>
+      <li class="menu-submit"><a href="https://meccog-meccogchallenge.hf.space/">Register &amp; submit</a></li>
+    </menu>
+    <a class="btn btn-fill nav-cta" href="https://meccog-meccogchallenge.hf.space/">Register &amp; submit</a>
+  </div>
+</nav>
+
+<main id="mechanism" class="mech-page">
+  <div class="in">
+    <div class="head-row">
+      <p class="eyebrow" style="color:var(--amber)">An example</p>
+      <h1 class="mech-h1">One proposed mechanism, as MecCog represents it</h1>
+      <p class="lead">A genetic disease mechanism begins at the DNA stage and usually proceeds through a series of stages of biological organization, including perturbations at the protein, protein-protein, cellular and others, culminating in the organism stage disease phenotype. Each disease mechanism step is represented by a substate perturbation (SSP) produced by an activity represented by an oval mechanism module (MM). SSPs are shown as rectangles; MMs are labeled with the specific activity that produces the next SSP. Color coding indicates the schema builder's evidence assessment, from high - green, to lower - orange, to lowest - red. Black ovals indicate unknown steps. Select any step for more.</p>
+    </div>
+    <div class="mech">
+      <div class="spine">
+        <p class="key">
+          <span><i style="background:var(--good)"></i> well supported</span>
+          <span><i style="background:var(--mid)"></i> partly supported</span>
+          <span><i style="background:var(--weak)"></i> weakly supported</span>
+          <span><i style="background:var(--ink)"></i> nobody has explained this step</span>
+        </p>
+<div class="stage"><p class="stage-name">The variant</p>
+<button type="button" class="node good" data-t="The APOE4 allele differs from APOE3 by the single base change rs429358-C." aria-pressed="false"><span class="node-id">SSP1</span><span class="node-rate"><i></i>well supported</span><span class="node-title">Single base change</span><span class="gloss">rs429358-C, in the APOE gene</span></button>
+<button type="button" class="link" data-id="MM1" data-t="The base change results in an amino acid substitution in the apoE protein." aria-pressed="false"><span class="arrow" aria-hidden="true"></span><span class="link-text">Protein synthesis</span></button>
+<button type="button" class="node good" data-t="The base change puts an arginine where APOE3 has a cysteine at residue 112 of the apoE protein." aria-pressed="false"><span class="node-id">SSP2</span><span class="node-rate"><i></i>well supported</span><span class="node-title">apoE C112R missense variant</span><span class="gloss">Cysteine replaced by arginine at position 112 of the apoE protein</span></button>
+</div>
+<button type="button" class="link unknown" data-id="MM2" data-t="The mechanism by which apoE4 increases nuclear HDAC4 is unknown. It may involve inhibition of protein kinase C by apoE4." data-r="Marked as unknown in Figure 1." aria-pressed="false"><span class="arrow" aria-hidden="true"></span><span class="link-text">Mechanism unknown</span></button>
+<div class="stage"><p class="stage-name">Inside the astrocyte</p>
+<button type="button" class="node mid" data-t="HDAC4 accumulates in the nucleus. How apoE4 causes this is not established, which is why the step before it is marked unknown." aria-pressed="false"><span class="node-id">SSP3</span><span class="node-rate"><i></i>partly supported</span><span class="node-title">Nuclear HDAC4 increased</span><span class="gloss">HDAC4: a deacetylase, an enzyme that removes acetyl groups from histones</span></button>
+<button type="button" class="link" data-id="MM3" data-t="More HDAC4 in the nucleus leads to a general decrease in histone acetylation. That generally means less accessible DNA and lower expression of some genes." aria-pressed="false"><span class="arrow" aria-hidden="true"></span><span class="link-text">Decreased histone acetylation</span></button>
+<button type="button" class="node mid" data-t="HDAC4 is a deacetylase, so more of it in the nucleus means less histone acetylation, less accessible DNA, and lower expression of some genes." aria-pressed="false"><span class="node-id">SSP4</span><span class="node-rate"><i></i>partly supported</span><span class="node-title">Less SLC9A6, so less NHE6</span><span class="gloss">SLC9A6: the gene for NHE6, a channel protein that gives protons an escape route from the endosome</span></button>
+<button type="button" class="link" data-id="MM4" data-t="Lower abundance of NHE6 reduces proton flow out of the endosome." aria-pressed="false"><span class="arrow" aria-hidden="true"></span><span class="link-text">Decreased endosome proton efflux</span></button>
+<button type="button" class="node mid" data-t="NHE6 normally lets protons escape the endosome. Less of it means the compartment acidifies." aria-pressed="false"><span class="node-id">SSP5</span><span class="node-rate"><i></i>partly supported</span><span class="node-title">Lower endosome pH</span><span class="gloss">Endosome: a compartment inside the cell that handles the traffic and breakdown of proteins</span></button>
+</div>
+<button type="button" class="link" data-id="MM5" data-t="Lower endosome pH results in less efficient transport of LRP1 from the endosome back to the membrane surface." aria-pressed="false"><span class="arrow" aria-hidden="true"></span><span class="link-text">Decreased LRP1 transport</span></button>
+<div class="stage"><p class="stage-name">At the cell surface and beyond</p>
+<button type="button" class="node mid" data-t="LRP1 is a surface receptor that imports many molecules, amyloid beta among them. A lower endosome pH impairs its return to the membrane." aria-pressed="false"><span class="node-id">SSP6</span><span class="node-rate"><i></i>partly supported</span><span class="node-title">Less LRP1 at the astrocyte surface</span><span class="gloss">LRP1: a surface receptor that imports many molecules, including amyloid beta (A&beta;)</span></button>
+<button type="button" class="link" data-id="MM6" data-t="With less LRP1 at the surface, there is less removal of A&beta; from the space between cells." aria-pressed="false"><span class="arrow" aria-hidden="true"></span><span class="link-text">Less A&beta; endocytosis</span></button>
+<button type="button" class="node mid" data-t="With less LRP1 at the surface, astrocytes take up and degrade less amyloid beta from the space between cells." aria-pressed="false"><span class="node-id">SSP7</span><span class="node-rate"><i></i>partly supported</span><span class="node-title">More extracellular A&beta;</span><span class="gloss">A&beta;: the main constituent of amyloid plaque</span></button>
+<button type="button" class="link" data-id="MM7" data-t="More A&beta; outside the cells is proposed to raise the rate of plaque formation." aria-pressed="false"><span class="arrow" aria-hidden="true"></span><span class="link-text">Higher rate of plaque formation</span></button>
+<button type="button" class="node good" data-t="More amyloid plaque accumulates, which is one of the two physical markers required for an Alzheimer's diagnosis." aria-pressed="false"><span class="node-id">SSP8</span><span class="node-rate"><i></i>well supported</span><span class="node-title">More plaque, higher risk</span></button>
+</div>
+      </div>
+      <div class="mech-side">
+        <div id="readout" aria-live="polite"><b>select a step</b>Each step is a separate claim with its own evidence and its own confidence. Finding and weighing that evidence is the work this challenge breaks into pieces.</div>
+        <p class="mech-note">Drawn after Figure 1 of the <a href="https://doi.org/10.13140/RG.2.2.25832.17927" target="_blank" rel="noopener">Moult and Darden preprint</a>, colors included. Choosing this mechanism as the example does not mean it is better supported than the others.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer><div class="in" style="padding-block:2.5rem"><p>MecCog is an open science project.</p><p><strong>Questions.</strong> The <a href="https://huggingface.co/spaces/MecCog/meccog-challenge/discussions/new" target="_blank" rel="noopener">Community tab</a> of this Space is where questions get asked and answered, and it is usually the fastest route, since someone has often been there before you. You can also join the conversation on <a href="https://discord.gg/C5KRB7bEj" target="_blank" rel="noopener">Discord</a>. For anything else, write to the organizers at <a href="mailto:e4admin@tunc.org">e4admin@tunc.org</a>.</p><p><a href="index.html">Back to the main page</a>.</p></div></footer>
+
+<script>
+(function () {
+  var out = document.getElementById("readout");
+  var side = document.querySelector(".mech-side");
+  var items = Array.prototype.slice.call(document.querySelectorAll(".node, .link"));
+  var narrow = window.matchMedia("(max-width: 60rem)");
+  function park() { if (out.parentNode !== side) side.insertBefore(out, side.firstChild); }
+  if (narrow.addEventListener) narrow.addEventListener("change", function () { if (!narrow.matches) park(); });
+  items.forEach(function (n) {
+    n.addEventListener("click", function () {
+      items.forEach(function (o) { o.setAttribute("aria-pressed", o === n ? "true" : "false"); });
+      var isNode = n.classList.contains("node");
+      var id = isNode ? n.querySelector(".node-id").textContent : n.getAttribute("data-id");
+      var title = n.querySelector(isNode ? ".node-title" : ".link-text").textContent;
+      out.innerHTML = "";
+      var b = document.createElement("b"); b.textContent = id + " \u2014 " + title; out.appendChild(b);
+      out.appendChild(document.createTextNode(n.getAttribute("data-t")));
+      if (n.getAttribute("data-r")) { var r = document.createElement("span"); r.className = "readout-rate"; r.textContent = n.getAttribute("data-r"); out.appendChild(r); }
+      if (narrow.matches) n.insertAdjacentElement("afterend", out); else park();
+    });
+  });
+
+})();
+</script>
+<script>
+(function () {
+  var nav = document.querySelector(".nav"), b = nav && nav.querySelector(".menu-toggle");
+  if (!b) return;
+  b.addEventListener("click", function () { var o = nav.classList.toggle("open"); b.setAttribute("aria-expanded", o ? "true" : "false"); });
+  nav.querySelectorAll("menu a").forEach(function (a) { a.addEventListener("click", function () { nav.classList.remove("open"); b.setAttribute("aria-expanded", "false"); }); });
+})();
+</script>
+<script>
+(function () {
+  // The menu's real height, so what sticks below it (tabs, side column) and every
+  // anchor lands just under it, on any screen.
+  var n = document.querySelector(".nav");
+  if (!n) return;
+  function set() { if (!n.classList.contains("open")) document.documentElement.style.setProperty("--navh", n.offsetHeight + "px"); }
+  set(); window.addEventListener("load", set); window.addEventListener("resize", set);
+})();
+</script>
+</body>
+</html>

@@ -25,9 +25,11 @@ repos:
         args: ["--maxkb=10240"]  # 10 MB — block accidental model weight commits
       - id: check-merge-conflict
       - id: end-of-file-fixer
-        exclude: \.jsonl$
+        # meccog/ holds downloaded source text and generated artifacts —
+        # whitespace edits would diverge them from what quotes verify against
+        exclude: \.jsonl$|^meccog/
       - id: trailing-whitespace
-        exclude: \.jsonl$
+        exclude: \.jsonl$|^meccog/
       - id: detect-private-key
 
   # --- hermes-plugin vendored pipeline must match agent/ ---

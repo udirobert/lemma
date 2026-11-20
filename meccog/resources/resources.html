@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MecCog Shared Resources</title>
+<link rel="icon" href="MecCog_logo_transparent.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<style>
+/* Same system as the main page: white ground, indigo ink, orange accent. */
+:root {
+  color-scheme: light;
+  --indigo: #2B1B74; --indigo-soft: #4A35A8;
+  --amber: #F0802B; --mint: #16A06A;
+  --page: #FFFFFF; --tint: #F6F5FB; --surface: #FFFFFF;
+  --ink: #15152B; --ink-soft: #5C5C78; --rule: #E6E5EF;
+  --display: "Poppins", system-ui, sans-serif;
+  --body: "DM Sans", system-ui, -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--page); color: var(--ink); font-family: var(--body); font-size: 1.0625rem; line-height: 1.7; }
+.in { max-width: 82rem; margin-inline: auto; padding-left: max(20px, env(safe-area-inset-left,0px)); padding-right: max(20px, env(safe-area-inset-right,0px)); }
+.nav { border-bottom: 1px solid var(--rule); }
+.nav .in { display: flex; align-items: center; gap: 1.5rem; padding-block: 1.1rem; flex-wrap: wrap; }
+.nav .logo { display: flex; align-items: center; gap: .65rem; color: var(--ink); text-decoration: none; font-family: var(--display); font-weight: 700; font-size: 1.3rem; }
+.nav .logo img { width: 54px; height: 54px; }
+.nav menu { display: flex; gap: 1.4rem; list-style: none; margin: 0 0 0 auto; padding: 0; flex-wrap: wrap; }
+.nav menu a { color: var(--ink-soft); text-decoration: none; font-size: 1.02rem; font-weight: 500; }
+.nav menu a:hover { color: var(--indigo-soft); }
+.btn { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--display); font-weight: 600; font-size: .88rem; padding: .55rem 1.15rem; border-radius: 999px; text-decoration: none; background: var(--amber); color: #231306; border: 2px solid transparent; }
+.btn:hover { filter: brightness(1.07); }
+
+header.page { padding-block: 3rem 1rem; }
+header.page .eyebrow { font-family: var(--display); font-size: .72rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--amber); margin: 0 0 .9rem; }
+header.page h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2.1rem,1.5rem + 2.6vw,3.2rem); letter-spacing: -0.025em; line-height: 1.12; margin: 0; color: var(--indigo); }
+header.page .lede { font-size: 1.15rem; color: var(--ink-soft); max-width: 44ch; margin: 1rem 0 0; }
+
+/* the decision panel */
+.glance { background: var(--tint); border: 1px solid var(--rule); border-radius: 18px; padding: clamp(1.4rem,1rem + 1.6vw,2.2rem); margin-block: 2.5rem 3.5rem; }
+.glance h2 { font-family: var(--display); font-size: 1.15rem; font-weight: 600; margin: 0 0 1.4rem; color: var(--indigo); }
+.when { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit,minmax(11rem,1fr)); margin-bottom: 1.8rem; }
+.when div { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 1rem 1.1rem; min-width: 0; }
+.when dt { font-family: var(--display); font-size: .68rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
+.when dd { margin: .35rem 0 0; font-family: var(--display); font-weight: 600; font-size: 1.15rem; color: var(--indigo); }
+.when dd.go { color: var(--mint); }
+.facts { display: grid; gap: .1rem; }
+.facts > div { display: grid; gap: .2rem 1.5rem; padding: .75rem 0; border-top: 1px solid var(--rule); }
+@media (min-width: 46rem) { .facts > div { grid-template-columns: 13rem 1fr; align-items: baseline; } }
+.facts dt { font-weight: 600; color: var(--ink); font-size: .95rem; }
+.facts dd { margin: 0; color: var(--ink-soft); font-size: .97rem; }
+
+main { padding-bottom: 4rem; }
+main .in > * { max-width: 54rem; }
+main table { min-width: 0; }
+main td a { overflow-wrap: anywhere; }
+@media (max-width: 40rem) { main thead { display: none; } main tr { display: block; padding-block: .5rem; border-bottom: 1px solid var(--rule); } main tr:last-child { border-bottom: 0; } main td { display: block; padding: .15rem 0; border-bottom: 0; } }
+h1, h2, h3 { font-family: var(--display); line-height: 1.2; text-wrap: balance; }
+main h1 { font-size: clamp(1.5rem,1.25rem + 1.3vw,2.1rem); font-weight: 600; color: var(--indigo); margin: 3.25rem 0 1rem; padding-top: 1.75rem; border-top: 2px solid var(--rule); }
+main h1:first-child, main .in > .toc + h1 { margin-top: 0; border-top: 0; padding-top: 0; }
+main h2 { font-size: 1.25rem; font-weight: 600; margin: 2.25rem 0 .75rem; }
+main h3 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 .4rem; }
+p { margin: 0 0 1.1rem; }
+a { color: var(--indigo-soft); }
+strong { font-weight: 700; }
+ul, ol { padding-left: 1.3rem; }
+li { margin-bottom: .4rem; }
+code { font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: .88em; background: var(--tint); padding: .1rem .35rem; border-radius: 4px; }
+main p > strong:first-child { color: var(--indigo); font-family: var(--display); font-weight: 600; }
+.tablewrap, table { width: 100%; }
+.tablewrap { overflow-x: auto; margin-bottom: 1.5rem; }
+table { border-collapse: collapse; font-size: .93rem; min-width: 30rem; }
+th, td { padding: .6rem .8rem; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+th { font-family: var(--display); font-weight: 600; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); border-bottom-width: 2px; }
+tr:last-child td { border-bottom: 0; }
+footer { background: var(--tint); border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: .92rem; }
+footer a { color: var(--indigo-soft); }
+:focus-visible { outline: 3px solid var(--indigo-soft); outline-offset: 2px; }
+
+/* Site style, November 2026: Manrope headings, darker secondary text */
+:root { --display: "Manrope", system-ui, sans-serif; --ink-soft: #46465F; }
+h1 { font-weight: 800; letter-spacing: -.03em; }
+h2, h3 { font-weight: 700; }
+/* compact menu on phones */
+.menu-toggle { display: none; margin-left: auto; font: inherit; font-family: var(--display); font-weight: 600; font-size: .95rem; color: var(--indigo); background: none; border: 1.5px solid var(--rule); border-radius: 999px; padding: .45rem 1rem; cursor: pointer; }
+.menu-toggle::after { content: ""; display: inline-block; width: .45rem; height: .45rem; margin-left: .55rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-25%) rotate(45deg); }
+.nav.open .menu-toggle::after { transform: translateY(15%) rotate(-135deg); }
+@media (max-width: 56rem) {
+  .menu-toggle { display: inline-flex; align-items: center; }
+  .nav .in > .btn { display: none; }
+  .nav menu { display: none; flex-basis: 100%; flex-direction: column; gap: 0; margin: .5rem 0 0; }
+  .nav.open menu { display: flex; }
+  .nav menu li a { display: block; padding: .7rem 0; border-top: 1px solid var(--rule); font-size: 1.05rem; }
+}
+
+/* one width for the whole site, the home page's */
+.in { max-width: 76rem !important; }
+
+main .in > * { max-width: none !important; }
+main .in > p, main .in > h2 { max-width: 50rem !important; }
+
+/* the submission page, one click away from every page */
+.nav .nav-cta { background: var(--amber); color: #231306; }
+.menu-submit { display: none; }
+@media (max-width: 56rem) { .menu-submit { display: list-item; } .nav menu li.menu-submit a { color: #B45412; font-weight: 700; } }
+.submit-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem 1.5rem; margin: 1.5rem 0; padding: 1.1rem 1.3rem; background: #FFF6EE; border: 1px solid #F6D3B4; border-radius: 16px; }
+.submit-cta p { margin: 0; font-weight: 600; color: var(--ink); }
+.submit-cta a { display: inline-flex; align-items: center; padding: .65rem 1.3rem; border-radius: 999px; background: var(--amber); color: #231306; font-family: var(--display); font-weight: 800; text-decoration: none; white-space: nowrap; }
+
+/* the menu bar stays at the top while scrolling */
+:root { --navh: 88px; }
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.97); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+html { scroll-padding-top: var(--navh); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="in">
+    <a class="logo" href="index.html"><img src="MecCog_logo_transparent.png" alt=""> MecCog</a>
+    <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <menu id="site-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="hypotheses.html">Hypotheses</a></li>
+      <li><a href="rules.html">Challenge specifics</a></li>
+      <li><a href="official-rules.html">Official rules</a></li>
+      <li><a href="resources.html">Shared resources</a></li>
+      <li><a href="rules.html#the-directness-class">Directness</a></li>
+      <li class="menu-submit"><a href="https://meccog-meccogchallenge.hf.space/">Register &amp; submit</a></li>
+    </menu>
+    <a class="btn btn-fill nav-cta" href="https://meccog-meccogchallenge.hf.space/">Register &amp; submit</a>
+  </div>
+</nav>
+
+<header class="page">
+  <div class="in">
+    <p class="eyebrow">Papers and Findings &middot; Step 1</p>
+    <h1>Shared resources</h1>
+    <p class="lede">The files you need for a submission. The <a href="rules.html">challenge specifics</a> page says how to use them.</p>
+  </div>
+</header>
+
+<main>
+  <div class="in">
+<div class="tablewrap"><table>
+<thead><tr><th>File</th><th>What it is</th></tr></thead>
+<tbody>
+<tr><td><a href="resources/submission_template.xlsx" download>submission_template.xlsx</a></td><td>The official template, with its Submission, Method and How to fill this in sheets.</td></tr>
+<tr><td><a href="resources/method_README_template.md" download>method_README_template.md</a></td><td>The six sections of the method README. Publish it as README.md at the root of a public repository or archive.</td></tr>
+<tr><td><a href="resources/validate_submission.py" download>validate_submission.py</a></td><td>The validator. Run it on your spreadsheet before you submit.</td></tr>
+<tr id="directness"><td><a href="resources/Directness_of_evidence_v02.docx" download>Directness_of_evidence_v02.docx</a></td><td>The directness of evidence document, by John Moult: the five directness classes, the strength d, and the ABCA1 examples the challenge specifics page refers to.</td></tr>
+<tr><td><a href="resources/submission_example.xlsx" download>submission_example.xlsx</a></td><td>A filled example, including the Method sheet. Its ABCA1 hypothesis is a worked example, not one of the five challenge hypotheses.</td></tr>
+<tr><td><a href="https://doi.org/10.13140/RG.2.2.25832.17927" target="_blank" rel="noopener">Moult and Darden preprint</a></td><td>Moult J, Darden L. Critical Assessment of Disease Mechanisms: APOE4 and Alzheimer's Disease. Preprint, 2025. Its Figure 1 is the mechanism drawn on the <a href="mechanism.html">mechanism page</a>, and the colors there follow that figure.</td></tr>
+</tbody>
+</table></div>
+<div class="submit-cta"><p>Once your spreadsheet passes the validator, the team leader submits it on the submission page.</p><a href="https://meccog-meccogchallenge.hf.space/">Register &amp; submit &rarr;</a></div>
+<h2>Running the validator</h2>
+<p>You need Python and the openpyxl package. Then run the validator on your spreadsheet:</p>
+<p><code>pip install openpyxl</code></p>
+<p><code>python validate_submission.py submission.xlsx</code></p>
+  </div>
+</main>
+
+<footer><div class="in" style="padding-block:2.5rem">
+<p><strong>Questions.</strong> The <a href="https://huggingface.co/spaces/MecCog/meccog-challenge/discussions/new" target="_blank" rel="noopener">Community tab</a> of this Space is where questions get asked and answered, and it is usually the fastest route, since someone has often been there before you. You can also join the conversation on <a href="https://discord.gg/C5KRB7bEj" target="_blank" rel="noopener">Discord</a>. For anything else, write to the organizers at <a href="mailto:e4admin@tunc.org">e4admin@tunc.org</a>.</p>
+<p><a href="index.html">Back to the main page</a></p>
+</div></footer>
+<script>
+(function () {
+  var nav = document.querySelector(".nav"), b = nav && nav.querySelector(".menu-toggle");
+  if (!b) return;
+  b.addEventListener("click", function () { var o = nav.classList.toggle("open"); b.setAttribute("aria-expanded", o ? "true" : "false"); });
+  nav.querySelectorAll("menu a").forEach(function (a) { a.addEventListener("click", function () { nav.classList.remove("open"); b.setAttribute("aria-expanded", "false"); }); });
+})();
+</script>
+<script>
+(function () {
+  // The menu's real height, so what sticks below it (tabs, side column) and every
+  // anchor lands just under it, on any screen.
+  var n = document.querySelector(".nav");
+  if (!n) return;
+  function set() { if (!n.classList.contains("open")) document.documentElement.style.setProperty("--navh", n.offsetHeight + "px"); }
+  set(); window.addEventListener("load", set); window.addEventListener("resize", set);
+})();
+</script>
+</body>
+</html>

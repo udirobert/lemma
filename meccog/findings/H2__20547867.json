@@ -1,0 +1,69 @@
+{
+  "hypothesis_id": "H2",
+  "hypothesis": "In some types of non-Alzheimer's, non-aged human brain cells, for example astrocytes, APOE4 causes impaired ARF6-related recycling of receptors between the cell surface and the endosome, compared with APOE3.",
+  "pmid": "20547867",
+  "paper": {
+    "title": "ApoE4 reduces glutamate receptor function and synaptic plasticity by selectively impairing ApoE receptor recycling.",
+    "doi": "10.1073/pnas.0914984107",
+    "journal": "Proceedings of the National Academy of Sciences of the United States of America",
+    "year": "2010",
+    "pmid": "20547867",
+    "pmcid": "PMC2900641"
+  },
+  "model": "claude-opus-5-5",
+  "extracted_at": "2026-11-20T03:10:08.701096+00:00",
+  "quotes_verbatim": "3/3",
+  "findings": [
+    {
+      "finding_description": "ApoE4, compared with other ApoE isoforms, reduced neuronal surface levels of Apoer2 and of NMDA and AMPA receptors, which the authors attribute to sequestration in intracellular compartments, i.e. impaired receptor recycling. The study used neurons, not astrocytes or human cells, and no ARF6 measurement is reported in the text available. Surface expression is therefore a surrogate for recycling.",
+      "quote": "ApoE4 reduces neuronal surface expression of Apoer2, a dual function receptor for ApoE and for Reelin, as well as NMDA and AMPA receptors by sequestration in intracellular compartments",
+      "summary": "ApoE4 lowers neuronal surface Apoer2, NMDA and AMPA receptors by trapping them intracellularly, consistent with impaired receptor recycling.",
+      "relevance": 0.5,
+      "experimental_system": "neurons (likely mouse cultures or human ApoE knock-in; abstract does not specify), ApoE4 vs ApoE3",
+      "data_location": "Abstract (panel not identifiable from text provided)",
+      "effect_size": "qualitative",
+      "effect_size_prov": "not_found_in_source",
+      "p_value": "N/A",
+      "p_value_prov": "not_found_in_source",
+      "sample_size": "N/A",
+      "sample_size_prov": "not_found_in_source",
+      "directness": "3",
+      "strength": "3",
+      "verification": "verbatim"
+    },
+    {
+      "finding_description": "ApoE4 selectively impaired Reelin-induced NMDA receptor phosphorylation and Reelin-modulated synaptic plasticity. This is a functional readout downstream of impaired Apoer2 and glutamate receptor surface availability; recycling and ARF6 are not measured directly.",
+      "quote": "ApoE4 selectively impairs synaptic plasticity and NMDA receptor phosphorylation by Reelin",
+      "summary": "ApoE4 blunts Reelin signaling to NMDA receptors and synaptic plasticity, a downstream consequence of receptor sequestration.",
+      "relevance": 0.3,
+      "experimental_system": "neurons / hippocampal slices from human ApoE knock-in mice",
+      "data_location": "Abstract (panel not identifiable from text provided)",
+      "effect_size": "qualitative",
+      "effect_size_prov": "not_found_in_source",
+      "p_value": "N/A",
+      "p_value_prov": "not_found_in_source",
+      "sample_size": "N/A",
+      "sample_size_prov": "not_found_in_source",
+      "directness": "3",
+      "strength": "4",
+      "verification": "verbatim"
+    },
+    {
+      "finding_description": "In hippocampal slices from human ApoE4 knock-in mice, Reelin's ability to prevent LTP suppression by extracts from AD-afflicted human brains was severely impaired. This is a distal functional surrogate, involves an AD-related challenge, and gives no direct recycling or ARF6 measure.",
+      "quote": "the ability of Reelin to prevent LTP suppression by extracts from AD-afflicted human brains in hippocampal slices from knockin mice expressing the human ApoE4 isoform is severely impaired",
+      "summary": "In ApoE4 knock-in slices, Reelin fails to rescue LTP from suppression by AD brain extracts.",
+      "relevance": 0.2,
+      "experimental_system": "hippocampal slices from human ApoE4 vs ApoE3 knock-in mice",
+      "data_location": "Abstract (panel not identifiable from text provided)",
+      "effect_size": "qualitative",
+      "effect_size_prov": "not_found_in_source",
+      "p_value": "N/A",
+      "p_value_prov": "not_found_in_source",
+      "sample_size": "N/A",
+      "sample_size_prov": "not_found_in_source",
+      "directness": "3",
+      "strength": "5",
+      "verification": "verbatim"
+    }
+  ]
+}

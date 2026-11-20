@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MecCog Hypotheses</title>
+<link rel="icon" href="MecCog_logo_transparent.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<style>
+/* Same system as the main page: white ground, indigo ink, orange accent. */
+:root {
+  color-scheme: light;
+  --indigo: #2B1B74; --indigo-soft: #4A35A8;
+  --amber: #F0802B; --mint: #16A06A;
+  --page: #FFFFFF; --tint: #F6F5FB; --surface: #FFFFFF;
+  --ink: #15152B; --ink-soft: #5C5C78; --rule: #E6E5EF;
+  --display: "Poppins", system-ui, sans-serif;
+  --body: "DM Sans", system-ui, -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--page); color: var(--ink); font-family: var(--body); font-size: 1.0625rem; line-height: 1.7; }
+.in { max-width: 82rem; margin-inline: auto; padding-left: max(20px, env(safe-area-inset-left,0px)); padding-right: max(20px, env(safe-area-inset-right,0px)); }
+.nav { border-bottom: 1px solid var(--rule); }
+.nav .in { display: flex; align-items: center; gap: 1.5rem; padding-block: 1.1rem; flex-wrap: wrap; }
+.nav .logo { display: flex; align-items: center; gap: .65rem; color: var(--ink); text-decoration: none; font-family: var(--display); font-weight: 700; font-size: 1.3rem; }
+.nav .logo img { width: 54px; height: 54px; }
+.nav menu { display: flex; gap: 1.4rem; list-style: none; margin: 0 0 0 auto; padding: 0; flex-wrap: wrap; }
+.nav menu a { color: var(--ink-soft); text-decoration: none; font-size: 1.02rem; font-weight: 500; }
+.nav menu a:hover { color: var(--indigo-soft); }
+.btn { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--display); font-weight: 600; font-size: .88rem; padding: .55rem 1.15rem; border-radius: 999px; text-decoration: none; background: var(--amber); color: #231306; border: 2px solid transparent; }
+.btn:hover { filter: brightness(1.07); }
+
+header.page { padding-block: 3rem 1rem; }
+header.page .eyebrow { font-family: var(--display); font-size: .72rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--amber); margin: 0 0 .9rem; }
+header.page h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2.1rem,1.5rem + 2.6vw,3.2rem); letter-spacing: -0.025em; line-height: 1.12; margin: 0; color: var(--indigo); }
+header.page .lede { font-size: 1.15rem; color: var(--ink-soft); max-width: 44ch; margin: 1rem 0 0; }
+
+/* the decision panel */
+.glance { background: var(--tint); border: 1px solid var(--rule); border-radius: 18px; padding: clamp(1.4rem,1rem + 1.6vw,2.2rem); margin-block: 2.5rem 3.5rem; }
+.glance h2 { font-family: var(--display); font-size: 1.15rem; font-weight: 600; margin: 0 0 1.4rem; color: var(--indigo); }
+.when { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit,minmax(11rem,1fr)); margin-bottom: 1.8rem; }
+.when div { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 1rem 1.1rem; min-width: 0; }
+.when dt { font-family: var(--display); font-size: .68rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
+.when dd { margin: .35rem 0 0; font-family: var(--display); font-weight: 600; font-size: 1.15rem; color: var(--indigo); }
+.when dd.go { color: var(--mint); }
+.facts { display: grid; gap: .1rem; }
+.facts > div { display: grid; gap: .2rem 1.5rem; padding: .75rem 0; border-top: 1px solid var(--rule); }
+@media (min-width: 46rem) { .facts > div { grid-template-columns: 13rem 1fr; align-items: baseline; } }
+.facts dt { font-weight: 600; color: var(--ink); font-size: .95rem; }
+.facts dd { margin: 0; color: var(--ink-soft); font-size: .97rem; }
+
+main { padding-bottom: 4rem; }
+main .in > * { max-width: 54rem; }
+main table { min-width: 0; }
+main td a { overflow-wrap: anywhere; }
+@media (max-width: 40rem) { main thead { display: none; } main tr { display: block; padding-block: .5rem; border-bottom: 1px solid var(--rule); } main tr:last-child { border-bottom: 0; } main td { display: block; padding: .15rem 0; border-bottom: 0; } }
+h1, h2, h3 { font-family: var(--display); line-height: 1.2; text-wrap: balance; }
+main h1 { font-size: clamp(1.5rem,1.25rem + 1.3vw,2.1rem); font-weight: 600; color: var(--indigo); margin: 3.25rem 0 1rem; padding-top: 1.75rem; border-top: 2px solid var(--rule); }
+main h1:first-child, main .in > .toc + h1 { margin-top: 0; border-top: 0; padding-top: 0; }
+main h2 { font-size: 1.25rem; font-weight: 600; margin: 2.25rem 0 .75rem; }
+main h3 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 .4rem; }
+p { margin: 0 0 1.1rem; }
+a { color: var(--indigo-soft); }
+strong { font-weight: 700; }
+ul, ol { padding-left: 1.3rem; }
+li { margin-bottom: .4rem; }
+code { font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: .88em; background: var(--tint); padding: .1rem .35rem; border-radius: 4px; }
+main p > strong:first-child { color: var(--indigo); font-family: var(--display); font-weight: 600; }
+.tablewrap, table { width: 100%; }
+.tablewrap { overflow-x: auto; margin-bottom: 1.5rem; }
+table { border-collapse: collapse; font-size: .93rem; min-width: 30rem; }
+th, td { padding: .6rem .8rem; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+th { font-family: var(--display); font-weight: 600; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); border-bottom-width: 2px; }
+tr:last-child td { border-bottom: 0; }
+footer { background: var(--tint); border-top: 1px solid var(--rule); color: var(--ink-soft); font-size: .92rem; }
+footer a { color: var(--indigo-soft); }
+:focus-visible { outline: 3px solid var(--indigo-soft); outline-offset: 2px; }
+
+/* Site style, November 2026: Manrope headings, darker secondary text */
+:root { --display: "Manrope", system-ui, sans-serif; --ink-soft: #46465F; }
+h1 { font-weight: 800; letter-spacing: -.03em; }
+h2, h3 { font-weight: 700; }
+/* compact menu on phones */
+.menu-toggle { display: none; margin-left: auto; font: inherit; font-family: var(--display); font-weight: 600; font-size: .95rem; color: var(--indigo); background: none; border: 1.5px solid var(--rule); border-radius: 999px; padding: .45rem 1rem; cursor: pointer; }
+.menu-toggle::after { content: ""; display: inline-block; width: .45rem; height: .45rem; margin-left: .55rem; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-25%) rotate(45deg); }
+.nav.open .menu-toggle::after { transform: translateY(15%) rotate(-135deg); }
+@media (max-width: 56rem) {
+  .menu-toggle { display: inline-flex; align-items: center; }
+  .nav .in > .btn { display: none; }
+  .nav menu { display: none; flex-basis: 100%; flex-direction: column; gap: 0; margin: .5rem 0 0; }
+  .nav.open menu { display: flex; }
+  .nav menu li a { display: block; padding: .7rem 0; border-top: 1px solid var(--rule); font-size: 1.05rem; }
+}
+
+/* one width for the whole site, the home page's */
+.in { max-width: 76rem !important; }
+
+main .in > * { max-width: none !important; }
+main .in > p, main .in > h2 { max-width: 50rem !important; }
+
+/* the submission page, one click away from every page */
+.nav .nav-cta { background: var(--amber); color: #231306; }
+.menu-submit { display: none; }
+@media (max-width: 56rem) { .menu-submit { display: list-item; } .nav menu li.menu-submit a { color: #B45412; font-weight: 700; } }
+.submit-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem 1.5rem; margin: 1.5rem 0; padding: 1.1rem 1.3rem; background: #FFF6EE; border: 1px solid #F6D3B4; border-radius: 16px; }
+.submit-cta p { margin: 0; font-weight: 600; color: var(--ink); }
+.submit-cta a { display: inline-flex; align-items: center; padding: .65rem 1.3rem; border-radius: 999px; background: var(--amber); color: #231306; font-family: var(--display); font-weight: 800; text-decoration: none; white-space: nowrap; }
+
+/* the menu bar stays at the top while scrolling */
+:root { --navh: 88px; }
+.nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.97); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+html { scroll-padding-top: var(--navh); }
+/* the hypotheses page: a briefing box, then one card per hypothesis */
+header.page .lede { max-width: 46rem; font-size: 1.15rem; color: var(--ink); }
+main .in { max-width: 76rem; }
+header.page .in { max-width: 76rem; }
+main .in > .hyp-layout { max-width: none; }
+.hyp-layout { display: grid; gap: 1.25rem; grid-template-areas: "howto" "hyps" "brief"; }
+.howto { grid-area: howto; } .hyps { grid-area: hyps; } .brief { grid-area: brief; }
+@media (min-width: 64rem) { .hyp-layout { grid-template-columns: minmax(0, 1fr) 22rem; grid-template-rows: auto 1fr; grid-template-areas: "hyps howto" "hyps brief"; gap: 1.25rem 2.5rem; align-items: start; } }
+.howto h2, .brief h2 { margin: 0 0 .6rem; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--amber); }
+.howto p { margin: 0; }
+.howto p.howto-next { margin-top: .9rem; padding-top: .8rem; border-top: 1px solid #F6D3B4; color: var(--ink); font-weight: 600; }
+.howto-next a { color: #B45412; font-weight: 800; text-decoration: none; }
+.brief { padding: 1.2rem 1.3rem; background: var(--tint); border: 1px solid var(--rule); border-radius: 16px; }
+.brief p { font-size: .95rem !important; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.brief h2 { margin: 0 0 .6rem; font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--amber); }
+.brief p { margin: 0 0 .8rem; font-size: 1rem; line-height: 1.6; }
+.brief p:last-child { margin-bottom: 0; }
+.howto { background: #FFF8F1; border-color: #F6C9A2 !important; border: 1px solid var(--rule); border-radius: 14px; padding: 1.1rem 1.2rem; align-self: start; }
+.howto p { font-weight: 600; color: var(--indigo); }
+.hyps { display: grid; gap: 1.25rem; }
+.hyp { scroll-margin-top: 1.5rem; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .4rem 1.25rem; padding: 1.4rem 1.5rem; background: #fff; border: 1px solid var(--rule); border-radius: 18px; box-shadow: 0 2px 12px rgba(43,27,116,.05); }
+.hid { grid-row: span 4; width: 3.2rem; height: 3.2rem; border-radius: 14px; display: grid; place-items: center; background: #F1EFF9; color: var(--indigo); font-family: var(--display); font-weight: 800; font-size: 1.2rem; }
+.hyp h2 { margin: .1rem 0 .35rem; font-size: 1.3rem; color: var(--indigo); }
+.statement { margin: 0; padding: 1rem 1.15rem; background: var(--tint); border-left: 4px solid var(--indigo-soft); border-radius: 0 12px 12px 0; font-size: 1.08rem; line-height: 1.55; color: var(--ink); -webkit-user-select: all; user-select: all; }
+.hyp-foot { display: flex; flex-wrap: wrap; align-items: baseline; gap: .6rem 1.25rem; margin-top: .6rem; }
+.copy { font: inherit; font-family: var(--display); font-weight: 700; font-size: .9rem; color: #231306; background: var(--amber); border: 0; border-radius: 999px; padding: .45rem 1.1rem; cursor: pointer; white-space: nowrap; }
+.copy.done { background: var(--mint); color: #fff; }
+.ref { flex: 1 1 22rem; margin: 0; font-size: .9rem; color: var(--ink-soft); }
+.ref b { color: var(--ink); font-weight: 600; }
+@media (max-width: 36rem) { .hyp { grid-template-columns: 1fr; padding: 1.15rem; } .hid { grid-row: auto; width: 2.6rem; height: 2.6rem; font-size: 1rem; } }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="in">
+    <a class="logo" href="index.html"><img src="MecCog_logo_transparent.png" alt=""> MecCog</a>
+    <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <menu id="site-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="hypotheses.html">Hypotheses</a></li>
+      <li><a href="rules.html">Challenge specifics</a></li>
+      <li><a href="official-rules.html">Official rules</a></li>
+      <li><a href="resources.html">Shared resources</a></li>
+      <li><a href="rules.html#the-directness-class">Directness</a></li>
+      <li class="menu-submit"><a href="https://meccog-meccogchallenge.hf.space/">Register &amp; submit</a></li>
+    </menu>
+    <a class="btn btn-fill nav-cta" href="https://meccog-meccogchallenge.hf.space/">Register &amp; submit</a>
+  </div>
+</nav>
+
+<header class="page">
+  <div class="in">
+    <p class="eyebrow">Papers and Findings &middot; Step 1</p>
+    <h1>The five hypotheses</h1>
+    <p class="lede">Mechanisms by which APOE4 has been proposed to alter endosome function, so increasing the risk of late-onset Alzheimer’s disease</p>
+  </div>
+</header>
+
+<main>
+  <div class="in">
+<div class="hyp-layout">
+<div class="howto">
+<h2>Using a statement</h2>
+<p>Copy the statement of the hypothesis you are working on into cell A2 of the Submission sheet, exactly as it appears here, including its qualifying clauses.</p>
+<p class="howto-next">Ready? <a href="https://meccog-meccogchallenge.hf.space/">Register and submit &rarr;</a></p>
+</div>
+<aside class="brief" aria-label="Before you start">
+<h2>Before you start</h2>
+<p>All five hypotheses concern proposed mechanisms by which the APOE4 genetic variant may increase the risk of late-onset Alzheimer's disease (LOAD).</p>
+<p>Hypotheses are precisely worded and include specifics that should not be ignored. However, findings that do not exactly fit the specifications are often still relevant. For example, all the hypotheses pertain to conditions in human brains, but most experiments are unavoidably made in model systems of one sort or another. Those findings are very much relevant. Later challenges will take experimental conditions into account in evaluating the strength of the evidence for or against a hypothesis. In this challenge, the task is to extract the experimental specifics needed for that.</p>
+<p>One reference is given per hypothesis, providing a literature source. Other papers also contain relevant evidence, and finding those is part of the challenge.</p>
+</aside>
+<div class="hyps">
+<article class="hyp" id="h1">
+<span class="hid" aria-hidden="true">H1</span>
+<h2><span class="sr">H1: </span>Lower endosome pH</h2>
+<p class="statement">In some types of non-Alzheimer's, non-aged human brain cells, for example astrocytes, APOE4 causes reduced endosome pH compared with APOE3.</p>
+<div class="hyp-foot"><button type="button" class="copy" hidden>Copy statement</button><p class="ref"><b>Starting reference.</b> Prasad H, Rao R. Amyloid clearance defect in ApoE4 astrocytes is reversed by epigenetic correction of endosomal pH. Proc Natl Acad Sci U S A. 2018;115(28):E6640-E6649. <a href="https://pubmed.ncbi.nlm.nih.gov/29946028/" target="_blank" rel="noopener">PMID 29946028</a>.</p></div>
+</article>
+<article class="hyp" id="h2">
+<span class="hid" aria-hidden="true">H2</span>
+<h2><span class="sr">H2: </span>Impaired receptor recycling</h2>
+<p class="statement">In some types of non-Alzheimer's, non-aged human brain cells, for example astrocytes, APOE4 causes impaired ARF6-related recycling of receptors between the cell surface and the endosome, compared with APOE3.</p>
+<div class="hyp-foot"><button type="button" class="copy" hidden>Copy statement</button><p class="ref"><b>Starting reference.</b> Rawat V, Wang S, Sima J, et al. ApoE4 Alters ABCA1 Membrane Trafficking in Astrocytes. J Neurosci. 2019;39(48):9611-9622. <a href="https://pubmed.ncbi.nlm.nih.gov/31641056/" target="_blank" rel="noopener">PMID 31641056</a>.</p></div>
+</article>
+<article class="hyp" id="h3">
+<span class="hid" aria-hidden="true">H3</span>
+<h2><span class="sr">H3: </span>APOE4 aggregation in the endo-lysosome</h2>
+<p class="statement">In some types of non-Alzheimer's, non-aged human brain cells, APOE4 undergoes increased aggregation in the endo-lysosome compared with APOE3.</p>
+<div class="hyp-foot"><button type="button" class="copy" hidden>Copy statement</button><p class="ref"><b>Starting reference.</b> Kaji S, Berghoff SA, Spieth L, et al. Apolipoprotein E aggregation in microglia initiates Alzheimer's disease pathology by seeding beta-amyloidosis. Immunity. 2024;57(11):2651-2668.e12. <a href="https://pubmed.ncbi.nlm.nih.gov/39419029/" target="_blank" rel="noopener">PMID 39419029</a>.</p></div>
+</article>
+<article class="hyp" id="h4">
+<span class="hid" aria-hidden="true">H4</span>
+<h2><span class="sr">H4: </span>APOE4 adhesion to recycling receptors</h2>
+<p class="statement">In some types of non-Alzheimer's, non-aged human brain cells, APOE4 adheres more tightly to some recycling receptors than APOE3, impeding recycling.</p>
+<div class="hyp-foot"><button type="button" class="copy" hidden>Copy statement</button><p class="ref"><b>Starting reference.</b> Xian X, Pohlkamp T, Durakoglugil MS, et al. Reversal of ApoE4-induced recycling block as a novel prevention approach for Alzheimer's disease. Elife. 2018;7:e40048. <a href="https://pubmed.ncbi.nlm.nih.gov/30375977/" target="_blank" rel="noopener">PMID 30375977</a>.</p></div>
+</article>
+<article class="hyp" id="h5">
+<span class="hid" aria-hidden="true">H5</span>
+<h2><span class="sr">H5: </span>Lipid metabolism and late endosome function</h2>
+<p class="statement">In some types of non-Alzheimer's, non-aged human brain cells, APOE4 disruption of lipid metabolism, compared with APOE3, results in impaired late endosome/lysosome function.</p>
+<div class="hyp-foot"><button type="button" class="copy" hidden>Copy statement</button><p class="ref"><b>Starting reference.</b> Lee H, Cho S, Kim MJ, et al. ApoE4-dependent lysosomal cholesterol accumulation impairs mitochondrial homeostasis and oxidative phosphorylation in human astrocytes. Cell Rep. 2023;42(10):113183. <a href="https://pubmed.ncbi.nlm.nih.gov/37777962/" target="_blank" rel="noopener">PMID 37777962</a>.</p></div>
+</article>
+</div>
+</div>
+  </div>
+</main>
+
+<footer><div class="in" style="padding-block:2.5rem">
+<p><strong>Questions.</strong> The <a href="https://huggingface.co/spaces/MecCog/meccog-challenge/discussions/new" target="_blank" rel="noopener">Community tab</a> of this Space is where questions get asked and answered, and it is usually the fastest route, since someone has often been there before you. You can also join the conversation on <a href="https://discord.gg/C5KRB7bEj" target="_blank" rel="noopener">Discord</a>. For anything else, write to the organizers at <a href="mailto:e4admin@tunc.org">e4admin@tunc.org</a>.</p>
+<p><a href="index.html">Back to the main page</a></p>
+</div></footer>
+<script>
+(function () {
+  var nav = document.querySelector(".nav"), b = nav && nav.querySelector(".menu-toggle");
+  if (!b) return;
+  b.addEventListener("click", function () { var o = nav.classList.toggle("open"); b.setAttribute("aria-expanded", o ? "true" : "false"); });
+  nav.querySelectorAll("menu a").forEach(function (a) { a.addEventListener("click", function () { nav.classList.remove("open"); b.setAttribute("aria-expanded", "false"); }); });
+})();
+</script>
+<script>
+(function () {
+  // The menu's real height, so what sticks below it (tabs, side column) and every
+  // anchor lands just under it, on any screen.
+  var n = document.querySelector(".nav");
+  if (!n) return;
+  function set() { if (!n.classList.contains("open")) document.documentElement.style.setProperty("--navh", n.offsetHeight + "px"); }
+  set(); window.addEventListener("load", set); window.addEventListener("resize", set);
+})();
+</script>
+<script>
+(function () {
+  // Copy exactly the text shown, which is what cell A2 is compared with.
+  Array.prototype.forEach.call(document.querySelectorAll(".hyp"), function (card) {
+    var b = card.querySelector(".copy"), s = card.querySelector(".statement");
+    b.hidden = false;
+    b.addEventListener("click", function () {
+      var text = s.textContent;
+      function ok() { b.textContent = "Copied"; b.classList.add("done"); setTimeout(function () { b.textContent = "Copy statement"; b.classList.remove("done"); }, 2000); }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
+      function fallback() { var r = document.createRange(); r.selectNodeContents(s); var sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); try { document.execCommand("copy"); ok(); } catch (x) {} }
+    });
+  });
+})();
+</script>
+</body>
+</html>
