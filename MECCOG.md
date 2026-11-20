@@ -131,5 +131,12 @@ verification layer that decides whether an extracted row is trustworthy.
   unverifiable numbers are dropped to `N/A` and flagged `REVIEW` rather than
   being given an invented provenance.
 
-Status log lives at the bottom of this file; each milestone lands with its
-validator report committed under `meccog/submissions/`.
+## Status log
+
+- **2026-11-20** — resources vendored; 5 seed full texts fetched; all 5 seed
+  papers extracted; discovery pass (`meccog_find.py`) → top-3 real-PMID
+  candidates per hypothesis fetched + extracted; workbooks rebuilt and all
+  `SUBMISSION VALID` (H1 4p/37f, H2 4/41, H3 2/21, H4 4/73, H5 4/78).
+  Validator reports committed beside each xlsx. Pending: human spot-check
+  (esp. WandB-Kimi-extracted rows + H4/H5 long tails), method README,
+  registration.
